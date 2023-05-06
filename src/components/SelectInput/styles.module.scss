@@ -1,0 +1,106 @@
+@use "src/styles/colors" as *;
+
+.select-input {
+  .rotate-icon {
+    transform: rotate(180deg) !important;
+
+    &.is-dashboard {
+      height: 1rem;
+      margin-bottom: 5px;
+    }
+  }
+
+
+
+  .select-input-button {
+    cursor: pointer;
+  }
+
+  .select-menu {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    margin-top: 0.3rem;
+    overflow-y: auto;
+    background-color: var(--dashboard-background-color);
+
+    &.is-menu-dashboard {
+      padding-block: .5rem !important;
+    }
+
+    .select-menu-item {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--body-text-color);
+      border-left: 4px solid;
+      border-color: transparent;
+      cursor: pointer;
+      min-height: 3rem;
+      display: flex;
+      align-items: center;
+
+      &.remove-border {
+        border: none;
+      }
+
+      &.is-dashboard {
+        min-height: 2rem;
+        border-radius: 8px;
+
+        &:hover,
+        &.found-option {
+          background-color: var(--input-select-hover-bg-color);
+          border-color: var(--input-select-hover-bg-color);
+          color: var(--body-text-color);
+        }
+
+        &.selected {
+          background-color: $primary-400;
+          color: $white !important;
+          border-color: $primary-400;
+
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+
+      &:hover,
+      &.found-option {
+        background-color: var(--input-select-hover-bg-color);
+        border-color: $primary-400;
+        color: var(--body-text-color);
+      }
+
+      &:focus,
+      &:active {
+        border-color: $primary-400;
+      }
+
+      &.selected {
+        background-color: $primary-400;
+        color: $white !important;
+
+        &:hover {
+          color: $white;
+        }
+      }
+
+      &.empty {
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: $gray-100;
+          border-color: $gray-100;
+        }
+      }
+    }
+  }
+}
+
+.portal-in-modal {
+  position: fixed;
+  z-index: 101;
+
+  @extend .select-input;
+}
