@@ -206,6 +206,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         }}
         positionX={props.calendarPositionX}
         positionY={props.calendarPositionY}
+        zIndex={props.zIndex}
       >
         <div
           class={"date-picker-input-area"}

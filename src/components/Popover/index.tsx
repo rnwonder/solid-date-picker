@@ -31,6 +31,7 @@ interface PopoverProps {
   className?: string;
   onOpen?: () => void;
   onClose?: () => void;
+  zIndex?: number;
 }
 
 const StyledContent = styled("div")<{
@@ -171,7 +172,7 @@ export const Popover = (props: PopoverProps) => {
         reference={elementRef}
         useRefWidth={props.useRefWidth}
         style={{
-          "z-index": 10000,
+          "z-index": props.zIndex || 1000,
           position: "fixed",
           ...(top() && { top: top() }),
           ...(left() && { left: left() }),

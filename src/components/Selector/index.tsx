@@ -12,6 +12,7 @@ interface SelectorProps {
   gridTemplateColumnsNo?: string;
   attributes?: Record<string, any>;
   className?: string;
+  zIndex?: number;
 }
 
 export const Selector = (props: SelectorProps) => {
@@ -32,6 +33,7 @@ export const Selector = (props: SelectorProps) => {
 
   return (
     <Popover
+      zIndex={props.zIndex}
       onOpen={() => {
         setOpen(true);
         const selectedOption = document.querySelector("[data-selected=true]");

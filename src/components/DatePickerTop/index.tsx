@@ -2,7 +2,7 @@ import { Accessor, Component, JSXElement, Setter, Show } from "solid-js";
 import { styled } from "solid-styled-components";
 import { PhosphorIcon } from "../PhosphorIcon";
 import { DatePickerMonthAndYearSelector } from "../DatePickerMonthAndYearSelector";
-import {Button} from "../Button";
+import { Button } from "../Button";
 
 export interface DatePickerTopProps {
   handlePrevMonth: () => void;
@@ -15,25 +15,18 @@ export interface DatePickerTopProps {
   monthSelectorJSX?: JSXElement;
   yearSelectorJSX?: JSXElement;
   monthYearSelectorJSX?: JSXElement;
+  zIndex?: number;
 }
 
-const StyledDatePickerTop = styled("div")<DatePickerTopProps>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 0 0.3125rem 0;
-  padding: 0 0.5rem;
-`;
-
-const StyledButton = styled("button")`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-`;
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
   return (
-    <StyledDatePickerTop {...props}>
-      <Button onClick={props.handlePrevMonth} >
+    <div
+      class={
+        "date-picker-top flex justify-between items-center mb-[0.3125rem] px-2"
+      }
+      data-date-picker-top={true}
+    >
+      <Button onClick={props.handlePrevMonth}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -58,6 +51,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           render={props.render}
           monthSelectorJSX={props.monthSelectorJSX}
           yearSelectorJSX={props.yearSelectorJSX}
+          zIndex={props.zIndex}
         />
       </Show>
 
@@ -72,6 +66,6 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
         </svg>
       </Button>
-    </StyledDatePickerTop>
+    </div>
   );
 };

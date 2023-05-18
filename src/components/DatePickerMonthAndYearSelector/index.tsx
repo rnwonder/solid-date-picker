@@ -22,6 +22,7 @@ export const DatePickerMonthAndYearSelector: Component<
     data: { index },
   }));
 
+
   return (
     <StyledSelector>
       <Show when={props.render()} keyed>

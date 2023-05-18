@@ -67,6 +67,8 @@ export interface DatePickerProps {
   calendarJSX?: IRenderJSX;
 
   hideTopArea?: boolean;
+
+  zIndex?: number;
 }
 
 const StyledDatePicker = styled("div")`
@@ -316,6 +318,7 @@ export const DatePicker = (props: DatePickerProps) => {
             handlePrevMonth={handlePrevMonth}
             monthSelectorJSX={monthSelectorJSX}
             yearSelectorJSX={yearSelectorJSX}
+            zIndex={props.zIndex}
           />
         )}
       </Show>
