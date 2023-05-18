@@ -65,6 +65,7 @@ export const CustomPortal: Component<ModalProps> = (props) => {
                 width: props.reference()?.clientWidth + "px",
               }),
             ...props.style,
+              background: "blue",
           }}
         >
           <StyledPortal {...props}>{props.children}</StyledPortal>

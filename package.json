@@ -1,28 +1,101 @@
 {
-  "name": "solid-date-picker",
-  "version": "0.0.0",
+  "name": "@rnwonder/solid-date-picker",
+  "version": "0.0.2",
   "description": "",
-  "type": "module",
-  "main": "dist/esm/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/lib/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./types/index.d.ts",
+  "exports": {
+    "import": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "solid",
+    "solidjs",
+    "date-picker",
+    "date",
+    "calendar",
+    "calendar-picker",
+    "solid-date-picker",
+    "solidjs-date-picker",
+    "solidjs-calendar-picker",
+    "solidjs-calendar",
+    "solidjs-date",
+    "solidjs-rangepicker",
+    "solid-rangepicker",
+    "rangepicker",
+    "solidjs-range-picker",
+    "solidjs-range",
+    "solidjs-picker",
+    "solid-range-picker",
+    "solid-date-picker"
+  ],
   "author": "rnwonder",
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "build": "jiti build.ts",
+    "kk": "tsup",
+    "build:vite": "vite build && tsc --emitDeclarationOnly --declarationDir types",
+    "serve": "vite preview",
+    "build:lib": "rollup -c rollup.config.js",
+    "test": "vitest --ui"
+  },
+  "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
+  "homepage": "https://github.com/rnwonder/solid-date-picker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rnwonder/solid-date-picker.git"
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "@babel/preset-env": "^7.19.4",
+    "@types/node": "^20.1.0",
+    "autoprefixer": "^10.4.14",
+    "clsx": "^1.2.1",
+    "daisyui": "^2.51.6",
+    "jiti": "^1.18.2",
+    "postcss": "^8.4.23",
+    "rollup": "^3.21.5",
+    "rollup-preset-solid": "^2.0.1",
     "sass": "^1.62.1",
+    "tailwindcss": "^3.3.2",
+    "tsup": "^6.7.0",
+    "tsup-preset-solid": "^0.1.8",
     "typescript": "^4.9.5",
     "vite": "^4.1.1",
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
-    "solid-js": "^1.6.10",
+    "@vinxi/tsconfig": "^0.0.3",
     "solid-styled-components": "^0.28.5",
     "solid-ts-hooks": "^0.0.6"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.6.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false,
+  "files": [
+    "dist/**",
+    "types/**",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browser": {},
+  "typesVersions": {},
+  "pnpm": {
+    "overrides": {
+      "@rollup/plugin-node-resolve": "13.3.0"
+    }
   }
 }

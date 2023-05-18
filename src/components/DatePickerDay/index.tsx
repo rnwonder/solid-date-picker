@@ -23,6 +23,7 @@ const StyledDatePickerDay = styled("div")<DatePickerDayProps>`
   text-align: center;
   margin-bottom: 10px;
   text-transform: uppercase;
+  font-family: inherit;
 
   display: ${(props) => (props.header ? "block" : "flex")};
   justify-content: center;
@@ -62,6 +63,7 @@ const StyledDatePickerDay = styled("div")<DatePickerDayProps>`
 const StyledDay = styled("button")<DatePickerDayProps>`
   text-align: center;
   position: relative;
+  font-family: inherit;
   color: ${({ dayRangeStart, dayRangeEnd, dayRangeBetween }) =>
     dayRangeStart || dayRangeEnd
       ? "var(--white)"
@@ -91,7 +93,11 @@ const StyledDay = styled("button")<DatePickerDayProps>`
 `;
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
   return (
-    <StyledDatePickerDay>
+    <StyledDatePickerDay
+      header={props.header}
+      data-day-number={!props.header}
+      data-day-name={props.header}
+    >
       <Show when={props.header} keyed>
         {props.children}
       </Show>

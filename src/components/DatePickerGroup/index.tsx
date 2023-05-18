@@ -4,8 +4,10 @@ import {
   Accessor,
   createEffect,
   createSignal,
+  JSX,
   onCleanup,
   Setter,
+  Show,
 } from "solid-js";
 import { TextInputGroup, TextInputGroupProps } from "../TextInputGroup";
 import {
@@ -15,17 +17,28 @@ import {
 } from "../../interface/date";
 import { upgradedSmartDropDown } from "../../../../../package/src/utils";
 import { convertDateObjectToDate } from "../DatePickerDay/config";
-import { CustomPortal } from "../CustomPortal";
 import { DatePicker, DatePickerProps } from "../DatePicker";
+import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
+
+interface IRenderInputJSXProps {
+  value: Accessor<IDatePickerInputDataValue>;
+}
+
+type IRenderInput =
+  | JSX.Element
+  | ((props: IRenderInputJSXProps) => JSX.Element);
 
 interface DatePickerInputSJProps
   extends Omit<TextInputGroupProps, "value" | "setValue" | "type">,
-    Omit<DatePickerProps, "type" | "value"> {
+    Omit<DatePickerProps, "type" | "value" | "setAllowedComponents"> {
   type?: IDatePickerType;
   value: Accessor<IDatePickerInputDataValue>;
   setValue?: Setter<IDatePickerInputDataValue>;
   onChange?: (data: IDatePickerOnChange) => void;
   componentsToAllowOutsideClick?: Array<any>;
+  renderInput?: IRenderInput;
+  calendarPositionX?: IPopOverPositionX;
+  calendarPositionY?: IPopOverPositionY;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -35,6 +48,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   const [left, setLeft] = createSignal<string | undefined>();
   const [datePickerRef, setDatePickerRef] = createSignal<any>();
   const [inputRef, setInputRef] = createSignal<any>();
+  const [allowedComponents, setAllowedComponents] = createSignal<any[]>([]);
 
   createEffect(() => {
     if (!reference?.()) return;
@@ -142,57 +156,80 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       });
     }
   };
+
+  createEffect(() => {
+    // console.log("allowedComponents", allowedComponents());
+  });
+
+  const renderCustomJSX = (renderJSX?: IRenderInput) => {
+    if (!renderJSX) return undefined;
+    if (typeof renderJSX === "function") {
+      const content = renderJSX({
+        value: props.value,
+      });
+      return <>{content}</>;
+    }
+    return <>{renderJSX}</>;
+  };
+
+  const inputJSX = renderCustomJSX(props.renderInput);
   return (
     <>
-      <div ref={setReference}>
-        <TextInputGroup
-          {...props}
-          placeholder="Select Date"
-          value={props.value?.().label || ""}
-          iconClass="ph-calendar-blank"
-          ref={setInputRef}
-          readOnly
-          isDashboard
-          onClick={() => {
-            console.log("clicked");
-            setIsShown(true);
-          }}
-        />
-      </div>
-
-      <CustomPortal
-        hideDefaultStyle
-        setIsShown={setIsShown}
-        reference={reference}
-        isShown={isShown()}
-        style={{
-          ...(top && { top: top() }),
-          ...(left && { left: left() }),
-          "max-width": "20rem",
-          "background-color": "red",
+      <Popover
+        onClose={() => {
+          setAllowedComponents([]);
         }}
-        onClickOutside={(e) => {
-          if (reference().contains(e.target)) return;
-          if (
-            props.componentsToAllowOutsideClick?.some((component) =>
-              component.contains(e.target)
-            )
-          )
+        content={({ close }) => (
+          <DatePicker
+            {...props}
+            type={props.type || "single"}
+            value={props.value?.().value}
+            ref={setDatePickerRef}
+            onChange={props.onChange || handleOnChange}
+            maxDate={props.maxDate}
+            minDate={props.minDate}
+            setAllowedComponents={setAllowedComponents}
+          />
+        )}
+        onClickOutside={(e, setter) => {
+          if (reference().contains(e?.target)) {
             return;
-
-          setIsShown(false);
+          }
+          if (
+            allowedComponents()
+              .concat(props.componentsToAllowOutsideClick || [])
+              ?.some((component) => component?.contains?.(e?.target))
+          ) {
+            return;
+          }
+          setter?.(false);
         }}
+        positionX={props.calendarPositionX}
+        positionY={props.calendarPositionY}
       >
-        <DatePicker
-          {...props}
-          type={props.type || "single"}
-          value={props.value?.().value}
-          ref={setDatePickerRef}
-          onChange={props.onChange || handleOnChange}
-          maxDate={props.maxDate}
-          minDate={props.minDate}
-        />
-      </CustomPortal>
+        <div
+          class={"date-picker-input-area"}
+          data-date-picker-input-area={true}
+          ref={setReference}
+        >
+          <Show when={inputJSX} keyed>
+            {inputJSX}
+          </Show>
+
+          <Show when={!inputJSX} keyed>
+            <TextInputGroup
+              {...props}
+              type={"text"}
+              placeholder="Select Date"
+              value={props.value?.().label || ""}
+              iconClass="ph-calendar-blank"
+              ref={setInputRef}
+              readOnly
+              isDashboard
+            />
+          </Show>
+        </div>
+      </Popover>
     </>
   );
 };

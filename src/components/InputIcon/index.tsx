@@ -44,12 +44,12 @@ export const InputIcon: Component<InputIconProps> = (props) => {
       <PhosphorIcon
         color={
           props.disabled
-            ? theme.colors.gray600
+            ? theme?.colors?.gray600
             : props.error
-            ? theme.colors.red400
+            ? theme?.colors?.red400
             : props.formActive()
-            ? theme.colors.gray700
-            : theme.colors.gray1000
+            ? theme?.colors?.gray700
+            : theme?.colors?.gray1000
         }
         fontSize={props.search ? "1rem" : '1.1rem'}
         onClick={props.onClick}
