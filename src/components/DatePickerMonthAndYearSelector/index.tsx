@@ -1,97 +1,64 @@
-import { Accessor, Component, Setter, Show } from "solid-js";
-import { styled } from "solid-styled-components";
-import { SelectInput } from "../SelectInput";
-import { ISelectInputData, ISelectOnChangeProps } from "../../interface/input";
-import { monthNames } from "../../store/date";
-import { currentYear, generateYearsArray } from "./config";
+import { Component, createEffect, createSignal, Show } from "solid-js";
 import { DatePickerTopProps } from "../DatePickerTop";
+import { MonthSelector } from "../MonthSelector";
+import { YearSelector } from "../YearSelector";
 
 interface DatePickerMonthAndYearSelectorProps
   extends Omit<DatePickerTopProps, "handlePrevMonth" | "handleNextMonth"> {}
 
-const StyledSelector = styled("div")`
-  display: flex;
-`;
-
 export const DatePickerMonthAndYearSelector: Component<
   DatePickerMonthAndYearSelectorProps
 > = (props) => {
-  const options = monthNames.map((month, index) => ({
-    value: month,
-    label: month,
-    data: { index },
-  }));
+  const [monthSelectorRef, setMonthSelectorRef] = createSignal<HTMLElement>();
+  const [yearSelectorRef, setYearSelectorRef] = createSignal<HTMLElement>();
 
+  createEffect(() => {
+    if (!monthSelectorRef()) return;
+    props.setAllowedComponents?.((prev) => {
+      return [...prev, monthSelectorRef()!];
+    });
+  });
+
+  createEffect(() => {
+    if (!yearSelectorRef()) return;
+    props.setAllowedComponents?.((prev) => {
+      return [...prev, yearSelectorRef()!];
+    });
+  });
 
   return (
-    <StyledSelector>
+    <div
+      class={`flex ${
+        props.monthYearSelectorFlexDirection === "column" ? "flex-col" : ""
+      }`}
+    >
       <Show when={props.render()} keyed>
         <Show when={props.monthSelectorJSX} keyed>
           {props.monthSelectorJSX}
         </Show>
         <Show when={!props.monthSelectorJSX} keyed>
-          <Select
-            value={monthNames[props.month()]}
-            options={options}
-            onChange={({ matched, data }) => {
-              if (matched) {
-                props.setMonth(data.index);
-              }
-            }}
-            emptyOptionsMessage="Not valid"
-            width={"6.5rem"}
+          <MonthSelector
+            ref={setMonthSelectorRef}
+            month={props.month}
+            setMonth={props.setMonth}
+            type={props.monthSelectorFormat || "short"}
+            zIndex={props.zIndex}
+            locale={props.locale}
           />
         </Show>
         <Show when={props.yearSelectorJSX} keyed>
           {props.yearSelectorJSX}
         </Show>
         <Show when={!props.yearSelectorJSX} keyed>
-          <Select
-            value={String(props.year())}
-            options={generateYearsArray(currentYear - 50, currentYear + 20).map(
-              (year, index) => ({
-                value: String(year),
-                label: String(year),
-                data: { year },
-              })
-            )}
-            onChange={({ value, data }) => {
-              const selectedYear = data?.year || Number(value);
-              props.setYear(selectedYear);
-            }}
-            maxLength={4}
-            useNotInOptionsValue
-            width={"4rem"}
+          <YearSelector
+            ref={setYearSelectorRef}
+            year={props.year}
+            setYear={props.setYear}
+            zIndex={props.zIndex}
+            yearRange={props.yearRange}
           />
         </Show>
       </Show>
-    </StyledSelector>
-  );
-};
-
-const Select = (props: {
-  value: string;
-  options: ISelectInputData[];
-  onChange: (data: ISelectOnChangeProps) => void;
-  selectedOptionClass?: string;
-  maxLength?: number;
-  useNotInOptionsValue?: boolean;
-  emptyOptionsMessage?: string;
-  width: string;
-}) => {
-  return (
-    <SelectInput
-      options={props.options}
-      value={props.value}
-      maxLength={props.maxLength}
-      onChange={props.onChange}
-      emptyOptionsMessage={props.emptyOptionsMessage || "Invalid"}
-      backgroundColor={"transparent"}
-      padding={"0"}
-      removeBorder
-      textAlign={"center"}
-      width={props.width}
-      useNotInOptionsValue={props.useNotInOptionsValue}
-    />
+    </div>
   );
 };

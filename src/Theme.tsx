@@ -1,5 +1,4 @@
 import { JSX } from "solid-js";
-import { ThemeProvider } from "solid-styled-components";
 
 export const themesContext = {
   colors: {
@@ -152,9 +151,3 @@ export const themesContext = {
 interface ThemeProps {
   children: JSX.Element;
 }
-
-function Theme(props: ThemeProps) {
-  return <ThemeProvider theme={themesContext}>{props.children}</ThemeProvider>;
-}
-
-export default Theme;

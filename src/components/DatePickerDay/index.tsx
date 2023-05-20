@@ -1,5 +1,5 @@
 import { Component, JSXElement, Show } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Button } from "../Button";
 
 interface DatePickerDayProps {
   header?: boolean;
@@ -14,88 +14,80 @@ interface DatePickerDayProps {
   disabled?: boolean;
 }
 
-const StyledDatePickerDay = styled("div")<DatePickerDayProps>`
-  font-size: ${(props) => (props.header ? "0.75rem" : "0.9375rem")};
-  line-height: 0.875rem;
-  font-weight: 700;
-  color: #909090;
-  letter-spacing: 0.02em;
-  text-align: center;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  font-family: inherit;
-
-  display: ${(props) => (props.header ? "block" : "flex")};
-  justify-content: center;
-  align-items: center;
-
-  position: relative;
-
-  background-color: ${({ dayRangeBetween }) =>
-    dayRangeBetween ? "rgba(86, 164, 211, 0.5)" : "transparent"};
-
-  ${({ dayRangeStart, dayRangeStartEnd, dayRangeEnd }) =>
-    dayRangeStart && dayRangeStartEnd
-      ? `&::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 15%;
-            width: 85%;
-            height: 100%;
-            border-radius: 50% 0 0 50%;
-            background-color: rgba(86, 164, 211, 0.5);
-          }`
-      : dayRangeEnd && dayRangeStartEnd
-      ? `&::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 15%;
-            width: 85%;
-            height: 100%;
-            border-radius: 0 50% 50% 0;
-            background-color: rgba(86, 164, 211, 0.5);
-          }`
-      : ""}
-`;
-
-const StyledDay = styled("button")<DatePickerDayProps>`
-  text-align: center;
-  position: relative;
-  font-family: inherit;
-  color: ${({ dayRangeStart, dayRangeEnd, dayRangeBetween }) =>
-    dayRangeStart || dayRangeEnd
-      ? "var(--white)"
-      : dayRangeBetween
-      ? "var(--date-picker-inbetween-color)"
-      : "var(--body-text-color)"};
-  height: 2rem;
-  width: 2rem;
-  font-size: 0.9375rem;
-  padding: 0;
-  opacity: ${(props) => (props.daysNotCurrentMonth ? "0.5" : "1")};
-  background-color: ${({ dayRangeStart, dayRangeEnd }) =>
-    dayRangeStart || dayRangeEnd ? "var(--primary-400)" : "transparent"};
-  border: ${({ dayRangeStart, dayRangeEnd, daysCurrent }) =>
-    dayRangeStart || dayRangeEnd
-      ? "1px solid var(--primary-500)"
-      : daysCurrent
-      ? "1px dashed var(--body-text-color)"
-      : "none"};
-
-  &:disabled {
-    color: var(--body-text-color);
-    opacity: 0.3;
-  }
-  border-radius: 50%;
-  cursor: pointer;
-`;
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
   return (
-    <StyledDatePickerDay
-      header={props.header}
-      data-day-number={!props.header}
+    <div
+      class={`
+        ${
+          props.header
+            ? `
+            day-name
+            text-[0.75rem]
+            block`
+            : `
+              day-number-area
+              flex
+              justify-center
+              items-center
+              text-[0.9375rem]
+            `
+        }
+        font-bold
+        mb-[0.13rem]
+        text-[#909090]
+        tracking-[0.02em]
+        text-center
+        uppercase
+        relative
+        ${
+          props.dayRangeBetween
+            ? "bg-[#56A4D3] bg-opacity-50"
+            : "bg-transparent"
+        }
+        before:content-[""]
+        before:absolute
+        before:top-0
+        before:w-[85%]
+        before:h-full
+        before:bg-[#56A4D3]
+        before:bg-opacity-50 
+        ${
+          (props.dayRangeStart && props.dayRangeStartEnd) ||
+          (props.dayRangeEnd && props.dayRangeStartEnd)
+            ? ""
+            : "before:hidden"
+        }
+        ${
+          props.dayRangeStart &&
+          props.dayRangeStartEnd &&
+          "before:left-[15%] before:rounded-l-full before:block"
+        }
+        ${
+          props.dayRangeEnd &&
+          props.dayRangeStartEnd &&
+          "before:right-[15%] before:rounded-r-full before:block"
+        }
+        
+        `}
+      data-day-number-area={!props.header}
+      data-day-number-area-range-start-or-end={
+        props.dayRangeStart || props.dayRangeEnd
+      }
+      data-day-number-area-range-between={props.dayRangeBetween}
+      data-day-number-area-range-start={props.dayRangeStart}
+      data-day-number-area-range-end={props.dayRangeEnd}
+      data-day-number-area-current-day={props.daysCurrent}
+      data-day-number-area-not-current-month={props.daysNotCurrentMonth}
+      data-day-number-area-range-tip={
+        (props.dayRangeStart && props.dayRangeStartEnd) ||
+        (props.dayRangeEnd && props.dayRangeStartEnd)
+      }
+      data-day-number-area-range-tip-start={
+        props.dayRangeStart && props.dayRangeStartEnd
+      }
+      data-day-number-area-range-tip-end={
+        props.dayRangeEnd && props.dayRangeStartEnd
+      }
       data-day-name={props.header}
     >
       <Show when={props.header} keyed>
@@ -103,8 +95,63 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
       </Show>
 
       <Show when={!props.header} keyed>
-        <StyledDay {...props}>{props.children}</StyledDay>
+        <Button
+          setHeight
+          class={`
+          day-number
+          
+          text-center          
+          relative
+          ${
+            props.dayRangeStart || props.dayRangeEnd
+              ? "text-white day-number-range-start-or-end"
+              : props.dayRangeBetween
+              ? "text-primary day-range-between"
+              : "text-black"
+          }
+          h-8
+          w-8
+          text-[0.9375rem]
+          p-0
+          ${
+            props.daysNotCurrentMonth
+              ? "opacity-50 day-number-not-current-month"
+              : "opacity-100 day-number-current-month"
+          }
+          ${
+            props.dayRangeStart || props.dayRangeEnd
+              ? "bg-primary hover:bg-primary"
+              : "bg-transparent"
+          }
+          ${props.dayRangeBetween && "hover:bg-transparent"}
+          ${
+            props.dayRangeStart || props.dayRangeEnd
+              ? "border border-solid border-primary-focus"
+              : props.daysCurrent
+              ? "day-number-current-day border border-dashed border-black hover:border hover:border-dashed hover:border-black"
+              : "border-none"
+          }
+          disabled:text-black
+          disabled:opacity-30
+          rounded-full
+          cursor-pointer
+          
+          `}
+          data-day-number={true}
+          data-day-number-range-start-or-end={
+            props.dayRangeStart || props.dayRangeEnd
+          }
+          data-day-number-range-between={props.dayRangeBetween}
+          data-day-number-range-start={props.dayRangeStart}
+          data-day-number-range-end={props.dayRangeEnd}
+          data-day-number-current-day={props.daysCurrent}
+          data-day-number-not-current-month={props.daysNotCurrentMonth}
+          onClick={props.onClick}
+          disabled={props.disabled}
+        >
+          {props.children}
+        </Button>
       </Show>
-    </StyledDatePickerDay>
+    </div>
   );
 };

@@ -1,0 +1,118 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\rnwon\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @rnwonder/solid-date-picker
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\rnwon\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python310\Scripts;C:\Python310;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\dotnet;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\chocolatey\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\OpenJDK\openjdk-8u312-b07\bin;C:\Program Files\PuTTY;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\PowerShell\7;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn;C:\Program Files\Microsoft SQL Server\160\Tools\Binn;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files\Microsoft SQL Server\160\DTS\Binn;C:\Program Files (x86)\Microsoft SQL Server\160\DTS\Binn;C:\Program Files\Azure Data Studio\bin;C:\Users\rnwon\.console-ninja\.bin;C:\Users\rnwon\AppData\Local\pnpm;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\rnwon\AppData\Local\Microsoft\WindowsApps;C:\Users\rnwon\.dotnet\tools;C:\Program Files\heroku\bin;C:\Users\rnwon\AppData\Local\GitHubDesktop\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\rnwon\AppData\Roaming\npm;C:\Users\rnwon\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\WebStorm 2023.1\bin;C:\Program Files\Azure Data Studio\bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\rnwon\AppData\Local\Yarn\Cache\v6\npm-glob-parent-6.0.2-6d237d99083950c79290f24c7642a3de9a28f9e3-integrity\node_modules\glob-parent\index.js' -> 'C:\Users\rnwon\Documents\GitHub\solid-wonder-ui\packages\Datepicker\node_modules\tailwindcss\node_modules\glob-parent\index.js'
+
+npm manifest: 
+  {
+    "name": "@rnwonder/solid-date-picker",
+    "version": "0.0.2",
+    "description": "",
+    "main": "./dist/index.cjs.js",
+    "module": "./dist/index.es.js",
+    "type": "module",
+    "types": "./types/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.es.js"
+      },
+      "./dist/index.css": {
+        "import": "./dist/index.css",
+        "require": "./dist/index.css"
+      }
+    },
+    "keywords": [
+      "solid",
+      "solidjs",
+      "date-picker",
+      "date",
+      "calendar",
+      "calendar-picker",
+      "solid-date-picker",
+      "solidjs-date-picker",
+      "solidjs-calendar-picker",
+      "solidjs-calendar",
+      "solidjs-date",
+      "solidjs-rangepicker",
+      "solid-rangepicker",
+      "rangepicker",
+      "solidjs-range-picker",
+      "solidjs-range",
+      "solidjs-picker",
+      "solid-range-picker",
+      "solid-date-picker"
+    ],
+    "author": "rnwonder",
+    "scripts": {
+      "start": "vite",
+      "dev": "vite",
+      "types": "tsc",
+      "build:styles": "postcss src/index.css -o dist/index.css",
+      "build": "vite build --mode lib && tsc && pnpm build:styles",
+      "serve": "vite preview",
+      "test": "vitest --ui"
+    },
+    "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
+    "homepage": "https://github.com/rnwonder/solid-date-picker",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rnwonder/solid-date-picker.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+      "@types/node": "^20.2.1",
+      "autoprefixer": "^10.4.14",
+      "clsx": "^1.2.1",
+      "daisyui": "^2.51.6",
+      "postcss": "^8.4.23",
+      "postcss-cli": "^10.1.0",
+      "sass": "^1.62.1",
+      "tailwindcss": "^3.3.2",
+      "typescript": "^4.9.5",
+      "vite": "^4.1.1",
+      "vite-plugin-solid": "^2.5.0"
+    },
+    "peerDependencies": {
+      "solid-js": "^1.6.12"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "private": false,
+    "files": [
+      "dist/**",
+      "types/**",
+      "README.md"
+    ],
+    "sideEffects": false,
+    "engines": {
+      "node": ">=16.0.0"
+    },
+    "browser": {},
+    "typesVersions": {},
+    "pnpm": {
+      "overrides": {
+        "@rollup/plugin-node-resolve": "13.3.0"
+      }
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

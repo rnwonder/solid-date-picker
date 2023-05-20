@@ -1,8 +1,6 @@
 import { Component, Setter, Show, JSX } from "solid-js";
 import { Portal, style } from "solid-js/web";
-import { styled } from "solid-styled-components";
-import { clickOutsideSJ } from "../../../../../package/src/utils";
-
+import { clickOutsideSJ } from "../../utils";
 export interface ModalProps {
   children: any;
   isShown?: boolean;
@@ -18,20 +16,6 @@ export interface ModalProps {
   onClickOutside?: (e?: any) => void;
   ignoreClickOutside?: boolean;
 }
-
-const StyledPortal = styled("div")<ModalProps>`
-  ${(props) =>
-    props.hideDefaultStyle
-      ? ""
-      : `
-  background-color: transparent;
-  width: 100%;
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  `}
-`;
 
 function clickOutside(el: any, accessor: any) {
   clickOutsideSJ(el, accessor);
@@ -65,10 +49,27 @@ export const CustomPortal: Component<ModalProps> = (props) => {
                 width: props.reference()?.clientWidth + "px",
               }),
             ...props.style,
-              background: "blue",
           }}
         >
-          <StyledPortal {...props}>{props.children}</StyledPortal>
+          <div
+            class={`
+            ${
+              props.hideDefaultStyle
+                ? ""
+                : `
+                bg-transparent
+                w-full
+                absolute
+                z-10
+                flex
+                flex-col
+            `
+            }
+            `}
+            {...props}
+          >
+            {props.children}
+          </div>
         </div>
       </Portal>
     </Show>

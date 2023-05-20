@@ -2,13 +2,18 @@
   "name": "@rnwonder/solid-date-picker",
   "version": "0.0.2",
   "description": "",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "type": "module",
   "types": "./types/index.d.ts",
   "exports": {
-    "import": {
+    ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "default": "./dist/index.es.js"
+    },
+    "./dist/index.css": {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css"
     }
   },
   "keywords": [
@@ -36,11 +41,10 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "jiti build.ts",
-    "kk": "tsup",
-    "build:vite": "vite build && tsc --emitDeclarationOnly --declarationDir types",
+    "types": "tsc",
+    "build:styles": "postcss src/index.css -o dist/index.css",
+    "build": "vite build --mode lib && tsc && pnpm build:styles",
     "serve": "vite preview",
-    "build:lib": "rollup -c rollup.config.js",
     "test": "vitest --ui"
   },
   "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
@@ -51,29 +55,17 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.19.6",
-    "@babel/preset-env": "^7.19.4",
-    "@types/node": "^20.1.0",
+    "@types/node": "^20.2.1",
     "autoprefixer": "^10.4.14",
     "clsx": "^1.2.1",
     "daisyui": "^2.51.6",
-    "jiti": "^1.18.2",
     "postcss": "^8.4.23",
-    "rollup": "^3.21.5",
-    "rollup-preset-solid": "^2.0.1",
+    "postcss-cli": "^10.1.0",
     "sass": "^1.62.1",
     "tailwindcss": "^3.3.2",
-    "tsup": "^6.7.0",
-    "tsup-preset-solid": "^0.1.8",
     "typescript": "^4.9.5",
     "vite": "^4.1.1",
     "vite-plugin-solid": "^2.5.0"
-  },
-  "dependencies": {
-    "@vinxi/tsconfig": "^0.0.3",
-    "solid-styled-components": "^0.28.5",
-    "solid-ts-hooks": "^0.0.6"
   },
   "peerDependencies": {
     "solid-js": "^1.6.12"
@@ -97,5 +89,8 @@
     "overrides": {
       "@rollup/plugin-node-resolve": "13.3.0"
     }
+  },
+  "dependencies": {
+    "@rnwonder/solid-date-picker": "^0.0.1"
   }
 }

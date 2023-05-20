@@ -1,8 +1,13 @@
 import { Accessor, Component, JSXElement, Setter, Show } from "solid-js";
-import { styled } from "solid-styled-components";
-import { PhosphorIcon } from "../PhosphorIcon";
 import { DatePickerMonthAndYearSelector } from "../DatePickerMonthAndYearSelector";
 import { Button } from "../Button";
+import {
+  IMonthSelectorType,
+  IMonthYearSelectorFlexDirection,
+  IYearRange,
+} from "../../interface/date";
+import { PrevIcon } from "../PrevIcon";
+import { NextIcon } from "../NextIcon";
 
 export interface DatePickerTopProps {
   handlePrevMonth: () => void;
@@ -16,56 +21,69 @@ export interface DatePickerTopProps {
   yearSelectorJSX?: JSXElement;
   monthYearSelectorJSX?: JSXElement;
   zIndex?: number;
+  setAllowedComponents: Setter<HTMLElement[]>;
+  monthSelectorFormat?: IMonthSelectorType;
+  monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
+  yearRange?: IYearRange;
+  locale?: Intl.LocalesArgument;
+  nextIcon?: JSXElement;
+  prevIcon?: JSXElement;
+  removeNavButtons?: boolean;
+  nextButtonAreaJSX?: JSXElement;
+  prevButtonAreaJSX?: JSXElement;
 }
 
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
   return (
     <div
-      class={
-        "date-picker-top flex justify-between items-center mb-[0.3125rem] px-2"
-      }
-      data-date-picker-top={true}
+      class={`
+        date-picker-top 
+        flex 
+        justify-between 
+        items-center 
+        mb-[0.3125rem] 
+        px-2
+      `}
+      data-type={"date-picker-top"}
     >
-      <Button onClick={props.handlePrevMonth}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="#000000"
-          viewBox="0 0 256 256"
+      <Show when={props.prevButtonAreaJSX} keyed>
+        {props.prevButtonAreaJSX}
+      </Show>
+
+      <Show when={!props.removeNavButtons} keyed>
+        <Button
+          class={"date-prev-next-btn"}
+          data-prev={true}
+          data-type={"date-prev-next-btn"}
+          onClick={props.handlePrevMonth}
         >
-          <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
-        </svg>
-      </Button>
+          {props.prevIcon || <PrevIcon />}
+        </Button>
+      </Show>
 
       <Show when={props.monthYearSelectorJSX} keyed>
         {props.monthYearSelectorJSX}
       </Show>
+
       <Show when={!props.monthYearSelectorJSX} keyed>
         {props.monthYearSelectorJSX}
-        <DatePickerMonthAndYearSelector
-          setYear={props.setYear}
-          setMonth={props.setMonth}
-          month={props.month}
-          year={props.year}
-          render={props.render}
-          monthSelectorJSX={props.monthSelectorJSX}
-          yearSelectorJSX={props.yearSelectorJSX}
-          zIndex={props.zIndex}
-        />
+        <DatePickerMonthAndYearSelector {...props} />
       </Show>
 
-      <Button onClick={props.handleNextMonth}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="#000000"
-          viewBox="0 0 256 256"
+      <Show when={!props.removeNavButtons} keyed>
+        <Button
+          class={"date-prev-next-btn"}
+          data-next={true}
+          data-type={"date-prev-next-btn"}
+          onClick={props.handleNextMonth}
         >
-          <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
-        </svg>
-      </Button>
+          {props.nextIcon || <NextIcon />}
+        </Button>
+      </Show>
+
+      <Show when={props.nextButtonAreaJSX} keyed>
+        {props.nextButtonAreaJSX}
+      </Show>
     </div>
   );
 };

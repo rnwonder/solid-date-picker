@@ -1,3 +1,5 @@
+import { Accessor, JSX, Setter } from "solid-js";
+
 export interface DateObjectUnits {
   // a year, such as 1987
   year?: number | undefined;
@@ -6,21 +8,6 @@ export interface DateObjectUnits {
   // a day of the month, 1-31, depending on the month
   day?: number | undefined;
   // day of the year, 1-365 or 366
-  ordinal?: number | undefined;
-  // an ISO week year
-  weekYear?: number | undefined;
-  // an ISO week number, between 1 and 52 or 53, depending on the year
-  weekNumber?: number | undefined;
-  // an ISO weekday, 1-7, where 1 is Monday and 7 is Sunday
-  weekday?: number | undefined;
-  // hour of the day, 0-23
-  hour?: number | undefined;
-  // minute of the hour, 0-59
-  minute?: number | undefined;
-  // second of the minute, 0-59
-  second?: number | undefined;
-  // millisecond of the second, 0-999
-  millisecond?: number | undefined;
 }
 
 export type IMonthStatus = "prev" | "current" | "next";
@@ -52,4 +39,37 @@ export interface IDatePickerInputValueTypes {
   start?: string;
   end?: string;
   selected?: string;
+}
+
+export interface IRenderInputJSXProps {
+  value: Accessor<IDatePickerInputDataValue>;
+  showDate: () => void;
+}
+
+export type IRenderInput =
+  | JSX.Element
+  | ((props: IRenderInputJSXProps) => JSX.Element);
+
+export interface IRenderJSXProps {
+  month: Accessor<number>;
+  setMonth: Setter<number>;
+  year: Accessor<number>;
+  setYear: Setter<number>;
+  handleNextMonth: () => void;
+  handlePrevMonth: () => void;
+  handleDayClick: (day: IMonthDaysObject) => void;
+  setRefToAllowOutsideClick: Setter<HTMLElement | undefined>;
+}
+
+export type IRenderJSX =
+  | JSX.Element
+  | ((props: IRenderJSXProps) => JSX.Element);
+
+export type IMonthSelectorType = "short" | "long";
+
+export type IMonthYearSelectorFlexDirection = "row" | "column";
+
+export interface IYearRange {
+  start: number;
+  end: number;
 }

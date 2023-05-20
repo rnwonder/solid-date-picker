@@ -7,6 +7,7 @@ import type {
 } from "../../interface/date";
 import type { ITimePickerFormat } from "../../interface/time";
 
+// Gets the current month and year days array
 export const getMonthDaysArray = (
   month: number,
   year: number
@@ -14,19 +15,20 @@ export const getMonthDaysArray = (
   const firstDayOfMonth = new Date(year, month, 1);
   const startDayOfWeekIndex = firstDayOfMonth.getDay();
 
-  const numDaysInMonth = new Date(year, month + 1, 0).getDate();
+  const numDaysInMonth = new Date(year, month + 1, 0).getDate()
 
   const daysOfMonth: IMonthDaysObject[] = [];
 
   const prevMonth = month === 0 ? 11 : month - 1;
   const prevMonthYear = prevMonth === 11 ? year - 1 : year;
   const numDaysInPrevMonth = new Date(
-    prevMonthYear,
-    prevMonth + 1,
-    0
+      prevMonthYear,
+      prevMonth + 1,
+      0
   ).getDate();
 
   let prevMonthStart = numDaysInPrevMonth - startDayOfWeekIndex + 1;
+
   if (prevMonthStart === numDaysInPrevMonth + 1) {
     prevMonthStart = 1;
   }
@@ -38,10 +40,8 @@ export const getMonthDaysArray = (
     daysOfMonth.push({ value: i, month: "current" });
   }
 
-  const numDaysLeft = (daysOfMonth.length > 35 ? 42 : 35) - daysOfMonth.length;
+  const numDaysLeft = 42 - daysOfMonth.length;
   for (let i = 1; i <= numDaysLeft; i++) {
-    const nextMonth = month === 11 ? 0 : month + 1;
-    const nextMonthYear = nextMonth === 0 ? year + 1 : year;
     const value = i;
     const status = "next";
     daysOfMonth.push({ value, month: status });
@@ -50,12 +50,13 @@ export const getMonthDaysArray = (
   return daysOfMonth;
 };
 
+
 export const getDatePickerRefactoredMonth = (
   month: number,
   monthStatus: IMonthStatus
 ) => {
   if (monthStatus === "prev") {
-    return month === 0 ? 11 : month;
+    return month === 0 ? 11 : month - 1;
   } else if (monthStatus === "next") {
     return month === 11 ? 0 : month + 1;
   }
@@ -89,6 +90,7 @@ export const isDayInBetweenRange = ({
   return date > start && date < end;
 };
 
+// Checks if the day is the start of the range or end of the range
 export const isDayTipRange = ({
   dateRange,
   day,
@@ -130,8 +132,9 @@ export const applyDateRangeStyles = ({
   dayRangeStart: boolean;
   dayRangeBetween: boolean;
   daysCurrent: boolean;
+  daysNotCurrentMonth: boolean;
 } => {
-  const result = {
+  return {
     dayRangeStartEnd:
       startDay &&
       endDay &&
@@ -181,7 +184,7 @@ export const applyDateRangeStyles = ({
       ) && day.month === "current",
     daysNotCurrentMonth: day.month !== "current",
   };
-  return result;
+
 };
 
 const checkIfItsTodayDate = (date: Date) => {
@@ -225,7 +228,7 @@ export const isMinMaxDate = ({
 };
 
 export function generateYearsArray(startYear: number, endYear: number) {
-  const years = [];
+  const years: number[] = [];
   for (let i = endYear; i >= startYear; i--) {
     years.push(i);
   }

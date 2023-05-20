@@ -7,9 +7,8 @@ import {
   onMount,
   Setter,
 } from "solid-js";
-import { upgradedSmartDropDown } from "../../../../../package/src/utils";
 import { CustomPortal } from "../CustomPortal";
-import { styled } from "solid-styled-components";
+import { upgradedSmartDropDown } from "../../utils";
 
 export type IPopOverSJContentPropType =
   | JSX.Element
@@ -27,23 +26,12 @@ interface PopoverProps {
   isShown?: boolean;
   setIsShown?: Setter<boolean>;
   onClickOutside?: (e?: Event, isShown?: Setter<boolean>) => void;
-  handleChildrenClick?: () => void;
+  handleChildrenClick?: (setIsShown?: Setter<boolean>) => void;
   className?: string;
   onOpen?: () => void;
   onClose?: () => void;
   zIndex?: number;
 }
-
-const StyledContent = styled("div")<{
-  isShown: boolean;
-}>`
-  opacity: ${(props) => (props.isShown ? 1 : 0)};
-  transform: ${(props) =>
-    props.isShown
-      ? "translateY(0rem) scale(1)"
-      : "translateY(-1rem) scale(0.9)"};
-  transition: opacity 0.35s ease-in-out, transform 0.35s 0.15s ease-in-out;
-`;
 
 export const Popover = (props: PopoverProps) => {
   const [top, setTop] = createSignal<string | undefined>();
@@ -108,6 +96,14 @@ export const Popover = (props: PopoverProps) => {
     positionDropDown();
   });
 
+  createEffect(() => {
+    if (!delayShown()) return;
+    positionDropDown({
+      y: props.positionY || "auto",
+      x: props.positionX || "center",
+    });
+  });
+
   onMount(() => {
     const portalIsland = document.getElementById("portal-island");
     if (portalIsland) return;
@@ -118,7 +114,7 @@ export const Popover = (props: PopoverProps) => {
 
   const handleElementClick = () => {
     if (props.handleChildrenClick) {
-      props.handleChildrenClick();
+      props.handleChildrenClick(props.setIsShown || setShown);
       return;
     }
     if (props.setIsShown) {
@@ -178,9 +174,37 @@ export const Popover = (props: PopoverProps) => {
           ...(left() && { left: left() }),
         }}
       >
-        <StyledContent isShown={delayShown()} ref={setPopoverRef}>
-          {renderContent()}
-        </StyledContent>
+        <div
+          class={`
+            ${
+              delayShown()
+                ? `opacity-100 translate-y-[0rem]`
+                : `opacity-0 -translate-y-[1rem]`
+            }
+            duration-350 
+            ease-in-out
+            delay-50
+            transition-transform
+            motion-reduce:transition-none
+        `}
+          ref={setPopoverRef}
+        >
+          <div
+            class={`
+            ${
+              delayShown()
+                ? `opacity-100 scale-100`
+                : `opacity-0 scale-90`
+            }
+            duration-350 
+            ease-in-out
+            transition-opacity
+            motion-reduce:transition-none
+        `}
+          >
+            {renderContent()}
+          </div>
+        </div>
       </CustomPortal>
     </div>
   );

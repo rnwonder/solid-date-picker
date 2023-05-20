@@ -1,5 +1,5 @@
 export function generateYearsArray(startYear: number, endYear: number) {
-  const years = [];
+  const years: number[] = [];
   for (let i = endYear; i >= startYear; i--) {
     years.push(i);
   }

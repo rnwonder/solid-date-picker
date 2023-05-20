@@ -1,11 +1,26 @@
 {
   "compilerOptions": {
+    "strict": true,
     "target": "ESNext",
-    "outDir": "./types",
-    "rootDir": "./src",
-    "lib": ["dom", "esnext"]
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "types": ["vite/client"],
+    "declaration": true,
+    "declarationDir": "types",
+    "isolatedModules": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "incremental": true,
   },
-  "exclude": ["dist", "build", "node_modules"],
-  "include": ["./src"],
-  "extends": "@vinxi/tsconfig/solid-library.json"
+  "exclude": ["dist", "build", "node_modules", "lib-types/store"],
+  "include": [
+    "./src/components",
+    "./src/index.ts",
+  ]
 }

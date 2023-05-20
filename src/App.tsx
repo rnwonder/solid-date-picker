@@ -1,7 +1,5 @@
 import type { Component } from "solid-js";
-import { TextInputGroup } from "./components/TextInputGroup";
 import { createEffect, createSignal } from "solid-js";
-import { SelectInput } from "./components/SelectInput";
 import { DatePickerGroup } from "./components/DatePickerGroup";
 import { IDatePickerInputDataValue } from "./interface/date";
 import { MonthSelector } from "./components/MonthSelector";
@@ -15,6 +13,10 @@ const App: Component = () => {
     value: {},
   });
 
+  createEffect(() => {
+    // console.log(date());
+  });
+
   return (
     <div>
       <div
@@ -22,71 +24,23 @@ const App: Component = () => {
           display: "flex",
         }}
       ></div>
-      <TextInputGroup
-        search
-        errorMessage={"hhsa"}
-        value={value()}
-        setValue={setValue}
-        label="Test"
-      />
-      <SelectInput
-        value={select()}
-        options={[
-          { label: "test", value: "test" },
-          { label: "test2", value: "test2" },
-          { label: "test3", value: "test3" },
-        ]}
-        onChange={({ value, matched }) => {
-          if (matched) {
-            setSelect(value);
-          } else {
-            setSelect("");
+
+      <DatePickerGroup
+        value={date}
+        setValue={setDate}
+        type={"range"}
+        monthSelectorFormat={"long"}
+        removeNavButtons
+        afterNextButtonAreaJSX={<>next</>}
+        onChange={(data) => {
+          if (data.type === "range") {
+            console.log(data.startDate, data.endDate);
+          }
+          if (data.type === "single") {
+            console.log(data.selectedDate);
           }
         }}
       />
-        <DatePickerGroup
-            monthSelectorJSX={(props) => (
-                <MonthSelector
-                    ref={props.setRefToAllowOutsideClick}
-                    month={props.month}
-                    setMonth={props.setMonth}
-                    type={"long"}
-                />
-            )}
-            yearSelectorJSX={({ year, setYear, setRefToAllowOutsideClick }) => (
-                <YearSelector
-                    ref={setRefToAllowOutsideClick}
-                    year={year}
-                    setYear={setYear}
-                />
-            )}
-            calendarPositionY={"bottom"}
-            // renderInput={({ value }) => (
-            //   <input
-            //     class={"w-full"}
-            //     placeholder={"Custom input"}
-            //     value={value().label}
-            //   />
-            // )}
-            // calendarLeftAreaJSX={(props) => (
-            //   <MonthSelector
-            //     ref={props.setRefToAllowOutsideClick}
-            //     month={props.month}
-            //     setMonth={props.setMonth}
-            //   />
-            // )}
-            // calendarRightAreaJSX={(props) => (
-            //   <YearSelector
-            //     ref={props.setRefToAllowOutsideClick}
-            //     year={props.year}
-            //     setYear={props.setYear}
-            //   />
-            // )}
-            // calendarBottomAreaJSX={<div>bottom</div>}
-            value={date}
-            setValue={setDate}
-            // type={"range"}
-        />
       <br />
       <br />
       <br />
@@ -187,7 +141,6 @@ const App: Component = () => {
       <br />
       <br />
       <br />
-
     </div>
   );
 };
