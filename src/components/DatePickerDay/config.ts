@@ -15,16 +15,16 @@ export const getMonthDaysArray = (
   const firstDayOfMonth = new Date(year, month, 1);
   const startDayOfWeekIndex = firstDayOfMonth.getDay();
 
-  const numDaysInMonth = new Date(year, month + 1, 0).getDate()
+  const numDaysInMonth = new Date(year, month + 1, 0).getDate();
 
   const daysOfMonth: IMonthDaysObject[] = [];
 
   const prevMonth = month === 0 ? 11 : month - 1;
   const prevMonthYear = prevMonth === 11 ? year - 1 : year;
   const numDaysInPrevMonth = new Date(
-      prevMonthYear,
-      prevMonth + 1,
-      0
+    prevMonthYear,
+    prevMonth + 1,
+    0
   ).getDate();
 
   let prevMonthStart = numDaysInPrevMonth - startDayOfWeekIndex + 1;
@@ -49,7 +49,6 @@ export const getMonthDaysArray = (
 
   return daysOfMonth;
 };
-
 
 export const getDatePickerRefactoredMonth = (
   month: number,
@@ -184,7 +183,6 @@ export const applyDateRangeStyles = ({
       ) && day.month === "current",
     daysNotCurrentMonth: day.month !== "current",
   };
-
 };
 
 const checkIfItsTodayDate = (date: Date) => {
@@ -272,7 +270,7 @@ export const convertDateObjectToDate = (date: DateObjectUnits) => {
   const now = new Date();
   return new Date(
     date?.year || now.getFullYear(),
-    date?.month || now.getMonth(),
+    date?.month === 0 ? 0 : date?.month || now.getMonth(),
     date?.day || now.getDay()
   );
 };

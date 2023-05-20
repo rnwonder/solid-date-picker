@@ -73,3 +73,5 @@ export interface IYearRange {
   start: number;
   end: number;
 }
+
+export type Locale = string | string[]

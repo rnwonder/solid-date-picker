@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.0.2",
+  "version": "0.1.2",
   "description": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -84,13 +84,5 @@
     "node": ">=16.0.0"
   },
   "browser": {},
-  "typesVersions": {},
-  "pnpm": {
-    "overrides": {
-      "@rollup/plugin-node-resolve": "13.3.0"
-    }
-  },
-  "dependencies": {
-    "@rnwonder/solid-date-picker": "^0.0.1"
-  }
+  "typesVersions": {}
 }

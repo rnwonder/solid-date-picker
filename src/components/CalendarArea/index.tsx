@@ -1,9 +1,10 @@
 import { Component } from "solid-js";
 import { CalendarDays, CalendarDaysProps } from "../CalendarDays";
 import { WeekDays } from "../WeekDays";
+import {Locale} from "../../interface/date";
 
 interface CalendarAreaProps extends CalendarDaysProps {
-  locale?: Intl.LocalesArgument;
+  locale?: Locale;
 }
 export const CalendarArea: Component<CalendarAreaProps> = (props) => {
   // TODO: add transition for calendar days

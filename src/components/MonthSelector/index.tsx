@@ -1,6 +1,6 @@
 import { Accessor, createSignal, onMount, Setter } from "solid-js";
 import { Selector } from "../Selector";
-import { IMonthSelectorType } from "../../interface/date";
+import {IMonthSelectorType, Locale} from "../../interface/date";
 
 interface MonthSelectorProps {
   month: Accessor<number>;
@@ -8,7 +8,7 @@ interface MonthSelectorProps {
   ref?: Setter<HTMLDivElement | undefined>;
   type?: IMonthSelectorType;
   zIndex?: number;
-  locale?: Intl.LocalesArgument;
+  locale?: Locale;
 }
 export const MonthSelector = (props: MonthSelectorProps) => {
   const [monthArray, setMonthArray] = createSignal<string[]>([]);

@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, For } from "solid-js";
 import { DatePickerGroup } from "./components/DatePickerGroup";
 import { IDatePickerInputDataValue } from "./interface/date";
 import { MonthSelector } from "./components/MonthSelector";
@@ -28,23 +28,54 @@ const App: Component = () => {
       <DatePickerGroup
         value={date}
         setValue={setDate}
-        type={"range"}
+        // type={"range"}
         monthSelectorFormat={"long"}
         removeNavButtons
         afterNextButtonAreaJSX={<>next</>}
         onChange={(data) => {
           if (data.type === "range") {
-            console.log(data.startDate, data.endDate);
+            // console.log(data.startDate, data.endDate);
           }
           if (data.type === "single") {
-            console.log(data.selectedDate);
+            // console.log(data.selectedDate);
           }
         }}
+        // shouldCloseOnSelect
+        // monthSelectorJSX={({ month, setMonth }) => (
+        //   <select
+        //     value={month()}
+        //     onChange={(e: any) => setMonth(e.target.value)}
+        //   >
+        //     <For
+        //       each={[
+        //         "Jan",
+        //         "Feb",
+        //         "Mar",
+        //         "Apr",
+        //         "May",
+        //         "Jun",
+        //         "Jul",
+        //         "Aug",
+        //         "Sep",
+        //         "Oct",
+        //         "Nov",
+        //         "Dec",
+        //       ]}
+        //     >
+        //       {(item, index) => <option value={index()}>{item}</option>}
+        //     </For>
+        //   </select>
+        // )}
       />
       <br />
       <br />
       <br />
-      <div>dfdf</div>
+      <div>
+        dfdferererererer ererer Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Amet eligendi inventore, ipsum libero officia officiis
+        voluptas! Ad autem distinctio explicabo, iure maiores maxime nihil qui,
+        ratione, saepe tempore unde ut.
+      </div>
       <br />
       <br />
       <br />

@@ -21,7 +21,7 @@ import {
   IMonthSelectorType,
   IMonthYearSelectorFlexDirection,
   IRenderJSX,
-  IYearRange,
+  IYearRange, Locale,
 } from "../../interface/date";
 import { currentYear } from "../DatePickerMonthAndYearSelector/config";
 import { CalendarArea } from "../CalendarArea";
@@ -38,7 +38,6 @@ export interface DatePickerProps {
   ref?: any;
   value?: IDatePickerInputValueTypes;
   setAllowedComponents: Setter<HTMLElement[]>;
-
 
   month?: Accessor<number>;
   setMonth?: Setter<number>;
@@ -58,13 +57,13 @@ export interface DatePickerProps {
   monthSelectorFormat?: IMonthSelectorType;
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
   yearRange?: IYearRange;
-  locale?: Intl.LocalesArgument;
+  locale?: Locale;
   nextIcon?: JSXElement;
   prevIcon?: JSXElement;
 
   hideTopArea?: boolean;
   removeNavButtons?: boolean;
-  showCloseOnSelect?: boolean;
+  shouldCloseOnSelect?: boolean;
 
   zIndex?: number;
 }
@@ -132,7 +131,7 @@ export const DatePicker = (props: DatePickerProps) => {
 
   createEffect(() => {
     if (props.type !== "single") return;
-    const agg= { selectedDate: startDay(), type: props.type }
+    const agg = { selectedDate: startDay(), type: props.type };
     props.handleOnChange(agg);
     props?.onChange?.(agg);
   });
@@ -143,14 +142,15 @@ export const DatePicker = (props: DatePickerProps) => {
       startDate: startDay(),
       endDate: endDay(),
       type: props.type,
-    }
+    };
     props.handleOnChange(agg);
     props?.onChange?.(agg);
   });
 
   const handleDayClick = (day: IMonthDaysObject) => {
-    let newMonth = props.month?.() || month();
-    let newYear = props.year?.() || year();
+    const initialMonth = Number(props.month?.() || month());
+    let newMonth = initialMonth;
+    let newYear = Number(props.year?.() || year());
 
     if (day.month === "prev") {
       newMonth =
@@ -214,10 +214,11 @@ export const DatePicker = (props: DatePickerProps) => {
     if (props.type === "single") {
       const selectedDay = new Date(
         newYear,
-        getDatePickerRefactoredMonth(props.month?.() || month(), day.month),
+        getDatePickerRefactoredMonth(initialMonth, day.month),
         day.value
       );
       setStartDay(convertDateToDateObject(selectedDay));
+      // console.log({selectedDay, startDay: startDay()})
     }
 
     setMonth(newMonth);
@@ -227,7 +228,7 @@ export const DatePicker = (props: DatePickerProps) => {
     props.setYear?.(newYear);
 
     setRender(false);
-    props.showCloseOnSelect && props.close();
+    props.shouldCloseOnSelect && props.close();
   };
 
   const handleNextMonth = () => {
@@ -309,6 +310,7 @@ export const DatePicker = (props: DatePickerProps) => {
           shadow-lg 
           border-t 
           border-gray-300 
+          bg-white
           border-solid 
           rounded-md 
           pt-[0.625rem] 

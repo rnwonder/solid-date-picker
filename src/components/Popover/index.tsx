@@ -72,8 +72,10 @@ export const Popover = (props: PopoverProps) => {
       });
     };
     document.addEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
     onCleanup(() => {
       document.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     });
   });
 
@@ -191,11 +193,7 @@ export const Popover = (props: PopoverProps) => {
         >
           <div
             class={`
-            ${
-              delayShown()
-                ? `opacity-100 scale-100`
-                : `opacity-0 scale-90`
-            }
+            ${delayShown() ? `opacity-100 scale-100` : `opacity-0 scale-90`}
             duration-350 
             ease-in-out
             transition-opacity

@@ -1,9 +1,10 @@
 import { Component, createSignal, For, onMount } from "solid-js";
 import { DatePickerWeek } from "../DatePickerWeek";
 import { DatePickerDay } from "../DatePickerDay";
+import {Locale} from "../../interface/date";
 
 interface IProps {
-  locale?: Intl.LocalesArgument;
+  locale?: Locale;
 }
 export const WeekDays: Component<IProps> = (props) => {
   const [weekDaysArray, setWeekDaysArray] = createSignal<Array<string>>([]);

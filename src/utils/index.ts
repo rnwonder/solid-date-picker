@@ -1,4 +1,5 @@
 import { Accessor, onCleanup } from "solid-js";
+import {DateObjectUnits} from "../interface/date";
 
 export function clickOutsideSJ(el: any, accessor: any) {
   const onClick = (e: any) => !el.contains(e.target) && accessor(e)?.(e);
@@ -96,3 +97,4 @@ export const upgradedSmartDropDown = ({
 
   return { top, left };
 };
+

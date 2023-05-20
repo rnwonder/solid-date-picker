@@ -5,9 +5,9 @@ import {
   IDatePickerType,
   IRenderInput,
 } from "../../interface/date";
-import { convertDateObjectToDate } from "../DatePickerDay/config";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
+import {convertDateObjectToDate} from "../DatePickerDay/config";
 
 export interface DatePickerInputSJProps
   extends Omit<DatePickerProps, "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"> {

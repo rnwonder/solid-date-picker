@@ -4,7 +4,7 @@ import { Button } from "../Button";
 import {
   IMonthSelectorType,
   IMonthYearSelectorFlexDirection,
-  IYearRange,
+  IYearRange, Locale,
 } from "../../interface/date";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
@@ -25,7 +25,7 @@ export interface DatePickerTopProps {
   monthSelectorFormat?: IMonthSelectorType;
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
   yearRange?: IYearRange;
-  locale?: Intl.LocalesArgument;
+  locale?: Locale;
   nextIcon?: JSXElement;
   prevIcon?: JSXElement;
   removeNavButtons?: boolean;
