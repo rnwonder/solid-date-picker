@@ -119,6 +119,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       const savedMultipleDateObject = savedValue.multipleDateObject || [];
       const newMultipleDateObject = data.multipleDates || [];
 
+      if(!props.value().label && newMultipleDateObject.length === 0) return
       if (
         savedMultipleDateObject.toString() ===
           newMultipleDateObject.toString() &&

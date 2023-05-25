@@ -369,12 +369,13 @@ export const DatePicker = (props: DatePickerProps) => {
         compareObjectDate(date, selectedDay)
       );
       if (findDate) {
-        setMultipleObject(
-          multipleObject().filter((date) => !compareObjectDate(date, findDate))
+        const newMultipleObject = multipleObject().filter(
+          (date) => !compareObjectDate(date, findDate)
         );
+        setMultipleObject(newMultipleObject);
         return;
       }
-      setMultipleObject([...multipleObject(), selectedDay]);
+      setMultipleObject((prev) => [...prev, selectedDay]);
     }
 
     if (!nextMonth) {

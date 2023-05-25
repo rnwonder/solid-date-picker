@@ -11,25 +11,7 @@ const App: Component = () => {
   const [select, setSelect] = createSignal("");
   const [date, setDate] = createSignal<IDatePickerInputDataValue>({
     label: "",
-    value: {
-      multipleDateObject: [
-        {
-          day: 3,
-          month: 3,
-          year: 2023,
-        },
-        {
-          day: 4,
-          month: 3,
-          year: 2023,
-        },
-        {
-          day: 5,
-          month: 3,
-          year: 2023,
-        },
-      ],
-    },
+    value: {},
   });
 
   createEffect(() => {
@@ -88,6 +70,10 @@ const App: Component = () => {
           }
           if (data.type === "single") {
             // console.log(data.selectedDate);
+          }
+
+          if(data.type === "multiple"){
+            // console.log(data.multipleDates)
           }
         }}
         // shouldCloseOnSelect
