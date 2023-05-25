@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --before-bg: #AAD1E9;
+  --before-color: #0277bd;
+  --hover-color: #d2d4d7;
+}
+
+.date-picker-day-number-area::before {
+  background-color: var(--before-bg);
+  color: var(--before-color);
+}
+
+button::hover {
+  background-color: var(--hover-color);
+}

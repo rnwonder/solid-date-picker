@@ -1,16 +1,35 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal, For } from "solid-js";
 import { DatePickerGroup } from "./components/DatePickerGroup";
-import { IDatePickerInputDataValue } from "./interface/date";
+import { IDatePickerInputDataValue } from "./interface/general";
 import { MonthSelector } from "./components/MonthSelector";
 import { YearSelector } from "./components/YearSelector";
+import { utils } from "./utils";
 
 const App: Component = () => {
   const [value, setValue] = createSignal("");
   const [select, setSelect] = createSignal("");
   const [date, setDate] = createSignal<IDatePickerInputDataValue>({
     label: "",
-    value: {},
+    value: {
+      multipleDateObject: [
+        {
+          day: 3,
+          month: 3,
+          year: 2023,
+        },
+        {
+          day: 4,
+          month: 3,
+          year: 2023,
+        },
+        {
+          day: 5,
+          month: 3,
+          year: 2023,
+        },
+      ],
+    },
   });
 
   createEffect(() => {
@@ -28,10 +47,41 @@ const App: Component = () => {
       <DatePickerGroup
         value={date}
         setValue={setDate}
-        // type={"range"}
+        type={"multiple"}
         monthSelectorFormat={"long"}
-        removeNavButtons
-        afterNextButtonAreaJSX={<>next</>}
+        shouldHighlightWeekends
+        startingMonth={7}
+        startingYear={2024}
+        showEndOfRange
+        // twoMonthsDisplay
+        // weekDaysType={"single"}
+        hideOutSideDays
+        // minDate={utils().getToday()}
+        // maxDate={{
+        //   year: 2023,
+        //   month: 4,
+        //   day: 30,
+        // }}
+        customDaysClassName={[
+          {
+            day: 30,
+            className: "bg-red-500",
+            month: 4,
+            year: 2023,
+          },
+        ]}
+        // maxDate={{
+        //     year: 2023,
+        //     month: 4,
+        //     day: 30,
+        // }}
+        // primaryColor="red"
+        // secondaryColor="blue"
+        // secondaryTextColor="white"
+        // primaryTextColor="yellow"
+        // backgroundColor="pink"
+        // removeNavButtons
+        // afterNextButtonAreaJSX={<>next</>}
         onChange={(data) => {
           if (data.type === "range") {
             // console.log(data.startDate, data.endDate);

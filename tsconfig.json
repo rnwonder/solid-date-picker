@@ -9,8 +9,8 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": ["vite/client"],
-    "noEmit": true,
     "declaration": true,
+    "noEmit": true,
     "declarationDir": "types",
     "isolatedModules": true,
     "allowJs": true,
@@ -20,7 +20,6 @@
   },
   "exclude": ["dist", "build", "node_modules", "lib-types/store"],
   "include": [
-    "./src/components",
-    "./src/index.ts",
+    "./src/**/*",
   ]
 }

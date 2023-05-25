@@ -1,16 +1,20 @@
-import { Accessor, createSignal, Setter, Show } from "solid-js";
+import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
 import {
   IDatePickerInputDataValue,
   IDatePickerOnChange,
   IDatePickerType,
   IRenderInput,
-} from "../../interface/date";
+} from "../../interface/general";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
-import {convertDateObjectToDate} from "../DatePickerDay/config";
+import { convertDateObjectToDate } from "../../utils";
+import clsx from "clsx";
 
 export interface DatePickerInputSJProps
-  extends Omit<DatePickerProps, "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"> {
+  extends Omit<
+    DatePickerProps,
+    "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"
+  > {
   type?: IDatePickerType;
   value: Accessor<IDatePickerInputDataValue>;
   setValue?: Setter<IDatePickerInputDataValue>;
@@ -22,6 +26,10 @@ export interface DatePickerInputSJProps
   placeholder?: string;
   onClose?: () => void;
   onOpen?: () => void;
+
+  inputProps?: JSX.InputHTMLAttributes<HTMLInputElement>;
+
+  inputLabel?: Accessor<string>;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -105,6 +113,50 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         label,
       });
     }
+
+    if (data.type === "multiple") {
+      const savedValue = props.value().value;
+      const savedMultipleDateObject = savedValue.multipleDateObject || [];
+      const newMultipleDateObject = data.multipleDates || [];
+
+      if (
+        savedMultipleDateObject.toString() ===
+          newMultipleDateObject.toString() &&
+        props.value().label
+      )
+        return;
+
+      const inputLabelValue = newMultipleDateObject.map((date) => {
+        const dateTime = convertDateObjectToDate(date);
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }).format(dateTime);
+      });
+
+      const newMultipleDateISO = newMultipleDateObject.map(
+        (date) => convertDateObjectToDate(date)?.toISOString() || ""
+      );
+
+      const arrangeDateISO = newMultipleDateISO.sort((a, b) => {
+        return a.localeCompare(b);
+      });
+
+      const arrangeDateObject = newMultipleDateObject.sort((a, b) => {
+        const isoA = convertDateObjectToDate(a)?.toISOString() || "";
+        const isoB = convertDateObjectToDate(b)?.toISOString() || "";
+        return isoA.localeCompare(isoB);
+      });
+
+      props.setValue?.({
+        value: {
+          multiple: arrangeDateISO,
+          multipleDateObject: arrangeDateObject,
+        },
+        label: inputLabelValue.join(", "),
+      });
+    }
   };
 
   const handleChildrenClick = () => {
@@ -177,12 +229,16 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
 
         <Show when={!inputJSX} keyed>
           <input
-            class={`w-full date-picker-input px-1`}
             readonly
             type={"text"}
             placeholder={props.placeholder}
-            value={props.value?.().label || ""}
-            data-date-picker-input={true}
+            value={props.inputLabel?.() || props.value?.().label || ""}
+            {...{ ...props.inputProps, class: undefined }}
+            class={clsx(
+              `w-full date-picker-input px-1`,
+              props.inputProps?.class
+            )}
+            data-type={"date-picker-input"}
           />
         </Show>
       </div>

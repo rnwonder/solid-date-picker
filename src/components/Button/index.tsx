@@ -5,7 +5,10 @@ interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
   class?: string;
   setHeight?: boolean;
   disabled?: boolean;
+  style?: JSX.CSSProperties;
 }
+
+
 export const Button: Component<ButtonProps> = (props) => {
   return (
     <button
@@ -17,10 +20,12 @@ export const Button: Component<ButtonProps> = (props) => {
         ${props.setHeight ? "" : "h-full"} 
         p-0 
         min-h-0 
+        date-picker-main-btn
         motion-reduce:transition-none
         `,
         props.class
       )}
+      data-type={"date-picker-main-btn"}
     >
       {props.children}
     </button>

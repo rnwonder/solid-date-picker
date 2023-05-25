@@ -15,6 +15,12 @@ module.exports = {
       mobile: {
         max: "640px",
       },
+      breakTwoCalendar: {
+        max: "566px",
+      },
+      aboveBreakTwoCalendar: {
+        min: "567px",
+      },
       tablet: "640px",
       laptop: "1024px",
       desktop: "1280px",

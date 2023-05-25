@@ -2,8 +2,13 @@ import { Accessor, createSignal, For, Setter } from "solid-js";
 import clsx from "clsx";
 import { Popover } from "../Popover";
 import { Button } from "../Button";
+import {
+  DateObjectUnits,
+  IColors,
+  MakeOptionalRequired,
+} from "../../interface/general";
 
-interface SelectorProps {
+interface SelectorProps extends IColors {
   option: Accessor<number>;
   setOption: Setter<number>;
   optionsArray: string[];
@@ -13,6 +18,12 @@ interface SelectorProps {
   attributes?: Record<string, any>;
   className?: string;
   zIndex?: number;
+  year?: Accessor<number>;
+
+  minDate?: MakeOptionalRequired<DateObjectUnits>;
+  maxDate?: MakeOptionalRequired<DateObjectUnits>;
+
+  twoMonthsDisplay?: boolean;
 }
 
 export const Selector = (props: SelectorProps) => {
@@ -31,6 +42,29 @@ export const Selector = (props: SelectorProps) => {
       : props.option() === index();
   };
 
+  const isDisabled = (value: string, index: Accessor<number>): boolean => {
+    if (props.useValueAsName && (props.minDate || props.maxDate)) {
+      return (
+        (props.minDate?.year ? Number(value) < props.minDate?.year : false) ||
+        (props.maxDate?.year ? Number(value) > props.maxDate?.year : false)
+      );
+    }
+    if (!props.useValueAsName && (props.minDate || props.maxDate)) {
+      return (
+        (props.minDate
+          ? (props.minDate.year === props.year?.() &&
+              index() < props.minDate.month) ||
+            props.minDate?.year > (props.year?.() || 0)
+          : false) ||
+        (props.maxDate
+          ? props.maxDate.year === props.year?.() &&
+            index() > props.maxDate.month
+          : false)
+      );
+    }
+    return false;
+  };
+
   return (
     <Popover
       zIndex={props.zIndex}
@@ -46,7 +80,7 @@ export const Selector = (props: SelectorProps) => {
       content={({ close }) => (
         <div
           class={`
-            selector
+            date-selector-wrapper
             bg-white
             rounded-lg
             drop-shadow-lg
@@ -63,6 +97,7 @@ export const Selector = (props: SelectorProps) => {
             max-h-[10.625rem]
             max-w-[25rem]
             overflow-y-auto
+            
           `}
           ref={props.ref}
           //@ts-ignore
@@ -71,18 +106,24 @@ export const Selector = (props: SelectorProps) => {
           aria-multiselectable={false}
           aria-readonly={false}
           aria-disabled={false}
-          data-selector={true}
+          data-type={"date-selector-wrapper"}
+          style={{
+            ...(props.backgroundColor && {
+              "background-color": props.backgroundColor,
+            }),
+          }}
         >
           <For each={props.optionsArray}>
             {(value, index) => (
               <Button
                 class={clsx(
                   `
-                  selector-option
+                  date-selector-option
                   px-[5px] 
                   text-black 
                   text-sm
                   smallMobile:text-[12px]
+                  disabled:opacity-40
                   ${
                     isSelected(value, index)
                       ? "bg-primary text-white hover:bg-primary hover:text-white selector-option-selected"
@@ -91,6 +132,14 @@ export const Selector = (props: SelectorProps) => {
                 `,
                   props.className
                 )}
+                style={{
+                  ...(isSelected(value, index)
+                    ? {
+                        "background-color": props.primaryColor,
+                        color: props.primaryTextColor,
+                      }
+                    : {}),
+                }}
                 onClick={() => handleOptionClick(index(), value, close)}
                 data-selected={isSelected(value, index)}
                 data-selector-option={true}
@@ -103,6 +152,7 @@ export const Selector = (props: SelectorProps) => {
                 aria-controls={"selector"}
                 aria-owns={value}
                 {...(props.attributes || {})}
+                disabled={isDisabled(value, index)}
               >
                 {value}
               </Button>
@@ -118,14 +168,21 @@ export const Selector = (props: SelectorProps) => {
         text-[15px]
         animate-none
         font-bold
-        selector-trigger
+        date-selector-trigger
+        breakTwoCalendar:text-sm
       `)}
         aria-haspopup={true}
         aria-expanded={open()}
-        data-selector-trigger={true}
+        data-type={"date-selector-trigger"}
       >
         {props.useValueAsName
           ? props.option()
+          : props.twoMonthsDisplay
+          ? `${props.optionsArray[props.option()]} - ${
+              props.option() === 11
+                ? props.optionsArray[0]
+                : props.optionsArray[props.option() + 1]
+            }`
           : props.optionsArray[props.option()]}
       </Button>
     </Popover>

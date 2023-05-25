@@ -1,7 +1,8 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
 import solidPlugin from "vite-plugin-solid";
-import { DOMElements, SVGElements } from "solid-js/web/dist/dev.cjs";
+import dts from "vite-plugin-dts";
+import terser from '@rollup/plugin-terser';
 
 export default defineConfig({
   build: {
@@ -16,12 +17,18 @@ export default defineConfig({
         preserveModules: true,
         exports: "named",
       },
+      plugins: [terser()]
     },
   },
   plugins: [
     solidPlugin(),
+    dts({
+      insertTypesEntry: true,
+      outputDir: "types",
+
+    }),
   ],
   server: {
-    port: 3000,
+    port: 3101,
   },
 });

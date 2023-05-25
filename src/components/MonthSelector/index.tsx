@@ -1,14 +1,18 @@
 import { Accessor, createSignal, onMount, Setter } from "solid-js";
 import { Selector } from "../Selector";
-import {IMonthSelectorType, Locale} from "../../interface/date";
+import {IMonthSelectorType, Locale, IColors, MakeOptionalRequired, DateObjectUnits} from "../../interface/general";
 
-interface MonthSelectorProps {
+interface MonthSelectorProps extends IColors {
   month: Accessor<number>;
   setMonth: Setter<number>;
   ref?: Setter<HTMLDivElement | undefined>;
   type?: IMonthSelectorType;
   zIndex?: number;
   locale?: Locale;
+  minDate?: MakeOptionalRequired<DateObjectUnits>;
+  maxDate?: MakeOptionalRequired<DateObjectUnits>;
+  year?: Accessor<number>;
+  twoMonthsDisplay?: boolean;
 }
 export const MonthSelector = (props: MonthSelectorProps) => {
   const [monthArray, setMonthArray] = createSignal<string[]>([]);
@@ -24,6 +28,7 @@ export const MonthSelector = (props: MonthSelectorProps) => {
 
   return (
     <Selector
+      {...props}
       optionsArray={monthArray()}
       option={props.month}
       setOption={props.setMonth}
@@ -34,6 +39,11 @@ export const MonthSelector = (props: MonthSelectorProps) => {
       }}
       className={"month-selector-option"}
       zIndex={props.zIndex}
+      primaryColor={props.primaryColor}
+      primaryTextColor={props.primaryTextColor}
+      secondaryColor={props.secondaryColor}
+      secondaryTextColor={props.secondaryTextColor}
+      twoMonthsDisplay={props.twoMonthsDisplay}
     />
   );
 };

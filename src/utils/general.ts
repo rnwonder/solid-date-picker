@@ -1,11 +1,15 @@
 import type { Accessor } from "solid-js";
 import type {
   DateObjectUnits,
-  IDatePickerInputDataValue,
   IMonthDaysObject,
   IMonthStatus,
-} from "../../interface/date";
-import type { ITimePickerFormat } from "../../interface/time";
+  MakeOptionalRequired,
+} from "../interface/general";
+import {
+  ApplyDateRange,
+  CustomDaysClassName,
+  DisableDate,
+} from "../interface/general";
 
 // Gets the current month and year days array
 export const getMonthDaysArray = (
@@ -113,26 +117,25 @@ export const isDayTipRange = ({
   return date.toDateString() === start.toDateString();
 };
 
-export const applyDateRangeStyles = ({
+export const applyDateRangeProps = ({
   year,
   month,
   endDay,
   day,
   startDay,
+  customDaysClassName,
+  multipleObject,
+  hideOutSideDays,
 }: {
   startDay: DateObjectUnits | undefined;
   endDay: DateObjectUnits | undefined;
   year: Accessor<number>;
   month: Accessor<number>;
   day: IMonthDaysObject;
-}): {
-  dayRangeEnd: boolean;
-  dayRangeStartEnd: undefined | boolean;
-  dayRangeStart: boolean;
-  dayRangeBetween: boolean;
-  daysCurrent: boolean;
-  daysNotCurrentMonth: boolean;
-} => {
+  customDaysClassName?: CustomDaysClassName[];
+  multipleObject: DateObjectUnits[];
+  hideOutSideDays?: boolean;
+}): ApplyDateRange => {
   return {
     dayRangeStartEnd:
       startDay &&
@@ -182,16 +185,53 @@ export const applyDateRangeStyles = ({
         )
       ) && day.month === "current",
     daysNotCurrentMonth: day.month !== "current",
+    ...isWeekendStatus({
+      year: year(),
+      month: month(),
+      day,
+    }),
+    customDayClass: customDaysClassName?.find(
+      (customDay) =>
+        customDay.year === year() &&
+        customDay.month === getDatePickerRefactoredMonth(month(), day.month) &&
+        customDay.day === day.value
+    )?.className,
+    isMultipleSelected: !!multipleObject?.find(
+      (multiple) =>
+        multiple.year === year() &&
+        multiple.month === getDatePickerRefactoredMonth(month(), day.month) &&
+        multiple.day === day.value
+    ),
+    hidden: hideOutSideDays ? day.month !== "current" : false,
   };
 };
 
-const checkIfItsTodayDate = (date: Date) => {
-  const today = new Date();
+export const checkIfItsTodayDate = (
+  date: Date | MakeOptionalRequired<DateObjectUnits>
+) => {
+  const today = getToday();
+
+  if (date instanceof Date) {
+    return (
+      date.getDate() === today.day &&
+      date.getMonth() === today.month &&
+      date.getFullYear() === today.year
+    );
+  }
   return (
-    date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() === today.getFullYear()
+    date.day === today.day &&
+    date.month === today.month &&
+    date.year === today.year
   );
+};
+
+export const getToday = (): MakeOptionalRequired<DateObjectUnits> => {
+  const today = new Date();
+  return {
+    day: today.getDate(),
+    month: today.getMonth(),
+    year: today.getFullYear(),
+  };
 };
 
 export const isMinMaxDate = ({
@@ -201,61 +241,32 @@ export const isMinMaxDate = ({
   year,
   month,
 }: {
-  minDate: DateObjectUnits | undefined;
-  maxDate: DateObjectUnits | undefined;
+  minDate: MakeOptionalRequired<DateObjectUnits> | undefined;
+  maxDate: MakeOptionalRequired<DateObjectUnits> | undefined;
   day: IMonthDaysObject;
   year: Accessor<number>;
   month: Accessor<number>;
 }): boolean => {
   if (!minDate && !maxDate) return false;
 
-  const date = new Date(year(), month() - 1, day.value);
+  const date = new Date(
+    year(),
+    getDatePickerRefactoredMonth(month(), day.month),
+    day.value
+  );
 
   if (minDate && maxDate) {
-    const min = new Date(minDate.year!, minDate.month!, minDate.day);
-    const max = new Date(maxDate.year!, maxDate.month!, maxDate.day);
+    const min = new Date(minDate.year, minDate.month, minDate.day);
+    const max = new Date(maxDate.year, maxDate.month, maxDate.day);
     return date < min || date > max;
   } else if (minDate) {
-    const min = new Date(minDate.year!, minDate.month!, minDate.day);
+    const min = new Date(minDate.year, minDate.month, minDate.day);
     return date < min;
   } else if (maxDate) {
-    const max = new Date(maxDate.year!, maxDate.month!, maxDate.day);
+    const max = new Date(maxDate.year, maxDate.month, maxDate.day);
     return date > max;
   }
   return false;
-};
-
-export function generateYearsArray(startYear: number, endYear: number) {
-  const years: number[] = [];
-  for (let i = endYear; i >= startYear; i--) {
-    years.push(i);
-  }
-  return years;
-}
-
-export const checkDateValidation = (start: IDatePickerInputDataValue) => {
-  const startDate = start?.value.start!;
-  const startFormat = new Date(startDate);
-  const nowDate = new Date();
-
-  if (start) {
-    return (
-      nowDate.getMonth() > startFormat.getMonth() ||
-      nowDate.getDate() > startFormat.getDate() ||
-      nowDate.getFullYear() > startFormat.getFullYear()
-    );
-  }
-};
-
-export const checkTimeValidation = (startTime: ITimePickerFormat) => {
-  const now = new Date();
-
-  if (startTime && startTime.minute) {
-    return (
-      startTime.minute - now.getMinutes() < 10 &&
-      startTime.hour === now.getHours()
-    );
-  }
 };
 
 export const convertDateToDateObject = (date: Date) => {
@@ -274,3 +285,121 @@ export const convertDateObjectToDate = (date: DateObjectUnits) => {
     date?.day || now.getDay()
   );
 };
+
+export const isPartOfDisabledDays = ({
+  disabledDays,
+  month,
+  day,
+  year,
+}: {
+  disabledDays?: DisableDate[];
+  day: IMonthDaysObject;
+  month: number;
+  year: number;
+}) => {
+  if (!disabledDays) return false;
+  const foundData = disabledDays.find((data) => {
+    if ("start" in data && "end" in data) {
+      const startDate = convertDateObjectToDate(data.start);
+      const endDate = convertDateObjectToDate(data.end);
+      const targetDate = convertDateObjectToDate({
+        day: day.value,
+        month: getDatePickerRefactoredMonth(month, day.month),
+        year,
+      });
+      return targetDate >= startDate && targetDate <= endDate;
+    } else {
+      return (
+        data.day === day.value &&
+        data.month === getDatePickerRefactoredMonth(month, day.month) &&
+        data.year === year
+      );
+    }
+  });
+  return !!foundData;
+};
+
+export const isDateRangeDisabled = (
+  startDate: Date,
+  endDate: Date,
+  disabledDays?: DisableDate[]
+): boolean => {
+  for (
+    let date = new Date(startDate);
+    date <= endDate;
+    date.setDate(date.getDate() + 1)
+  ) {
+    if (
+      isPartOfDisabledDays({
+        day: {
+          month: "current",
+          value: date.getDate(),
+        },
+        month: date.getMonth(),
+        year: date.getFullYear(),
+        disabledDays,
+      })
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const isWeekendStatus = ({
+  year,
+  month,
+  day,
+}: {
+  day: IMonthDaysObject;
+  month: number;
+  year: number;
+}): {
+  isWeekend: boolean;
+  isSaturday: boolean;
+  isSunday: boolean;
+} => {
+  const refactorMonth = getDatePickerRefactoredMonth(month, day.month);
+  const date = new Date(year, refactorMonth, day.value);
+  const dayOfWeek = date.getDay();
+
+  return {
+    isWeekend: dayOfWeek === 0 || dayOfWeek === 6,
+    isSaturday: dayOfWeek === 6,
+    isSunday: dayOfWeek === 0,
+  };
+};
+
+export const compareObjectDate = (
+  first: DateObjectUnits,
+  second: DateObjectUnits
+) => {
+  return (
+    first.day === second.day &&
+    first.month === second.month &&
+    first.year === second.year
+  );
+};
+
+export const isBeforeDate = (
+  first: MakeOptionalRequired<DateObjectUnits> | Date,
+  second: MakeOptionalRequired<DateObjectUnits> | Date
+) => {
+  const firstDate =
+    first instanceof Date ? first : convertDateObjectToDate(first);
+  const secondDate =
+    second instanceof Date ? second : convertDateObjectToDate(second);
+  return firstDate < secondDate;
+};
+
+export function generateYearsArray(startYear: number, endYear: number) {
+  const years: number[] = [];
+  for (let i = endYear; i >= startYear; i--) {
+    years.push(i);
+  }
+  return years;
+}
+
+const now = new Date();
+export const currentYear = now.getFullYear();

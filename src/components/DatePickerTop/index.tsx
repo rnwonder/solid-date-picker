@@ -4,12 +4,15 @@ import { Button } from "../Button";
 import {
   IMonthSelectorType,
   IMonthYearSelectorFlexDirection,
-  IYearRange, Locale,
-} from "../../interface/date";
+  IYearRange,
+  Locale,
+  IColors,
+  MakeOptionalRequired, DateObjectUnits
+} from '../../interface/general';
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
 
-export interface DatePickerTopProps {
+export interface DatePickerTopProps extends IColors {
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
   setMonth: Setter<number>;
@@ -31,9 +34,31 @@ export interface DatePickerTopProps {
   removeNavButtons?: boolean;
   nextButtonAreaJSX?: JSXElement;
   prevButtonAreaJSX?: JSXElement;
+  minDate?: MakeOptionalRequired<DateObjectUnits>;
+  maxDate?: MakeOptionalRequired<DateObjectUnits>;
+
+  twoMonthsDisplay?: boolean;
 }
 
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
+
+  const isPrevButtonDisabled = () => {
+    if (!props.minDate) return false;
+    if (props.year() < props.minDate.year) return true;
+    if (props.year() === props.minDate.year) {
+      if (props.month() - 1 < props.minDate.month) return true;
+    }
+    return false;
+  }
+
+  const isNextButtonDisabled = () => {
+    if (!props.maxDate) return false;
+    if (props.year() > props.maxDate.year) return true;
+    if (props.year() === props.maxDate.year) {
+      if (props.month() + 1 > props.maxDate.month) return true;
+    }
+    return false;
+  }
   return (
     <div
       class={`
@@ -52,9 +77,10 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
 
       <Show when={!props.removeNavButtons} keyed>
         <Button
-          class={"date-prev-next-btn"}
+          class={"date-prev-next-btn disabled:opacity-10"}
           data-prev={true}
           data-type={"date-prev-next-btn"}
+          disabled={isPrevButtonDisabled()}
           onClick={props.handlePrevMonth}
         >
           {props.prevIcon || <PrevIcon />}
@@ -72,10 +98,11 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
 
       <Show when={!props.removeNavButtons} keyed>
         <Button
-          class={"date-prev-next-btn"}
+          class={"date-prev-next-btn disabled:opacity-10"}
           data-next={true}
           data-type={"date-prev-next-btn"}
           onClick={props.handleNextMonth}
+          disabled={isNextButtonDisabled()}
         >
           {props.nextIcon || <NextIcon />}
         </Button>

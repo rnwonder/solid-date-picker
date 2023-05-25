@@ -9,9 +9,13 @@ import {
 } from "solid-js";
 import { DatePickerTop } from "../DatePickerTop";
 import {
+  compareObjectDate,
+  convertDateObjectToDate,
   convertDateToDateObject,
+  currentYear,
   getDatePickerRefactoredMonth,
-} from "../DatePickerDay/config";
+  isDateRangeDisabled,
+} from "../../utils";
 import {
   DateObjectUnits,
   IDatePickerInputValueTypes,
@@ -21,18 +25,24 @@ import {
   IMonthSelectorType,
   IMonthYearSelectorFlexDirection,
   IRenderJSX,
-  IYearRange, Locale,
-} from "../../interface/date";
-import { currentYear } from "../DatePickerMonthAndYearSelector/config";
+  IYearRange,
+  Locale,
+  IColors,
+  DisableDate,
+  MakeOptionalRequired,
+  CustomDaysClassName,
+  WeekDaysType,
+} from "../../interface/general";
 import { CalendarArea } from "../CalendarArea";
 
-export interface DatePickerProps {
+export interface DatePickerProps extends IColors {
   type: IDatePickerType;
   close: () => void;
   handleOnChange: (data: IDatePickerOnChange) => void;
+  onDisabledDayError?: () => void;
 
-  minDate?: DateObjectUnits;
-  maxDate?: DateObjectUnits;
+  minDate?: MakeOptionalRequired<DateObjectUnits>;
+  maxDate?: MakeOptionalRequired<DateObjectUnits>;
   onChange?: (data: IDatePickerOnChange) => void;
 
   ref?: any;
@@ -53,6 +63,7 @@ export interface DatePickerProps {
   calendarJSX?: IRenderJSX;
   afterNextButtonAreaJSX?: IRenderJSX;
   beforePrevButtonAreaJSX?: IRenderJSX;
+  weekDaysJSX?: IRenderJSX;
 
   monthSelectorFormat?: IMonthSelectorType;
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
@@ -64,30 +75,65 @@ export interface DatePickerProps {
   hideTopArea?: boolean;
   removeNavButtons?: boolean;
   shouldCloseOnSelect?: boolean;
+  shouldHighlightWeekends?: boolean;
+  hideCalendar?: boolean;
+  hideOutSideDays?: boolean;
+  twoMonthsDisplay?: boolean;
+  showEndOfRange?: boolean;
 
   zIndex?: number;
+  startingMonth?: number;
+  startingYear?: number;
+
+  disabledDays?: DisableDate[];
+  customDaysClassName?: CustomDaysClassName[];
+  weekDaysType?: WeekDaysType;
 }
 
 export const DatePicker = (props: DatePickerProps) => {
   const [month, setMonth] = createSignal(new Date().getMonth());
   const [year, setYear] = createSignal(currentYear);
-  const [startDay, setStartDay] = createSignal<DateObjectUnits | undefined>(
-    undefined
-  );
+  const [startDay, setStartDay] = createSignal<DateObjectUnits | undefined>();
   const [endDay, setEndDay] = createSignal<DateObjectUnits | undefined>(
     undefined
   );
+  const [multipleObject, setMultipleObject] = createSignal<DateObjectUnits[]>(
+    []
+  );
   const [render, setRender] = createSignal(true);
+  const [mounted, setMounted] = createSignal(false);
 
   onMount(() => {
-    if (!props.value?.selected && !props.value?.start && !props.value?.end) {
+    if (
+      !props.value?.selected &&
+      !props.value?.start &&
+      !props.value?.end &&
+      !props.value?.selectedDateObject &&
+      !props.value?.startDateObject &&
+      !props.value?.endDateObject &&
+      !props.value?.multiple &&
+      !props.value?.multipleDateObject?.length
+    ) {
       if (!props.month?.()) props.setMonth?.(new Date().getMonth());
       if (!props.year?.()) props.setYear?.(currentYear);
+
+      if (props.type === "single") {
+        setStartDay({
+          year: year(),
+          month: month(),
+          day: new Date().getDate(),
+        });
+      }
+      startingDate();
       return;
     }
+    startingDate();
+    setMounted(true);
 
-    if (props.value.selected) {
-      const selectedDate = new Date(props.value.selected);
+    if (props.value.selected || props.value.selectedDateObject) {
+      const selectedDate = props.value.selected
+        ? new Date(props.value.selected)
+        : convertDateObjectToDate(props.value.selectedDateObject!);
       setMonth(selectedDate.getMonth());
       props.setMonth?.(selectedDate.getMonth());
       setYear(selectedDate.getFullYear());
@@ -99,20 +145,49 @@ export const DatePicker = (props: DatePickerProps) => {
       });
     }
 
-    if (props.value.start || props.value.end) {
-      const startDate = new Date(props.value.start || "0");
-      const endDate = props.value.end ? new Date(props.value.end) : undefined;
+    if (
+      props.value.start ||
+      props.value.end ||
+      props.value.startDateObject ||
+      props.value.endDateObject
+    ) {
+      const startDate = props.value.start
+        ? new Date(props.value.start)
+        : props.value.startDateObject
+        ? convertDateObjectToDate(props.value.startDateObject)
+        : undefined;
+      const endDate = props.value.end
+        ? new Date(props.value.end)
+        : props.value.endDateObject
+        ? convertDateObjectToDate(props.value.endDateObject)
+        : undefined;
 
-      setMonth(startDate.getMonth());
-      props.setMonth?.(startDate.getMonth());
+      if (!startDate && !endDate) return;
+      if (!startDate && endDate) {
+        setMonth(endDate.getMonth());
+        props.setMonth?.(endDate.getMonth());
 
-      setYear(startDate.getFullYear());
-      props.setYear?.(startDate.getFullYear());
+        setYear(endDate.getFullYear());
+        props.setYear?.(endDate.getFullYear());
+
+        setStartDay({
+          year: endDate.getFullYear(),
+          month: endDate.getMonth(),
+          day: endDate.getDate(),
+        });
+        return;
+      }
+
+      setMonth(startDate!.getMonth());
+      props.setMonth?.(startDate!.getMonth());
+
+      setYear(startDate!.getFullYear());
+      props.setYear?.(startDate!.getFullYear());
 
       setStartDay({
-        year: startDate.getFullYear(),
-        month: startDate.getMonth(),
-        day: startDate.getDate(),
+        year: startDate!.getFullYear(),
+        month: startDate!.getMonth(),
+        day: startDate!.getDate(),
       });
 
       if (!endDate) return;
@@ -121,8 +196,44 @@ export const DatePicker = (props: DatePickerProps) => {
         month: endDate.getMonth(),
         day: endDate.getDate(),
       });
+
+      if (props.showEndOfRange) {
+        setMonth(endDate.getMonth());
+        props.setMonth?.(endDate.getMonth());
+
+        setYear(endDate.getFullYear());
+        props.setYear?.(endDate.getFullYear());
+      }
+    }
+
+    if (props.value.multipleDateObject?.length || props.value.multiple) {
+      const multipleDateObject = props.value.multipleDateObject?.length
+        ? props.value.multipleDateObject
+        : props.value.multiple
+        ? props.value.multiple.map((date) =>
+            convertDateToDateObject(new Date(date))
+          )
+        : undefined;
+
+      if (!multipleDateObject) return;
+      setMultipleObject(multipleDateObject);
+      const lastDate = multipleDateObject.at(-1);
+      lastDate?.month && setMonth(lastDate.month);
+      lastDate?.year && setYear(lastDate.year);
     }
   });
+
+  const onChange = (data: IDatePickerOnChange) => {
+    props.handleOnChange(data);
+    props?.onChange?.(data);
+  };
+
+  const startingDate = () => {
+    props.startingMonth && setMonth(props.startingMonth);
+    props.startingMonth && props.setMonth?.(props.startingMonth);
+    props.startingYear && setYear(props.startingYear);
+    props.startingYear && props.setYear?.(props.startingYear);
+  };
 
   createEffect(() => {
     if (render()) return;
@@ -131,47 +242,56 @@ export const DatePicker = (props: DatePickerProps) => {
 
   createEffect(() => {
     if (props.type !== "single") return;
-    const agg = { selectedDate: startDay(), type: props.type };
-    props.handleOnChange(agg);
-    props?.onChange?.(agg);
+    if (!mounted()) return;
+    const agg = {
+      selectedDate: startDay(),
+      type: props.type,
+    };
+    onChange(agg);
+  });
+
+  createEffect(() => {
+    if (props.type !== "multiple") return;
+    if (!mounted()) return;
+    const agg = {
+      multipleDates: multipleObject(),
+      type: props.type,
+    };
+    onChange(agg);
   });
 
   createEffect(() => {
     if (props.type !== "range") return;
+    if (!mounted()) return;
     const agg = {
       startDate: startDay(),
       endDate: endDay(),
       type: props.type,
     };
-    props.handleOnChange(agg);
-    props?.onChange?.(agg);
+    onChange(agg);
   });
 
-  const handleDayClick = (day: IMonthDaysObject) => {
-    const initialMonth = Number(props.month?.() || month());
+  const handleDayClick = (
+    day: IMonthDaysObject,
+    month: Accessor<number>,
+    year: Accessor<number>,
+    nextMonth: boolean = false
+  ) => {
+    if (!mounted()) {
+      setMounted(true);
+    }
+    const initialMonth = Number(month());
     let newMonth = initialMonth;
-    let newYear = Number(props.year?.() || year());
+    let newYear = Number(year());
 
     if (day.month === "prev") {
-      newMonth =
-        props.month?.() || month() === 0
-          ? 11
-          : (props.month?.() || month()) - 1;
-      newYear =
-        props.month?.() || month() === 0
-          ? (props.year?.() || year()) - 1
-          : props.year?.() || year();
+      newMonth = month() === 0 ? 11 : month() - 1;
+      newYear = month() === 0 ? year() - 1 : year();
     }
 
     if (day.month === "next") {
-      newMonth =
-        props.month?.() || month() === 11
-          ? 0
-          : (props.month?.() || month()) + 1;
-      newYear =
-        props.month?.() || month() === 11
-          ? (props.year?.() || year()) + 1
-          : props.year?.() || year();
+      newMonth = month() === 11 ? 0 : month() + 1;
+      newYear = month() === 11 ? year() + 1 : year();
     }
 
     if (props.type === "range") {
@@ -195,15 +315,34 @@ export const DatePicker = (props: DatePickerProps) => {
         );
         const endDayDate = new Date(
           year(),
-          getDatePickerRefactoredMonth(props.month?.() || month(), day.month),
+          getDatePickerRefactoredMonth(month(), day.month),
           day.value
         );
+
         if (startDayDate.getTime() === endDayDate.getTime()) {
           return;
         }
+
+        if (
+          startDayDate.getTime() < endDayDate.getTime() &&
+          isDateRangeDisabled(startDayDate, endDayDate, props.disabledDays)
+        ) {
+          setStartDay(convertDateToDateObject(endDayDate));
+          return;
+        }
+
+        if (
+          startDayDate.getTime() > endDayDate.getTime() &&
+          isDateRangeDisabled(endDayDate, startDayDate, props.disabledDays)
+        ) {
+          setStartDay(convertDateToDateObject(endDayDate));
+          return;
+        }
+
         if (startDayDate.getTime() < endDayDate.getTime()) {
           setEndDay(convertDateToDateObject(endDayDate));
         }
+
         if (startDayDate.getTime() > endDayDate.getTime()) {
           setStartDay(convertDateToDateObject(endDayDate));
           setEndDay(convertDateToDateObject(startDayDate));
@@ -218,15 +357,33 @@ export const DatePicker = (props: DatePickerProps) => {
         day.value
       );
       setStartDay(convertDateToDateObject(selectedDay));
-      // console.log({selectedDay, startDay: startDay()})
     }
 
-    setMonth(newMonth);
-    props.setMonth?.(newMonth);
+    if (props.type === "multiple") {
+      const selectedDay: DateObjectUnits = {
+        year: newYear,
+        month: getDatePickerRefactoredMonth(initialMonth, day.month),
+        day: day.value,
+      };
+      const findDate = multipleObject().find((date) =>
+        compareObjectDate(date, selectedDay)
+      );
+      if (findDate) {
+        setMultipleObject(
+          multipleObject().filter((date) => !compareObjectDate(date, findDate))
+        );
+        return;
+      }
+      setMultipleObject([...multipleObject(), selectedDay]);
+    }
 
-    setYear(newYear);
-    props.setYear?.(newYear);
+    if (!nextMonth) {
+      setMonth(newMonth);
+      props.setMonth?.(newMonth);
 
+      setYear(newYear);
+      props.setYear?.(newYear);
+    }
     setRender(false);
     props.shouldCloseOnSelect && props.close();
   };
@@ -288,6 +445,9 @@ export const DatePicker = (props: DatePickerProps) => {
         setYear,
         setRefToAllowOutsideClick: setRef,
         handleDayClick,
+        multipleDates: multipleObject,
+        endDate: endDay,
+        selectedDate: startDay,
       });
       return <div data-type="custom-jsx">{content}</div>;
     }
@@ -303,6 +463,7 @@ export const DatePicker = (props: DatePickerProps) => {
   const calendarJSX = renderCustomJSX(props.calendarJSX);
   const nextButtonAreaJSX = renderCustomJSX(props.afterNextButtonAreaJSX);
   const prevButtonAreaJSX = renderCustomJSX(props.beforePrevButtonAreaJSX);
+  const weekDaysJSX = renderCustomJSX(props.weekDaysJSX);
 
   return (
     <div
@@ -317,12 +478,18 @@ export const DatePicker = (props: DatePickerProps) => {
           pb-[0.5rem]
           ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "w-max"}
           `}
-      data-date-picker-wrapper={true}
+      data-type={"date-picker-wrapper"}
       ref={props.ref}
+      style={{
+        ...(props.backgroundColor && {
+          "background-color": props.backgroundColor,
+        }),
+      }}
     >
       <Show when={!props.hideTopArea} keyed>
         {calendarTopAreaJSX || (
           <DatePickerTop
+            {...props}
             setYear={props.setYear || setYear}
             setMonth={props.setMonth || setMonth}
             month={props.month || month}
@@ -345,6 +512,10 @@ export const DatePicker = (props: DatePickerProps) => {
             removeNavButtons={props.removeNavButtons}
             nextButtonAreaJSX={nextButtonAreaJSX}
             prevButtonAreaJSX={prevButtonAreaJSX}
+            primaryColor={props.primaryColor}
+            primaryTextColor={props.primaryTextColor}
+            secondaryColor={props.secondaryColor}
+            secondaryTextColor={props.secondaryTextColor}
           />
         )}
       </Show>
@@ -354,18 +525,27 @@ export const DatePicker = (props: DatePickerProps) => {
           {calendarLeftAreaJSX}
         </Show>
 
-        {calendarJSX || (
-          <CalendarArea
-            locale={props.locale}
-            year={props.year || year}
-            month={props.month || month}
-            endDay={endDay}
-            startDay={startDay}
-            handleDayClick={handleDayClick}
-            maxDate={props.maxDate}
-            minDate={props.minDate}
-          />
-        )}
+        <Show when={!props.hideCalendar} keyed>
+          {calendarJSX || (
+            <CalendarArea
+              {...props}
+              locale={props.locale}
+              year={props.year || year}
+              month={props.month || month}
+              endDay={endDay}
+              startDay={startDay}
+              handleDayClick={handleDayClick}
+              maxDate={props.maxDate}
+              minDate={props.minDate}
+              primaryColor={props.primaryColor}
+              primaryTextColor={props.primaryTextColor}
+              secondaryColor={props.secondaryColor}
+              secondaryTextColor={props.secondaryTextColor}
+              multipleObject={multipleObject}
+              weekDaysJSX={weekDaysJSX}
+            />
+          )}
+        </Show>
 
         <Show when={calendarRightAreaJSX} keyed>
           {calendarRightAreaJSX}

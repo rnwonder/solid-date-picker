@@ -7,16 +7,15 @@ export const DatePickerWeek: Component<DatePickerWeekDaysProps> = (props) => {
   return (
     <div
       class={`
-    calendar-row
+    date-picker-calendar-row
     grid
     grid-cols-7
     my-2
     text-sm
     text-red-500
-    px-4
     
   `}
-      data-calendar-row={true}
+      data-type={"date-picker-calendar-row"}
       //@ts-ignore
       role={"composite"}
     >
