@@ -31,6 +31,7 @@ interface PopoverProps {
   onOpen?: () => void;
   onClose?: () => void;
   zIndex?: number;
+  width?: JSX.CSSProperties["width"];
 }
 
 export const Popover = (props: PopoverProps) => {
@@ -153,7 +154,13 @@ export const Popover = (props: PopoverProps) => {
 
   return (
     <div>
-      <div ref={setElementRef} onClick={handleElementClick}>
+      <div
+        style={{
+          width: props.width || "100%",
+        }}
+        ref={setElementRef}
+        onClick={handleElementClick}
+      >
         {props.children}
       </div>
 

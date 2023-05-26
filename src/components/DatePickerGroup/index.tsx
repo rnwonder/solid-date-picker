@@ -28,13 +28,12 @@ export interface DatePickerInputSJProps
   onOpen?: () => void;
 
   inputProps?: JSX.InputHTMLAttributes<HTMLInputElement>;
-
   inputLabel?: Accessor<string>;
+  inputWrapperWidth?: JSX.CSSProperties["width"];
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   const [isShown, setIsShown] = createSignal(false);
-  const [reference, setReference] = createSignal<any>();
   const [allowedComponents, setAllowedComponents] = createSignal<any[]>([]);
 
   const handleOnChange = (data: IDatePickerOnChange) => {
@@ -119,7 +118,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       const savedMultipleDateObject = savedValue.multipleDateObject || [];
       const newMultipleDateObject = data.multipleDates || [];
 
-      if(!props.value().label && newMultipleDateObject.length === 0) return
+      if (!props.value().label && newMultipleDateObject.length === 0) return;
       if (
         savedMultipleDateObject.toString() ===
           newMultipleDateObject.toString() &&
@@ -202,9 +201,6 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         />
       )}
       onClickOutside={(e, setShown) => {
-        if (reference().contains(e?.target)) {
-          return;
-        }
         if (
           allowedComponents()
             .concat(props.componentsToAllowOutsideClick || [])
@@ -218,12 +214,9 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       positionY={props.calendarPositionY}
       zIndex={props.zIndex}
       handleChildrenClick={inputJSX ? () => {} : undefined}
+      width={props.inputWrapperWidth}
     >
-      <div
-        class={"date-picker-input-area"}
-        data-date-picker-input-area={true}
-        ref={setReference}
-      >
+      <div class={"date-picker-input-area"} data-date-picker-input-area={true}>
         <Show when={inputJSX} keyed>
           {inputJSX}
         </Show>
