@@ -34,7 +34,18 @@ const App: Component = () => {
         shouldHighlightWeekends
         startingMonth={7}
         startingYear={2024}
+        // textColor={"blue"}
+        primaryColor={"orange"}
+        // weekDaysType={"single"}
+          weekEndDayTextColor={"blue"}
         showEndOfRange
+        inputWrapperWidth={"fit-content"}
+        renderInput={({ value, showDate }) => (
+            <input onclick={showDate} style={{
+                width: "200px",
+                border: "1px solid #ccc",
+            }} />
+        )}
         // twoMonthsDisplay
         // weekDaysType={"single"}
         hideOutSideDays

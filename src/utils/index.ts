@@ -1,14 +1,14 @@
 import {
   checkIfItsTodayDate,
   convertDateObjectToDate,
-  convertDateToDateObject,
-  getToday, isBeforeDate,
+  convertDateToDateObject, formatDateObject,
+  getMonthName,
+  getToday,
+  isBeforeDate,
 } from "./general";
 
 export * from "./general";
 export * from "./portal";
-
-
 
 export const utils = () => ({
   getToday,
@@ -16,5 +16,6 @@ export const utils = () => ({
   convertDateToDateObject,
   checkIfItsTodayDate,
   isBeforeDate,
+  getMonthName,
+  formatDateObject,
 });
-

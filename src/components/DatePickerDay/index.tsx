@@ -41,7 +41,6 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
     }
   });
 
-
   return (
     <div
       ref={setref}
@@ -199,7 +198,10 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           onClick={props.onClick}
           disabled={props.disabled}
           style={{
-            ...((props.dayRangeStart || props.dayRangeEnd) && props.primaryColor
+            ...((props.dayRangeStart ||
+              props.dayRangeEnd ||
+              props.isMultipleSelected) &&
+            (props.primaryColor || props.primaryTextColor)
               ? {
                   "background-color": props.primaryColor,
                   color: props.primaryTextColor,
@@ -209,11 +211,22 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
               ? { color: props.secondaryTextColor }
               : {}),
             ...((props.weekEndDayTextColor || props.weekEndDayBgColor) &&
+            !props.dayRangeStart &&
+            !props.dayRangeEnd &&
+            !props.isMultipleSelected &&
             props.isWeekend
               ? {
                   color: props.weekEndDayTextColor,
                   "background-color": props.weekEndDayBgColor,
                 }
+              : {}),
+            ...(props.textColor &&
+            !props.dayRangeStart &&
+            !props.dayRangeEnd &&
+            !props.isMultipleSelected
+              ? props.shouldHighlightWeekends && props.isWeekend
+                ? {}
+                : { color: props.textColor }
               : {}),
           }}
         >

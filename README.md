@@ -2,6 +2,8 @@
 
 A simple and reusable Datepicker component for SolidJS ([Demo](https://stackblitz.com/edit/solidjs-templates-dof6jl?file=src%2FApp.tsx))
 
+[Documentation](https://date-picker-doc-rnwonder.vercel.app/docs/)
+
 ![Screenshot 2023-05-20 084944.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569302/Screenshot_2023-05-20_085338_ruwgsx.jpg)
 ![Screenshot 2023-05-20 084945.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569301/Screenshot_2023-05-20_085412_imossu.jpg)
 ![Screenshot 2023-05-20 084946.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684899114/Screenshot_2023-05-24_043041_to0svp.jpg)
@@ -105,6 +107,7 @@ You can style the datepicker using the following classes or data attributes.
 | `primaryTextColor`    | `string` | `#fffff`  | This is the primary text color for the calendar            |
 | `secondaryColor`      | `string` | `#AAD1E9` | This is the secondary background color for the calendar    |
 | `secondaryTextColor`  | `string` | `#0277bd` | This is the secondary text color for the calendar          |
+| `textColor`           | `string` | `#000000` | This is the default text color                             |
 | `weekDaysNameColor`   | `string` | `#909090` | This is the text color for the week day names              |
 | `weekEndDayBgColor`   | `string` | `inherit` | This is the background color for the calendar weekend days |
 | `weekEndDayTextColor` | `string` | `inherit` | This is the text color for the calendar weekend days       |
@@ -112,7 +115,7 @@ You can style the datepicker using the following classes or data attributes.
 ### Other Datepicker Props
 
 | Props                            | Type                                        | Default                                            | Description                                                                                                                                                                      |
-| -------------------------------- | ------------------------------------------- | -------------------------------------------------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------- | ------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `afterNextButtonAreaJSX`         | `IRenderJSX`                                | `undefined`                                        | This allows you pass in JSX after the next button                                                                                                                                |
 | `beforePrevButtonAreaJSX`        | `IRenderJSX`                                | `undefined`                                        | This allows you pass in JSX before the previous button                                                                                                                           |
 | `calendarBottomAreaJSX`          | `IRenderJSX`                                | `undefined`                                        | This allow you to add JSX below the calendar area                                                                                                                                |

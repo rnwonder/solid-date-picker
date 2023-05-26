@@ -139,6 +139,7 @@ export const Selector = (props: SelectorProps) => {
                         color: props.primaryTextColor,
                       }
                     : {}),
+                  ...(props.textColor && !isSelected(value, index) && { color: props.textColor }),
                 }}
                 onClick={() => handleOptionClick(index(), value, close)}
                 data-selected={isSelected(value, index)}
@@ -174,6 +175,9 @@ export const Selector = (props: SelectorProps) => {
         aria-haspopup={true}
         aria-expanded={open()}
         data-type={"date-selector-trigger"}
+        style={{
+          ...(props.textColor && { color: props.textColor }),
+        }}
       >
         {props.useValueAsName
           ? props.option()

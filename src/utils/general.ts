@@ -403,3 +403,26 @@ export function generateYearsArray(startYear: number, endYear: number) {
 
 const now = new Date();
 export const currentYear = now.getFullYear();
+
+export const getMonthName = (
+  month: number,
+  format: "narrow" | "long" | "short" = "long"
+) => {
+  const date = new Date(2000, month, 1);
+  return date.toLocaleString("default", { month: format });
+};
+
+export const formatDateObject = (
+  date: DateObjectUnits,
+  options?: Intl.DateTimeFormatOptions
+) => {
+  const dateTime = convertDateObjectToDate(date);
+  return new Intl.DateTimeFormat(
+    "en-US",
+    options || {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }
+  ).format(dateTime);
+};

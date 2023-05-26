@@ -13,7 +13,8 @@ import {
   IColors,
   DisableDate,
   MakeOptionalRequired,
-  CustomDaysClassName, HandleDayClick,
+  CustomDaysClassName,
+  HandleDayClick,
 } from "../../interface/general";
 
 export interface CalendarDaysProps extends IColors {
@@ -41,6 +42,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
       <For each={getMonthDaysArray(props.month(), props.year())}>
         {(day) => (
           <DatePickerDay
+            {...props}
             {...applyDateRangeProps({
               year: props.year,
               day,
@@ -51,7 +53,14 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
               multipleObject: props.multipleObject(),
               hideOutSideDays: props.hideOutSideDays,
             })}
-            onClick={() => props.handleDayClick(day, props.month, props.year, props.nextMonth || false)}
+            onClick={() =>
+              props.handleDayClick(
+                day,
+                props.month,
+                props.year,
+                props.nextMonth || false
+              )
+            }
             disabled={
               isPartOfDisabledDays({
                 disabledDays: props.disabledDays,

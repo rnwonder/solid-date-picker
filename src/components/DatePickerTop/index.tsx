@@ -7,8 +7,9 @@ import {
   IYearRange,
   Locale,
   IColors,
-  MakeOptionalRequired, DateObjectUnits
-} from '../../interface/general';
+  MakeOptionalRequired,
+  DateObjectUnits,
+} from "../../interface/general";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
 
@@ -41,7 +42,6 @@ export interface DatePickerTopProps extends IColors {
 }
 
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
-
   const isPrevButtonDisabled = () => {
     if (!props.minDate) return false;
     if (props.year() < props.minDate.year) return true;
@@ -49,7 +49,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       if (props.month() - 1 < props.minDate.month) return true;
     }
     return false;
-  }
+  };
 
   const isNextButtonDisabled = () => {
     if (!props.maxDate) return false;
@@ -58,7 +58,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       if (props.month() + 1 > props.maxDate.month) return true;
     }
     return false;
-  }
+  };
   return (
     <div
       class={`
@@ -82,8 +82,11 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           data-type={"date-prev-next-btn"}
           disabled={isPrevButtonDisabled()}
           onClick={props.handlePrevMonth}
+          style={{
+            ...(props.textColor && { color: props.textColor }),
+          }}
         >
-          {props.prevIcon || <PrevIcon />}
+          {props.prevIcon || <PrevIcon color={props.textColor} />}
         </Button>
       </Show>
 
@@ -103,8 +106,11 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           data-type={"date-prev-next-btn"}
           onClick={props.handleNextMonth}
           disabled={isNextButtonDisabled()}
+          style={{
+            ...(props.textColor && { color: props.textColor }),
+          }}
         >
-          {props.nextIcon || <NextIcon />}
+          {props.nextIcon || <NextIcon color={props.textColor} />}
         </Button>
       </Show>
 
