@@ -9,7 +9,6 @@ import { DatePickerDay } from "../DatePickerDay";
 import { DatePickerWeek } from "../DatePickerWeek";
 import {
   DateObjectUnits,
-  IMonthDaysObject,
   IColors,
   DisableDate,
   MakeOptionalRequired,

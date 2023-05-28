@@ -8,7 +8,6 @@ import {
 import { Button } from "../Button";
 import clsx from "clsx";
 import { ApplyDateRange, DisableDate, IColors } from "../../interface/general";
-import { isWeekendStatus } from "../../utils/general";
 
 interface DatePickerDayProps extends IColors, Partial<ApplyDateRange> {
   header?: boolean;
