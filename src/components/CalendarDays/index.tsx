@@ -1,8 +1,5 @@
 import { Accessor, Component, For } from "solid-js";
-import {
-  applyDateRangeProps,
-  getMonthDaysArray,
-} from "../../utils";
+import { applyDateRangeProps, getMonthDaysArray } from "../../utils";
 import { DatePickerDay } from "../DatePickerDay";
 import { DatePickerWeek } from "../DatePickerWeek";
 import {
@@ -37,11 +34,17 @@ export interface CalendarDaysProps extends IColors {
   onHoverDay: HandleDayClick;
   onHoverDayEnd: HandleDayClick;
   hoverRangeValue: Accessor<HoverRangeValue>;
+
+  weekStartDay?: number;
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
   return (
     <DatePickerWeek>
-      <For each={getMonthDaysArray(props.month(), props.year())}>
+      <For
+        each={getMonthDaysArray(props.month(), props.year(), {
+          weekStartDay: props.weekStartDay,
+        })}
+      >
         {(day) => (
           <DatePickerDay
             {...props}

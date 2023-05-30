@@ -30,6 +30,8 @@ export interface DatePickerInputSJProps
   inputProps?: JSX.InputHTMLAttributes<HTMLInputElement>;
   inputLabel?: Accessor<string>;
   inputWrapperWidth?: JSX.CSSProperties["width"];
+  multipleDatesSeparator?: string;
+  rangeDatesSeparator?: string;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -101,7 +103,9 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           endDateTime
         );
       }
-      label = `${startDateFormatted} - ${endDateFormatted}`;
+      label = `${startDateFormatted} ${
+        props.rangeDatesSeparator || "-"
+      } ${endDateFormatted}`;
       props.setValue?.({
         value: {
           start: startDateTime?.toISOString() || "",
@@ -154,7 +158,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           multiple: arrangeDateISO,
           multipleDateObject: arrangeDateObject,
         },
-        label: inputLabelValue.join(", "),
+        label: inputLabelValue.join(props.multipleDatesSeparator || ", "),
       });
     }
   };

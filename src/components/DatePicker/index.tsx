@@ -90,6 +90,7 @@ export interface DatePickerProps extends IColors {
   zIndex?: number;
   startingMonth?: number;
   startingYear?: number;
+  weekStartDay?: number;
 
   disabledDays?: DateArray[];
   enabledDays?: DateArray[];
@@ -154,7 +155,6 @@ export const DatePicker = (props: DatePickerProps) => {
         day: selectedDate.getDate(),
       });
     }
-
     if (
       props.value.start ||
       props.value.end ||
@@ -163,14 +163,15 @@ export const DatePicker = (props: DatePickerProps) => {
     ) {
       const startDate = props.value.start
         ? new Date(props.value.start)
-        : props.value.startDateObject
+        : props.value.startDateObject?.day
         ? convertDateObjectToDate(props.value.startDateObject)
         : undefined;
       const endDate = props.value.end
         ? new Date(props.value.end)
-        : props.value.endDateObject
+        : props.value.endDateObject?.day
         ? convertDateObjectToDate(props.value.endDateObject)
         : undefined;
+
 
       if (!startDate && !endDate) return;
       if (!startDate && endDate) {
@@ -180,10 +181,15 @@ export const DatePicker = (props: DatePickerProps) => {
         setYear(endDate.getFullYear());
         props.setYear?.(endDate.getFullYear());
 
-        setStartDay({
+        const startObj = {
           year: endDate.getFullYear(),
           month: endDate.getMonth(),
           day: endDate.getDate(),
+        };
+
+        setStartDay(startObj);
+        setHoverRangeValue({
+          start: startObj,
         });
         return;
       }
@@ -194,10 +200,14 @@ export const DatePicker = (props: DatePickerProps) => {
       setYear(startDate!.getFullYear());
       props.setYear?.(startDate!.getFullYear());
 
-      setStartDay({
+      const startObj = {
         year: startDate!.getFullYear(),
         month: startDate!.getMonth(),
         day: startDate!.getDate(),
+      };
+      setStartDay(startObj);
+      setHoverRangeValue({
+        start: startObj,
       });
 
       if (!endDate) return;
@@ -205,6 +215,9 @@ export const DatePicker = (props: DatePickerProps) => {
         year: endDate.getFullYear(),
         month: endDate.getMonth(),
         day: endDate.getDate(),
+      });
+      setHoverRangeValue({
+        start: undefined,
       });
 
       if (props.showEndOfRange) {

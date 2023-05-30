@@ -29,7 +29,7 @@ const App: Component = () => {
       <DatePickerGroup
         value={date}
         setValue={setDate}
-        type={"range"}
+        type={"multiple"}
         monthSelectorFormat={"long"}
         shouldHighlightWeekends
         // startingMonth={7}
@@ -50,13 +50,16 @@ const App: Component = () => {
         // )}
         twoMonthsDisplay
         // weekDaysType={"single"}
-        hideOutSideDays
+        // hideOutSideDays
         // minDate={utils().getToday()}
         // maxDate={{
         //   year: 2023,
         //   month: 4,
         //   day: 30,
         // }}
+          rangeDatesSeparator={}
+        multipleDatesSeparator={}
+        weekStartDay={1}
         enabledDays={[
           {
             day: 14,

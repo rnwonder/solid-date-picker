@@ -15,9 +15,18 @@ import {
 // Gets the current month and year days array
 export const getMonthDaysArray = (
   month: number,
-  year: number
+  year: number,
+  option?: {
+    weekStartDay?: number;
+  }
 ): IMonthDaysObject[] => {
-  const firstDayOfMonth = new Date(year, month, 1);
+  // TODO: Add Locale support
+
+  const firstDayOfMonth = new Date(
+    year,
+    month,
+    1 - (option?.weekStartDay || 0)
+  );
   const startDayOfWeekIndex = firstDayOfMonth.getDay();
 
   const numDaysInMonth = new Date(year, month + 1, 0).getDate();
@@ -37,15 +46,20 @@ export const getMonthDaysArray = (
   if (prevMonthStart === numDaysInPrevMonth + 1) {
     prevMonthStart = 1;
   }
+
+  // Previous month days
   for (let i = 0; i < startDayOfWeekIndex; i++) {
     daysOfMonth.push({ value: prevMonthStart + i, month: "prev" });
   }
 
+  // Current month days
   for (let i = 1; i <= numDaysInMonth; i++) {
     daysOfMonth.push({ value: i, month: "current" });
   }
 
   const numDaysLeft = 42 - daysOfMonth.length;
+
+  // Next month days
   for (let i = 1; i <= numDaysLeft; i++) {
     const value = i;
     const status = "next";
