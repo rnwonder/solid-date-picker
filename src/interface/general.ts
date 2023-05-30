@@ -34,7 +34,7 @@ export type IDatePickerOnChange =
       type: "multiple";
     };
 
-export interface IDatePickerInputDataValue {
+export interface PickerValue {
   value: IDatePickerInputValueTypes;
   label: string;
 }
@@ -51,7 +51,7 @@ export interface IDatePickerInputValueTypes {
 }
 
 export interface IRenderInputJSXProps {
-  value: Accessor<IDatePickerInputDataValue>;
+  value: Accessor<PickerValue>;
   showDate: () => void;
 }
 
@@ -111,7 +111,7 @@ export interface IColors {
   backgroundColor?: string;
 }
 
-export type DisableDate =
+export type DateArray =
   | MakeOptionalRequired<DateObjectUnits>
   | {
       start: MakeOptionalRequired<DateObjectUnits>;
@@ -135,6 +135,7 @@ export interface ApplyDateRange {
   customDayClass?: string;
   isMultipleSelected: boolean;
   hidden: boolean;
+  disabled: boolean;
 }
 
 export interface CustomDaysClassName
@@ -143,3 +144,10 @@ export interface CustomDaysClassName
 }
 
 export type WeekDaysType = "short" | "single";
+
+export interface HoverRangeValue {
+  start?: DateObjectUnits;
+  end?: DateObjectUnits;
+}
+
+export type DateOption = DateObjectUnits | Date | number | string;

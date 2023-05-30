@@ -36,7 +36,7 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
     }
   });
   return (
-    <div class={"flex breakTwoCalendar:flex-col items-center  w-full"}>
+    <div class={"flex breakTwoCalendar:flex-col w-full"}>
       <div
         class={clsx({
           "px-4": !props.twoMonthsDisplay,

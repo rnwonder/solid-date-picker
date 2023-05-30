@@ -8,7 +8,8 @@ import type {
 import {
   ApplyDateRange,
   CustomDaysClassName,
-  DisableDate,
+  DateArray,
+  HoverRangeValue,
 } from "../interface/general";
 
 // Gets the current month and year days array
@@ -126,6 +127,11 @@ export const applyDateRangeProps = ({
   customDaysClassName,
   multipleObject,
   hideOutSideDays,
+  hoverRangeValue,
+  minDate,
+  maxDate,
+  disabledDays,
+  enabledDays,
 }: {
   startDay: DateObjectUnits | undefined;
   endDay: DateObjectUnits | undefined;
@@ -135,45 +141,50 @@ export const applyDateRangeProps = ({
   customDaysClassName?: CustomDaysClassName[];
   multipleObject: DateObjectUnits[];
   hideOutSideDays?: boolean;
+  hoverRangeValue: Accessor<HoverRangeValue>;
+  minDate?: MakeOptionalRequired<DateObjectUnits>;
+  maxDate?: MakeOptionalRequired<DateObjectUnits>;
+  disabledDays?: DateArray[];
+  enabledDays?: DateArray[];
 }): ApplyDateRange => {
   return {
     dayRangeStartEnd:
-      startDay &&
-      endDay &&
+      (hoverRangeValue().start || startDay) &&
+      (hoverRangeValue().end || endDay) &&
       (isDayTipRange({
         year: year(),
         month: month(),
         day: day.value,
-        dateRange: startDay,
+        dateRange: hoverRangeValue().start || startDay,
         monthStatus: day.month,
       }) ||
         isDayTipRange({
           year: year(),
           month: month(),
           day: day.value,
-          dateRange: endDay,
+          dateRange: hoverRangeValue().end || endDay,
           monthStatus: day.month,
         })),
     dayRangeBetween: isDayInBetweenRange({
       year: year(),
       month: month(),
       day: day.value,
-      startDate: startDay,
-      endDate: endDay,
+      startDate: hoverRangeValue().start || startDay,
+      endDate: hoverRangeValue().end || endDay,
       monthStatus: day.month,
     }),
     dayRangeStart: isDayTipRange({
       year: year(),
       month: month(),
       day: day.value,
-      dateRange: startDay,
+      dateRange: hoverRangeValue().start || startDay,
       monthStatus: day.month,
     }),
     dayRangeEnd: isDayTipRange({
       year: year(),
       month: month(),
       day: day.value,
-      dateRange: endDay,
+      dateRange: hoverRangeValue().end || endDay,
       monthStatus: day.month,
     }),
     daysCurrent:
@@ -203,6 +214,26 @@ export const applyDateRangeProps = ({
         multiple.day === day.value
     ),
     hidden: hideOutSideDays ? day.month !== "current" : false,
+    disabled:
+      isPartOfDisabledDays({
+        disabledDays,
+        day,
+        month: month(),
+        year: year(),
+      }) ||
+      isMinMaxDate({
+        day,
+        month: month,
+        year: year,
+        minDate: minDate,
+        maxDate: maxDate,
+      }) ||
+      isNotPartOfEnabledDays({
+        enabledDays,
+        day,
+        month: month(),
+        year: year(),
+      }),
   };
 };
 
@@ -292,7 +323,7 @@ export const isPartOfDisabledDays = ({
   day,
   year,
 }: {
-  disabledDays?: DisableDate[];
+  disabledDays?: DateArray[];
   day: IMonthDaysObject;
   month: number;
   year: number;
@@ -319,10 +350,150 @@ export const isPartOfDisabledDays = ({
   return !!foundData;
 };
 
+export const getRefactoredPrevDate = (year: number, month: number) => {
+  return {
+    year: month === 0 ? year - 1 : year,
+    month: month === 0 ? 11 : month - 1,
+  };
+};
+
+export const getRefactoredNextDate = (year: number, month: number) => {
+  return {
+    year: month === 11 ? year + 1 : year,
+    month: month === 11 ? 0 : month + 1,
+  };
+};
+
+export const isNotPartOfEnabledDays = ({
+  enabledDays,
+  day,
+  year,
+  month,
+  next,
+  prev,
+}: {
+  enabledDays?: DateArray[];
+  day?: IMonthDaysObject;
+  month: number;
+  year: number;
+  next?: boolean;
+  prev?: boolean;
+}) => {
+  if (!enabledDays) return false;
+  return enabledDays.every((enabled) => {
+    // for (const enabled of enabledDays) {
+    const targetDate = day
+      ? {
+          day: day.value,
+          month: getDatePickerRefactoredMonth(month, day.month),
+          year,
+        }
+      : {
+          year,
+          month,
+        };
+    if ("start" in enabled && "end" in enabled) {
+      // Range of enabled dates
+      const startDate = enabled.start;
+      const endDate = enabled.end;
+      if (isDateWithinRange(targetDate, startDate, endDate, { next, prev })) {
+        return false; // Date is enabled
+      }
+    } else {
+      // Single enabled date
+
+      if (isDatesEqual(targetDate, enabled)) {
+        return false; // Date is enabled
+      }
+    }
+    return true; // Date is not enabled
+  });
+};
+
+function isDatesEqual(
+  date1: DateObjectUnits,
+  date2: DateObjectUnits,
+  option?: {
+    next?: boolean;
+  }
+): boolean {
+  if (date1.day) {
+    return (
+      date1.year === date2.year &&
+      date1.month === date2.month &&
+      date1.day === date2.day
+    );
+  } else {
+    return date1.year === date2.year && date1.month === date2.month;
+  }
+}
+
+function isDateWithinRange(
+  date: DateObjectUnits,
+  startDate: DateObjectUnits,
+  endDate: DateObjectUnits,
+  option?: {
+    next?: boolean;
+    prev?: boolean;
+  }
+): boolean {
+  if (option?.next) {
+    return (
+      startDate.year === undefined ||
+      date.year === undefined ||
+      startDate.year > date.year ||
+      (date.year === startDate.year &&
+        (date.month === undefined ||
+          startDate.month === undefined ||
+          startDate.month >= date.month))
+    );
+  }
+
+  if (option?.prev) {
+    return (
+      endDate.year === undefined ||
+      date.year === undefined ||
+      endDate.year < date.year ||
+      (date.year === endDate.year &&
+        (date.month === undefined ||
+          endDate.month === undefined ||
+          endDate.month <= date.month))
+    );
+  }
+
+  const isAfterStart =
+    startDate.year === undefined ||
+    date.year === undefined ||
+    date.year > startDate.year ||
+    (date.year === startDate.year &&
+      (date.month === undefined ||
+        startDate.month === undefined ||
+        date.month > startDate.month ||
+        (date.month === startDate.month &&
+          (date.day
+            ? startDate.day === undefined || date.day >= startDate.day
+            : true))));
+
+  const isBeforeEnd =
+    endDate.year === undefined ||
+    date.year === undefined ||
+    date.year < endDate.year ||
+    (date.year === endDate.year &&
+      (date.month === undefined ||
+        endDate.month === undefined ||
+        date.month < endDate.month ||
+        (date.month === endDate.month &&
+          (date.day
+            ? endDate.day === undefined || date.day <= endDate.day
+            : true))));
+
+  return isAfterStart && isBeforeEnd;
+}
+
 export const isDateRangeDisabled = (
   startDate: Date,
   endDate: Date,
-  disabledDays?: DisableDate[]
+  disabledDays?: DateArray[]
 ): boolean => {
   for (
     let date = new Date(startDate);
@@ -345,6 +516,32 @@ export const isDateRangeDisabled = (
   }
 
   return false;
+};
+
+export const isDateRangeEnabled = (
+  startDate: Date,
+  endDate: Date,
+  enabledDays?: DateArray[]
+) => {
+  for (
+    let date = new Date(startDate);
+    date <= endDate;
+    date.setDate(date.getDate() + 1)
+  ) {
+    if (
+      isNotPartOfEnabledDays({
+        day: {
+          month: "current",
+          value: date.getDate(),
+        },
+        month: date.getMonth(),
+        year: date.getFullYear(),
+        enabledDays,
+      })
+    ) {
+      return true;
+    }
+  }
 };
 
 export const isWeekendStatus = ({
@@ -425,4 +622,119 @@ export const formatDateObject = (
       year: "numeric",
     }
   ).format(dateTime);
+};
+
+export const handleDateRange = ({
+  year,
+  day,
+  startDay,
+  endDay,
+  disabledDays,
+  month,
+  hover,
+  hoverEndDay,
+  enabledDays,
+}: {
+  startDay: DateObjectUnits | undefined;
+  endDay: DateObjectUnits | undefined;
+  year: Accessor<number>;
+  month: Accessor<number>;
+  day: IMonthDaysObject;
+  disabledDays?: DateArray[];
+  enabledDays?: DateArray[];
+  hover?: boolean;
+  hoverEndDay?: boolean;
+}): {
+  start?: DateObjectUnits;
+  end?: DateObjectUnits;
+  initial?: boolean;
+} => {
+  if (
+    ((startDay && endDay) || (!startDay && !endDay)) &&
+    !hover &&
+    !hoverEndDay
+  ) {
+    const dateObject = {
+      year: year(),
+      month: getDatePickerRefactoredMonth(month(), day.month),
+      day: day.value,
+    };
+    return {
+      start: dateObject,
+      end: undefined,
+      initial: true,
+    };
+  }
+  if (startDay && !endDay) {
+    const startDayDate = new Date(
+      startDay?.year!,
+      startDay?.month!,
+      startDay?.day
+    );
+    const endDayDate = new Date(
+      year(),
+      getDatePickerRefactoredMonth(month(), day.month),
+      day.value
+    );
+
+    if (startDayDate.getTime() === endDayDate.getTime()) {
+      return {
+        start: startDay,
+      };
+    }
+
+    if (
+      startDayDate.getTime() < endDayDate.getTime() &&
+      ((disabledDays &&
+        isDateRangeDisabled(startDayDate, endDayDate, disabledDays)) ||
+        (enabledDays &&
+          isDateRangeEnabled(startDayDate, endDayDate, enabledDays)))
+    ) {
+      if (hover) {
+        return {
+          start: startDay,
+        };
+      }
+      return {
+        start: convertDateToDateObject(endDayDate),
+        initial: true,
+      };
+    }
+
+    if (
+      startDayDate.getTime() > endDayDate.getTime() &&
+      ((disabledDays &&
+        isDateRangeDisabled(startDayDate, endDayDate, disabledDays)) ||
+        (enabledDays &&
+          isDateRangeEnabled(endDayDate, startDayDate, enabledDays)))
+    ) {
+      if (hover) {
+        return {
+          start: startDay,
+        };
+      }
+      return {
+        start: convertDateToDateObject(endDayDate),
+        initial: true,
+      };
+    }
+
+    if (startDayDate.getTime() < endDayDate.getTime()) {
+      return {
+        end: convertDateToDateObject(endDayDate),
+        start: startDay,
+      };
+    }
+
+    if (startDayDate.getTime() > endDayDate.getTime()) {
+      return {
+        start: convertDateToDateObject(endDayDate),
+        end: convertDateToDateObject(startDayDate),
+      };
+    }
+  }
+  return {
+    start: startDay,
+    end: endDay,
+  };
 };

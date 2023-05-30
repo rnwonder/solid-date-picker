@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { DatePickerGroup } from "./components/DatePickerGroup";
-import { IDatePickerInputDataValue } from "./interface/general";
+import { PickerValue } from "./interface/general";
 import { MonthSelector } from "./components/MonthSelector";
 import { YearSelector } from "./components/YearSelector";
 // import { utils } from "./utils";
@@ -9,7 +9,7 @@ import { YearSelector } from "./components/YearSelector";
 const App: Component = () => {
   const [value, setValue] = createSignal("");
   const [select, setSelect] = createSignal("");
-  const [date, setDate] = createSignal<IDatePickerInputDataValue>({
+  const [date, setDate] = createSignal<PickerValue>({
     label: "",
     value: {},
   });
@@ -29,24 +29,26 @@ const App: Component = () => {
       <DatePickerGroup
         value={date}
         setValue={setDate}
-        type={"multiple"}
+        type={"range"}
         monthSelectorFormat={"long"}
         shouldHighlightWeekends
-        startingMonth={7}
-        startingYear={2024}
+        // startingMonth={7}
+        // startingYear={2024}
+
+        // disableRangeHoverEffect
         // textColor={"blue"}
         primaryColor={"orange"}
         // weekDaysType={"single"}
-          weekEndDayTextColor={"blue"}
+        weekEndDayTextColor={"blue"}
         showEndOfRange
-        inputWrapperWidth={"fit-content"}
-        renderInput={({ value, showDate }) => (
-            <input onclick={showDate} style={{
-                width: "200px",
-                border: "1px solid #ccc",
-            }} />
-        )}
-        // twoMonthsDisplay
+        // inputWrapperWidth={"fit-content"}
+        // renderInput={({ value, showDate }) => (
+        //     <input onclick={showDate} style={{
+        //         width: "200px",
+        //         border: "1px solid #ccc",
+        //     }} />
+        // )}
+        twoMonthsDisplay
         // weekDaysType={"single"}
         hideOutSideDays
         // minDate={utils().getToday()}
@@ -55,6 +57,59 @@ const App: Component = () => {
         //   month: 4,
         //   day: 30,
         // }}
+        enabledDays={[
+          {
+            day: 14,
+            month: 1,
+            year: 2024,
+          },
+          {
+            start: {
+              day: 4,
+              month: 4,
+              year: 2023,
+            },
+            end: {
+              day: 10,
+              year: 2023,
+              month: 4,
+            },
+          },
+          {
+            start: {
+              day: 20,
+              month: 4,
+              year: 2023,
+            },
+            end: {
+              day: 26,
+              year: 2023,
+              month: 4,
+            },
+          },
+          {
+            start: {
+              day: 20,
+              month: 4,
+              year: 2024,
+            },
+            end: {
+              day: 26,
+              year: 2024,
+              month: 4,
+            },
+          },
+          {
+            day: 14,
+            month: 5,
+            year: 2023,
+          },
+          {
+            day: 14,
+            month: 1,
+            year: 2024,
+          },
+        ]}
         customDaysClassName={[
           {
             day: 30,
@@ -83,7 +138,7 @@ const App: Component = () => {
             // console.log(data.selectedDate);
           }
 
-          if(data.type === "multiple"){
+          if (data.type === "multiple") {
             // console.log(data.multipleDates)
           }
         }}

@@ -14,6 +14,7 @@ import {
   convertDateToDateObject,
   currentYear,
   getDatePickerRefactoredMonth,
+  handleDateRange,
   isDateRangeDisabled,
 } from "../../utils";
 import {
@@ -28,10 +29,11 @@ import {
   IYearRange,
   Locale,
   IColors,
-  DisableDate,
+  DateArray,
   MakeOptionalRequired,
   CustomDaysClassName,
   WeekDaysType,
+  HoverRangeValue,
 } from "../../interface/general";
 import { CalendarArea } from "../CalendarArea";
 
@@ -43,7 +45,10 @@ export interface DatePickerProps extends IColors {
 
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
+
   onChange?: (data: IDatePickerOnChange) => void;
+  onYearChange?: (year: number) => void;
+  onMonthChange?: (month: number) => void;
 
   ref?: any;
   value?: IDatePickerInputValueTypes;
@@ -80,12 +85,14 @@ export interface DatePickerProps extends IColors {
   hideOutSideDays?: boolean;
   twoMonthsDisplay?: boolean;
   showEndOfRange?: boolean;
+  disableRangeHoverEffect?: boolean;
 
   zIndex?: number;
   startingMonth?: number;
   startingYear?: number;
 
-  disabledDays?: DisableDate[];
+  disabledDays?: DateArray[];
+  enabledDays?: DateArray[];
   customDaysClassName?: CustomDaysClassName[];
   weekDaysType?: WeekDaysType;
 }
@@ -102,6 +109,9 @@ export const DatePicker = (props: DatePickerProps) => {
   );
   const [render, setRender] = createSignal(true);
   const [mounted, setMounted] = createSignal(false);
+  const [hoverRangeValue, setHoverRangeValue] = createSignal<HoverRangeValue>(
+    {}
+  );
 
   onMount(() => {
     if (
@@ -241,6 +251,14 @@ export const DatePicker = (props: DatePickerProps) => {
   });
 
   createEffect(() => {
+    props.onMonthChange?.(month());
+  });
+
+  createEffect(() => {
+    props.onYearChange?.(year());
+  });
+
+  createEffect(() => {
     if (props.type !== "single") return;
     if (!mounted()) return;
     const agg = {
@@ -295,58 +313,22 @@ export const DatePicker = (props: DatePickerProps) => {
     }
 
     if (props.type === "range") {
-      if ((startDay() && endDay()) || (!startDay() && !endDay())) {
-        setStartDay(undefined);
-        setEndDay(undefined);
-        setStartDay({
-          year: year(),
-          month: getDatePickerRefactoredMonth(
-            props.month?.() || month(),
-            day.month
-          ),
-          day: day.value,
+      const { end, start, initial } = handleDateRange({
+        day,
+        month,
+        year,
+        endDay: endDay(),
+        startDay: startDay(),
+        disabledDays: props.disabledDays,
+        enabledDays: props.enabledDays,
+      });
+      setStartDay(start);
+      setEndDay(end);
+      if (initial && !props.disableRangeHoverEffect) {
+        setHoverRangeValue({
+          start: start,
+          end: undefined,
         });
-      }
-      if (startDay() && !endDay()) {
-        const startDayDate = new Date(
-          startDay()?.year!,
-          startDay()?.month!,
-          startDay()?.day
-        );
-        const endDayDate = new Date(
-          year(),
-          getDatePickerRefactoredMonth(month(), day.month),
-          day.value
-        );
-
-        if (startDayDate.getTime() === endDayDate.getTime()) {
-          return;
-        }
-
-        if (
-          startDayDate.getTime() < endDayDate.getTime() &&
-          isDateRangeDisabled(startDayDate, endDayDate, props.disabledDays)
-        ) {
-          setStartDay(convertDateToDateObject(endDayDate));
-          return;
-        }
-
-        if (
-          startDayDate.getTime() > endDayDate.getTime() &&
-          isDateRangeDisabled(endDayDate, startDayDate, props.disabledDays)
-        ) {
-          setStartDay(convertDateToDateObject(endDayDate));
-          return;
-        }
-
-        if (startDayDate.getTime() < endDayDate.getTime()) {
-          setEndDay(convertDateToDateObject(endDayDate));
-        }
-
-        if (startDayDate.getTime() > endDayDate.getTime()) {
-          setStartDay(convertDateToDateObject(endDayDate));
-          setEndDay(convertDateToDateObject(startDayDate));
-        }
       }
     }
 
@@ -422,6 +404,42 @@ export const DatePicker = (props: DatePickerProps) => {
     setMonth(newMonth);
     props.setMonth?.(newMonth);
     setRender(false);
+  };
+
+  const onHoverDay = (
+    day: IMonthDaysObject,
+    month: Accessor<number>,
+    year: Accessor<number>
+  ) => {
+    if (props.disableRangeHoverEffect) return;
+    if (props.type !== "range") return;
+    if (!hoverRangeValue()?.start) return;
+    const { end, start } = handleDateRange({
+      day,
+      month,
+      year,
+      endDay: hoverRangeValue()?.end,
+      startDay: hoverRangeValue()?.start,
+      disabledDays: props.disabledDays,
+      hover: true,
+      enabledDays: props.enabledDays,
+    });
+
+    setHoverRangeValue({
+      start,
+      end,
+    });
+  };
+
+  const onHoverDayEnd = () => {
+    if (props.disableRangeHoverEffect) return;
+    if (props.type !== "range") return;
+    if (!hoverRangeValue()?.start) return;
+    if (startDay() && endDay()) return;
+    setHoverRangeValue({
+      start: startDay(),
+      end: undefined,
+    });
   };
 
   // Render Custom JSX
@@ -530,20 +548,16 @@ export const DatePicker = (props: DatePickerProps) => {
           {calendarJSX || (
             <CalendarArea
               {...props}
-              locale={props.locale}
               year={props.year || year}
               month={props.month || month}
               endDay={endDay}
               startDay={startDay}
               handleDayClick={handleDayClick}
-              maxDate={props.maxDate}
-              minDate={props.minDate}
-              primaryColor={props.primaryColor}
-              primaryTextColor={props.primaryTextColor}
-              secondaryColor={props.secondaryColor}
-              secondaryTextColor={props.secondaryTextColor}
               multipleObject={multipleObject}
               weekDaysJSX={weekDaysJSX}
+              onHoverDay={onHoverDay}
+              hoverRangeValue={hoverRangeValue}
+              onHoverDayEnd={onHoverDayEnd}
             />
           )}
         </Show>

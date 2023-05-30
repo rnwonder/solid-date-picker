@@ -2,18 +2,17 @@ import { Accessor, Component, For } from "solid-js";
 import {
   applyDateRangeProps,
   getMonthDaysArray,
-  isMinMaxDate,
-  isPartOfDisabledDays,
 } from "../../utils";
 import { DatePickerDay } from "../DatePickerDay";
 import { DatePickerWeek } from "../DatePickerWeek";
 import {
   DateObjectUnits,
   IColors,
-  DisableDate,
+  DateArray,
   MakeOptionalRequired,
   CustomDaysClassName,
   HandleDayClick,
+  HoverRangeValue,
 } from "../../interface/general";
 
 export interface CalendarDaysProps extends IColors {
@@ -25,7 +24,8 @@ export interface CalendarDaysProps extends IColors {
 
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
-  disabledDays?: DisableDate[];
+  disabledDays?: DateArray[];
+  enabledDays?: DateArray[];
   customDaysClassName?: CustomDaysClassName[];
   multipleObject: Accessor<DateObjectUnits[]>;
   shouldHighlightWeekends?: boolean;
@@ -34,6 +34,9 @@ export interface CalendarDaysProps extends IColors {
 
   nextMonth?: boolean;
   twoMonthsDisplay?: boolean;
+  onHoverDay: HandleDayClick;
+  onHoverDayEnd: HandleDayClick;
+  hoverRangeValue: Accessor<HoverRangeValue>;
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
   return (
@@ -51,6 +54,11 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
               customDaysClassName: props.customDaysClassName,
               multipleObject: props.multipleObject(),
               hideOutSideDays: props.hideOutSideDays,
+              hoverRangeValue: props.hoverRangeValue,
+              enabledDays: props.enabledDays,
+              minDate: props.minDate,
+              maxDate: props.maxDate,
+              disabledDays: props.disabledDays,
             })}
             onClick={() =>
               props.handleDayClick(
@@ -60,20 +68,21 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
                 props.nextMonth || false
               )
             }
-            disabled={
-              isPartOfDisabledDays({
-                disabledDays: props.disabledDays,
+            onHover={() =>
+              props.onHoverDay(
                 day,
-                month: props.month(),
-                year: props.year(),
-              }) ||
-              isMinMaxDate({
+                props.month,
+                props.year,
+                props.nextMonth || false
+              )
+            }
+            onHoverEnd={() =>
+              props.onHoverDayEnd(
                 day,
-                month: props.month,
-                year: props.year,
-                minDate: props.minDate,
-                maxDate: props.maxDate,
-              })
+                props.month,
+                props.year,
+                props.nextMonth || false
+              )
             }
             primaryColor={props.primaryColor}
             primaryTextColor={props.primaryTextColor}
@@ -82,6 +91,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
             disabledDays={props.disabledDays}
             shouldHighlightWeekends={props.shouldHighlightWeekends}
             onDisabledDayError={props.onDisabledDayError}
+            hoverRangeValue={props.hoverRangeValue}
           >
             {day.value}
           </DatePickerDay>

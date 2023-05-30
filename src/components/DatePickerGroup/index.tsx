@@ -1,6 +1,6 @@
 import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
 import {
-  IDatePickerInputDataValue,
+  PickerValue,
   IDatePickerOnChange,
   IDatePickerType,
   IRenderInput,
@@ -16,8 +16,8 @@ export interface DatePickerInputSJProps
     "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"
   > {
   type?: IDatePickerType;
-  value: Accessor<IDatePickerInputDataValue>;
-  setValue?: Setter<IDatePickerInputDataValue>;
+  value: Accessor<PickerValue>;
+  setValue?: Setter<PickerValue>;
   onChange?: (data: IDatePickerOnChange) => void;
   componentsToAllowOutsideClick?: Array<HTMLElement>;
   renderInput?: IRenderInput;

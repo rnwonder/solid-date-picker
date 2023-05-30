@@ -4,9 +4,11 @@ import { Popover } from "../Popover";
 import { Button } from "../Button";
 import {
   DateObjectUnits,
+  DateArray,
   IColors,
   MakeOptionalRequired,
 } from "../../interface/general";
+import { isNotPartOfEnabledDays } from "../../utils";
 
 interface SelectorProps extends IColors {
   option: Accessor<number>;
@@ -22,6 +24,7 @@ interface SelectorProps extends IColors {
 
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
+  enabledDays?: DateArray[];
 
   twoMonthsDisplay?: boolean;
 }
@@ -43,24 +46,49 @@ export const Selector = (props: SelectorProps) => {
   };
 
   const isDisabled = (value: string, index: Accessor<number>): boolean => {
-    if (props.useValueAsName && (props.minDate || props.maxDate)) {
-      return (
-        (props.minDate?.year ? Number(value) < props.minDate?.year : false) ||
-        (props.maxDate?.year ? Number(value) > props.maxDate?.year : false)
-      );
-    }
-    if (!props.useValueAsName && (props.minDate || props.maxDate)) {
-      return (
-        (props.minDate
-          ? (props.minDate.year === props.year?.() &&
-              index() < props.minDate.month) ||
-            props.minDate?.year > (props.year?.() || 0)
-          : false) ||
-        (props.maxDate
-          ? props.maxDate.year === props.year?.() &&
-            index() > props.maxDate.month
-          : false)
-      );
+    // year
+    if (props.useValueAsName) {
+      if (props.minDate || props.maxDate) {
+        return (
+          (props.minDate?.year ? Number(value) < props.minDate?.year : false) ||
+          (props.maxDate?.year ? Number(value) > props.maxDate?.year : false)
+        );
+      }
+
+      if (props.enabledDays) {
+        return props.enabledDays.every((enabled) => {
+          if ("start" in enabled && "end" in enabled) {
+            return (
+              enabled.start.year !== Number(value) ||
+              enabled.end.year !== Number(value)
+            );
+          }
+          return enabled.year !== Number(value);
+        });
+      }
+    } else {
+      // month
+      if (props.minDate || props.maxDate) {
+        return (
+          (props.minDate
+            ? (props.minDate.year === props.year?.() &&
+                index() < props.minDate.month) ||
+              props.minDate?.year > (props.year?.() || 0)
+            : false) ||
+          (props.maxDate
+            ? props.maxDate.year === props.year?.() &&
+              index() > props.maxDate.month
+            : false)
+        );
+      }
+
+      if (props.enabledDays && props.year?.()) {
+        return isNotPartOfEnabledDays({
+          year: props.year?.(),
+          month: index(),
+          enabledDays: props.enabledDays,
+        });
+      }
     }
     return false;
   };
@@ -129,6 +157,7 @@ export const Selector = (props: SelectorProps) => {
                       ? "bg-primary text-white hover:bg-primary hover:text-white selector-option-selected"
                       : ""
                   }
+
                 `,
                   props.className
                 )}
@@ -139,7 +168,8 @@ export const Selector = (props: SelectorProps) => {
                         color: props.primaryTextColor,
                       }
                     : {}),
-                  ...(props.textColor && !isSelected(value, index) && { color: props.textColor }),
+                  ...(props.textColor &&
+                    !isSelected(value, index) && { color: props.textColor }),
                 }}
                 onClick={() => handleOptionClick(index(), value, close)}
                 data-selected={isSelected(value, index)}

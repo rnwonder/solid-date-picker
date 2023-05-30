@@ -4,10 +4,16 @@ import {
   Show,
   createEffect,
   createSignal,
+  Accessor,
 } from "solid-js";
 import { Button } from "../Button";
 import clsx from "clsx";
-import { ApplyDateRange, DisableDate, IColors } from "../../interface/general";
+import {
+  ApplyDateRange,
+  DateArray,
+  HoverRangeValue,
+  IColors,
+} from "../../interface/general";
 
 interface DatePickerDayProps extends IColors, Partial<ApplyDateRange> {
   header?: boolean;
@@ -15,9 +21,12 @@ interface DatePickerDayProps extends IColors, Partial<ApplyDateRange> {
   onClick?: () => void;
   disabled?: boolean;
 
-  disabledDays?: DisableDate[];
+  disabledDays?: DateArray[];
   shouldHighlightWeekends?: boolean;
   onDisabledDayError?: () => void;
+  onHover?: () => void;
+  onHoverEnd?: () => void;
+  hoverRangeValue?: Accessor<HoverRangeValue>;
 }
 
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
@@ -65,6 +74,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         text-center
         uppercase
         relative
+        ${props.hidden && "pointer-events-none"}
         ${
           props.dayRangeBetween && !props.hidden
             ? `bg-[#56A4D3] bg-opacity-50`
@@ -126,6 +136,8 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             }
           : {}),
       }}
+      onMouseEnter={props.onHover}
+      onMouseLeave={props.onHoverEnd}
     >
       <Show when={props.header && !props.hidden} keyed>
         {props.children}
@@ -139,6 +151,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           date-picker-day-number
           text-center          
           relative
+          transition-none
           ${
             props.dayRangeStart || props.dayRangeEnd
               ? "text-white day-number-range-start-or-end"

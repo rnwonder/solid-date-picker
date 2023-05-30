@@ -9,9 +9,15 @@ import {
   IColors,
   MakeOptionalRequired,
   DateObjectUnits,
+  DateArray,
 } from "../../interface/general";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
+import {
+  getRefactoredNextDate,
+  getRefactoredPrevDate,
+  isNotPartOfEnabledDays,
+} from "../../utils";
 
 export interface DatePickerTopProps extends IColors {
   handlePrevMonth: () => void;
@@ -37,27 +43,44 @@ export interface DatePickerTopProps extends IColors {
   prevButtonAreaJSX?: JSXElement;
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
+  enabledDays?: DateArray[];
 
   twoMonthsDisplay?: boolean;
 }
 
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
   const isPrevButtonDisabled = () => {
-    if (!props.minDate) return false;
-    if (props.year() < props.minDate.year) return true;
-    if (props.year() === props.minDate.year) {
-      if (props.month() - 1 < props.minDate.month) return true;
+    if (!props.minDate && !props.enabledDays) return false;
+    if (props.minDate) {
+      if (props.year() < props.minDate.year) return true;
+      if (props.year() === props.minDate.year) {
+        if (props.month() - 1 < props.minDate.month) return true;
+      }
     }
-    return false;
+    const { month, year } = getRefactoredPrevDate(props.year(), props.month());
+    return isNotPartOfEnabledDays({
+      enabledDays: props.enabledDays,
+      year,
+      month,
+      prev: true
+    });
   };
 
   const isNextButtonDisabled = () => {
-    if (!props.maxDate) return false;
-    if (props.year() > props.maxDate.year) return true;
-    if (props.year() === props.maxDate.year) {
-      if (props.month() + 1 > props.maxDate.month) return true;
+    if (!props.maxDate && !props.enabledDays) return false;
+    if (props.maxDate) {
+      if (props.year() > props.maxDate.year) return true;
+      if (props.year() === props.maxDate.year) {
+        if (props.month() + 1 > props.maxDate.month) return true;
+      }
     }
-    return false;
+    const { year, month } = getRefactoredNextDate(props.year(), props.month());
+    return isNotPartOfEnabledDays({
+      enabledDays: props.enabledDays,
+      year,
+      month,
+      next: true
+    });
   };
   return (
     <div

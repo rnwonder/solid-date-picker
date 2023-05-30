@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -61,6 +61,7 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.3",
+    "@sentry/browser": "^7.53.1",
     "@types/node": "^20.2.1",
     "@vitest/ui": "^0.31.1",
     "autoprefixer": "^10.4.14",
