@@ -16,22 +16,20 @@ interface CalendarAreaProps extends CalendarDaysProps {
   weekDaysType?: WeekDaysType;
 }
 export const CalendarArea: Component<CalendarAreaProps> = (props) => {
-  const [prevYear, setPrevYear] = createSignal(0);
   const [nextYear, setNextYear] = createSignal(0);
-  const [prevMonth, setPrevMonth] = createSignal(0);
   const [nextMonth, setNextMonth] = createSignal(0);
 
   createEffect(() => {
     if (props.month() === 0) {
-      setPrevYear(props.year() - 1);
-      setPrevMonth(11);
+      // setPrevYear(props.year() - 1);
+      // setPrevMonth(11);
     } else if (props.month() === 11) {
       setNextYear(props.year() + 1);
       setNextMonth(0);
     } else {
-      setPrevYear(props.year());
+      // setPrevYear(props.year());
       setNextYear(props.year());
-      setPrevMonth(props.month() - 1);
+      // setPrevMonth(props.month() - 1);
       setNextMonth(props.month() + 1);
     }
   });
@@ -49,6 +47,7 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
             weekDaysNameColor={props.weekDaysNameColor}
             weekDaysType={props.weekDaysType}
             locale={props.locale}
+            weekStartDay={props.weekStartDay}
           />
         )}
         <CalendarDays {...props} />
@@ -67,6 +66,7 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
               weekDaysNameColor={props.weekDaysNameColor}
               weekDaysType={props.weekDaysType}
               locale={props.locale}
+              weekStartDay={props.weekStartDay}
             />
           )}
           <CalendarDays
