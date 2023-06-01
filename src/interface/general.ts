@@ -102,6 +102,7 @@ export interface IColors {
   secondaryTextColor?: string;
 
   textColor?: string;
+  arrowsColor?: string;
 
   weekEndDayBgColor?: string;
   weekEndDayTextColor?: string;

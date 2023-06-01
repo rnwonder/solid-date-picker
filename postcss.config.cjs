@@ -1,6 +1,9 @@
-module.exports = ({ env }) => ({
+const purgecss = require('@fullhuman/postcss-purgecss')
+
+module.exports = {
   plugins: [
-    require("tailwindcss")(),
-    require("autoprefixer")(),
+    require('tailwindcss'),
+    require('autoprefixer'),
+
   ],
-});
+}

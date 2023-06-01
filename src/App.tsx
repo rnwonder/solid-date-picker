@@ -4,12 +4,17 @@ import { DatePickerGroup } from "./components/DatePickerGroup";
 import { PickerValue } from "./interface/general";
 import { MonthSelector } from "./components/MonthSelector";
 import { YearSelector } from "./components/YearSelector";
-// import { utils } from "./utils";
+import { utils } from "./utils";
 
 const App: Component = () => {
   const [value, setValue] = createSignal("");
   const [select, setSelect] = createSignal("");
   const [date, setDate] = createSignal<PickerValue>({
+    label: "",
+    value: {},
+  });
+
+  const [singleCustomDate, setSingleCustomDate] = createSignal<PickerValue>({
     label: "",
     value: {},
   });
@@ -25,6 +30,83 @@ const App: Component = () => {
           display: "flex",
         }}
       ></div>
+
+      <DatePickerGroup
+        weekDaysType="single"
+        value={singleCustomDate}
+        backgroundColor="#FFEE00"
+        calendarTopAreaJSX={
+          <div class="top-area">
+            <h6>CyberPunk DatePicker</h6>
+            <p>
+              Huh? I can add <code>top</code>, <code>left</code>,{" "}
+              <code>right</code> and <code>bottom</code> jsx? So cool!
+            </p>
+          </div>
+        }
+        calendarLeftAreaJSX={({ handleNextMonth, handlePrevMonth }) => (
+          <div class="side-area">
+            <button onClick={handlePrevMonth}>{`<`}</button>
+            <button onClick={handleNextMonth}>{`>`}</button>
+          </div>
+        )}
+        calendarRightAreaJSX={({
+          year,
+          setYear,
+          setRefToAllowOutsideClick,
+          month,
+          setMonth,
+        }) => (
+          <div class="side-area right">
+            <div>
+              <MonthSelector
+                month={month}
+                setMonth={setMonth}
+                ref={setRefToAllowOutsideClick}
+                backgroundColor="#FFEE00"
+              />
+              <YearSelector
+                setYear={setYear}
+                year={year}
+                ref={setRefToAllowOutsideClick}
+                backgroundColor="#FFEE00"
+              />
+            </div>
+          </div>
+        )}
+        calendarBottomAreaJSX={({ selectedDate }) => (
+          <div class="bottom-area">
+            {utils().formatDateObject(selectedDate() || {})}
+          </div>
+        )}
+        renderInput={({ showDate, value }) => (
+          <div class="custom-input">
+            <input value={value().label} readOnly />
+            <button onClick={showDate}>c</button>
+          </div>
+        )}
+        weekDaysNameColor="green"
+        onChange={(data) => {
+          if (data.type === "single") {
+            const label = `${data.selectedDate?.day || 1}/${
+              data.selectedDate?.month || 1
+            }/${data.selectedDate?.year || 2023}`;
+
+            const ISODate = new Date(
+              data.selectedDate?.year || 2023,
+              data.selectedDate?.month || 1,
+              data.selectedDate?.day || 1
+            ).toISOString();
+
+            setSingleCustomDate({
+              label: label,
+              value: {
+                selected: ISODate,
+              },
+            });
+          }
+        }}
+      />
 
       <DatePickerGroup
         value={date}
@@ -57,62 +139,62 @@ const App: Component = () => {
         //   month: 4,
         //   day: 30,
         // }}
-          rangeDatesSeparator={}
-        multipleDatesSeparator={}
+
+
         weekStartDay={1}
-        enabledDays={[
-          {
-            day: 14,
-            month: 1,
-            year: 2024,
-          },
-          {
-            start: {
-              day: 4,
-              month: 4,
-              year: 2023,
-            },
-            end: {
-              day: 10,
-              year: 2023,
-              month: 4,
-            },
-          },
-          {
-            start: {
-              day: 20,
-              month: 4,
-              year: 2023,
-            },
-            end: {
-              day: 26,
-              year: 2023,
-              month: 4,
-            },
-          },
-          {
-            start: {
-              day: 20,
-              month: 4,
-              year: 2024,
-            },
-            end: {
-              day: 26,
-              year: 2024,
-              month: 4,
-            },
-          },
-          {
-            day: 14,
-            month: 5,
-            year: 2023,
-          },
-          {
-            day: 14,
-            month: 1,
-            year: 2024,
-          },
-        ]}
+        // enabledDays={[
+        //   {
+        //     day: 14,
+        //     month: 1,
+        //     year: 2024,
+        //   },
+        //   {
+        //     start: {
+        //       day: 4,
+        //       month: 4,
+        //       year: 2023,
+        //     },
+        //     end: {
+        //       day: 10,
+        //       year: 2023,
+        //       month: 4,
+        //     },
+        //   },
+        //   {
+        //     start: {
+        //       day: 20,
+        //       month: 4,
+        //       year: 2023,
+        //     },
+        //     end: {
+        //       day: 26,
+        //       year: 2023,
+        //       month: 4,
+        //     },
+        //   },
+        //   {
+        //     start: {
+        //       day: 20,
+        //       month: 4,
+        //       year: 2024,
+        //     },
+        //     end: {
+        //       day: 26,
+        //       year: 2024,
+        //       month: 4,
+        //     },
+        //   },
+        //   {
+        //     day: 14,
+        //     month: 5,
+        //     year: 2023,
+        //   },
+        //   {
+        //     day: 14,
+        //     month: 1,
+        //     year: 2024,
+        //   },
+        // ]}
         customDaysClassName={[
           {
             day: 30,
