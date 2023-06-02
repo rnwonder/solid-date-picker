@@ -15,7 +15,6 @@ import {
   currentYear,
   getDatePickerRefactoredMonth,
   handleDateRange,
-  isDateRangeDisabled,
 } from "../../utils";
 import {
   DateObjectUnits,
@@ -552,7 +551,7 @@ export const DatePicker = (props: DatePickerProps) => {
         )}
       </Show>
 
-      <div class={"flex"}>
+      <div class={"flex justify-center"}>
         <Show when={calendarLeftAreaJSX} keyed>
           {calendarLeftAreaJSX}
         </Show>

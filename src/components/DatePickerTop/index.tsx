@@ -106,10 +106,10 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           disabled={isPrevButtonDisabled()}
           onClick={props.handlePrevMonth}
           style={{
-            ...(props.textColor && { color: props.textColor }),
+            ...(props.arrowsColor && { color: props.arrowsColor }),
           }}
         >
-          {props.prevIcon || <PrevIcon color={props.textColor} />}
+          {props.prevIcon || <PrevIcon color={props.arrowsColor} />}
         </Button>
       </Show>
 
@@ -130,10 +130,10 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           onClick={props.handleNextMonth}
           disabled={isNextButtonDisabled()}
           style={{
-            ...(props.textColor && { color: props.textColor }),
+            ...(props.arrowsColor && { color: props.arrowsColor }),
           }}
         >
-          {props.nextIcon || <NextIcon color={props.textColor} />}
+          {props.nextIcon || <NextIcon color={props.arrowsColor} />}
         </Button>
       </Show>
 

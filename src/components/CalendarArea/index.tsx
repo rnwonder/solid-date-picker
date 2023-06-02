@@ -21,20 +21,16 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
 
   createEffect(() => {
     if (props.month() === 0) {
-      // setPrevYear(props.year() - 1);
-      // setPrevMonth(11);
     } else if (props.month() === 11) {
       setNextYear(props.year() + 1);
       setNextMonth(0);
     } else {
-      // setPrevYear(props.year());
       setNextYear(props.year());
-      // setPrevMonth(props.month() - 1);
       setNextMonth(props.month() + 1);
     }
   });
   return (
-    <div class={"flex breakTwoCalendar:flex-col w-full"}>
+    <div class={"flex breakTwoCalendar:flex-col"}>
       <div
         class={clsx({
           "px-4": !props.twoMonthsDisplay,

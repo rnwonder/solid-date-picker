@@ -26,5 +26,10 @@ module.exports = {
       desktop: "1280px",
     },
   },
+  daisyui: {
+    themes: false,
+  },
+
   plugins: [require("daisyui")],
+  
 };

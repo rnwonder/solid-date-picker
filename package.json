@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.4.1",
+  "version": "0.4.6",
   "description": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -53,13 +53,14 @@
     "test": "vitest --ui"
   },
   "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
-  "homepage": "https://github.com/rnwonder/solid-date-picker",
+  "homepage": "https://date-picker-doc-rnwonder.vercel.app",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rnwonder/solid-date-picker.git"
   },
   "license": "MIT",
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
     "@rollup/plugin-terser": "^0.4.3",
     "@sentry/browser": "^7.53.1",
     "@types/node": "^20.2.1",
@@ -74,6 +75,7 @@
     "tailwindcss": "^3.3.2",
     "typescript": "^4.9.5",
     "vite": "^4.1.1",
+    "vite-plugin-compression": "^0.5.1",
     "vite-plugin-dts": "^2.3.0",
     "vite-plugin-solid": "^2.5.0",
     "vitest": "^0.31.1"

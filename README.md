@@ -100,6 +100,7 @@ You can style the datepicker using the following classes or data attributes.
 
 | Props                 | Type     | Default   | Description                                                |
 | --------------------- | -------- | --------- | ---------------------------------------------------------- |
+| `arrowsColor`         | `string` | `#000000` | This is the color of the arrows                            |
 | `backgroundColor`     | `string` | `#fffff`  | This is the background color for the calendar              |
 | `primaryColor`        | `string` | `#0277bd` | This is the primary background color for the calendar      |
 | `primaryTextColor`    | `string` | `#fffff`  | This is the primary text color for the calendar            |
@@ -178,3 +179,6 @@ You can style the datepicker using the following classes or data attributes.
 #### Feel free to open an issue [here](https://github.com/rnwonder/solid-date-picker/issues) if you run into any problem while using this library.
 
 #### You can also contribute to this project [here](https://github.com/rnwonder/solid-date-picker/pulls).
+
+<a href="https://www.buymeacoffee.com/rnwonderw" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40px" width="170px"></a>
+
