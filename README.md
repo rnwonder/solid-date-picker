@@ -27,7 +27,6 @@ This package depends on `solid-js` so you need to have it installed
 ## Usage
 
 ```tsx
-import "@rnwonder/solid-date-picker/dist/index.css";
 import DatePicker, { PickerValue } from "@rnwonder/solid-date-picker";
 
 const App = () => {
