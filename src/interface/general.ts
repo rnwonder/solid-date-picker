@@ -93,7 +93,8 @@ export interface IYearRange {
   end: number;
 }
 
-export type Locale = string | string[];
+const _date = new Date();
+export type Locale = typeof _date.toLocaleDateString;
 
 export interface IColors {
   primaryColor?: string;
