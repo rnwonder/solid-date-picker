@@ -151,4 +151,41 @@ export interface HoverRangeValue {
   end?: DateObjectUnits;
 }
 
-export type DateOption = DateObjectUnits | Date | number | string;
+export interface ClassNames {
+  inputClass?: string;
+  inputWrapperClass?: string;
+  datePickerWrapperClass?: string;
+  datePickerTopAreaClass?: string;
+  prevNextMonthBtnClass?: string
+  prevMonthBtnClass?: string;
+  nextMonthBtnClass?: string;
+  datePickerTopMonthYearAreaClass?: string;
+  monthYearTriggerBtnClass?: string;
+  monthYearSelectorWrapperClass?: string;
+  monthYearOptionBtnClass?: string;
+  monthYearOptionBtnActiveClass?: string;
+  datePickerBodyAreaClass?: string;
+  calendarWrapperClass?: string;
+  calendarOneAreaClass?: string;
+  calendarTwoAreaClass?: string;
+  calendarDividerClass?: string;
+  weekNamesRowClass?: string;
+  weekNamesClass?: string;
+  daysRowClass?: string;
+  daysWrapperClass?: string;
+  daysBtnClass?: string;
+  daysActiveRangeBetweenBtnClass?: string;
+  daysActivePrimaryBtnClass?: string;
+  currentDayBtnClass?: string;
+  weekEndDaysBtnClass?: string;
+  sundaysBtnClass?: string;
+  saturdaysBtnClass?: string;
+  daysNotInCurrentMonthBtnClass?: string;
+  daysActiveRangeStartBtnClass?: string;
+  daysActiveRangeEndBtnClass?: string;
+
+  daysActiveRangeStartWrapperClass?: string;
+  daysActiveRangeEndWrapperClass?: string;
+  daysActivePrimaryWrapperClass?: string;
+  daysActiveRangeBetweenWrapperClass?: string;
+}

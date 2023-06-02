@@ -30,16 +30,22 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
     }
   });
   return (
-    <div class={"flex breakTwoCalendar:flex-col"}>
+    <div
+      class={clsx("flex breakTwoCalendar:flex-col", props.calendarWrapperClass)}
+    >
       <div
-        class={clsx({
-          "px-4": !props.twoMonthsDisplay,
-          "aboveBreakTwoCalendar:pl-4 breakTwoCalendar:px-4":
-            props.twoMonthsDisplay,
-        })}
+        class={clsx(
+          {
+            "px-4": !props.twoMonthsDisplay,
+            "aboveBreakTwoCalendar:pl-4 breakTwoCalendar:px-4":
+              props.twoMonthsDisplay,
+          },
+          props.calendarOneAreaClass
+        )}
       >
         {props.weekDaysJSX || (
           <WeekDays
+            {...props}
             weekDaysNameColor={props.weekDaysNameColor}
             weekDaysType={props.weekDaysType}
             locale={props.locale}
@@ -50,15 +56,24 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
       </div>
 
       <Show when={props.twoMonthsDisplay} keyed>
-        <div class="divider aboveBreakTwoCalendar:divider-horizontal aboveBreakTwoCalendar:mx-2 aboveBreakTwoCalendar:w-fit "></div>
         <div
-          class={clsx({
-            "aboveBreakTwoCalendar:pr-4 breakTwoCalendar:px-4":
-              props.twoMonthsDisplay,
-          })}
+          class={clsx(
+            "divider aboveBreakTwoCalendar:divider-horizontal aboveBreakTwoCalendar:mx-2 aboveBreakTwoCalendar:w-fit ",
+            props.calendarDividerClass
+          )}
+        ></div>
+        <div
+          class={clsx(
+            {
+              "aboveBreakTwoCalendar:pr-4 breakTwoCalendar:px-4":
+                props.twoMonthsDisplay,
+            },
+            props.calendarTwoAreaClass
+          )}
         >
           {props.weekDaysJSX || (
             <WeekDays
+              {...props}
               weekDaysNameColor={props.weekDaysNameColor}
               weekDaysType={props.weekDaysType}
               locale={props.locale}

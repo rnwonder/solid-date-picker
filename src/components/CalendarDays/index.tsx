@@ -10,9 +10,10 @@ import {
   CustomDaysClassName,
   HandleDayClick,
   HoverRangeValue,
+  ClassNames,
 } from "../../interface/general";
 
-export interface CalendarDaysProps extends IColors {
+export interface CalendarDaysProps extends IColors, ClassNames {
   month: Accessor<number>;
   year: Accessor<number>;
   handleDayClick: HandleDayClick;
@@ -39,7 +40,7 @@ export interface CalendarDaysProps extends IColors {
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
   return (
-    <DatePickerWeek>
+    <DatePickerWeek daysRowClass={props.daysRowClass}>
       <For
         each={getMonthDaysArray(props.month(), props.year(), {
           weekStartDay: props.weekStartDay,
@@ -47,7 +48,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
       >
         {(day) => (
           <DatePickerDay
-            {...props}
+            {...{ ...props, calendarWeekDaysNameClass: undefined }}
             {...applyDateRangeProps({
               year: props.year,
               day,

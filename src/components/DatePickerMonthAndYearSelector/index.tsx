@@ -2,6 +2,7 @@ import { Component, createEffect, createSignal, Show } from "solid-js";
 import { DatePickerTopProps } from "../DatePickerTop";
 import { MonthSelector } from "../MonthSelector";
 import { YearSelector } from "../YearSelector";
+import clsx from "clsx";
 
 interface DatePickerMonthAndYearSelectorProps
   extends Omit<DatePickerTopProps, "handlePrevMonth" | "handleNextMonth"> {}
@@ -28,9 +29,12 @@ export const DatePickerMonthAndYearSelector: Component<
 
   return (
     <div
-      class={`flex date-month-year-selector-area ${
-        props.monthYearSelectorFlexDirection === "column" ? "flex-col" : ""
-      }`}
+      class={clsx(
+        `flex date-month-year-selector-area justify-center items-center ${
+          props.monthYearSelectorFlexDirection === "column" ? "flex-col" : ""
+        }`,
+        props.datePickerTopMonthYearAreaClass
+      )}
       data-type={"date-month-year-selector-area"}
     >
       <Show when={props.render()} keyed>

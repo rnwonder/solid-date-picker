@@ -10,12 +10,16 @@ import { Button } from "../Button";
 import clsx from "clsx";
 import {
   ApplyDateRange,
+  ClassNames,
   DateArray,
   HoverRangeValue,
   IColors,
 } from "../../interface/general";
 
-interface DatePickerDayProps extends IColors, Partial<ApplyDateRange> {
+interface DatePickerDayProps
+  extends IColors,
+    Partial<ApplyDateRange>,
+    ClassNames {
   header?: boolean;
   children?: JSXElement;
   onClick?: () => void;
@@ -52,7 +56,8 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
   return (
     <div
       ref={setref}
-      class={`
+      class={clsx(
+        `
         ${
           props.header
             ? `
@@ -103,7 +108,20 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           "before:right-[15%] before:w-[85%] before:rounded-r-full before:block"
         }
         
-        `}
+        `,
+        props.weekNamesClass,
+        props.daysWrapperClass,
+        {
+          [props.daysActiveRangeStartWrapperClass || ""]: props.dayRangeStart,
+          [props.daysActiveRangeEndWrapperClass || ""]: props.dayRangeEnd,
+          [props.daysActivePrimaryWrapperClass || ""]:
+            props.dayRangeStart ||
+            props.dayRangeEnd ||
+            props.isMultipleSelected,
+          [props.daysActiveRangeBetweenWrapperClass || ""]:
+            props.dayRangeBetween,
+        }
+      )}
       data-day-number-area={!props.header}
       data-day-number-area-range-start-or-end={
         props.dayRangeStart || props.dayRangeEnd
@@ -192,7 +210,24 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           rounded-full
           cursor-pointer
           `,
-            props.customDayClass
+            props.daysBtnClass,
+            props.customDayClass,
+            {
+              [props.daysActivePrimaryBtnClass || ""]:
+                props.dayRangeStart ||
+                props.dayRangeEnd ||
+                props.isMultipleSelected,
+              [props.daysActiveRangeBetweenBtnClass || ""]:
+                props.dayRangeBetween,
+              [props.currentDayBtnClass || ""]: props.daysCurrent,
+              [props.weekEndDaysBtnClass || ""]: props.isWeekend,
+              [props.sundaysBtnClass || ""]: props.isSunday,
+              [props.saturdaysBtnClass || ""]: props.isSaturday,
+              [props.daysNotInCurrentMonthBtnClass || ""]:
+                props.daysNotCurrentMonth,
+              [props.daysActiveRangeStartBtnClass || ""]: props.dayRangeStart,
+              [props.daysActiveRangeEndBtnClass || ""]: props.dayRangeEnd,
+            }
           )}
           data-day-number={true}
           data-day-number-range-start-or-end={

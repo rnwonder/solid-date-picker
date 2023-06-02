@@ -1,9 +1,14 @@
 import { Component, createSignal, For, onMount } from "solid-js";
 import { DatePickerWeek } from "../DatePickerWeek";
 import { DatePickerDay } from "../DatePickerDay";
-import { IColors, Locale, WeekDaysType } from "../../interface/general";
+import {
+  ClassNames,
+  IColors,
+  Locale,
+  WeekDaysType,
+} from "../../interface/general";
 
-interface IProps extends IColors {
+interface IProps extends IColors, ClassNames {
   locale?: Locale;
   weekDaysType?: WeekDaysType;
   weekStartDay?: number;
@@ -24,10 +29,14 @@ export const WeekDays: Component<IProps> = (props) => {
     setWeekDaysArray(dayNames);
   });
   return (
-    <DatePickerWeek>
+    <DatePickerWeek weekNamesRowClass={props.weekNamesRowClass}>
       <For each={weekDaysArray()}>
         {(day) => (
-          <DatePickerDay weekDaysNameColor={props.weekDaysNameColor} header>
+          <DatePickerDay
+            weekDaysNameColor={props.weekDaysNameColor}
+            weekNamesClass={props.weekNamesClass}
+            header
+          >
             {day}
           </DatePickerDay>
         )}

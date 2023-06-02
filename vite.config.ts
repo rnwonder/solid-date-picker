@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import solidPlugin from "vite-plugin-solid";
 import dts from "vite-plugin-dts";
-import terser from '@rollup/plugin-terser';
+import terser from "@rollup/plugin-terser";
 
 export default defineConfig({
   build: {
@@ -17,7 +17,7 @@ export default defineConfig({
         preserveModules: true,
         exports: "named",
       },
-      plugins: [terser()]
+      plugins: [terser()],
     },
   },
   plugins: [
@@ -25,7 +25,6 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       outputDir: "types",
-
     }),
   ],
   server: {
