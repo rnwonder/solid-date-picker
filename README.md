@@ -2,7 +2,7 @@
 
 A simple and reusable Datepicker component for SolidJS ([Demo](https://stackblitz.com/edit/solidjs-templates-dof6jl?file=src%2FApp.tsx))
 
-[Documentation](https://date-picker-doc-rnwonder.vercel.app)
+[Documentation](https://main--vermillion-torte-7e7d0b.netlify.app/)
 
 ![Screenshot 2023-05-20 084944.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569302/Screenshot_2023-05-20_085338_ruwgsx.jpg)
 ![Screenshot 2023-05-20 084945.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569301/Screenshot_2023-05-20_085412_imossu.jpg)
