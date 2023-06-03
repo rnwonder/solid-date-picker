@@ -230,6 +230,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           <input
             readonly
             type={"text"}
+            aria-label={"date picker input"}
             placeholder={props.placeholder}
             value={props.inputLabel?.() || props.value?.().label || ""}
             {...{ ...props.inputProps, class: undefined }}
