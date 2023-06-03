@@ -1,13 +1,14 @@
 import { Accessor, createSignal, onMount, Setter } from "solid-js";
-import { Selector } from "../Selector";
 import {
+  ClassNames,
+  DateObjectUnits,
+  IColors,
   IMonthSelectorType,
   Locale,
-  IColors,
+  LocaleOptions,
   MakeOptionalRequired,
-  DateObjectUnits,
-  ClassNames
 } from "../../interface/general";
+import { Selector } from "../Selector";
 
 interface MonthSelectorProps extends IColors, ClassNames {
   month: Accessor<number>;
@@ -16,6 +17,7 @@ interface MonthSelectorProps extends IColors, ClassNames {
   type?: IMonthSelectorType;
   zIndex?: number;
   locale?: Locale;
+  localeOptions?: LocaleOptions;
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
   year?: Accessor<number>;
@@ -27,7 +29,9 @@ export const MonthSelector = (props: MonthSelectorProps) => {
   onMount(() => {
     const months = Array.from({ length: 12 }, (e, i) => {
       return new Date(0, i + 1, 0).toLocaleDateString(props.locale || "en", {
-        month: props.type || "short",
+        month: props?.type
+          ? props.type
+          : props?.localeOptions?.month ?? "short",
       });
     });
     setMonthArray(months);

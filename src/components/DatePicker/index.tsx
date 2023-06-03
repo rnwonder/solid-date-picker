@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   Accessor,
   createEffect,
@@ -7,17 +8,13 @@ import {
   Setter,
   Show,
 } from "solid-js";
-import { DatePickerTop } from "../DatePickerTop";
 import {
-  compareObjectDate,
-  convertDateObjectToDate,
-  convertDateToDateObject,
-  currentYear,
-  getDatePickerRefactoredMonth,
-  handleDateRange,
-} from "../../utils";
-import {
+  ClassNames,
+  CustomDaysClassName,
+  DateArray,
   DateObjectUnits,
+  HoverRangeValue,
+  IColors,
   IDatePickerInputValueTypes,
   IDatePickerOnChange,
   IDatePickerType,
@@ -27,16 +24,20 @@ import {
   IRenderJSX,
   IYearRange,
   Locale,
-  IColors,
-  DateArray,
+  LocaleOptions,
   MakeOptionalRequired,
-  CustomDaysClassName,
   WeekDaysType,
-  HoverRangeValue,
-  ClassNames,
 } from "../../interface/general";
+import {
+  compareObjectDate,
+  convertDateObjectToDate,
+  convertDateToDateObject,
+  currentYear,
+  getDatePickerRefactoredMonth,
+  handleDateRange,
+} from "../../utils";
 import { CalendarArea } from "../CalendarArea";
-import clsx from "clsx";
+import { DatePickerTop } from "../DatePickerTop";
 
 export interface DatePickerProps extends IColors, ClassNames {
   type: IDatePickerType;
@@ -75,6 +76,7 @@ export interface DatePickerProps extends IColors, ClassNames {
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
   yearRange?: IYearRange;
   locale?: Locale;
+  localeOptions?: LocaleOptions;
   nextIcon?: JSXElement;
   prevIcon?: JSXElement;
 
@@ -547,7 +549,12 @@ export const DatePicker = (props: DatePickerProps) => {
         )}
       </Show>
 
-      <div class={clsx("flex justify-center date-picker-body", props.datePickerBodyAreaClass)}>
+      <div
+        class={clsx(
+          "flex justify-center date-picker-body",
+          props.datePickerBodyAreaClass
+        )}
+      >
         <Show when={calendarLeftAreaJSX} keyed>
           {calendarLeftAreaJSX}
         </Show>

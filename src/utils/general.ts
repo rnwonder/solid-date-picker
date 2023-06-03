@@ -3,6 +3,8 @@ import type {
   DateObjectUnits,
   IMonthDaysObject,
   IMonthStatus,
+  Locale,
+  LocaleOptions,
   MakeOptionalRequired,
 } from "../interface/general";
 import {
@@ -617,26 +619,26 @@ export const currentYear = now.getFullYear();
 
 export const getMonthName = (
   month: number,
-  format: "narrow" | "long" | "short" = "long"
+  format: "narrow" | "long" | "short" = "long",
+  locale?: Locale
 ) => {
   const date = new Date(2000, month, 1);
-  return date.toLocaleString("default", { month: format });
+  return date.toLocaleString(locale ?? "en", { month: format });
 };
 
 export const formatDateObject = (
   date: DateObjectUnits,
-  options?: Intl.DateTimeFormatOptions
-) => {
-  const dateTime = convertDateObjectToDate(date);
-  return new Intl.DateTimeFormat(
-    "en-US",
-    options || {
+  localeOptions?: LocaleOptions,
+  locale?: Locale
+) =>
+  convertDateObjectToDate(date).toLocaleDateString(
+    locale ?? "en-US",
+    localeOptions || {
       month: "short",
       day: "numeric",
       year: "numeric",
     }
-  ).format(dateTime);
-};
+  );
 
 export const handleDateRange = ({
   year,

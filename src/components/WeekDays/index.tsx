@@ -1,15 +1,17 @@
 import { Component, createSignal, For, onMount } from "solid-js";
-import { DatePickerWeek } from "../DatePickerWeek";
-import { DatePickerDay } from "../DatePickerDay";
 import {
   ClassNames,
   IColors,
   Locale,
+  LocaleOptions,
   WeekDaysType,
 } from "../../interface/general";
+import { DatePickerDay } from "../DatePickerDay";
+import { DatePickerWeek } from "../DatePickerWeek";
 
 interface IProps extends IColors, ClassNames {
   locale?: Locale;
+  localeOptions?: LocaleOptions;
   weekDaysType?: WeekDaysType;
   weekStartDay?: number;
 }
@@ -23,7 +25,10 @@ export const WeekDays: Component<IProps> = (props) => {
         0,
         i - (1 - (props.weekStartDay || 0)) + 1
       ).toLocaleDateString(props.locale || "en", {
-        weekday: props.weekDaysType === "single" ? "narrow" : "short",
+        weekday:
+          props.weekDaysType === "single"
+            ? "narrow"
+            : props.localeOptions?.weekday ?? "short",
       });
     });
     setWeekDaysArray(dayNames);
