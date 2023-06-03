@@ -12,9 +12,11 @@ import {
 describe("convertDateObjectToDate", () => {
   test("should return Date from date object", () => {
     const date = { day: 1, month: 1, year: 2021 };
-    expect(convertDateObjectToDate(date)).toMatchInlineSnapshot(
-
-    '2021-01-31T23:00:00.000Z');
+    /* EDIT - adjusted to allow test to correctly pass for any timezone */
+    const timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+    const convertedDate = convertDateObjectToDate(date);
+    const tzAdjDate = new Date(convertedDate.getTime() - timeZoneOffset);
+    expect(tzAdjDate).toMatchInlineSnapshot("2021-02-01T00:00:00.000Z");
   });
 });
 
@@ -34,9 +36,7 @@ describe("convertDateToDateObject", () => {
 describe("checkIfItsTodayDate", () => {
   test("should return true if date is today", () => {
     const today = new Date();
-    expect(
-      checkIfItsTodayDate(today)
-    ).toBe(true);
+    expect(checkIfItsTodayDate(today)).toBe(true);
   });
   test("should return false if date is not today", () => {
     const today = new Date();
@@ -111,6 +111,10 @@ describe("isBeforeDate", () => {
   });
 });
 
+/**
+ * Date formatting tests
+ */
+
 describe("getMonthName", () => {
   test("should return month name in long format", () => {
     expect(getMonthName(0)).toBe("January");
@@ -178,5 +182,119 @@ describe("formatDateObject", () => {
         day: "2-digit",
       })
     ).toMatchInlineSnapshot('"February 01, 2021"');
+  });
+});
+
+/* Tests for regional formatting */
+describe("Test for getMonthName function", () => {
+  test("should return month name in Spanish long format", () => {
+    expect(getMonthName(0, "long", "es-MX")).toBe("enero");
+    expect(getMonthName(1, "long", "es-MX")).toBe("febrero");
+    expect(getMonthName(2, "long", "es-MX")).toBe("marzo");
+    expect(getMonthName(3, "long", "es-MX")).toBe("abril");
+    expect(getMonthName(4, "long", "es-MX")).toBe("mayo");
+    expect(getMonthName(5, "long", "es-MX")).toBe("junio");
+    expect(getMonthName(6, "long", "es-MX")).toBe("julio");
+    expect(getMonthName(7, "long", "es-MX")).toBe("agosto");
+    expect(getMonthName(8, "long", "es-MX")).toBe("septiembre");
+    expect(getMonthName(9, "long", "es-MX")).toBe("octubre");
+    expect(getMonthName(10, "long", "es-MX")).toBe("noviembre");
+    expect(getMonthName(11, "long", "es-MX")).toBe("diciembre");
+  });
+  test("should return month name in Spanish short format", () => {
+    expect(getMonthName(0, "short", "es-MX")).toBe("ene");
+    expect(getMonthName(1, "short", "es-MX")).toBe("feb");
+    expect(getMonthName(2, "short", "es-MX")).toBe("mar");
+    expect(getMonthName(3, "short", "es-MX")).toBe("abr");
+    expect(getMonthName(4, "short", "es-MX")).toBe("may");
+    expect(getMonthName(5, "short", "es-MX")).toBe("jun");
+    expect(getMonthName(6, "short", "es-MX")).toBe("jul");
+    expect(getMonthName(7, "short", "es-MX")).toBe("ago");
+    expect(getMonthName(8, "short", "es-MX")).toBe("sept");
+    expect(getMonthName(9, "short", "es-MX")).toBe("oct");
+    expect(getMonthName(10, "short", "es-MX")).toBe("nov");
+    expect(getMonthName(11, "short", "es-MX")).toBe("dic");
+  });
+  test("should return month name in Spanish narrow format", () => {
+    expect(getMonthName(0, "narrow", "es-MX")).toBe("E");
+    expect(getMonthName(1, "narrow", "es-MX")).toBe("F");
+    expect(getMonthName(2, "narrow", "es-MX")).toBe("M");
+    expect(getMonthName(3, "narrow", "es-MX")).toBe("A");
+    expect(getMonthName(4, "narrow", "es-MX")).toBe("M");
+    expect(getMonthName(5, "narrow", "es-MX")).toBe("J");
+    expect(getMonthName(6, "narrow", "es-MX")).toBe("J");
+    expect(getMonthName(7, "narrow", "es-MX")).toBe("A");
+    expect(getMonthName(8, "narrow", "es-MX")).toBe("S");
+    expect(getMonthName(9, "narrow", "es-MX")).toBe("O");
+    expect(getMonthName(10, "narrow", "es-MX")).toBe("N");
+    expect(getMonthName(11, "narrow", "es-MX")).toBe("D");
+  });
+});
+
+/* Tests for formatting date object in a form that EVERYONE except the US understands */
+describe("Format a date object in a form that EVERYONE except the US understands", () => {
+  test("should return date object in the CORRECT short format", () => {
+    const date = {
+      day: 1,
+      month: 1,
+      year: 2021,
+    };
+    expect(formatDateObject(date, undefined, "en-GB")).toMatchInlineSnapshot(
+      '"1 Feb 2021"'
+    );
+  });
+  test("should return date object in the CORRECT long format", () => {
+    const date = {
+      day: 1,
+      month: 1,
+      year: 2021,
+    };
+    expect(
+      formatDateObject(date, { dateStyle: "long" }, "en-GB")
+    ).toMatchInlineSnapshot('"1 February 2021"');
+  });
+  test("should return date object in the CORRECT full format", () => {
+    const date = {
+      day: 1,
+      month: 1,
+      year: 2021,
+    };
+    expect(
+      formatDateObject(date, { dateStyle: "full" }, "en-GB")
+    ).toMatchInlineSnapshot('"Monday, 1 February 2021"');
+  });
+});
+
+/* Tests for date formatting in a language other than English */
+describe("Format a date object in Spanish", () => {
+  test("should return date object in Spanish short format", () => {
+    const date = {
+      day: 1,
+      month: 1,
+      year: 2021,
+    };
+    expect(formatDateObject(date, undefined, "es-MX")).toMatchInlineSnapshot(
+      '"1 feb 2021"'
+    );
+  });
+  test("should return date object in Spanish long format", () => {
+    const date = {
+      day: 1,
+      month: 1,
+      year: 2021,
+    };
+    expect(
+      formatDateObject(date, { dateStyle: "long" }, "es-MX")
+    ).toMatchInlineSnapshot('"1 de febrero de 2021"');
+  });
+  test("should return date object in Spanish full format", () => {
+    const date = {
+      day: 1,
+      month: 1,
+      year: 2021,
+    };
+    expect(
+      formatDateObject(date, { dateStyle: "full" }, "es-MX")
+    ).toMatchInlineSnapshot('"lunes, 1 de febrero de 2021"');
   });
 });

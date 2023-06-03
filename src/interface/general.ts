@@ -93,7 +93,8 @@ export interface IYearRange {
   end: number;
 }
 
-export type Locale = string | string[];
+export type Locale = Intl.LocalesArgument;
+export type LocaleOptions = Intl.DateTimeFormatOptions;
 
 export interface IColors {
   primaryColor?: string;

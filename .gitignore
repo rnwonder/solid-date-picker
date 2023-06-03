@@ -4,6 +4,4 @@ dist
 types
 stats.html
 tsconfig.tsbuildinfo
-sentry.ts
-
-
+.DS_Store

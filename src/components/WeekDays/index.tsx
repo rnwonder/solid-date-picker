@@ -1,12 +1,12 @@
 import { Component, createSignal, For, onMount } from "solid-js";
-import { DatePickerWeek } from "../DatePickerWeek";
-import { DatePickerDay } from "../DatePickerDay";
 import {
   ClassNames,
   IColors,
   Locale,
   WeekDaysType,
 } from "../../interface/general";
+import { DatePickerDay } from "../DatePickerDay";
+import { DatePickerWeek } from "../DatePickerWeek";
 
 interface IProps extends IColors, ClassNames {
   locale?: Locale;
