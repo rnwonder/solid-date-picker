@@ -427,9 +427,6 @@ export const isNotPartOfEnabledDays = ({
 function isDatesEqual(
   date1: DateObjectUnits,
   date2: DateObjectUnits,
-  option?: {
-    next?: boolean;
-  }
 ): boolean {
   if (date1.day) {
     return (
