@@ -62,50 +62,50 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           props.header
             ? `
             date-picker-weekday-name
-            text-[0.75rem]
-            block`
+            rn-text-[0.75rem]
+            rn-block`
             : `
               date-picker-day-number-area
-              flex
-              justify-center
-              items-center
-              text-[0.9375rem]
+              rn-flex
+              rn-justify-center
+              rn-items-center
+              rn-text-[0.9375rem]
             `
         }
-        font-bold
-        mb-[0.13rem]
-        text-[#909090]
-        tracking-[0.02em]
-        text-center
-        uppercase
-        relative
-        ${props.hidden && "pointer-events-none"}
+        rn-font-bold
+        rn-mb-[0.13rem]
+        rn-text-[#909090]
+        rn-tracking-[0.02em]
+        rn-text-center
+        rn-uppercase
+        rn-relative
+        ${props.hidden && "rn-pointer-events-none"}
         ${
           props.dayRangeBetween && !props.hidden
-            ? `bg-[#56A4D3] bg-opacity-50`
+            ? `rn-bg-[#56A4D3] rn-bg-opacity-50`
             : ""
         }
-        before:content-[""]
-        before:absolute
-        before:top-0
-        before:h-full
+        before:rn-content-[""]
+        before:rn-absolute
+        before:rn-top-0
+        before:rn-h-full
        
-        before:bg-opacity-50 
+        before:rn-bg-opacity-50 
         ${
           (props.dayRangeStart && props.dayRangeStartEnd && !props.hidden) ||
           (props.dayRangeEnd && props.dayRangeStartEnd && !props.hidden)
             ? ""
-            : "before:hidden"
+            : "before:rn-hidden"
         }
         ${
           props.dayRangeStart &&
           props.dayRangeStartEnd &&
-          "before:left-[15%] before:w-[86%] before:rounded-l-full before:block"
+          "before:rn-left-[15%] before:rn-w-[86%] before:rn-rounded-l-full before:rn-block"
         }
         ${
           props.dayRangeEnd &&
           props.dayRangeStartEnd &&
-          "before:right-[15%] before:w-[85%] before:rounded-r-full before:block"
+          "before:rn-right-[15%] before:rn-w-[85%] before:rn-rounded-r-full before:rn-block"
         }
         
         `,
@@ -167,48 +167,48 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           class={clsx(
             `
           date-picker-day-number
-          text-center          
-          relative
-          transition-none
+          rn-text-center          
+          rn-relative
+          rn-transition-none
           ${
             props.dayRangeStart || props.dayRangeEnd
-              ? "text-white day-number-range-start-or-end"
+              ? "rn-text-white day-number-range-start-or-end"
               : props.isMultipleSelected
-              ? "text-white day-number-multiple-select"
+              ? "rn-text-white day-number-multiple-select"
               : props.dayRangeBetween
-              ? "text-primary day-range-between"
-              : "text-black"
+              ? "rn-text-primary day-range-between"
+              : "rn-text-black"
           }
-          h-8
-          w-8
-          text-[0.9375rem]
-          p-0
-          z-10
+          rn-h-8
+          rn-w-8
+          rn-text-[0.9375rem]
+          rn-p-0
+          rn-z-10
           ${
             props.daysNotCurrentMonth
               ? !props.dayRangeStart && !props.dayRangeEnd
-                ? "opacity-50 day-number-not-current-month"
-                : "opacity-95"
-              : "opacity-100 day-number-current-month"
+                ? "rn-opacity-50 day-number-not-current-month"
+                : "rn-opacity-95"
+              : "rn-opacity-100 day-number-current-month"
           }
           ${
             props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
-              ? "bg-primary hover:bg-primary"
+              ? "rn-bg-primary hover:rn-bg-primary"
               : ""
           }
-          ${props.dayRangeBetween && "hover:bg-transparent"}
+          ${props.dayRangeBetween && "hover:rn-bg-transparent"}
           ${
             props.dayRangeStart || props.dayRangeEnd
               ? ""
               : props.daysCurrent
-              ? "day-number-current-day border border-dashed border-black hover:border hover:border-dashed hover:border-black"
+              ? "day-number-current-day rn-border rn-border-dashed rn-border-black hover:rn-border hover:rn-border-dashed hover:rn-border-black"
               : ""
           }
-          ${props.shouldHighlightWeekends && props.isWeekend && "text-red-500"}
-          disabled:text-black
-          disabled:opacity-30
-          rounded-full
-          cursor-pointer
+          ${props.shouldHighlightWeekends && props.isWeekend && "rn-text-red-500"}
+          disabled:rn-text-black
+          disabled:rn-opacity-30
+          rn-rounded-full
+          rn-cursor-pointer
           `,
             props.daysBtnClass,
             props.customDayClass,
@@ -283,7 +283,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         <Show keyed when={props.disabled}>
           <div
             onClick={props.onDisabledDayError}
-            class="absolute w-full h-full top-0 left-0 rounded-full"
+            class="rn-absolute rn-w-full rn-h-full rn-top-0 rn-left-0 rn-rounded-full"
           />
         </Show>
       </Show>

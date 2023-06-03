@@ -30,8 +30,8 @@ export const DatePickerMonthAndYearSelector: Component<
   return (
     <div
       class={clsx(
-        `flex date-month-year-selector-area justify-center items-center ${
-          props.monthYearSelectorFlexDirection === "column" ? "flex-col" : ""
+        `rn-flex date-month-year-selector-area rn-justify-center rn-items-center ${
+          props.monthYearSelectorFlexDirection === "column" ? "rn-flex-col" : ""
         }`,
         props.datePickerTopMonthYearAreaClass
       )}

@@ -151,7 +151,7 @@ export const Popover = (props: PopoverProps) => {
         style={{
           ...(props.width && { width: props.width || "100%" }),
         }}
-        class={clsx("w-full", props.className)}
+        class={clsx("rn-w-full", props.className)}
         ref={setElementRef}
         onClick={handleElementClick}
       >
@@ -181,24 +181,24 @@ export const Popover = (props: PopoverProps) => {
           class={`
             ${
               delayShown()
-                ? `opacity-100 translate-y-[0rem]`
-                : `opacity-0 -translate-y-[1rem]`
+                ? `rn-opacity-100 rn-translate-y-[0rem]`
+                : `rn-opacity-0 -rn-translate-y-[1rem]`
             }
-            duration-350 
-            ease-in-out
-            delay-50
-            transition-transform
-            motion-reduce:transition-none
+            rn-duration-350 
+            rn-ease-in-out
+            rn-delay-50
+            rn-transition-transform
+            motion-reduce:rn-transition-none
         `}
           ref={setPopoverRef}
         >
           <div
             class={`
-            ${delayShown() ? `opacity-100 scale-100` : `opacity-0 scale-90`}
-            duration-350 
-            ease-in-out
-            transition-opacity
-            motion-reduce:transition-none
+            ${delayShown() ? `rn-opacity-100 scale-100` : `rn-opacity-0 scale-90`}
+            rn-duration-350 
+            rn-ease-in-out
+            rn-transition-opacity
+            motion-reduce:rn-transition-none
         `}
           >
             {renderContent()}

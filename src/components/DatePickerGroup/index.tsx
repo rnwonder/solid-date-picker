@@ -241,11 +241,12 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           <input
             readonly
             type={"text"}
+            aria-label={"date picker input"}
             placeholder={props.placeholder}
             value={props.inputLabel?.() || props.value?.().label || ""}
             {...{ ...props.inputProps, class: undefined }}
             class={clsx(
-              `w-full date-picker-input px-1`,
+              `rn-w-full date-picker-input px-1`,
               props.inputProps?.class, props.inputClass
             )}
             data-type={"date-picker-input"}

@@ -495,15 +495,15 @@ export const DatePicker = (props: DatePickerProps) => {
     <div
       class={clsx(
         `date-picker-wrapper 
-          shadow-lg 
-          border-t 
-          border-gray-300 
-          bg-white
-          border-solid 
-          rounded-md 
-          pt-[0.625rem] 
-          pb-[0.5rem]
-          ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "w-max"}
+          rn-shadow-lg 
+          rn-border-t 
+          rn-border-gray-300 
+          rn-bg-white
+          rn-border-solid 
+          rn-rounded-md 
+          rn-pt-[0.625rem] 
+          rn-pb-[0.5rem]
+          ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "rn-w-max"}
           `,
         props.datePickerWrapperClass
       )}
@@ -551,7 +551,7 @@ export const DatePicker = (props: DatePickerProps) => {
 
       <div
         class={clsx(
-          "flex justify-center date-picker-body",
+          "rn-flex rn-justify-center date-picker-body",
           props.datePickerBodyAreaClass
         )}
       >

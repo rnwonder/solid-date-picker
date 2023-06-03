@@ -89,11 +89,11 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       class={clsx(
         `
         date-picker-top 
-        flex 
-        justify-between 
-        items-center 
-        mb-[0.3125rem] 
-        px-2
+        rn-flex 
+        rn-justify-between 
+        rn-items-center 
+        rn-mb-[0.3125rem] 
+        rn-px-2
       `,
         props.datePickerTopAreaClass
       )}
@@ -106,7 +106,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={clsx(
-            "date-prev-next-btn disabled:opacity-10",
+            "date-prev-next-btn disabled:rn-opacity-10",
             props.prevMonthBtnClass,
             props.prevNextMonthBtnClass
           )}
@@ -134,7 +134,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={clsx(
-            "date-prev-next-btn disabled:opacity-10",
+            "date-prev-next-btn disabled:rn-opacity-10",
             props.nextMonthBtnClass,
             props.prevNextMonthBtnClass
           )}

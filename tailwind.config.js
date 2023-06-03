@@ -29,7 +29,7 @@ module.exports = {
   daisyui: {
     themes: false,
   },
+  prefix: "rn-",
 
   plugins: [require("daisyui")],
-  
 };
