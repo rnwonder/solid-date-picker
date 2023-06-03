@@ -19,6 +19,7 @@ export default defineConfig({
       },
       plugins: [terser()],
     },
+
   },
   plugins: [
     solidPlugin(),

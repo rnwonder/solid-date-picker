@@ -31,13 +31,13 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
   });
   return (
     <div
-      class={clsx("flex breakTwoCalendar:flex-col", props.calendarWrapperClass)}
+      class={clsx("rn-flex rn-breakTwoCalendar:rn-flex-col", props.calendarWrapperClass)}
     >
       <div
         class={clsx(
           {
-            "px-4": !props.twoMonthsDisplay,
-            "aboveBreakTwoCalendar:pl-4 breakTwoCalendar:px-4":
+            "rn-px-4": !props.twoMonthsDisplay,
+            "aboveBreakTwoCalendar:rn-pl-4 breakTwoCalendar:rn-px-4":
               props.twoMonthsDisplay,
           },
           props.calendarOneAreaClass
@@ -58,14 +58,14 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
       <Show when={props.twoMonthsDisplay} keyed>
         <div
           class={clsx(
-            "divider aboveBreakTwoCalendar:divider-horizontal aboveBreakTwoCalendar:mx-2 aboveBreakTwoCalendar:w-fit ",
+            "rn-divider aboveBreakTwoCalendar:rn-divider-horizontal aboveBreakTwoCalendar:rn-mx-2 aboveBreakTwoCalendar:rn-w-fit ",
             props.calendarDividerClass
           )}
         ></div>
         <div
           class={clsx(
             {
-              "aboveBreakTwoCalendar:pr-4 breakTwoCalendar:px-4":
+              "aboveBreakTwoCalendar:rn-pr-4 breakTwoCalendar:rn-px-4":
                 props.twoMonthsDisplay,
             },
             props.calendarTwoAreaClass

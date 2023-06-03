@@ -48,7 +48,7 @@
     "dev": "vite",
     "types": "tsc",
     "build:styles": "postcss src/index.css -o dist/index.css",
-    "build": "vitest run && rm -r types && vite build --mode lib && pnpm build:styles",
+    "build": "vitest run && rm -r types && vite build --mode lib",
     "serve": "vite preview",
     "test": "vitest --ui"
   },

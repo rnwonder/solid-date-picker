@@ -57,12 +57,12 @@ export const CustomPortal: Component<ModalProps> = (props) => {
               props.hideDefaultStyle
                 ? ""
                 : `
-                bg-transparent
-                w-full
-                absolute
-                z-10
-                flex
-                flex-col
+                rn-bg-transparent
+                rn-w-full
+                rn-absolute
+                rn-z-10
+                rn-flex
+                rn-flex-col
             `
             }
             `}

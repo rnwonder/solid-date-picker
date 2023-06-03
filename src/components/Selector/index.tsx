@@ -111,22 +111,22 @@ export const Selector = (props: SelectorProps) => {
           class={clsx(
             `
             date-selector-wrapper
-            bg-white
-            rounded-lg
-            drop-shadow-lg
-            grid
+            rn-bg-white
+            rn-rounded-lg
+            rn-drop-shadow-lg
+            rn-grid
             ${
               props.gridTemplateColumnsNo
                 ? props.gridTemplateColumnsNo === "3"
-                  ? `grid-cols-3`
-                  : `grid-cols-4`
-                : "grid-cols-4"
+                  ? `rn-grid-cols-3`
+                  : `rn-grid-cols-4`
+                : "rn-grid-cols-4"
             }
-            gap-2
-            p-2
-            max-h-[10.625rem]
-            max-w-[25rem]
-            overflow-y-auto
+            rn-gap-2
+            rn-p-2
+            rn-max-h-[10.625rem]
+            rn-max-w-[25rem]
+            rn-overflow-y-auto
             
           `,
             props.monthYearSelectorWrapperClass
@@ -151,14 +151,14 @@ export const Selector = (props: SelectorProps) => {
                 class={clsx(
                   `
                   date-selector-option
-                  px-[5px] 
-                  text-black 
-                  text-sm
-                  smallMobile:text-[12px]
-                  disabled:opacity-40
+                  rn-px-[5px] 
+                  rn-text-black 
+                  rn-text-sm
+                  smallMobile:rn-text-[12px]
+                  disabled:rn-opacity-40
                   ${
                     isSelected(value, index)
-                      ? "bg-primary text-white hover:bg-primary hover:text-white selector-option-selected"
+                      ? "rn-bg-primary rn-text-white hover:rn-bg-primary hover:rn-text-white rn-selector-option-selected"
                       : ""
                   }
 
@@ -206,13 +206,13 @@ export const Selector = (props: SelectorProps) => {
       <Button
         class={clsx(
           `
-        p-[5px]
-        text-black
-        text-[15px]
-        animate-none
-        font-bold
-        date-selector-trigger
-        breakTwoCalendar:text-sm
+        rn-p-[5px]
+        rn-text-black
+        rn-text-[15px]
+        rn-animate-none
+        rn-font-bold
+        rn-date-selector-trigger
+        breakTwoCalendar:rn-text-sm
       `,
           props.monthYearTriggerBtnClass
         )}

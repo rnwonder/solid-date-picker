@@ -234,7 +234,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
             value={props.inputLabel?.() || props.value?.().label || ""}
             {...{ ...props.inputProps, class: undefined }}
             class={clsx(
-              `w-full date-picker-input px-1`,
+              `rn-w-full date-picker-input px-1`,
               props.inputProps?.class, props.inputClass
             )}
             data-type={"date-picker-input"}

@@ -15,13 +15,13 @@ export const Button: Component<ButtonProps> = (props) => {
       {...{ ...props, class: undefined }}
       class={clsx(
         `
-        btn 
-        btn-ghost 
-        ${props.setHeight ? "" : "h-full"} 
-        p-0 
-        min-h-0 
-        date-picker-main-btn
-        motion-reduce:transition-none
+        rn-btn 
+        rn-btn-ghost 
+        ${props.setHeight ? "" : "rn-h-full"} 
+        rn-p-0 
+        rn-min-h-0 
+        rn-date-picker-main-btn
+        motion-reduce:rn-transition-none
         `,
         props.class
       )}
