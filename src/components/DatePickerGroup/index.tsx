@@ -67,11 +67,9 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
 
       let label = "";
       const startOptions: Intl.DateTimeFormatOptions = {
-        ...props?.localeOptions,
-        year: undefined,
-      } || {
         month: "short",
         day: "numeric",
+        ...(props?.localeOptions || {}),
         year: undefined,
       };
       const endOptions: Intl.DateTimeFormatOptions = props?.localeOptions || {
@@ -247,7 +245,8 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
             {...{ ...props.inputProps, class: undefined }}
             class={clsx(
               `rn-w-full date-picker-input px-1`,
-              props.inputProps?.class, props.inputClass
+              props.inputProps?.class,
+              props.inputClass
             )}
             data-type={"date-picker-input"}
           />
