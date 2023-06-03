@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -53,7 +53,7 @@
     "test": "vitest --ui"
   },
   "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
-  "homepage": "https://main--vermillion-torte-7e7d0b.netlify.app/",
+  "homepage": "https://soliddatepicker.live",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rnwonder/solid-date-picker.git"
