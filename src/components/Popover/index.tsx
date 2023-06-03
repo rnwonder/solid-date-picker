@@ -9,6 +9,7 @@ import {
 } from "solid-js";
 import { CustomPortal } from "../CustomPortal";
 import { upgradedSmartDropDown } from "../../utils";
+import clsx from "clsx";
 
 export type IPopOverSJContentPropType =
   | JSX.Element
@@ -138,26 +139,19 @@ export const Popover = (props: PopoverProps) => {
   const renderContent = () => {
     if (typeof props.content === "function") {
       const content = props.content({ close: handleClose });
-      return (
-        <div data-type="dropdown" class={props.className}>
-          {content}
-        </div>
-      );
+      return <div data-type="dropdown">{content}</div>;
     }
 
-    return (
-      <div data-type="dropdown" class={props.className}>
-        {props.content}
-      </div>
-    );
+    return <div data-type="dropdown">{props.content}</div>;
   };
 
   return (
     <div>
       <div
         style={{
-          width: props.width || "100%",
+          ...(props.width && { width: props.width || "100%" }),
         }}
+        class={clsx("w-full", props.className)}
         ref={setElementRef}
         onClick={handleElementClick}
       >

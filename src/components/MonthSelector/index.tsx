@@ -1,8 +1,15 @@
 import { Accessor, createSignal, onMount, Setter } from "solid-js";
 import { Selector } from "../Selector";
-import {IMonthSelectorType, Locale, IColors, MakeOptionalRequired, DateObjectUnits} from "../../interface/general";
+import {
+  IMonthSelectorType,
+  Locale,
+  IColors,
+  MakeOptionalRequired,
+  DateObjectUnits,
+  ClassNames
+} from "../../interface/general";
 
-interface MonthSelectorProps extends IColors {
+interface MonthSelectorProps extends IColors, ClassNames {
   month: Accessor<number>;
   setMonth: Setter<number>;
   ref?: Setter<HTMLDivElement | undefined>;

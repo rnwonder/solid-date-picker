@@ -2,13 +2,13 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import solidPlugin from "vite-plugin-solid";
 import dts from "vite-plugin-dts";
-import terser from '@rollup/plugin-terser';
+import terser from "@rollup/plugin-terser";
 
 export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      formats: ["es", "cjs"],
+      formats: ["es"],
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
@@ -17,7 +17,7 @@ export default defineConfig({
         preserveModules: true,
         exports: "named",
       },
-      plugins: [terser()]
+      plugins: [terser()],
     },
   },
   plugins: [
@@ -25,7 +25,6 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       outputDir: "types",
-
     }),
   ],
   server: {

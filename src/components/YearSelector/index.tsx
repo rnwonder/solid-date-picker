@@ -1,9 +1,9 @@
 import { Accessor, Component, Setter } from "solid-js";
 import { Selector } from "../Selector";
-import {IYearRange, IColors, MakeOptionalRequired, DateObjectUnits} from "../../interface/general";
+import {IYearRange, IColors, MakeOptionalRequired, DateObjectUnits, ClassNames} from "../../interface/general";
 import { currentYear, generateYearsArray } from "../../utils";
 
-interface YearSelectorProps extends IColors {
+interface YearSelectorProps extends IColors, ClassNames {
   year: Accessor<number>;
   setYear: Setter<number>;
   ref?: Setter<HTMLDivElement | undefined>;

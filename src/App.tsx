@@ -111,15 +111,18 @@ const App: Component = () => {
       <DatePickerGroup
         value={date}
         setValue={setDate}
-        type={"multiple"}
+        type={"range"}
         monthSelectorFormat={"long"}
         shouldHighlightWeekends
+        // daysActiveRangeBetweenWrapperClass={cssEx}
+        // datePickerWrapperClass={"bg-blue-500"}
+        monthYearOptionBtnActiveClass={"bg-pink-200 hover:bg-pink-200"}
         // startingMonth={7}
         // startingYear={2024}
 
         // disableRangeHoverEffect
         // textColor={"blue"}
-        primaryColor={"orange"}
+        // primaryColor={"orange"}
         // weekDaysType={"single"}
         weekEndDayTextColor={"blue"}
         showEndOfRange
@@ -139,7 +142,6 @@ const App: Component = () => {
         //   month: 4,
         //   day: 30,
         // }}
-
 
         weekStartDay={1}
         // enabledDays={[
@@ -266,6 +268,9 @@ const App: Component = () => {
       <br />
       <br />
       <br />
+
+
+
       <div>dfdf</div>
       <br />
       <br />
@@ -364,3 +369,4 @@ const App: Component = () => {
 };
 
 export default App;
+

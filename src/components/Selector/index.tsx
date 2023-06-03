@@ -7,10 +7,11 @@ import {
   DateArray,
   IColors,
   MakeOptionalRequired,
+  ClassNames,
 } from "../../interface/general";
 import { isNotPartOfEnabledDays } from "../../utils";
 
-interface SelectorProps extends IColors {
+interface SelectorProps extends IColors, ClassNames {
   option: Accessor<number>;
   setOption: Setter<number>;
   optionsArray: string[];
@@ -107,7 +108,8 @@ export const Selector = (props: SelectorProps) => {
       onClose={() => setOpen(false)}
       content={({ close }) => (
         <div
-          class={`
+          class={clsx(
+            `
             date-selector-wrapper
             bg-white
             rounded-lg
@@ -126,7 +128,9 @@ export const Selector = (props: SelectorProps) => {
             max-w-[25rem]
             overflow-y-auto
             
-          `}
+          `,
+            props.monthYearSelectorWrapperClass
+          )}
           ref={props.ref}
           //@ts-ignore
           role={"composite"}
@@ -159,7 +163,14 @@ export const Selector = (props: SelectorProps) => {
                   }
 
                 `,
-                  props.className
+                  props.className,
+                  props.monthYearOptionBtnClass,
+                  {
+                    [props.monthYearOptionBtnActiveClass || ""]: isSelected(
+                      value,
+                      index
+                    ),
+                  }
                 )}
                 style={{
                   ...(isSelected(value, index)
@@ -193,7 +204,8 @@ export const Selector = (props: SelectorProps) => {
       )}
     >
       <Button
-        class={clsx(`
+        class={clsx(
+          `
         p-[5px]
         text-black
         text-[15px]
@@ -201,7 +213,9 @@ export const Selector = (props: SelectorProps) => {
         font-bold
         date-selector-trigger
         breakTwoCalendar:text-sm
-      `)}
+      `,
+          props.monthYearTriggerBtnClass
+        )}
         aria-haspopup={true}
         aria-expanded={open()}
         data-type={"date-selector-trigger"}

@@ -219,6 +219,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       zIndex={props.zIndex}
       handleChildrenClick={inputJSX ? () => {} : undefined}
       width={props.inputWrapperWidth}
+      className={props.inputWrapperClass}
     >
       <div class={"date-picker-input-area"} data-date-picker-input-area={true}>
         <Show when={inputJSX} keyed>
@@ -234,7 +235,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
             {...{ ...props.inputProps, class: undefined }}
             class={clsx(
               `w-full date-picker-input px-1`,
-              props.inputProps?.class
+              props.inputProps?.class, props.inputClass
             )}
             data-type={"date-picker-input"}
           />

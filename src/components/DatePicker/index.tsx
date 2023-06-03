@@ -33,10 +33,12 @@ import {
   CustomDaysClassName,
   WeekDaysType,
   HoverRangeValue,
+  ClassNames,
 } from "../../interface/general";
 import { CalendarArea } from "../CalendarArea";
+import clsx from "clsx";
 
-export interface DatePickerProps extends IColors {
+export interface DatePickerProps extends IColors, ClassNames {
   type: IDatePickerType;
   close: () => void;
   handleOnChange: (data: IDatePickerOnChange) => void;
@@ -126,14 +128,6 @@ export const DatePicker = (props: DatePickerProps) => {
     ) {
       if (!props.month?.()) props.setMonth?.(new Date().getMonth());
       if (!props.year?.()) props.setYear?.(currentYear);
-
-      if (props.type === "single") {
-        setStartDay({
-          year: year(),
-          month: month(),
-          day: new Date().getDate(),
-        });
-      }
       startingDate();
       return;
     }
@@ -170,7 +164,6 @@ export const DatePicker = (props: DatePickerProps) => {
         : props.value.endDateObject?.day
         ? convertDateObjectToDate(props.value.endDateObject)
         : undefined;
-
 
       if (!startDate && !endDate) return;
       if (!startDate && endDate) {
@@ -498,7 +491,8 @@ export const DatePicker = (props: DatePickerProps) => {
 
   return (
     <div
-      class={`date-picker-wrapper 
+      class={clsx(
+        `date-picker-wrapper 
           shadow-lg 
           border-t 
           border-gray-300 
@@ -508,7 +502,9 @@ export const DatePicker = (props: DatePickerProps) => {
           pt-[0.625rem] 
           pb-[0.5rem]
           ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "w-max"}
-          `}
+          `,
+        props.datePickerWrapperClass
+      )}
       data-type={"date-picker-wrapper"}
       ref={props.ref}
       style={{
@@ -551,7 +547,7 @@ export const DatePicker = (props: DatePickerProps) => {
         )}
       </Show>
 
-      <div class={"flex justify-center"}>
+      <div class={clsx("flex justify-center date-picker-body", props.datePickerBodyAreaClass)}>
         <Show when={calendarLeftAreaJSX} keyed>
           {calendarLeftAreaJSX}
         </Show>

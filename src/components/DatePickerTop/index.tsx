@@ -10,6 +10,7 @@ import {
   MakeOptionalRequired,
   DateObjectUnits,
   DateArray,
+  ClassNames,
 } from "../../interface/general";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
@@ -18,8 +19,9 @@ import {
   getRefactoredPrevDate,
   isNotPartOfEnabledDays,
 } from "../../utils";
+import clsx from "clsx";
 
-export interface DatePickerTopProps extends IColors {
+export interface DatePickerTopProps extends IColors, ClassNames {
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
   setMonth: Setter<number>;
@@ -62,7 +64,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       enabledDays: props.enabledDays,
       year,
       month,
-      prev: true
+      prev: true,
     });
   };
 
@@ -79,19 +81,22 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       enabledDays: props.enabledDays,
       year,
       month,
-      next: true
+      next: true,
     });
   };
   return (
     <div
-      class={`
+      class={clsx(
+        `
         date-picker-top 
         flex 
         justify-between 
         items-center 
         mb-[0.3125rem] 
         px-2
-      `}
+      `,
+        props.datePickerTopAreaClass
+      )}
       data-type={"date-picker-top"}
     >
       <Show when={props.prevButtonAreaJSX} keyed>
@@ -100,7 +105,11 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
 
       <Show when={!props.removeNavButtons} keyed>
         <Button
-          class={"date-prev-next-btn disabled:opacity-10"}
+          class={clsx(
+            "date-prev-next-btn disabled:opacity-10",
+            props.prevMonthBtnClass,
+            props.prevNextMonthBtnClass
+          )}
           data-prev={true}
           data-type={"date-prev-next-btn"}
           disabled={isPrevButtonDisabled()}
@@ -124,7 +133,11 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
 
       <Show when={!props.removeNavButtons} keyed>
         <Button
-          class={"date-prev-next-btn disabled:opacity-10"}
+          class={clsx(
+            "date-prev-next-btn disabled:opacity-10",
+            props.nextMonthBtnClass,
+            props.prevNextMonthBtnClass
+          )}
           data-next={true}
           data-type={"date-prev-next-btn"}
           onClick={props.handleNextMonth}
