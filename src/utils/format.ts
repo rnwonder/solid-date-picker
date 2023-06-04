@@ -12,6 +12,7 @@ export const formatDateWithString = (
 ) => {
   const date = getJSDateFormat(dateToFormat);
   if (!date) return "";
+
   format = format
     .replace(
       /(?<!~)(?<!y)yyyy(?!y)/g,
@@ -30,18 +31,6 @@ export const formatDateWithString = (
       date.toLocaleString(locale, { month: "2-digit" })
     )
     .replace(
-      /(?<!~)(?<!M)M(?!M)/g,
-      date.toLocaleString(locale, { month: "narrow" })
-    )
-    .replace(
-      /(?<!~)(?<!M)MM(?!M)/g,
-      date.toLocaleString(locale, { month: "short" })
-    )
-    .replace(
-      /(?<!~)(?<!M)MMM(?!M)/g,
-      date.toLocaleString(locale, { month: "long" })
-    )
-    .replace(
       /(?<!~)(?<!d)dd(?!d)/g,
       date.toLocaleString(locale, { day: "2-digit" })
     )
@@ -51,16 +40,29 @@ export const formatDateWithString = (
     )
     .replace(
       /(?<!~)(?<!D)DDD(?!D)/g,
-      date.toLocaleString(locale, { weekday: "long" })
+      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "long" }))
     )
     .replace(
       /(?<!~)(?<!D)DD(?!D)/g,
-      date.toLocaleString(locale, { weekday: "short" })
+      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "short" }))
     )
     .replace(
       /(?<!~)(?<!D)D(?!D)/g,
-      date.toLocaleString(locale, { weekday: "narrow" })
+      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "narrow" }))
     )
+    .replace(
+      /(?<!~)(?<!M)MMM(?!M)/g,
+      date.toLocaleString(locale, { month: "long" })
+    )
+    .replace(
+      /(?<!~)(?<!M)MM(?!M)/g,
+      date.toLocaleString(locale, { month: "short" })
+    )
+    .replace(
+      /(?<!~)(?<!M)M(?!M)/g,
+      date.toLocaleString(locale, { month: "narrow" })
+    )
+
     .replace(/~y/g, "y")
     .replace(/~m/g, "m")
     .replace(/~M/g, "M")
@@ -74,26 +76,15 @@ export const getJSDateFormat = (date: DateOption): Date | undefined => {
 
   if (typeof date === "string" || typeof date === "number") {
     newDate = new Date(date);
-  }
-  if (date instanceof Date) {
+  } else if (date instanceof Date) {
     newDate = date;
+  } else {
+    newDate = new Date(
+      date.year || 2023,
+      !date.month && date.month !== 0 ? 1 : date.month,
+      date.day
+    );
   }
-  if (
-    !(date instanceof Date) &&
-    typeof date !== "string" &&
-    typeof date !== "number"
-  ) {
-    newDate = new Date(date.year || 2023, date.month || 1, date.day);
-  }
-
-  if (typeof date === "string") {
-    newDate = new Date(date);
-  }
-
-  if (typeof date === "number") {
-    newDate = new Date(date);
-  }
-
   return newDate;
 };
 
@@ -151,4 +142,12 @@ export const labelFormat = ({
   return format
     ? formatDateWithString(date, format, locale)
     : date.toLocaleDateString(locale ?? "en-US", option);
+};
+
+const checkIfItStartsWithM = (string: string) => {
+  if (string.startsWith("M")) {
+    return "~" + string;
+  } else {
+    return string;
+  }
 };

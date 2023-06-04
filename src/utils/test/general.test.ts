@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
 import {
   checkIfItsTodayDate,
-  getMonthName,
-  getToday,
   isBeforeDate,
 } from "../general";
+
+import {getMonthName, getToday} from "../generate";
 
 
 

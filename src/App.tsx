@@ -114,8 +114,8 @@ const App: Component = () => {
         type={"single"}
         monthSelectorFormat={"long"}
         shouldHighlightWeekends
-        formatInputLabel={"MMM DDD, yyyy"}
-        locale={"es-MX"}
+        formatInputLabel="DDD, yyyy MM dd"
+        // locale={"es-MX"}
         // daysActiveRangeBetweenWrapperClass={cssEx}
         // datePickerWrapperClass={"bg-blue-500"}
         monthYearOptionBtnActiveClass={"bg-pink-200 hover:bg-pink-200"}

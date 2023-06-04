@@ -163,9 +163,9 @@ describe("formatDate", () => {
     };
     expect(
       formatDate(date, {
-        format: "d dd D DD DDD",
+        format: "d dd D DD DDD m",
       })
-    ).toMatchInlineSnapshot('"1 01 M Mon Monday"');
+    ).toMatchInlineSnapshot('"1 01 M Mon Monday 2"');
   });
 
   test("should return string in format string `m mm M MM MMM`", () => {
@@ -191,13 +191,23 @@ describe("formatDate", () => {
   });
 
   test("should return string in format string `dd/mm/yy`", () => {
-    const date = "2021 2 1";
+    const date = "2021 12 1";
     expect(
       formatDate(date, {
-        format: "dd/mm/yy",
+        format: "dd/MMM/yy",
       })
-    ).toMatchInlineSnapshot('"01/02/21"');
+    ).toMatchInlineSnapshot('"01/December/21"');
   });
+
+  test("should return string in format string `dd/mm/yy`", () => {
+    const date = "2021 12 12";
+    expect(
+        formatDate(date, {
+          format: "dd/mm/yy",
+        })
+    ).toMatchInlineSnapshot('"12/12/21"');
+  });
+
 
   test("should return string in format string `DDD - MMM - yyyy` in Spanish", () => {
     const date = 1612134000000;
