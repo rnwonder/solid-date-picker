@@ -1,18 +1,13 @@
-import type { Accessor } from "solid-js";
+import type {Accessor} from "solid-js";
 import type {
   DateObjectUnits,
   IMonthDaysObject,
   IMonthStatus,
   Locale,
-  LocaleOptions,
   MakeOptionalRequired,
 } from "../interface/general";
-import {
-  ApplyDateRange,
-  CustomDaysClassName,
-  DateArray,
-  HoverRangeValue,
-} from "../interface/general";
+import {ApplyDateRange, CustomDaysClassName, DateArray, HoverRangeValue,} from "../interface/general";
+import {convertDateObjectToDate, convertDateToDateObject} from "./format";
 
 // Gets the current month and year days array
 export const getMonthDaysArray = (
@@ -316,23 +311,6 @@ export const isMinMaxDate = ({
   return false;
 };
 
-export const convertDateToDateObject = (date: Date) => {
-  return {
-    year: date.getFullYear(),
-    month: date.getMonth(),
-    day: date.getDate(),
-  };
-};
-
-export const convertDateObjectToDate = (date: DateObjectUnits) => {
-  const now = new Date();
-  return new Date(
-    date?.year || now.getFullYear(),
-    date?.month === 0 ? 0 : date?.month || now.getMonth(),
-    date?.day || now.getDay()
-  );
-};
-
 export const isPartOfDisabledDays = ({
   disabledDays,
   month,
@@ -622,20 +600,6 @@ export const getMonthName = (
   const date = new Date(2000, month, 1);
   return date.toLocaleString(locale ?? "en", { month: format });
 };
-
-export const formatDateObject = (
-  date: DateObjectUnits,
-  localeOptions?: LocaleOptions,
-  locale?: Locale
-) =>
-  convertDateObjectToDate(date).toLocaleDateString(
-    locale ?? "en-US",
-    localeOptions || {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }
-  );
 
 export const handleDateRange = ({
   year,

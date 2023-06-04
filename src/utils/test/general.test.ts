@@ -1,37 +1,12 @@
 import { describe, expect, test } from "vitest";
 import {
   checkIfItsTodayDate,
-  convertDateObjectToDate,
-  convertDateToDateObject,
-  formatDateObject,
   getMonthName,
   getToday,
   isBeforeDate,
 } from "../general";
 
-describe("convertDateObjectToDate", () => {
-  test("should return Date from date object", () => {
-    const date = { day: 1, month: 1, year: 2021 };
-    /* EDIT - adjusted to allow test to correctly pass for any timezone */
-    const timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
-    const convertedDate = convertDateObjectToDate(date);
-    const tzAdjDate = new Date(convertedDate.getTime() - timeZoneOffset);
-    expect(tzAdjDate).toMatchInlineSnapshot("2021-02-01T00:00:00.000Z");
-  });
-});
 
-describe("convertDateToDateObject", () => {
-  test("should return date object from Date", () => {
-    const date = new Date(2021, 1, 1);
-    expect(convertDateToDateObject(date)).toMatchInlineSnapshot(`
-      {
-        "day": 1,
-        "month": 1,
-        "year": 2021,
-      }
-    `);
-  });
-});
 
 describe("checkIfItsTodayDate", () => {
   test("should return true if date is today", () => {
@@ -160,30 +135,7 @@ describe("getMonthName", () => {
   });
 });
 
-describe("formatDateObject", () => {
-  test("should return date object in short format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(formatDateObject(date)).toMatchInlineSnapshot('"Feb 1, 2021"');
-  });
-  test("should return date object in long format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(
-      formatDateObject(date, {
-        year: "numeric",
-        month: "long",
-        day: "2-digit",
-      })
-    ).toMatchInlineSnapshot('"February 01, 2021"');
-  });
-});
+
 
 /* Tests for regional formatting */
 describe("Test for getMonthName function", () => {
@@ -228,73 +180,5 @@ describe("Test for getMonthName function", () => {
     expect(getMonthName(9, "narrow", "es-MX")).toBe("O");
     expect(getMonthName(10, "narrow", "es-MX")).toBe("N");
     expect(getMonthName(11, "narrow", "es-MX")).toBe("D");
-  });
-});
-
-/* Tests for formatting date object in a form that EVERYONE except the US understands */
-describe("Format a date object in a form that EVERYONE except the US understands", () => {
-  test("should return date object in the CORRECT short format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(formatDateObject(date, undefined, "en-GB")).toMatchInlineSnapshot(
-      '"1 Feb 2021"'
-    );
-  });
-  test("should return date object in the CORRECT long format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(
-      formatDateObject(date, { dateStyle: "long" }, "en-GB")
-    ).toMatchInlineSnapshot('"1 February 2021"');
-  });
-  test("should return date object in the CORRECT full format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(
-      formatDateObject(date, { dateStyle: "full" }, "en-GB")
-    ).toMatchInlineSnapshot('"Monday, 1 February 2021"');
-  });
-});
-
-/* Tests for date formatting in a language other than English */
-describe("Format a date object in Spanish", () => {
-  test("should return date object in Spanish short format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(formatDateObject(date, undefined, "es-MX")).toMatchInlineSnapshot(
-      '"1 feb 2021"'
-    );
-  });
-  test("should return date object in Spanish long format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(
-      formatDateObject(date, { dateStyle: "long" }, "es-MX")
-    ).toMatchInlineSnapshot('"1 de febrero de 2021"');
-  });
-  test("should return date object in Spanish full format", () => {
-    const date = {
-      day: 1,
-      month: 1,
-      year: 2021,
-    };
-    expect(
-      formatDateObject(date, { dateStyle: "full" }, "es-MX")
-    ).toMatchInlineSnapshot('"lunes, 1 de febrero de 2021"');
   });
 });

@@ -6,7 +6,10 @@ import {
   IRenderInput,
   PickerValue,
 } from "../../interface/general";
-import { convertDateObjectToDate } from "../../utils";
+import {
+  convertDateObjectToDate,
+  labelFormat,
+} from "../../utils";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
 
@@ -32,6 +35,11 @@ export interface DatePickerInputSJProps
   inputWrapperWidth?: JSX.CSSProperties["width"];
   multipleDatesSeparator?: string;
   rangeDatesSeparator?: string;
+
+  alwaysShowRangeStartYear?: boolean;
+  formatInputLabel?: string;
+  formatInputLabelRangeStart?: string;
+  formatInputLabelRangeEnd?: string;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -41,19 +49,22 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   const handleOnChange = (data: IDatePickerOnChange) => {
     if (data.type === "single") {
       const dateTime = convertDateObjectToDate(data?.selectedDate || {});
+      const label = labelFormat({
+        date: dateTime,
+        option: props?.localeOptions || {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        },
+        format: props.formatInputLabel,
+        locale: props.locale,
+      });
       props.setValue?.({
         value: {
           selected: dateTime?.toISOString() || "",
           selectedDateObject: data?.selectedDate || {},
         },
-        label: dateTime?.toLocaleDateString(
-          props?.locale || "en-US",
-          props?.localeOptions || {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }
-        ),
+        label,
       });
     }
 
@@ -69,8 +80,9 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       const startOptions: Intl.DateTimeFormatOptions = {
         month: "short",
         day: "numeric",
+        year: "numeric",
         ...(props?.localeOptions || {}),
-        year: undefined,
+        ...(props?.alwaysShowRangeStartYear ? {} : { year: undefined }),
       };
       const endOptions: Intl.DateTimeFormatOptions = props?.localeOptions || {
         month: "short",
@@ -82,32 +94,41 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
 
       if (startDateTime && endDateTime) {
         if (startDateTime.getFullYear() === endDateTime.getFullYear()) {
+          if (props.alwaysShowRangeStartYear) return;
           startOptions.year = undefined;
         } else {
           startOptions.year = "numeric";
         }
-        startDateFormatted = startDateTime?.toLocaleDateString(
-          props?.locale || "en-US",
-          startOptions
-        );
-        endDateFormatted = endDateTime?.toLocaleDateString(
-          props?.locale || "en-US",
-          endOptions
-        );
+        startDateFormatted = labelFormat({
+          date: startDateTime,
+          option: startOptions,
+          format: props.formatInputLabelRangeStart,
+          locale: props.locale,
+        });
+        endDateFormatted = labelFormat({
+          date: endDateTime,
+          option: endOptions,
+          format: props.formatInputLabelRangeEnd,
+          locale: props.locale,
+        });
       }
 
       if (startDateTime && !endDateTime) {
-        startDateFormatted = startDateTime?.toLocaleDateString(
-          props?.locale || "en-US",
-          startOptions
-        );
+        startDateFormatted = labelFormat({
+          date: startDateTime,
+          option: startOptions,
+          format: props.formatInputLabelRangeStart,
+          locale: props.locale,
+        });
       }
 
       if (!startDateTime && endDateTime) {
-        endDateFormatted = endDateTime?.toLocaleDateString(
-          props?.locale || "en-US",
-          endOptions
-        );
+        endDateFormatted = labelFormat({
+          date: endDateTime,
+          option: endOptions,
+          format: props.formatInputLabelRangeEnd,
+          locale: props.locale,
+        });
       }
       label = `${startDateFormatted} ${
         props.rangeDatesSeparator || "-"
@@ -138,14 +159,16 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
 
       const inputLabelValue = newMultipleDateObject.map((date) => {
         const dateTime = convertDateObjectToDate(date);
-        return dateTime?.toLocaleDateString(
-          props?.locale || "en-US",
-          props?.localeOptions || {
+        return labelFormat({
+          date: dateTime,
+          option: props?.localeOptions || {
             month: "short",
             day: "numeric",
             year: "numeric",
-          }
-        );
+          },
+          format: props.formatInputLabel,
+          locale: props.locale,
+        });
       });
 
       const newMultipleDateISO = newMultipleDateObject.map(

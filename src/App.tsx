@@ -76,7 +76,7 @@ const App: Component = () => {
         )}
         calendarBottomAreaJSX={({ selectedDate }) => (
           <div class="bottom-area">
-            {utils().formatDateObject(selectedDate() || {})}
+            {utils().formatDate(selectedDate() || {})}
           </div>
         )}
         renderInput={({ showDate, value }) => (
@@ -111,9 +111,11 @@ const App: Component = () => {
       <DatePickerGroup
         value={date}
         setValue={setDate}
-        type={"range"}
+        type={"single"}
         monthSelectorFormat={"long"}
         shouldHighlightWeekends
+        formatInputLabel={"MMM DDD, yyyy"}
+        locale={"es-MX"}
         // daysActiveRangeBetweenWrapperClass={cssEx}
         // datePickerWrapperClass={"bg-blue-500"}
         monthYearOptionBtnActiveClass={"bg-pink-200 hover:bg-pink-200"}
@@ -133,7 +135,7 @@ const App: Component = () => {
         //         border: "1px solid #ccc",
         //     }} />
         // )}
-        twoMonthsDisplay
+        // twoMonthsDisplay
         // weekDaysType={"single"}
         // hideOutSideDays
         // minDate={utils().getToday()}
