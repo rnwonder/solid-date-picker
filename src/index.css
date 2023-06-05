@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --before-bg: #AAD1E9;
+  --before-bg: #aad1e9;
   --before-color: #0277bd;
   --hover-color: #d2d4d7;
 }
@@ -19,6 +19,10 @@ button:hover {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --before-bg: #335A72;
+    --before-bg: #335a72;
   }
+}
+
+.dark {
+  --before-bg: #335a72;
 }

@@ -24,6 +24,9 @@ devDependencies:
   daisyui:
     specifier: ^2.51.6
     version: 2.51.6(autoprefixer@10.4.14)(postcss@8.4.23)
+  modify-selectors:
+    specifier: ^2.0.0
+    version: 2.0.0(postcss@8.4.23)
   postcss:
     specifier: ^8.4.23
     version: 8.4.23
@@ -1738,6 +1741,15 @@ packages:
       pathe: 1.1.0
       pkg-types: 1.0.3
       ufo: 1.1.2
+    dev: true
+
+  /modify-selectors@2.0.0(postcss@8.4.23):
+    resolution: {integrity: sha512-Hm32mqJ27AZ0AnpwyX3mXpvevAM9eAq0BsmNNVk2CSE8zqUW2bXk4ZNnA1nsjtm1z/cQJJlVmP6AGMqb/KQpKg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      postcss: ^8.0.0
+    dependencies:
+      postcss: 8.4.23
     dev: true
 
   /mrmime@1.0.1:

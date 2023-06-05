@@ -495,9 +495,10 @@ export const DatePicker = (props: DatePickerProps) => {
   const weekDaysJSX = renderCustomJSX(props.weekDaysJSX);
 
   return (
-    <div
-      class={clsx(
-        `date-picker-wrapper 
+
+      <div
+        class={clsx(
+          `date-picker-wrapper 
           rn-shadow-lg 
           rn-border-t 
           rn-border-gray-300 
@@ -508,92 +509,94 @@ export const DatePicker = (props: DatePickerProps) => {
           rn-rounded-md 
           rn-pt-[0.625rem] 
           rn-pb-[0.5rem]
+
           ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "rn-w-max"}
           `,
-        props.datePickerWrapperClass
-      )}
-      data-type={"date-picker-wrapper"}
-      ref={props.ref}
-      style={{
-        ...(props.backgroundColor && {
-          "background-color": props.backgroundColor,
-        }),
-      }}
-      data-scope={"date-picker"}
-      data-part={"content"}
-      role={"application"}
-      aria-label={"calendar"}
-      aria-roledescription={"date-picker"}
-    >
-      <Show when={!props.hideTopArea} keyed>
-        {calendarTopAreaJSX || (
-          <DatePickerTop
-            {...props}
-            setYear={props.setYear || setYear}
-            setMonth={props.setMonth || setMonth}
-            month={props.month || month}
-            year={props.year || year}
-            render={render}
-            handleNextMonth={handleNextMonth}
-            handlePrevMonth={handlePrevMonth}
-            monthSelectorJSX={monthSelectorJSX}
-            yearSelectorJSX={yearSelectorJSX}
-            zIndex={props.zIndex}
-            setAllowedComponents={props.setAllowedComponents}
-            monthSelectorFormat={props.monthSelectorFormat}
-            monthYearSelectorFlexDirection={
-              props.monthYearSelectorFlexDirection
-            }
-            yearRange={props.yearRange}
-            locale={props.locale}
-            nextIcon={props.nextIcon}
-            prevIcon={props.prevIcon}
-            removeNavButtons={props.removeNavButtons}
-            nextButtonAreaJSX={nextButtonAreaJSX}
-            prevButtonAreaJSX={prevButtonAreaJSX}
-            primaryColor={props.primaryColor}
-            primaryTextColor={props.primaryTextColor}
-            secondaryColor={props.secondaryColor}
-            secondaryTextColor={props.secondaryTextColor}
-          />
+          props.datePickerWrapperClass
         )}
-      </Show>
-
-      <div
-        class={clsx(
-          "rn-flex rn-justify-center date-picker-body",
-          props.datePickerBodyAreaClass
-        )}
+        data-type={"date-picker-wrapper"}
+        ref={props.ref}
+        style={{
+          ...(props.backgroundColor && {
+            "background-color": props.backgroundColor,
+          }),
+        }}
+        data-scope={"date-picker"}
+        data-part={"content"}
+        role={"application"}
+        aria-label={"calendar"}
+        aria-roledescription={"date-picker"}
       >
-        <Show when={calendarLeftAreaJSX} keyed>
-          {calendarLeftAreaJSX}
-        </Show>
-
-        <Show when={!props.hideCalendar} keyed>
-          {calendarJSX || (
-            <CalendarArea
+        <Show when={!props.hideTopArea} keyed>
+          {calendarTopAreaJSX || (
+            <DatePickerTop
               {...props}
-              year={props.year || year}
+              setYear={props.setYear || setYear}
+              setMonth={props.setMonth || setMonth}
               month={props.month || month}
-              endDay={endDay}
-              startDay={startDay}
-              handleDayClick={handleDayClick}
-              multipleObject={multipleObject}
-              weekDaysJSX={weekDaysJSX}
-              onHoverDay={onHoverDay}
-              hoverRangeValue={hoverRangeValue}
-              onHoverDayEnd={onHoverDayEnd}
+              year={props.year || year}
+              render={render}
+              handleNextMonth={handleNextMonth}
+              handlePrevMonth={handlePrevMonth}
+              monthSelectorJSX={monthSelectorJSX}
+              yearSelectorJSX={yearSelectorJSX}
+              zIndex={props.zIndex}
+              setAllowedComponents={props.setAllowedComponents}
+              monthSelectorFormat={props.monthSelectorFormat}
+              monthYearSelectorFlexDirection={
+                props.monthYearSelectorFlexDirection
+              }
+              yearRange={props.yearRange}
+              locale={props.locale}
+              nextIcon={props.nextIcon}
+              prevIcon={props.prevIcon}
+              removeNavButtons={props.removeNavButtons}
+              nextButtonAreaJSX={nextButtonAreaJSX}
+              prevButtonAreaJSX={prevButtonAreaJSX}
+              primaryColor={props.primaryColor}
+              primaryTextColor={props.primaryTextColor}
+              secondaryColor={props.secondaryColor}
+              secondaryTextColor={props.secondaryTextColor}
             />
           )}
         </Show>
 
-        <Show when={calendarRightAreaJSX} keyed>
-          {calendarRightAreaJSX}
+        <div
+          class={clsx(
+            "rn-flex rn-justify-center date-picker-body",
+            props.datePickerBodyAreaClass
+          )}
+        >
+          <Show when={calendarLeftAreaJSX} keyed>
+            {calendarLeftAreaJSX}
+          </Show>
+
+          <Show when={!props.hideCalendar} keyed>
+            {calendarJSX || (
+              <CalendarArea
+                {...props}
+                year={props.year || year}
+                month={props.month || month}
+                endDay={endDay}
+                startDay={startDay}
+                handleDayClick={handleDayClick}
+                multipleObject={multipleObject}
+                weekDaysJSX={weekDaysJSX}
+                onHoverDay={onHoverDay}
+                hoverRangeValue={hoverRangeValue}
+                onHoverDayEnd={onHoverDayEnd}
+              />
+            )}
+          </Show>
+
+          <Show when={calendarRightAreaJSX} keyed>
+            {calendarRightAreaJSX}
+          </Show>
+        </div>
+        <Show when={calendarBottomAreaJSX} keyed>
+          {calendarBottomAreaJSX}
         </Show>
       </div>
-      <Show when={calendarBottomAreaJSX} keyed>
-        {calendarBottomAreaJSX}
-      </Show>
-    </div>
+
   );
 };
