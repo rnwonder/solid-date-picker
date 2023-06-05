@@ -61,7 +61,7 @@ const App = () => {
 - Check out the [documentation](https://soliddatepicker.live/docs/styling/) for more details
 
 ### Themes
-- We have some themes that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/themes/)
+- We have a growing list of themes you can use. Please check them out [here](https://soliddatepicker.live/docs/themes/)
 
 ### Other Datepicker Props
 - We have some other props that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/other-props/)
