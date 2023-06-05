@@ -7,11 +7,9 @@
  * This only styles the datepicker only and not the input field
  &
  * @author Ruona Matthew <rnwonder@gmail.com>
- * @version 1.1
+ * @version 1.2
  *
  */
-
-
 
 :root {
   --colors-accent-default: #eb5e41;
@@ -19,12 +17,14 @@
   --colors-bg-subtle: #f5f5f4;
   --colors-fg-emphasized: #44403c;
   --colors-fg-default: #1c1917;
+  --colors-fg-emphasized-reverse: #44403c;
 
   --size-1: 0.875rem;
   --size-2: 2.25rem;
   --size-3: 2.5rem;
-
   --spacing-1: 1.5rem;
+
+  /*default variable for range start and end before background color just changing the value here*/
   --before-bg: var(--colors-bg-subtle);
 }
 
@@ -44,8 +44,11 @@
 }
 
 .date-prev-next-btn:hover,
-.date-selector-trigger:hover {
+.date-selector-trigger:hover,
+.date-prev-next-btn,
+.date-selector-trigger {
   background-color: transparent;
+  color: var(--colors-fg-emphasized);
 }
 
 .date-prev-next-btn > svg {
@@ -63,15 +66,15 @@
   max-height: 13rem;
 }
 
+.date-selector-option {
+  min-height: var(--size-3);
+  font-weight: 400;
+  color: var(--colors-fg-emphasized);
+}
 [data-selected="true"],
 [data-selected="true"]:hover {
   background-color: var(--colors-bg-subtle);
   color: var(--colors-accent-default);
-}
-
-.date-selector-option {
-  min-height: var(--size-3);
-  font-weight: 400;
 }
 
 .date-picker-weekday-name {
@@ -83,9 +86,6 @@
   font-size: var(--size-1);
   font-weight: 500;
   color: var(--colors-fg-default);
-}
-
-.date-picker-day-number-area::before {
 }
 
 .date-picker-day-number {
@@ -145,5 +145,13 @@
     --size-3: 2.15rem;
 
     --spacing-1: 1.5rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --colors-bg-subtle: #343434;
+    --colors-fg-emphasized: #e1e1e1;
+    --colors-fg-default: #e8e8e8;
   }
 }
