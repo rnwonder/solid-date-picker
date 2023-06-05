@@ -17,7 +17,7 @@ To get an overview of the project, read the [README](README.md). Here are some r
 - [Collaborating with pull requests](https://github.com/rnwonder/solid-date-picker/pulls)
 -
 ### Themes
-- When adding themes we generally want the file to in css format. That way anyone can use it without having to install any package like sass and the likes.
+- When adding a new theme, we generally want the file to be in css format. That way anyone can use it without having to install any package like sass and the likes.
 
 ### Issues
 
