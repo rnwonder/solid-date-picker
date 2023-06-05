@@ -265,6 +265,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           data-day-number-is-multiple-selected={props.isMultipleSelected}
           data-day-number-range-end-hover={props.dayRangeEndHover}
           data-scope={"date-picker"}
+          data-highlight-weekend={props.shouldHighlightWeekends}
           data-part={"cell-trigger"}
           //@ts-ignore
           role={"button"}

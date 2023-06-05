@@ -7,7 +7,7 @@
  * This only styles the datepicker only and not the input field
  &
  * @author Ruona Matthew <rnwonder@gmail.com>
- * @version 1.0
+ * @version 1.1
  *
  */
 
@@ -115,8 +115,13 @@
   background-color: var(--colors-bg-subtle);
 }
 
+[data-highlight-weekend="true"][data-day-number-is-weekend="true"] {
+  color: var(--colors-accent-default);
+}
+
 [data-day-number-selected="true"],
-[data-day-number-selected="true"]:hover {
+[data-day-number-selected="true"]:hover,
+[data-day-number-selected="true"][data-highlight-weekend="true"] {
   background-color: var(--colors-accent-default);
   color: var(--colors-fg-inverted-default);
 }

@@ -6,7 +6,7 @@ import { MonthSelector } from "./components/MonthSelector";
 import { YearSelector } from "./components/YearSelector";
 // import { utils } from "./utils";
 // import style from "./App.module.css";
-// import "./themes/ark-ui.css";
+import "./themes/ark-ui.css";
 
 const App: Component = () => {
   const [value, setValue] = createSignal("");
@@ -38,6 +38,7 @@ const App: Component = () => {
         type={"range"}
         value={singleCustomDate}
         setValue={setSingleCustomDate}
+        shouldHighlightWeekends
       />
 
       <br />
