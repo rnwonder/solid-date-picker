@@ -33,7 +33,7 @@ export interface DatePickerTopProps extends IColors, ClassNames {
   yearSelectorJSX?: JSXElement;
   monthYearSelectorJSX?: JSXElement;
   zIndex?: number;
-  setAllowedComponents: Setter<HTMLElement[]>;
+  setAllowedComponents?: Setter<HTMLElement[]>;
   monthSelectorFormat?: IMonthSelectorType;
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
   yearRange?: IYearRange;

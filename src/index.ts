@@ -4,6 +4,7 @@ export { MonthSelector } from "./components/MonthSelector";
 export { YearSelector } from "./components/YearSelector";
 export { CalendarArea } from "./components/CalendarArea";
 export { Popover } from "./components/Popover";
+export { DatePicker as DatePickerStandAlone } from "./components/DatePicker";
 
 export { utils } from "./utils";
 export * from "./interface/general";

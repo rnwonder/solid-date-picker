@@ -41,7 +41,7 @@ import { DatePickerTop } from "../DatePickerTop";
 
 export interface DatePickerProps extends IColors, ClassNames {
   type: IDatePickerType;
-  close: () => void;
+  close?: () => void;
   handleOnChange: (data: IDatePickerOnChange) => void;
   onDisabledDayError?: () => void;
 
@@ -54,7 +54,7 @@ export interface DatePickerProps extends IColors, ClassNames {
 
   ref?: any;
   value?: IDatePickerInputValueTypes;
-  setAllowedComponents: Setter<HTMLElement[]>;
+  setAllowedComponents?: Setter<HTMLElement[]>;
 
   month?: Accessor<number>;
   setMonth?: Setter<number>;
@@ -375,7 +375,7 @@ export const DatePicker = (props: DatePickerProps) => {
       props.setYear?.(newYear);
     }
     setRender(false);
-    props.shouldCloseOnSelect && props.close();
+    props.shouldCloseOnSelect && props.close?.();
   };
 
   const handleNextMonth = () => {
