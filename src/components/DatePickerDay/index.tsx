@@ -5,6 +5,7 @@ import {
   createEffect,
   createSignal,
   Accessor,
+  JSX,
 } from "solid-js";
 import { Button } from "../Button";
 import clsx from "clsx";
@@ -31,6 +32,8 @@ interface DatePickerDayProps
   onHover?: () => void;
   onHoverEnd?: () => void;
   hoverRangeValue?: Accessor<HoverRangeValue>;
+  wrapperProps?: any;
+  headerValue?: string;
 }
 
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
@@ -79,6 +82,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         rn-text-center
         rn-uppercase
         rn-relative
+        dark:rn-text-slate-300
         ${props.hidden && "rn-pointer-events-none"}
         ${
           props.dayRangeBetween && !props.hidden
@@ -89,7 +93,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         before:rn-absolute
         before:rn-top-0
         before:rn-h-full
-       
+        
         before:rn-bg-opacity-50 
         ${
           (props.dayRangeStart && props.dayRangeStartEnd && !props.hidden) ||
@@ -122,6 +126,10 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             props.dayRangeBetween,
         }
       )}
+      aria-selected={
+        props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
+      }
+      data-value={props.header ? props.headerValue : props.dateValue}
       data-day-number-area={!props.header}
       data-day-number-area-range-start-or-end={
         props.dayRangeStart || props.dayRangeEnd
@@ -156,6 +164,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
       }}
       onMouseEnter={props.onHover}
       onMouseLeave={props.onHoverEnd}
+      {...props.wrapperProps}
     >
       <Show when={props.header && !props.hidden} keyed>
         {props.children}
@@ -164,6 +173,12 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
       <Show when={!props.header && !props.hidden} keyed>
         <Button
           setHeight
+          // @ts-ignore
+          tabindex={
+            props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
+              ? 0
+              : -1
+          }
           class={clsx(
             `
           date-picker-day-number
@@ -172,9 +187,9 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           rn-transition-none
           ${
             props.dayRangeStart || props.dayRangeEnd
-              ? "rn-text-white day-number-range-start-or-end"
+              ? "rn-text-white dark:rn-text-white day-number-range-start-or-end"
               : props.isMultipleSelected
-              ? "rn-text-white day-number-multiple-select"
+              ? "rn-text-white dark:rn-text-white day-number-multiple-select"
               : props.dayRangeBetween
               ? "rn-text-primary day-range-between"
               : "rn-text-black"
@@ -184,6 +199,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           rn-text-[0.9375rem]
           rn-p-0
           rn-z-10
+          dark:rn-text-slate-300
           ${
             props.daysNotCurrentMonth
               ? !props.dayRangeStart && !props.dayRangeEnd
@@ -193,18 +209,20 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           }
           ${
             props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
-              ? "rn-bg-primary hover:rn-bg-primary"
-              : ""
-          }
-          ${props.dayRangeBetween && "hover:rn-bg-transparent"}
-          ${
-            props.dayRangeStart || props.dayRangeEnd
-              ? ""
+              ? "rn-bg-primary hover:rn-bg-primary dark:hover:rn-bg-primary dark:rn-bg-primary"
               : props.daysCurrent
               ? "day-number-current-day rn-border rn-border-dashed rn-border-black hover:rn-border hover:rn-border-dashed hover:rn-border-black"
               : ""
           }
-          ${props.shouldHighlightWeekends && props.isWeekend && "rn-text-red-500"}
+          ${props.dayRangeBetween && "hover:rn-bg-transparent"}
+          ${
+            props.shouldHighlightWeekends &&
+            props.isWeekend &&
+            !props.dayRangeStart &&
+            !props.dayRangeEnd &&
+            !props.isMultipleSelected &&
+            "rn-text-red-500 dark:rn-text-red-500"
+          }
           disabled:rn-text-black
           disabled:rn-opacity-30
           rn-rounded-full
@@ -230,6 +248,9 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             }
           )}
           data-day-number={true}
+          data-day-number-selected={
+            props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
+          }
           data-day-number-range-start-or-end={
             props.dayRangeStart || props.dayRangeEnd
           }
@@ -242,8 +263,19 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           data-day-number-is-sunday={props.isSunday}
           data-day-number-is-saturday={props.isSaturday}
           data-day-number-is-multiple-selected={props.isMultipleSelected}
+          data-day-number-range-end-hover={props.dayRangeEndHover}
+          data-scope={"date-picker"}
+          data-part={"cell-trigger"}
+          //@ts-ignore
+          role={"button"}
+          aria-label={"Choose " + props.date}
+          data-value={props.dateValue}
+          data-type={"day"}
           onClick={props.onClick}
           disabled={props.disabled}
+          selected={
+            props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
+          }
           style={{
             ...((props.dayRangeStart ||
               props.dayRangeEnd ||

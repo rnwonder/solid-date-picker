@@ -60,6 +60,9 @@ const App = () => {
 - You can style the datepicker using class props, color props, default css class names or data attributes.
 - Check out the [documentation](https://soliddatepicker.live/docs/styling/) for more details
 
+### Themes
+- We have some themes that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/themes/)
+
 ### Other Datepicker Props
 - We have some other props that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/other-props/)
 

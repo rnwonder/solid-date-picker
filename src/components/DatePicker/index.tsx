@@ -337,6 +337,9 @@ export const DatePicker = (props: DatePickerProps) => {
           end: undefined,
         });
       }
+      if (end && start) {
+        setHoverRangeValue({});
+      }
     }
 
     if (props.type === "single") {
@@ -499,6 +502,8 @@ export const DatePicker = (props: DatePickerProps) => {
           rn-border-t 
           rn-border-gray-300 
           rn-bg-white
+          dark:rn-border-gray-700
+          dark:rn-bg-dreamless-sleep
           rn-border-solid 
           rn-rounded-md 
           rn-pt-[0.625rem] 
@@ -514,6 +519,11 @@ export const DatePicker = (props: DatePickerProps) => {
           "background-color": props.backgroundColor,
         }),
       }}
+      data-scope={"date-picker"}
+      data-part={"content"}
+      role={"application"}
+      aria-label={"calendar"}
+      aria-roledescription={"date-picker"}
     >
       <Show when={!props.hideTopArea} keyed>
         {calendarTopAreaJSX || (

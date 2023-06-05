@@ -1,0 +1,144 @@
+/**
+ * Ark-UI Datepicker theme
+ *
+ * Adapted theme based on:
+ * ark-ui datepicker (https://ark-ui.com/docs/solid/components/date-picker)
+ *
+ * This only styles the datepicker only and not the input field
+ &
+ * @author Ruona Matthew <rnwonder@gmail.com>
+ * @version 1.0
+ *
+ */
+
+
+
+:root {
+  --colors-accent-default: #eb5e41;
+  --colors-fg-inverted-default: #fff;
+  --colors-bg-subtle: #f5f5f4;
+  --colors-fg-emphasized: #44403c;
+  --colors-fg-default: #1c1917;
+
+  --size-1: 0.875rem;
+  --size-2: 2.25rem;
+  --size-3: 2.5rem;
+
+  --spacing-1: 1.5rem;
+  --before-bg: var(--colors-bg-subtle);
+}
+
+.date-prev-next-btn {
+  height: var(--size-2);
+  width: var(--size-2);
+}
+
+.date-picker-main-btn {
+  height: var(--size-2) !important;
+  min-width: var(--size-2);
+  text-transform: capitalize;
+}
+
+.date-picker-main-btn:hover {
+  background-color: var(--colors-bg-subtle);
+}
+
+.date-prev-next-btn:hover,
+.date-selector-trigger:hover {
+  background-color: transparent;
+}
+
+.date-prev-next-btn > svg {
+  width: 1em;
+  height: 1em;
+}
+
+.date-selector-trigger {
+  font-size: var(--size-1);
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.date-selector-wrapper {
+  max-height: 13rem;
+}
+
+[data-selected="true"],
+[data-selected="true"]:hover {
+  background-color: var(--colors-bg-subtle);
+  color: var(--colors-accent-default);
+}
+
+.date-selector-option {
+  min-height: var(--size-3);
+  font-weight: 400;
+}
+
+.date-picker-weekday-name {
+  height: var(--size-3);
+  width: var(--size-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--size-1);
+  font-weight: 500;
+  color: var(--colors-fg-default);
+}
+
+.date-picker-day-number-area::before {
+}
+
+.date-picker-day-number {
+  min-height: var(--size-3);
+  min-width: var(--size-3);
+  border-radius: 0.5rem;
+  font-size: var(--size-1);
+  font-weight: 400;
+  color: var(--colors-fg-emphasized);
+}
+
+[data-day-number-current-day="true"],
+[data-day-number-current-day="true"]:hover {
+  border: none;
+}
+
+[data-day-number-current-day="true"]::before {
+  content: "•";
+  color: var(--colors-accent-default);
+  position: absolute;
+  margin-top: var(--spacing-1);
+  border-style: solid;
+  font-size: 1rem;
+}
+
+[data-day-number-area-range-between="true"] {
+  background-color: var(--colors-bg-subtle);
+}
+
+[data-day-number-selected="true"],
+[data-day-number-selected="true"]:hover {
+  background-color: var(--colors-accent-default);
+  color: var(--colors-fg-inverted-default);
+}
+
+[data-day-number-range-end-hover="true"],
+[data-day-number-range-end-hover="true"]:hover {
+  background-color: var(--colors-bg-subtle);
+  color: var(--colors-accent-default);
+}
+
+@media (max-width: 620px) {
+  .date-picker-calendar-wrapper {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --size-1: 0.875rem;
+    --size-2: 1.75rem;
+    --size-3: 2.15rem;
+
+    --spacing-1: 1.5rem;
+  }
+}

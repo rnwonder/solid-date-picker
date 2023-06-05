@@ -6,6 +6,7 @@ interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
   setHeight?: boolean;
   disabled?: boolean;
   style?: JSX.CSSProperties;
+  selected?: boolean;
 }
 
 
@@ -18,9 +19,10 @@ export const Button: Component<ButtonProps> = (props) => {
         rn-btn 
         rn-btn-ghost 
         ${props.setHeight ? "" : "rn-h-full"} 
+        ${props.selected ? "" : "dark:hover:rn-bg-slate-700"}
         rn-p-0 
         rn-min-h-0 
-        rn-date-picker-main-btn
+        date-picker-main-btn
         motion-reduce:rn-transition-none
         `,
         props.class

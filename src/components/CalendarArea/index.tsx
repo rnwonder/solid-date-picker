@@ -31,10 +31,11 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
   });
   return (
     <div
-      class={clsx("rn-flex rn-breakTwoCalendar:rn-flex-col", props.calendarWrapperClass)}
+      class={clsx("date-picker-calendar-wrapper rn-flex breakTwoCalendar:rn-flex-col", props.calendarWrapperClass)}
     >
       <div
         class={clsx(
+            'date-picker-calendar-area-one',
           {
             "rn-px-4": !props.twoMonthsDisplay,
             "aboveBreakTwoCalendar:rn-pl-4 breakTwoCalendar:rn-px-4":
@@ -42,6 +43,12 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
           },
           props.calendarOneAreaClass
         )}
+        data-scope={"date-picker"}
+        data-part={"grid"}
+        role={"grid"}
+        data-columns={7}
+        aria-roledescription={"calendar month"}
+        tabindex={-1}
       >
         {props.weekDaysJSX || (
           <WeekDays
@@ -58,12 +65,13 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
       <Show when={props.twoMonthsDisplay} keyed>
         <div
           class={clsx(
-            "rn-divider aboveBreakTwoCalendar:rn-divider-horizontal aboveBreakTwoCalendar:rn-mx-2 aboveBreakTwoCalendar:rn-w-fit ",
+            "date-picker-calendar-area-divider rn-divider aboveBreakTwoCalendar:rn-divider-horizontal aboveBreakTwoCalendar:rn-mx-2 aboveBreakTwoCalendar:rn-w-fit ",
             props.calendarDividerClass
           )}
         ></div>
         <div
           class={clsx(
+              'date-picker-calendar-area-two',
             {
               "aboveBreakTwoCalendar:rn-pr-4 breakTwoCalendar:rn-px-4":
                 props.twoMonthsDisplay,

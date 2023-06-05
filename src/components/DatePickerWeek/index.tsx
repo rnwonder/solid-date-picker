@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 interface DatePickerWeekDaysProps extends ClassNames {
   children: JSXElement;
+  header?: boolean;
 }
 export const DatePickerWeek: Component<DatePickerWeekDaysProps> = (props) => {
   return (
@@ -21,8 +22,10 @@ export const DatePickerWeek: Component<DatePickerWeekDaysProps> = (props) => {
         props.weekNamesRowClass
       )}
       data-type={"date-picker-calendar-row"}
+      data-part={props.header ? "header" : "row"}
+      data-scope={"date-picker"}
       //@ts-ignore
-      role={"composite"}
+      role={"row"}
     >
       {props.children}
     </div>

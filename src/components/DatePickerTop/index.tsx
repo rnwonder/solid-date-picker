@@ -106,12 +106,15 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={clsx(
-            "date-prev-next-btn disabled:rn-opacity-10",
+            "date-prev-next-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-slate-200",
             props.prevMonthBtnClass,
             props.prevNextMonthBtnClass
           )}
           data-prev={true}
           data-type={"date-prev-next-btn"}
+          aria-label={"Prev"}
+          data-scope={"button"}
+          data-part={"root"}
           disabled={isPrevButtonDisabled()}
           onClick={props.handlePrevMonth}
           style={{
@@ -134,11 +137,14 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={clsx(
-            "date-prev-next-btn disabled:rn-opacity-10",
+            "date-prev-next-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-slate-200",
             props.nextMonthBtnClass,
             props.prevNextMonthBtnClass
           )}
           data-next={true}
+          aria-label={"Next"}
+          data-scope={"button"}
+          data-part={"root"}
           data-type={"date-prev-next-btn"}
           onClick={props.handleNextMonth}
           disabled={isNextButtonDisabled()}

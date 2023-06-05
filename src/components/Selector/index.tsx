@@ -9,7 +9,7 @@ import {
   MakeOptionalRequired,
   ClassNames,
 } from "../../interface/general";
-import { isNotPartOfEnabledDays } from "../../utils";
+import { getMonthName, isNotPartOfEnabledDays } from "../../utils";
 
 interface SelectorProps extends IColors, ClassNames {
   option: Accessor<number>;
@@ -127,14 +127,19 @@ export const Selector = (props: SelectorProps) => {
             rn-max-h-[10.625rem]
             rn-max-w-[25rem]
             rn-overflow-y-auto
-            
+            dark:rn-bg-eerie-black
           `,
             props.monthYearSelectorWrapperClass
           )}
           ref={props.ref}
+          data-part={"grid"}
+          data-scope={"date-picker"}
+          aria-roledescription={
+            props.useValueAsName ? "calendar year" : "calendar month"
+          }
           //@ts-ignore
-          role={"composite"}
-          aria-activedescendant={props.option()}
+          role={"grid"}
+
           aria-multiselectable={false}
           aria-readonly={false}
           aria-disabled={false}
@@ -153,12 +158,13 @@ export const Selector = (props: SelectorProps) => {
                   date-selector-option
                   rn-px-[5px] 
                   rn-text-black 
+                  dark:rn-text-slate-300
                   rn-text-sm
                   smallMobile:rn-text-[12px]
                   disabled:rn-opacity-40
                   ${
                     isSelected(value, index)
-                      ? "rn-bg-primary rn-text-white hover:rn-bg-primary hover:rn-text-white rn-selector-option-selected"
+                      ? "rn-bg-primary rn-text-white dark:rn-text-white hover:rn-bg-primary dark:hover:rn-bg-primary hover:rn-text-white rn-selector-option-selected"
                       : ""
                   }
 
@@ -184,11 +190,22 @@ export const Selector = (props: SelectorProps) => {
                 }}
                 onClick={() => handleOptionClick(index(), value, close)}
                 data-selected={isSelected(value, index)}
+                selected={isSelected(value, index)}
                 data-selector-option={true}
+                data-scope={"date-picker"}
+                data-part={"cell-trigger"}
+                aria-label={
+                  props.useValueAsName
+                    ? value
+                    : getMonthName(index()) + " " + props.year?.()
+                }
+                data-value={props.useValueAsName ? value : index() + 1}
+                data-type={props.useValueAsName ? "year" : "month"}
+                //@ts-ignore
+                tabindex={isSelected(value, index) ? 0 : -1}
                 aria-selected={isSelected(value, index)}
                 aria-disabled={false}
                 aria-readonly={false}
-                aria-label={value}
                 aria-setsize={props.optionsArray.length}
                 aria-posinset={index() + 1}
                 aria-controls={"selector"}
@@ -211,12 +228,15 @@ export const Selector = (props: SelectorProps) => {
         rn-text-[15px]
         rn-animate-none
         rn-font-bold
-        rn-date-selector-trigger
+        date-selector-trigger
         breakTwoCalendar:rn-text-sm
-      `,
+        dark:rn-text-slate-300`,
           props.monthYearTriggerBtnClass
         )}
         aria-haspopup={true}
+        aria-label={props.useValueAsName ? "Select a year" : "Select a month"}
+        data-scope={"button"}
+        data-part={"root"}
         aria-expanded={open()}
         data-type={"date-selector-trigger"}
         style={{

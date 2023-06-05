@@ -11,6 +11,7 @@ import { Accessor } from "solid-js";
 import { getDatePickerRefactoredMonth } from "./generate";
 import {
   checkIfItsTodayDate,
+  compareObjectDate,
   isDayInBetweenRange,
   isDayTipRange,
   isMinMaxDate,
@@ -18,6 +19,7 @@ import {
   isPartOfDisabledDays,
   isWeekendStatus,
 } from "./general";
+import { getJSDateFormat } from "./format";
 
 export const applyDateRangeProps = ({
   year,
@@ -48,7 +50,17 @@ export const applyDateRangeProps = ({
   disabledDays?: DateArray[];
   enabledDays?: DateArray[];
 }): ApplyDateRange => {
+  const date =`${year()}-${getDatePickerRefactoredMonth(month(), day.month)}-${
+      day.value
+  }`
   return {
+    dayRangeEndHover: checkHoverEnd(
+      hoverRangeValue,
+      startDay,
+      day,
+      year,
+      month
+    ),
     dayRangeStartEnd:
       (hoverRangeValue().start || startDay) &&
       (hoverRangeValue().end || endDay) &&
@@ -135,5 +147,57 @@ export const applyDateRangeProps = ({
         month: month(),
         year: year(),
       }),
+    date,
+    dateValue: date,
   };
+};
+
+const checkHoverEnd = (
+  hoverRangeValue: Accessor<HoverRangeValue>,
+  startDay: DateObjectUnits | undefined,
+  day: IMonthDaysObject,
+  year: Accessor<number>,
+  month: Accessor<number>
+) => {
+  if (!hoverRangeValue().end?.day) return false;
+  if (!hoverRangeValue().start?.day) return false;
+
+  const startDayDate = getJSDateFormat(hoverRangeValue().start!);
+  const endDayDate = getJSDateFormat(hoverRangeValue().end!);
+  const selectedDate = getJSDateFormat(startDay!);
+
+  let start: Date | undefined;
+  let end: Date | undefined;
+
+  if (!startDayDate || !endDayDate || !selectedDate) {
+    return false;
+  }
+
+  if (selectedDate.getTime() > startDayDate.getTime()) {
+    end = selectedDate;
+    start = startDayDate;
+  }
+
+  if (selectedDate.getTime() < endDayDate.getTime()) {
+    end = selectedDate;
+    start = endDayDate;
+  }
+
+  if (start!.getTime() < end!.getTime()) {
+    return compareObjectDate(hoverRangeValue().start!, {
+      year: year(),
+      month: getDatePickerRefactoredMonth(month(), day.month),
+      day: day.value,
+    });
+  }
+
+  if (start!.getTime() > end!.getTime()) {
+    return compareObjectDate(hoverRangeValue().end!, {
+      year: year(),
+      month: getDatePickerRefactoredMonth(month(), day.month),
+      day: day.value,
+    });
+  }
+
+  return false;
 };

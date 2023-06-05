@@ -6,6 +6,8 @@ module.exports = {
       colors: {
         primary: "#0277bd",
         "primary-focus": "#02639d",
+        "eerie-black": "#1b1b1b",
+        "dreamless-sleep": "#111111",
       },
     },
     screens: {

@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+
+.purpleDay {
+  border: 2px solid rgba(156, 136, 255, 0.7);
+  background-color: red;
+}

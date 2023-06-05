@@ -138,6 +138,9 @@ export interface ApplyDateRange {
   isMultipleSelected: boolean;
   hidden: boolean;
   disabled: boolean;
+  dayRangeEndHover: boolean;
+  date: string
+  dateValue: string
 }
 
 export interface CustomDaysClassName
@@ -157,7 +160,7 @@ export interface ClassNames {
   inputWrapperClass?: string;
   datePickerWrapperClass?: string;
   datePickerTopAreaClass?: string;
-  prevNextMonthBtnClass?: string
+  prevNextMonthBtnClass?: string;
   prevMonthBtnClass?: string;
   nextMonthBtnClass?: string;
   datePickerTopMonthYearAreaClass?: string;
@@ -191,4 +194,4 @@ export interface ClassNames {
   daysActiveRangeBetweenWrapperClass?: string;
 }
 
-export type DateOption = Date | DateObjectUnits | string | number
+export type DateOption = Date | DateObjectUnits | string | number;

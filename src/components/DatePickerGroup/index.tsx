@@ -6,10 +6,7 @@ import {
   IRenderInput,
   PickerValue,
 } from "../../interface/general";
-import {
-  convertDateObjectToDate,
-  labelFormat,
-} from "../../utils";
+import { convertDateObjectToDate, labelFormat } from "../../utils";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
 
@@ -253,7 +250,12 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       width={props.inputWrapperWidth}
       className={props.inputWrapperClass}
     >
-      <div class={"date-picker-input-area"} data-date-picker-input-area={true}>
+      <div
+        class={"date-picker-input-area"}
+        data-date-picker-input-area={true}
+        data-scope="date-picker"
+        data-part="control"
+      >
         <Show when={inputJSX} keyed>
           {inputJSX}
         </Show>
@@ -262,6 +264,8 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           <input
             readonly
             type={"text"}
+            data-scope="date-picker"
+            data-part="input"
             aria-label={"date picker input"}
             placeholder={props.placeholder}
             value={props.inputLabel?.() || props.value?.().label || ""}
