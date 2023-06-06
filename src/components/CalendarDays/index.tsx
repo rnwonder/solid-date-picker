@@ -49,7 +49,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
         {(day) => (
           <DatePickerDay
             {...{ ...props, calendarWeekDaysNameClass: undefined }}
-            {...applyDateRangeProps({
+            {... (applyDateRangeProps({
               year: props.year,
               day,
               month: props.month,
@@ -63,7 +63,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
               minDate: props.minDate,
               maxDate: props.maxDate,
               disabledDays: props.disabledDays,
-            })}
+            }))}
             onClick={() =>
               props.handleDayClick(
                 day,

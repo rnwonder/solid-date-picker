@@ -38,6 +38,15 @@ interface DatePickerDayProps
 
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
   const [ref, setref] = createSignal<HTMLDivElement>();
+  const [isSelected, setIsSelected] = createSignal(false);
+
+  createEffect(() => {
+    if (props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected) {
+      setIsSelected(true);
+    } else {
+      setIsSelected(false);
+    }
+  });
 
   createEffect(() => {
     if (!ref()) return;
@@ -126,9 +135,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             props.dayRangeBetween,
         }
       )}
-      aria-selected={
-        props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
-      }
+      aria-selected={isSelected()}
       data-value={props.header ? props.headerValue : props.dateValue}
       data-day-number-area={!props.header}
       data-day-number-area-range-start-or-end={
@@ -174,11 +181,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         <Button
           setHeight
           // @ts-ignore
-          tabindex={
-            props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
-              ? 0
-              : -1
-          }
+          tabindex={isSelected() ? 0 : -1}
           class={clsx(
             `
           date-picker-day-number
@@ -208,7 +211,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
               : "rn-opacity-100 day-number-current-month"
           }
           ${
-            props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
+            isSelected()
               ? "rn-bg-primary hover:rn-bg-primary dark:hover:rn-bg-primary dark:rn-bg-primary"
               : props.daysCurrent
               ? "day-number-current-day rn-border rn-border-dashed rn-border-black hover:rn-border hover:rn-border-dashed hover:rn-border-black"
@@ -231,10 +234,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             props.daysBtnClass,
             props.customDayClass,
             {
-              [props.daysActivePrimaryBtnClass || ""]:
-                props.dayRangeStart ||
-                props.dayRangeEnd ||
-                props.isMultipleSelected,
+              [props.daysActivePrimaryBtnClass || ""]: isSelected(),
               [props.daysActiveRangeBetweenBtnClass || ""]:
                 props.dayRangeBetween,
               [props.currentDayBtnClass || ""]: props.daysCurrent,
@@ -248,9 +248,9 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             }
           )}
           data-day-number={true}
-          data-day-number-selected={
-            props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
-          }
+          data-day-number-selected={isSelected()}
+          data-day-number-range-end-hover={props.dayRangeEndHover}
+          data-day-number-range-end-selected={!props.dayRangeEndHover && isSelected()}
           data-day-number-range-start-or-end={
             props.dayRangeStart || props.dayRangeEnd
           }
@@ -263,7 +263,6 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           data-day-number-is-sunday={props.isSunday}
           data-day-number-is-saturday={props.isSaturday}
           data-day-number-is-multiple-selected={props.isMultipleSelected}
-          data-day-number-range-end-hover={props.dayRangeEndHover}
           data-scope={"date-picker"}
           data-highlight-weekend={props.shouldHighlightWeekends}
           data-part={"cell-trigger"}
@@ -274,14 +273,9 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           data-type={"day"}
           onClick={props.onClick}
           disabled={props.disabled}
-          selected={
-            props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected
-          }
+          selected={isSelected()}
           style={{
-            ...((props.dayRangeStart ||
-              props.dayRangeEnd ||
-              props.isMultipleSelected) &&
-            (props.primaryColor || props.primaryTextColor)
+            ...(isSelected() && (props.primaryColor || props.primaryTextColor)
               ? {
                   "background-color": props.primaryColor,
                   color: props.primaryTextColor,

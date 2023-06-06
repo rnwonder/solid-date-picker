@@ -89,20 +89,22 @@ export const getJSDateFormat = (date: DateOption): Date | undefined => {
 };
 
 export const convertDateToDateObject = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
   return {
-    year: date.getFullYear(),
-    month: date.getMonth(),
-    day: date.getDate(),
+    year,
+    month,
+    day,
   };
 };
 
 export const convertDateObjectToDate = (date: DateObjectUnits) => {
   const now = new Date();
-  return new Date(
-    date?.year || now.getFullYear(),
-    date?.month === 0 ? 0 : date?.month || now.getMonth(),
-    date?.day || now.getDay()
-  );
+  const year = date?.year ?? now.getFullYear();
+  const month = date?.month === 0 ? 0 : date?.month ?? now.getMonth();
+  const day = date?.day ?? now.getDate();
+  return new Date(year, month, day);
 };
 
 export const formatDate = (

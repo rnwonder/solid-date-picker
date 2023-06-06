@@ -17,12 +17,6 @@ button:hover {
   background-color: var(--hover-color);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --before-bg: #335a72;
-  }
-}
-
 .dark {
   --before-bg: #335a72;
 }

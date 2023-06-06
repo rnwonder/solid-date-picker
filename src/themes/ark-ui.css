@@ -7,7 +7,7 @@
  * This only styles the datepicker only and not the input field
  &
  * @author Ruona Matthew <rnwonder@gmail.com>
- * @version 1.3
+ * @version 1.4
  *
  */
 
@@ -86,10 +86,10 @@
   font-weight: 400;
   color: var(--colors-fg-emphasized);
 }
-[data-selected="true"],
-[data-selected="true"]:hover,
-.dark [data-selected="true"],
-.dark [data-selected="true"]:hover {
+[date-selector-option-selected="true"],
+[date-selector-option-selected="true"]:hover,
+.dark [date-selector-option-selected="true"],
+.dark [date-selector-option-selected="true"]:hover {
   background-color: var(--colors-bg-subtle);
   color: var(--colors-accent-default);
 }
@@ -150,6 +150,16 @@
   color: var(--colors-fg-inverted-default);
 }
 
+[data-day-number-range-end-selected="false"],
+[data-day-number-range-end-selected="false"]:hover,
+[data-day-number-range-end-selected="false"][data-highlight-weekend="true"],
+.dark [data-day-number-range-end-selected="false"],
+.dark [data-day-number-range-end-selected="false"]:hover,
+.dark [data-day-number-range-end-selected="false"][data-highlight-weekend="true"] {
+  background-color: transparent;
+  color: var(--colors-fg-emphasized);
+}
+
 [data-day-number-range-end-hover="true"],
 [data-day-number-range-end-hover="true"]:hover,
 .dark [data-day-number-range-end-hover="true"],
@@ -171,15 +181,6 @@
     --size-3: 2.15rem;
 
     --spacing-1: 1.5rem;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --colors-bg-subtle: #343434;
-    --colors-fg-emphasized: #e1e1e1;
-    --colors-fg-default: #e8e8e8;
-    --color-bg-disabled: #252525;
   }
 }
 

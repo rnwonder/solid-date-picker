@@ -12,6 +12,7 @@ import { getDatePickerRefactoredMonth } from "./generate";
 import {
   checkIfItsTodayDate,
   compareObjectDate,
+  isBeforeDate,
   isDayInBetweenRange,
   isDayTipRange,
   isMinMaxDate,
@@ -19,7 +20,6 @@ import {
   isPartOfDisabledDays,
   isWeekendStatus,
 } from "./general";
-import { getJSDateFormat } from "./format";
 
 export const applyDateRangeProps = ({
   year,
@@ -50,9 +50,9 @@ export const applyDateRangeProps = ({
   disabledDays?: DateArray[];
   enabledDays?: DateArray[];
 }): ApplyDateRange => {
-  const date =`${year()}-${getDatePickerRefactoredMonth(month(), day.month)}-${
-      day.value
-  }`
+  const date = `${year()}-${getDatePickerRefactoredMonth(month(), day.month)}-${
+    day.value
+  }`;
   return {
     dayRangeEndHover: checkHoverEnd(
       hoverRangeValue,
@@ -161,43 +161,20 @@ const checkHoverEnd = (
 ) => {
   if (!hoverRangeValue().end?.day) return false;
   if (!hoverRangeValue().start?.day) return false;
-
-  const startDayDate = getJSDateFormat(hoverRangeValue().start!);
-  const endDayDate = getJSDateFormat(hoverRangeValue().end!);
-  const selectedDate = getJSDateFormat(startDay!);
-
-  let start: Date | undefined;
-  let end: Date | undefined;
-
-  if (!startDayDate || !endDayDate || !selectedDate) {
-    return false;
-  }
-
-  if (selectedDate.getTime() > startDayDate.getTime()) {
-    end = selectedDate;
-    start = startDayDate;
-  }
-
-  if (selectedDate.getTime() < endDayDate.getTime()) {
-    end = selectedDate;
-    start = endDayDate;
-  }
-
-  if (start!.getTime() < end!.getTime()) {
+  if (!startDay?.day) return false;
+  if (isBeforeDate(hoverRangeValue().start as any, startDay as any)) {
     return compareObjectDate(hoverRangeValue().start!, {
       year: year(),
       month: getDatePickerRefactoredMonth(month(), day.month),
       day: day.value,
     });
   }
-
-  if (start!.getTime() > end!.getTime()) {
+  if (isBeforeDate(startDay as any, hoverRangeValue().end as any)) {
     return compareObjectDate(hoverRangeValue().end!, {
       year: year(),
       month: getDatePickerRefactoredMonth(month(), day.month),
       day: day.value,
     });
   }
-
   return false;
 };

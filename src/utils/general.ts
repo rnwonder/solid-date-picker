@@ -53,7 +53,7 @@ export const isDayTipRange = ({
     day
   );
   const start = new Date(dateRange.year!, dateRange.month!, dateRange.day);
-  return date.toDateString() === start.toDateString();
+  return date.getTime() === start.getTime();
 };
 
 export const checkIfItsTodayDate = (
@@ -360,5 +360,5 @@ export const isBeforeDate = (
     first instanceof Date ? first : convertDateObjectToDate(first);
   const secondDate =
     second instanceof Date ? second : convertDateObjectToDate(second);
-  return firstDate < secondDate;
+  return firstDate.getTime() < secondDate.getTime();
 };

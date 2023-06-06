@@ -189,7 +189,7 @@ export const Selector = (props: SelectorProps) => {
                     !isSelected(value, index) && { color: props.textColor }),
                 }}
                 onClick={() => handleOptionClick(index(), value, close)}
-                data-selected={isSelected(value, index)}
+                date-selector-option-selected={isSelected(value, index)}
                 selected={isSelected(value, index)}
                 data-selector-option={true}
                 data-scope={"date-picker"}
