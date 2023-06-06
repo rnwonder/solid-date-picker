@@ -7,47 +7,47 @@
  * This only styles the datepicker only and not the input field
  &
  * @author Ruona Matthew <rnwonder@gmail.com>
- * @version 1.5
+ * @version 1.5.1
  *
  */
 
 /* Note .dark selector is needed to override the default theme in dark mode */
 
 :root {
-  --colors-accent-default: #eb5e41;
-  --colors-fg-inverted-default: #fff;
-  --colors-bg-subtle: #f5f5f4;
-  --colors-fg-emphasized: #44403c;
-  --colors-fg-default: #1c1917;
-  --colors-fg-emphasized-reverse: #44403c;
-  --color-bg-disabled: #f3f4f4;
+  --ark-colors-accent-default: #eb5e41;
+  --ark-colors-fg-inverted-default: #fff;
+  --ark-colors-bg-subtle: #f5f5f4;
+  --ark-colors-fg-emphasized: #44403c;
+  --ark-colors-fg-default: #1c1917;
+  --ark-colors-fg-emphasized-reverse: #44403c;
+  --ark-colors-bg-disabled: #f3f4f4;
 
-  --size-1: 0.875rem;
-  --size-2: 2.25rem;
-  --size-3: 2.5rem;
-  --spacing-1: 1.5rem;
+  --ark-size-1: 0.875rem;
+  --ark-size-2: 2.25rem;
+  --ark-size-3: 2.5rem;
+  --ark-spacing-1: 1.5rem;
 }
 
 .date-prev-next-btn {
-  height: var(--size-2);
-  width: var(--size-2);
+  height: var(--ark-size-2);
+  width: var(--ark-size-2);
 }
 
 .date-picker-main-btn {
-  height: var(--size-2);
-  min-width: var(--size-2);
+  height: var(--ark-size-2);
+  min-width: var(--ark-size-2);
   text-transform: capitalize;
 }
 
 .date-picker-main-btn:disabled,
 .dark .date-picker-main-btn:disabled {
-  background-color: var(--color-bg-disabled);
-  color: var(--colors-fg-emphasized);
+  background-color: var(--ark-colors-bg-disabled);
+  color: var(--ark-colors-fg-emphasized);
 }
 
 .date-picker-main-btn:hover,
 .dark .date-picker-main-btn:hover {
-  background-color: var(--colors-bg-subtle);
+  background-color: var(--ark-colors-bg-subtle);
 }
 
 .date-prev-next-btn:hover,
@@ -59,7 +59,7 @@
 .dark .date-prev-next-btn:hover,
 .dark .date-selector-trigger:hover {
   background-color: transparent;
-  color: var(--colors-fg-emphasized);
+  color: var(--ark-colors-fg-emphasized);
 }
 
 .date-prev-next-btn > svg {
@@ -68,7 +68,7 @@
 }
 
 .date-selector-trigger {
-  font-size: var(--size-1);
+  font-size: var(--ark-size-1);
   text-transform: capitalize;
   font-weight: 600;
 }
@@ -79,43 +79,43 @@
 
 .date-selector-option,
 .dark .date-selector-option {
-  min-height: var(--size-3);
+  min-height: var(--ark-size-3);
   font-weight: 400;
-  color: var(--colors-fg-emphasized);
+  color: var(--ark-colors-fg-emphasized);
 }
 [date-selector-option-selected="true"],
 [date-selector-option-selected="true"]:hover,
 .dark [date-selector-option-selected="true"],
 .dark [date-selector-option-selected="true"]:hover {
-  background-color: var(--colors-bg-subtle);
-  color: var(--colors-accent-default);
+  background-color: var(--ark-colors-bg-subtle);
+  color: var(--ark-colors-accent-default);
 }
 
 .date-picker-weekday-name,
 .dark .date-picker-weekday-name {
-  height: var(--size-3);
-  width: var(--size-3);
+  height: var(--ark-size-3);
+  width: var(--ark-size-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--size-1);
+  font-size: var(--ark-size-1);
   font-weight: 500;
-  color: var(--colors-fg-default);
+  color: var(--ark-colors-fg-default);
 }
 
 .date-picker-day-number-area::before,
 .dark .date-picker-day-number-area::before {
-  background-color: var(--colors-bg-subtle);
+  background-color: var(--ark-colors-bg-subtle);
 }
 
 .date-picker-day-number,
 .dark .date-picker-day-number {
-  min-height: var(--size-3);
-  min-width: var(--size-3);
+  min-height: var(--ark-size-3);
+  min-width: var(--ark-size-3);
   border-radius: 0.5rem;
-  font-size: var(--size-1);
+  font-size: var(--ark-size-1);
   font-weight: 400;
-  color: var(--colors-fg-emphasized);
+  color: var(--ark-colors-fg-emphasized);
 }
 
 [data-day-number-current-day="true"],
@@ -126,20 +126,20 @@
 [data-day-number-current-day="true"]::before,
 .dark [data-day-number-current-day="true"]::before {
   content: "•";
-  color: var(--colors-accent-default);
+  color: var(--ark-colors-accent-default);
   position: absolute;
-  margin-top: var(--spacing-1);
+  margin-top: var(--ark-spacing-1);
   border-style: solid;
   font-size: 1rem;
 }
 
 [data-day-number-area-range-between="true"],
 .dark [data-day-number-area-range-between="true"] {
-  background-color: var(--colors-bg-subtle);
+  background-color: var(--ark-colors-bg-subtle);
 }
 
 [data-highlight-weekend="true"][data-day-number-is-weekend="true"] {
-  color: var(--colors-accent-default);
+  color: var(--ark-colors-accent-default);
 }
 
 [data-day-number-selected="true"],
@@ -148,8 +148,8 @@
 .dark [data-day-number-selected="true"],
 .dark [data-day-number-selected="true"]:hover,
 .dark [data-day-number-selected="true"][data-highlight-weekend="true"] {
-  background-color: var(--colors-accent-default);
-  color: var(--colors-fg-inverted-default);
+  background-color: var(--ark-colors-accent-default);
+  color: var(--ark-colors-fg-inverted-default);
 }
 
 [data-day-number-range-end-selected="false"],
@@ -160,15 +160,15 @@
 .dark
   [data-day-number-range-end-selected="false"][data-highlight-weekend="true"] {
   background-color: transparent;
-  color: var(--colors-fg-emphasized);
+  color: var(--ark-colors-fg-emphasized);
 }
 
 [data-day-number-range-end-hover="true"],
 [data-day-number-range-end-hover="true"]:hover,
 .dark [data-day-number-range-end-hover="true"],
 .dark [data-day-number-range-end-hover="true"]:hover {
-  background-color: var(--colors-bg-subtle);
-  color: var(--colors-accent-default);
+  background-color: var(--ark-colors-bg-subtle);
+  color: var(--ark-colors-accent-default);
 }
 
 @media (max-width: 620px) {
@@ -179,17 +179,16 @@
 
 @media (max-width: 320px) {
   :root {
-    --size-1: 0.875rem;
-    --size-2: 1.75rem;
-    --size-3: 2.15rem;
-
-    --spacing-1: 1.5rem;
+    --ark-size-1: 0.875rem;
+    --ark-size-2: 1.75rem;
+    --ark-size-3: 2.15rem;
+    --ark-spacing-1: 1.5rem;
   }
 }
 
 .dark {
-  --colors-bg-subtle: #343434;
-  --colors-fg-emphasized: #e1e1e1;
-  --colors-fg-default: #e8e8e8;
-  --color-bg-disabled: #252525;
+  --ark-colors-bg-subtle: #343434;
+  --ark-colors-fg-emphasized: #e1e1e1;
+  --ark-colors-fg-default: #e8e8e8;
+  --ark-colors-bg-disabled: #252525;
 }
