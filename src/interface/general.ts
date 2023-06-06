@@ -192,6 +192,8 @@ export interface ClassNames {
   daysActiveRangeEndWrapperClass?: string;
   daysActivePrimaryWrapperClass?: string;
   daysActiveRangeBetweenWrapperClass?: string;
+
+  dataPickerContainerClass?: string;
 }
 
 export type DateOption = Date | DateObjectUnits | string | number;

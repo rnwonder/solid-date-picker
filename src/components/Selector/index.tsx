@@ -99,7 +99,7 @@ export const Selector = (props: SelectorProps) => {
       zIndex={props.zIndex}
       onOpen={() => {
         setOpen(true);
-        const selectedOption = document.querySelector("[data-selected=true]");
+        const selectedOption = document.querySelector("[date-selector-option-selected=true]");
         selectedOption?.scrollIntoView({
           block: "center",
           inline: "center",

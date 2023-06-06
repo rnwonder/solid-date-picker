@@ -33,6 +33,7 @@ interface PopoverProps {
   onClose?: () => void;
   zIndex?: number;
   width?: JSX.CSSProperties["width"];
+  contentClassName?: string;
 }
 
 export const Popover = (props: PopoverProps) => {
@@ -193,13 +194,13 @@ export const Popover = (props: PopoverProps) => {
           ref={setPopoverRef}
         >
           <div
-            class={`
+            class={clsx(`
             ${delayShown() ? `rn-opacity-100 scale-100` : `rn-opacity-0 scale-90`}
             rn-duration-350 
             rn-ease-in-out
             rn-transition-opacity
             motion-reduce:rn-transition-none
-        `}
+        `, props.contentClassName)}
           >
             {renderContent()}
           </div>

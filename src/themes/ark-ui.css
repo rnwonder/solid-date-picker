@@ -7,7 +7,7 @@
  * This only styles the datepicker only and not the input field
  &
  * @author Ruona Matthew <rnwonder@gmail.com>
- * @version 1.4
+ * @version 1.5
  *
  */
 
@@ -26,9 +26,6 @@
   --size-2: 2.25rem;
   --size-3: 2.5rem;
   --spacing-1: 1.5rem;
-
-  /*default variable for range start and end before background color just changing the value here*/
-  --before-bg: var(--colors-bg-subtle);
 }
 
 .date-prev-next-btn {
@@ -106,6 +103,11 @@
   color: var(--colors-fg-default);
 }
 
+.date-picker-day-number-area::before,
+.dark .date-picker-day-number-area::before {
+  background-color: var(--colors-bg-subtle);
+}
+
 .date-picker-day-number,
 .dark .date-picker-day-number {
   min-height: var(--size-3);
@@ -155,7 +157,8 @@
 [data-day-number-range-end-selected="false"][data-highlight-weekend="true"],
 .dark [data-day-number-range-end-selected="false"],
 .dark [data-day-number-range-end-selected="false"]:hover,
-.dark [data-day-number-range-end-selected="false"][data-highlight-weekend="true"] {
+.dark
+  [data-day-number-range-end-selected="false"][data-highlight-weekend="true"] {
   background-color: transparent;
   color: var(--colors-fg-emphasized);
 }
@@ -189,5 +192,4 @@
   --colors-fg-emphasized: #e1e1e1;
   --colors-fg-default: #e8e8e8;
   --color-bg-disabled: #252525;
-  --before-bg: var(--colors-bg-subtle);
 }
