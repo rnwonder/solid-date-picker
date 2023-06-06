@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.6.9",
+  "version": "0.6.7",
   "description": "",
   "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
