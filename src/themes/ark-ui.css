@@ -37,7 +37,7 @@
 }
 
 .date-picker-main-btn {
-  height: var(--size-2) !important;
+  height: var(--size-2);
   min-width: var(--size-2);
   text-transform: capitalize;
 }
