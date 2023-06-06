@@ -7,7 +7,7 @@
  * This only styles the datepicker only and not the input field
  &
  * @author @rnwonder <rnwonder@gmail.com>
- * @version 1.6.0
+ * @version 1.6.1
  *
  */
 
@@ -184,6 +184,12 @@
   [data-day-number-range-end-selected="false"][data-day-number-selected="true"] {
   background-color: var(--ark-colors-bg-subtle);
   color: var(--ark-colors-accent-default);
+}
+
+[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before,
+.dark
+[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before {
+  color: var(--ark-colors-fg-inverted-default);
 }
 
 /*I believe everything else is pretty self explanatory, but if you have any questions feel free to ask here https://github.com/rnwonder/solid-date-picker/discussions/7*/
