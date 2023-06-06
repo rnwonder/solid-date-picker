@@ -16,6 +16,9 @@ To get an overview of the project, read the [README](README.md). Here are some r
 -
 ### Themes
 - When adding a new theme, we generally want the file to be in css format. That way anyone can use it without having to install any package like sass and the likes. Also please make sure it is responsive and accounts for dark mode too.
+- Add a comment at the top of each theme, describing it. But more importantly add a version number and your github username. That way users can know if the theme has been updated by comparing the versions number and also know who to mention when raising an issue about a particular theme.
+- Avoid the use of !important as much as you can.
+- Have fun!
 
 ### Issues
 
