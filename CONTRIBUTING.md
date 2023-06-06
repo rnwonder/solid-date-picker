@@ -60,7 +60,7 @@ Once you submit your PR, a Docs team member will review your proposal. We may as
 
 ### Your PR is merged!
 
-Congratulations :tada::tada: Thank you :sparkles:.
+Congratulations :tada::tada: And thank you :sparkles:.
 
 Once your PR is merged, your contributions will be publicly visible on the [Solid Date Picker docs]([https://docs.github.com/en](https://soliddatepicker.live/docs/contributors/)).
 
