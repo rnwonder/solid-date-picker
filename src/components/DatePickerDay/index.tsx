@@ -39,12 +39,23 @@ interface DatePickerDayProps
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
   const [ref, setref] = createSignal<HTMLDivElement>();
   const [isSelected, setIsSelected] = createSignal(false);
+  const [isNotSelected, setIsNotSelected] = createSignal(true);
 
   createEffect(() => {
     if (props.dayRangeStart || props.dayRangeEnd || props.isMultipleSelected) {
       setIsSelected(true);
     } else {
       setIsSelected(false);
+    }
+
+    if (
+      !props.dayRangeStart &&
+      !props.dayRangeEnd &&
+      !props.isMultipleSelected
+    ) {
+      setIsNotSelected(true);
+    } else {
+      setIsNotSelected(false);
     }
   });
 
@@ -202,7 +213,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           rn-text-[0.9375rem]
           rn-p-0
           rn-z-10
-          dark:rn-text-slate-300
+          
           ${
             props.daysNotCurrentMonth
               ? !props.dayRangeStart && !props.dayRangeEnd
@@ -219,12 +230,9 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           }
           ${props.dayRangeBetween && "hover:rn-bg-transparent"}
           ${
-            props.shouldHighlightWeekends &&
-            props.isWeekend &&
-            !props.dayRangeStart &&
-            !props.dayRangeEnd &&
-            !props.isMultipleSelected &&
-            "rn-text-red-500 dark:rn-text-red-500"
+            props.shouldHighlightWeekends && props.isWeekend && isNotSelected()
+              ? "rn-text-red-500 dark:rn-text-red-500"
+              : "dark:rn-text-slate-300"
           }
           disabled:rn-text-black
           disabled:rn-opacity-30
@@ -250,7 +258,9 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           data-day-number={true}
           data-day-number-selected={isSelected()}
           data-day-number-range-end-hover={props.dayRangeEndHover}
-          data-day-number-range-end-selected={!props.dayRangeEndHover && isSelected()}
+          data-day-number-range-end-selected={
+            !props.dayRangeEndHover && isSelected()
+          }
           data-day-number-range-start-or-end={
             props.dayRangeStart || props.dayRangeEnd
           }

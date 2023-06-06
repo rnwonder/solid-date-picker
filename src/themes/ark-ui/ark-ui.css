@@ -7,7 +7,7 @@
  * This only styles the datepicker only and not the input field
  &
  * @author @rnwonder <rnwonder@gmail.com>
- * @version 1.5.1
+ * @version 1.6.0
  *
  */
 
@@ -28,28 +28,33 @@
   --ark-spacing-1: 1.5rem;
 }
 
+/*style arrow button*/
 .date-prev-next-btn {
   height: var(--ark-size-2);
   width: var(--ark-size-2);
 }
 
+/*style all buttons*/
 .date-picker-main-btn {
   height: var(--ark-size-2);
   min-width: var(--ark-size-2);
   text-transform: capitalize;
 }
 
+/*style all buttons when disabled*/
 .date-picker-main-btn:disabled,
 .dark .date-picker-main-btn:disabled {
   background-color: var(--ark-colors-bg-disabled);
   color: var(--ark-colors-fg-emphasized);
 }
 
+/*style all buttons when hovered*/
 .date-picker-main-btn:hover,
 .dark .date-picker-main-btn:hover {
   background-color: var(--ark-colors-bg-subtle);
 }
 
+/*style arrow buttons, month year selector trigger buttons when hovered and when not hovered*/
 .date-prev-next-btn:hover,
 .date-selector-trigger:hover,
 .date-prev-next-btn,
@@ -62,27 +67,33 @@
   color: var(--ark-colors-fg-emphasized);
 }
 
+/*styled arrow buttons svg*/
 .date-prev-next-btn > svg {
   width: 1em;
   height: 1em;
 }
 
+/*style month year selector trigger buttons*/
 .date-selector-trigger {
   font-size: var(--ark-size-1);
   text-transform: capitalize;
   font-weight: 600;
 }
 
+/*style month year selector dropdown container div*/
 .date-selector-wrapper {
   max-height: 13rem;
 }
 
+/*style month year selector dropdown options buttons*/
 .date-selector-option,
 .dark .date-selector-option {
   min-height: var(--ark-size-3);
   font-weight: 400;
   color: var(--ark-colors-fg-emphasized);
 }
+
+/*style selected/active month year selector dropdown options button when hovered and when not hovered*/
 [date-selector-option-selected="true"],
 [date-selector-option-selected="true"]:hover,
 .dark [date-selector-option-selected="true"],
@@ -91,6 +102,7 @@
   color: var(--ark-colors-accent-default);
 }
 
+/*styled week day names*/
 .date-picker-weekday-name,
 .dark .date-picker-weekday-name {
   height: var(--ark-size-3);
@@ -103,11 +115,13 @@
   color: var(--ark-colors-fg-default);
 }
 
+/*style day number area/container div before selector*/
 .date-picker-day-number-area::before,
 .dark .date-picker-day-number-area::before {
   background-color: var(--ark-colors-bg-subtle);
 }
 
+/*style day number buttons*/
 .date-picker-day-number,
 .dark .date-picker-day-number {
   min-height: var(--ark-size-3);
@@ -118,11 +132,13 @@
   color: var(--ark-colors-fg-emphasized);
 }
 
+/*styled current day number button*/
 [data-day-number-current-day="true"],
 [data-day-number-current-day="true"]:hover {
   border: none;
 }
 
+/*styled current day number button before selector*/
 [data-day-number-current-day="true"]::before,
 .dark [data-day-number-current-day="true"]::before {
   content: "•";
@@ -133,15 +149,19 @@
   font-size: 1rem;
 }
 
+/*styled day number buttons between selected range*/
 [data-day-number-area-range-between="true"],
 .dark [data-day-number-area-range-between="true"] {
   background-color: var(--ark-colors-bg-subtle);
 }
 
-[data-highlight-weekend="true"][data-day-number-is-weekend="true"] {
+/*styled weekend day number buttons when shouldHighlightWeekends props is true*/
+[data-highlight-weekend="true"][data-day-number-is-weekend="true"],
+.dark [data-highlight-weekend="true"][data-day-number-is-weekend="true"] {
   color: var(--ark-colors-accent-default);
 }
 
+/*styled selected day number buttons when hovered and not hovered*/
 [data-day-number-selected="true"],
 [data-day-number-selected="true"]:hover,
 [data-day-number-selected="true"][data-highlight-weekend="true"],
@@ -152,25 +172,21 @@
   color: var(--ark-colors-fg-inverted-default);
 }
 
-[data-day-number-range-end-selected="false"],
-[data-day-number-range-end-selected="false"]:hover,
-[data-day-number-range-end-selected="false"][data-highlight-weekend="true"],
-.dark [data-day-number-range-end-selected="false"],
-.dark [data-day-number-range-end-selected="false"]:hover,
+/*
+ * styled hover day number range end buttons not selected yet just hovered over.
+ * I know its confusing since data-day-number-selected="true"
+ * but again its not selected yet, its just hovered over.
+ * meaning data-day-number-selected is true when hovering over the end day of a range
+ * but data-day-number-range-end-selected is false because it hasn't actually been selected just hovered over.
+ */
+[data-day-number-range-end-selected="false"][data-day-number-selected="true"],
 .dark
-  [data-day-number-range-end-selected="false"][data-highlight-weekend="true"] {
-  background-color: transparent;
-  color: var(--ark-colors-fg-emphasized);
-}
-
-[data-day-number-range-end-hover="true"],
-[data-day-number-range-end-hover="true"]:hover,
-.dark [data-day-number-range-end-hover="true"],
-.dark [data-day-number-range-end-hover="true"]:hover {
+  [data-day-number-range-end-selected="false"][data-day-number-selected="true"] {
   background-color: var(--ark-colors-bg-subtle);
   color: var(--ark-colors-accent-default);
 }
 
+/*I believe everything else is pretty self explanatory, but if you have any questions feel free to ask here https://github.com/rnwonder/solid-date-picker/discussions/7*/
 @media (max-width: 620px) {
   .date-picker-calendar-wrapper {
     flex-direction: column;
