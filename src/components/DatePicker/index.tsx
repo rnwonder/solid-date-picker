@@ -63,6 +63,7 @@ export interface DatePickerProps extends IColors, ClassNames {
 
   monthSelectorJSX?: IRenderJSX;
   yearSelectorJSX?: IRenderJSX;
+  calendarAboveTopAreaJSX?: IRenderJSX;
   calendarTopAreaJSX?: IRenderJSX;
   calendarBottomAreaJSX?: IRenderJSX;
   calendarLeftAreaJSX?: IRenderJSX;
@@ -493,6 +494,7 @@ export const DatePicker = (props: DatePickerProps) => {
   const nextButtonAreaJSX = renderCustomJSX(props.afterNextButtonAreaJSX);
   const prevButtonAreaJSX = renderCustomJSX(props.beforePrevButtonAreaJSX);
   const weekDaysJSX = renderCustomJSX(props.weekDaysJSX);
+  const calendarAboveTopAreaJSX = renderCustomJSX(props.calendarAboveTopAreaJSX)
 
   return (
 
@@ -528,6 +530,7 @@ export const DatePicker = (props: DatePickerProps) => {
         aria-roledescription={"date-picker"}
       >
         <Show when={!props.hideTopArea} keyed>
+          {calendarAboveTopAreaJSX}
           {calendarTopAreaJSX || (
             <DatePickerTop
               {...props}

@@ -248,7 +248,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       zIndex={props.zIndex}
       handleChildrenClick={inputJSX ? () => {} : undefined}
       width={props.inputWrapperWidth}
-      className={props.inputWrapperClass}
+      className={clsx(props.inputWrapperClass, "date-picker-input-wrapper")}
       contentClassName={props.dataPickerContainerClass}
     >
       <div

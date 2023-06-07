@@ -9,6 +9,8 @@
  * @author @rnwonder <rnwonder@gmail.com>
  * @version 1.6.1
  *
+ * @supported picker version ^0.6.8
+ *
  */
 
 /* Note .dark selector is needed to override the default theme in dark mode */
@@ -188,7 +190,7 @@
 
 [data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before,
 .dark
-[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before {
+  [data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before {
   color: var(--ark-colors-fg-inverted-default);
 }
 

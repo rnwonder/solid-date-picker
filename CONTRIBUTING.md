@@ -15,8 +15,8 @@ To get an overview of the project, read the [README](README.md). Here are some r
 - [Collaborating with pull requests](https://github.com/rnwonder/solid-date-picker/pulls)
 
 ### Themes
-- When adding a new theme, we generally want the file to be in css format. That way anyone can use it without having to install any package like sass and the likes. Also please make sure it is responsive and accounts for dark mode too.
-- Add a comment at the top of each theme, describing it. But more importantly add a version number and your github username. That way users can know if the theme has been updated by comparing the versions number and also know who to mention when raising an issue about a particular theme.
+- When creating a new theme, we generally want the file to be in css format. That way anyone can use it without having to install any package like sass and the likes. Also please make sure it is responsive and accounts for dark mode too.
+- Add a comment at the top of each theme, describing it. But more importantly add a version number, the supported date picker version and your github username. That way users can know if the theme has been updated by comparing the versions number and also know who to mention when raising an issue about a particular theme.
 - Avoid the use of `!important` as much as you can.
 - Refer to the styling props page on the [documentation](https://soliddatepicker.live/docs/styling/) for the available classes and data attributes.
 - Also you can refer to an existing theme for how to get started. [Ark UI Theme](https://github.com/rnwonder/solid-date-picker/tree/main/src/themes/ark-ui) is certainly a good place to start.
@@ -26,7 +26,7 @@ To get an overview of the project, read the [README](README.md). Here are some r
 
 #### Create a new issue
 
-If you spot a problem with the docs, [search if an issue already exists](https://docs.github.com/en/github/searching-for-information-on-github/searching-on-github/searching-issues-and-pull-requests#search-by-the-title-body-or-comments). If a related issue doesn't exist, you can open a new issue using a relevant [issue form](https://github.com/rnwonder/solid-date-picker/issues/new).
+If you spot a problem with the date picker, [search if an issue already exists](https://docs.github.com/en/github/searching-for-information-on-github/searching-on-github/searching-issues-and-pull-requests#search-by-the-title-body-or-comments). If a related issue doesn't exist, you can open a new issue using a relevant [issue form](https://github.com/rnwonder/solid-date-picker/issues/new).
 
 #### Solve an issue
 

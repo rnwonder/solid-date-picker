@@ -131,17 +131,14 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           props.dayRangeStartEnd &&
           "before:rn-right-[15%] before:rn-w-[85%] before:rn-rounded-r-full before:rn-block"
         }
-        
+        ${isSelected() && "date-picker-day-number-area-selected"}
         `,
         props.weekNamesClass,
         props.daysWrapperClass,
         {
           [props.daysActiveRangeStartWrapperClass || ""]: props.dayRangeStart,
           [props.daysActiveRangeEndWrapperClass || ""]: props.dayRangeEnd,
-          [props.daysActivePrimaryWrapperClass || ""]:
-            props.dayRangeStart ||
-            props.dayRangeEnd ||
-            props.isMultipleSelected,
+          [props.daysActivePrimaryWrapperClass || ""]: isSelected(),
           [props.daysActiveRangeBetweenWrapperClass || ""]:
             props.dayRangeBetween,
         }
