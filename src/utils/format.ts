@@ -3,6 +3,7 @@ import {
   DateOption,
   Locale,
   LocaleOptions,
+  MakeOptionalRequired,
 } from "../interface/general";
 
 export const formatDateWithString = (
@@ -11,7 +12,6 @@ export const formatDateWithString = (
   locale: Locale = "en-US"
 ) => {
   const date = getJSDateFormat(dateToFormat);
-  if (!date) return "";
 
   format = format
     .replace(
@@ -71,8 +71,8 @@ export const formatDateWithString = (
   return format;
 };
 
-export const getJSDateFormat = (date: DateOption): Date | undefined => {
-  let newDate: Date | undefined = undefined;
+export const getJSDateFormat = (date: DateOption): Date => {
+  let newDate: Date;
 
   if (typeof date === "string" || typeof date === "number") {
     newDate = new Date(date);
@@ -88,7 +88,9 @@ export const getJSDateFormat = (date: DateOption): Date | undefined => {
   return newDate;
 };
 
-export const convertDateToDateObject = (date: Date) => {
+export const convertDateToDateObject = (
+  date: Date
+): MakeOptionalRequired<DateObjectUnits> => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
@@ -99,7 +101,7 @@ export const convertDateToDateObject = (date: Date) => {
   };
 };
 
-export const convertDateObjectToDate = (date: DateObjectUnits) => {
+export const convertDateObjectToDate = (date: DateObjectUnits): Date => {
   const now = new Date();
   const year = date?.year ?? now.getFullYear();
   const month = date?.month === 0 ? 0 : date?.month ?? now.getMonth();
@@ -117,7 +119,6 @@ export const formatDate = (
 ) => {
   const { localeOptions, locale, format } = options || {};
   const newDate = getJSDateFormat(date);
-  if (!newDate) return "";
   return labelFormat({
     date: newDate,
     option: localeOptions || {

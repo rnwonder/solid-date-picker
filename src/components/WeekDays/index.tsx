@@ -19,13 +19,18 @@ export const WeekDays: Component<IProps> = (props) => {
 
   onMount(() => {
     const dayNames = Array.from({ length: 7 }, (e, i) => {
-      return new Date(
+      const name = new Date(
         0,
         0,
         i - (1 - (props.weekStartDay || 0)) + 1
       ).toLocaleDateString(props.locale || "en", {
         weekday: props.weekDaysType === "single" ? "narrow" : "short",
       });
+
+      if (props.weekDaysType === "double") {
+        return name.slice(0, 2);
+      }
+      return name;
     });
     const dayLongNames = Array.from({ length: 7 }, (e, i) => {
       return new Date(

@@ -112,7 +112,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           )}
           data-prev={true}
           data-type={"date-prev-next-btn"}
-          aria-label={"Prev"}
+          aria-label={"Move backward to switch to the previous month"}
           data-scope={"button"}
           data-part={"root"}
           disabled={isPrevButtonDisabled()}
@@ -142,7 +142,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
             props.prevNextMonthBtnClass
           )}
           data-next={true}
-          aria-label={"Next"}
+          aria-label={"Move forward to switch to the next month."}
           data-scope={"button"}
           data-part={"root"}
           data-type={"date-prev-next-btn"}

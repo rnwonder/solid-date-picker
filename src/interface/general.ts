@@ -139,8 +139,8 @@ export interface ApplyDateRange {
   hidden: boolean;
   disabled: boolean;
   dayRangeEndHover: boolean;
-  date: string
-  dateValue: string
+  date: string;
+  dateValue: string;
 }
 
 export interface CustomDaysClassName
@@ -148,7 +148,7 @@ export interface CustomDaysClassName
   className: string;
 }
 
-export type WeekDaysType = "short" | "single";
+export type WeekDaysType = "short" | "single" | "double";
 
 export interface HoverRangeValue {
   start?: DateObjectUnits;
@@ -197,3 +197,23 @@ export interface ClassNames {
 }
 
 export type DateOption = Date | DateObjectUnits | string | number;
+
+export type DateMathDiffUnit =
+  | "milliseconds"
+  | "seconds"
+  | "minutes"
+  | "hours"
+  | "days"
+  | "weeks"
+  | "months"
+  | "quarters"
+  | "years";
+
+export interface DateMathDiff
+  extends Partial<Record<DateMathDiffUnit, number>> {}
+
+export interface DateTimeObject extends DateObjectUnits {
+  hour?: number;
+  minute?: number;
+  second?: number;
+}
