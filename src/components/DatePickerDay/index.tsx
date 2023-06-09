@@ -96,14 +96,14 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             `
         }
         rn-font-bold
-        rn-mb-[0.13rem]
+        
         rn-text-[#909090]
         rn-tracking-[0.02em]
         rn-text-center
         rn-uppercase
         rn-relative
         dark:rn-text-slate-300
-        ${props.hidden && "rn-pointer-events-none"}
+        ${props.hidden && "rn-pointer-events-none day-number-area-outside-days"}
         ${
           props.dayRangeBetween && !props.hidden
             ? `rn-bg-[#56A4D3] rn-bg-opacity-50`

@@ -8,7 +8,6 @@ import { YearSelector } from "./components/YearSelector";
 // import style from "./App.module.css";
 import "./themes/ark-ui/ark-ui.css";
 
-
 const App: Component = () => {
   const [value, setValue] = createSignal("");
   const [select, setSelect] = createSignal("");

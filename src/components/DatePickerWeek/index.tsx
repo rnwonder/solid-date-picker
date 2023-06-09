@@ -11,15 +11,16 @@ export const DatePickerWeek: Component<DatePickerWeekDaysProps> = (props) => {
     <div
       class={clsx(
         `
-    date-picker-calendar-row
-    rn-grid
-    rn-grid-cols-7
-    rn-my-2
-    rn-text-sm
-    rn-text-red-500
-    
-  `,
-        props.weekNamesRowClass
+          rn-grid
+          rn-grid-cols-7
+          rn-text-sm
+        `,
+        {
+          "date-picker-week-names-row rn-my-2": props.header,
+          "date-picker-days-row rn-mb-[0.13rem]": !props.header,
+        },
+        props.weekNamesRowClass,
+        props.daysRowClass
       )}
       data-type={"date-picker-calendar-row"}
       data-part={props.header ? "header" : "row"}
