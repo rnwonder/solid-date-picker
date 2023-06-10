@@ -120,7 +120,7 @@ class DateMath {
 
   toString(options?: {
     format?: string;
-    localeOptions: LocaleOptions;
+    localeOptions?: LocaleOptions;
     locale?: Locale;
   }) {
     const { localeOptions, locale, format } = options || {};

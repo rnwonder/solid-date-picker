@@ -292,19 +292,14 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
               ? { color: props.secondaryTextColor }
               : {}),
             ...((props.weekEndDayTextColor || props.weekEndDayBgColor) &&
-            !props.dayRangeStart &&
-            !props.dayRangeEnd &&
-            !props.isMultipleSelected &&
+            isNotSelected() &&
             props.isWeekend
               ? {
                   color: props.weekEndDayTextColor,
                   "background-color": props.weekEndDayBgColor,
                 }
               : {}),
-            ...(props.textColor &&
-            !props.dayRangeStart &&
-            !props.dayRangeEnd &&
-            !props.isMultipleSelected
+            ...(props.textColor && isNotSelected()
               ? props.shouldHighlightWeekends && props.isWeekend
                 ? {}
                 : { color: props.textColor }
