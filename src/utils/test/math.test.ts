@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import DateMath from "../math";
-import { DateTime } from "luxon";
 
 describe("DateMath.diff", () => {
   test("should return the difference between two dates in milliseconds", () => {
