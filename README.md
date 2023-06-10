@@ -55,6 +55,18 @@ const App = () => {
 };
 ```
 
+For Solid Start, you want to use the `DatePicker` component as a client-side component. You can do this by using the `unstable_clientOnly` from `solid-start`.
+
+```tsx
+import { unstable_clientOnly } from "solid-start";
+import { PickerValue } from "@rnwonder/solid-date-picker";
+const DatePicker = unstable_clientOnly(
+    () => import("@rnwonder/solid-date-picker")
+);
+```
+
+After importing the `DatePicker` component, you can use it the same way as above.
+
 ### Styling With Props, Classes, or Attributes
 
 - You can style the datepicker using class props, color props, default css class names or data attributes.
