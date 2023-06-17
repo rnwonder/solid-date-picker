@@ -155,6 +155,3 @@ class DateMath {
 
 export default DateMath;
 
-
-const date = { month: 1, day: 14, year: 2023 };
-const kk = DateMath.set(date).minus({ second: 86400 }).toString()

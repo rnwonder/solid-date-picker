@@ -218,3 +218,13 @@ export interface DateTimeObject extends DateObjectUnits {
   minute?: number;
   second?: number;
 }
+
+export interface ITimePickerFormat {
+  hour: number | undefined;
+  minute: number | undefined;
+  second: number | undefined;
+}
+
+export type ITimeView = "hour" | "minute" | "second";
+
+export type ITimeMeridiem = "AM" | "PM";

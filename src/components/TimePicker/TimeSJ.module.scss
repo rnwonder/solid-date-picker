@@ -1,0 +1,372 @@
+.circle-time-picker-container {
+  max-width: 20rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  align-items: center;
+  background-color: var(--dashboard-background-color);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.08);
+
+  .circle-time-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.5rem;
+
+    .circle-time-top-left {
+      display: flex;
+      align-items: center;
+
+      span {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--body-text-color);
+      }
+
+      .circle-time-input {
+        min-width: 0 !important;
+        width: 30px !important;
+        height: 30px !important;
+        padding: 0 !important;
+        text-align: center;
+        margin-left: 0.5rem;
+        background: var(--snowflake-snowflakeAlpha);
+        border: none;
+      }
+    }
+
+    .circle-time-navigate {
+      align-self: flex-end;
+      display: flex;
+      margin-bottom: 0.2rem;
+      user-select: none;
+
+      button {
+        background-color: transparent;
+        border: none;
+        transition: none;
+        padding: 0px;
+        height: 1.7rem;
+        min-width: 1.7rem;
+        background: var(--snowflake-snowflakeAlpha);
+
+        &:first-of-type {
+          margin-right: 1rem;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+        }
+      }
+
+      i {
+        color: var(--body-text-color);
+        font-size: 1.3rem !important;
+      }
+    }
+  }
+
+  .circle-time-picker {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background-color: var(--snowflake-snowflakeAlpha);
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    .default-colors {
+      background-color: transparent;
+      color: var(--body-text-color);
+      z-index: 1;
+    }
+
+    .clock-opts {
+      @extend .default-colors;
+      height: 36px;
+      width: 36px;
+      position: absolute;
+      left: calc((100% - 36px) / 2);
+      display: inline-flex;
+      -webkit-box-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      align-items: center;
+      border-radius: 50%;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    // hours
+    .clock-1 {
+      transform: translate(45px, 13px);
+    }
+
+    .clock-2 {
+      transform: translate(79px, 47px);
+    }
+
+    .clock-3 {
+      transform: translate(91px, 92px);
+    }
+
+    .clock-4 {
+      transform: translate(79px, 137px);
+    }
+
+    .clock-5 {
+      transform: translate(45px, 171px);
+    }
+
+    .clock-6 {
+      transform: translate(0px, 183px);
+    }
+
+    .clock-7 {
+      transform: translate(-46px, 171px);
+    }
+
+    .clock-8 {
+      transform: translate(-79px, 138px);
+    }
+
+    .clock-9 {
+      transform: translate(-91px, 92px);
+    }
+
+    .clock-10 {
+      transform: translate(-79px, 46px);
+    }
+
+    .clock-11 {
+      transform: translate(-46px, 13px);
+    }
+
+    .clock-line {
+      width: 2px;
+      background-color: #297eaf;
+      position: absolute;
+      left: calc(50% - 1px);
+      bottom: 50%;
+      transform-origin: center bottom 0px;
+      height: 34%;
+      transform: rotateZ(30deg);
+    }
+
+    .clock-center {
+      //   @extend .default-colors;
+      width: 5px;
+      height: 5px;
+      background-color: #297eaf;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @for $i from 1 through 12 {
+      &.circle-hour-#{$i} {
+        .clock-#{$i} {
+          background-color: #297eaf;
+          color: white;
+        }
+        .clock-line {
+          transform: rotateZ(#{$i * 30}deg);
+        }
+      }
+    }
+
+
+
+    // minutes and seconds
+
+    @mixin min($i) {
+      @if $i % 5 != 0 {
+        color: transparent;
+      }
+      @if $i % 5 == 0 {
+        z-index: 2;
+      }
+      @if $i < 5 {
+        transform: translate(#{$i * 9}px, #{$i * 2.6}px);
+      }
+      @if $i == 5 {
+        transform: translate(45px, 13px);
+      }
+      @if $i > 5 and $i < 10 {
+        transform: translate(
+          #{(($i - 5) * 6.8) + 45}px,
+          #{(($i - 5) * 6.8) + 13}px
+        );
+      }
+      @if $i == 10 {
+        transform: translate(79px, 47px);
+      }
+      @if $i > 10 and $i < 15 {
+        transform: translate(
+          #{(($i - 10) * 2.6) + 79}px,
+          #{(($i - 10) * 9) + 47}px
+        );
+      }
+      @if $i == 15 {
+        transform: translate(91px, 92px);
+      }
+      @if $i > 15 and $i < 20 {
+        transform: translate(
+          #{(91 - ($i - 15) * 2.6)}px,
+          #{(($i - 15) * 9) + 92}px
+        );
+      }
+      @if $i == 20 {
+        transform: translate(79px, 137px);
+      }
+      @if $i > 20 and $i < 25 {
+        transform: translate(
+          #{(79 - ($i - 20) * 6.8)}px,
+          #{(($i - 20) * 6.8) + 137}px
+        );
+      }
+      @if $i == 25 {
+        transform: translate(45px, 171px);
+      }
+      @if $i > 25 and $i < 30 {
+        transform: translate(
+          #{(45 - ($i - 25) * 9)}px,
+          #{(171 + ($i - 25) * 2.6)}px
+        );
+      }
+      @if $i == 30 {
+        transform: translate(0px, 183px);
+      }
+      @if $i > 30 and $i < 35 {
+        transform: translate(
+          #{(0 - ($i - 30) * 9)}px,
+          #{(183 - ($i - 30) * 2.6)}px
+        );
+      }
+      @if $i == 35 {
+        transform: translate(-46px, 171px);
+      }
+      @if $i > 35 and $i < 40 {
+        transform: translate(
+          #{(-46 - ($i - 35) * 6.8)}px,
+          #{(171 - ($i - 35) * 6.8)}px
+        );
+      }
+      @if $i == 40 {
+        transform: translate(-79px, 137px);
+      }
+      @if $i > 40 and $i < 45 {
+        transform: translate(
+          #{(-79 - ($i - 40) * 2.6)}px,
+          #{(137 - ($i - 40) * 9)}px
+        );
+      }
+      @if $i == 45 {
+        transform: translate(-91px, 92px);
+      }
+      @if $i > 45 and $i < 50 {
+        transform: translate(
+          #{(-91 + ($i - 45) * 2.6)}px,
+          #{(92 - ($i - 45) * 9)}px
+        );
+      }
+      @if $i == 50 {
+        transform: translate(-79px, 47px);
+      }
+      @if $i > 50 and $i < 55 {
+        transform: translate(
+          #{(-79 + ($i - 50) * 6.8)}px,
+          #{(47 - ($i - 50) * 6.8)}px
+        );
+      }
+      @if $i == 55 {
+        transform: translate(-45px, 13px);
+      }
+      @if $i > 55 and $i < 60 {
+        transform: translate(
+          #{(-45 + ($i - 55) * 9)}px,
+          #{(13 - ($i - 55) * 2.6)}px
+        );
+      }
+    }
+
+    .minutes-opts {
+      @extend .clock-opts;
+    }
+
+    @for $i from 0 through 59 {
+      .minutes-#{$i} {
+        @include min($i);
+      }
+    }
+
+    @for $i from 0 through 59 {
+      &.circle-minute-#{$i} {
+        .minutes-#{$i} {
+          background-color: #297eaf;
+          color: white;
+          opacity: 0.8;
+        }
+        .clock-line {
+          transform: rotateZ(#{$i * 6}deg);
+        }
+      }
+    }
+
+    @for $i from 0 through 59 {
+      &.circle-second-#{$i} {
+        .minutes-#{$i} {
+          background-color: #297eaf;
+          color: white;
+          opacity: 0.8;
+        }
+        .clock-line {
+          transform: rotateZ(#{$i * 6}deg);
+        }
+      }
+    }
+  }
+
+  .circle-time-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .circle-time-button {
+      min-width: 0 !important;
+      padding: 0rem !important;
+      width: 2.3rem !important;
+      height: 2.3rem !important;
+      border: none !important;
+      border-radius: 50% !important;
+      flex-shrink: 0;
+      user-select: none;
+      font-weight: 400 !important;
+
+      &:first-of-type {
+        margin-right: 1rem;
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+
+      &:disabled {
+        svg {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  .time-set {
+    color: var(--body-text-color);
+  }
+
+  @media (max-width: 600px) {
+    padding: 0.5rem;
+    width: 270px;
+  }
+}

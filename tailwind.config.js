@@ -10,6 +10,9 @@ module.exports = {
         "eerie-black": "#1b1b1b",
         "dreamless-sleep": "#111111",
       },
+      transformOrigin: {
+        "center-bottom": "center bottom ",
+      }
     },
     screens: {
       smallMobile: {

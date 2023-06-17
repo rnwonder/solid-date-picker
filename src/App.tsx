@@ -1,37 +1,68 @@
-import type { Component } from "solid-js";
+import type {Component, Setter} from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { DatePickerGroup } from "./components/DatePickerGroup";
-import { PickerValue } from "./interface/general";
+import {ITimePickerFormat, PickerValue} from "./interface/general";
 import { MonthSelector } from "./components/MonthSelector";
 import { YearSelector } from "./components/YearSelector";
 // import { utils } from "./utils";
 // import style from "./App.module.css";
-import "./themes/ark-ui/ark-ui.css";
+// import "./themes/ark-ui/ark-ui.css";
+// import "./themes/temptress/temptress.css";
+import {utils} from "./utils";
+import {DateMath} from "./index";
+import {TimeSJ} from "./components/TimePicker";
+import {Test} from "./components/Test";
 
 const App: Component = () => {
-  const [value, setValue] = createSignal("");
+  const [value, setValue] = createSignal<ITimePickerFormat>({});
   const [select, setSelect] = createSignal("");
   const [date, setDate] = createSignal<PickerValue>({
     label: "",
     value: {},
   });
 
+    const [date2, setDate2] = createSignal<PickerValue>({
+        label: "",
+        value: {},
+    });
+
   const [singleCustomDate, setSingleCustomDate] = createSignal<PickerValue>({
     label: "",
     value: {},
   });
 
-  createEffect(() => {
-    // console.log(date());
-  });
 
   return (
     <div>
       <div
         style={{
           display: "flex",
+            "justify-content": "center",
+            "align-items": "center",
+            height: "100vh",
         }}
-      ></div>
+      >
+          <Test />
+
+      </div>
+
+<TimeSJ setTime={setValue} time={value} />
+
+      <DatePickerGroup
+        value={date2}
+        setValue={setDate2}
+        formatInputLabel="dd.mm.yyyy"
+        renderInput={({ value, showDate }) => (
+          <CustomInput
+            showDate={showDate}
+            value={value()}
+            setDate={(val) => setDate2(val)}
+          />
+        )}
+        onChange={(data) => {
+          console.log("change", date2());
+        }}
+      />
 
       <DatePickerGroup
         weekDaysType="double"
@@ -39,7 +70,7 @@ const App: Component = () => {
         value={singleCustomDate}
         setValue={setSingleCustomDate}
         shouldHighlightWeekends
-        hideOutSideDays
+        // hideOutSideDays
       />
 
       <br />
@@ -62,10 +93,10 @@ const App: Component = () => {
       <br />
       <br />
       <div>
-        Lorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Amet eligendi inventore, ipsum libero officia officiis
-        voluptas! Ad autem distinctio explicabo, iure maiores maxime nihil qui,
-        ratione, saepe tempore unde ut.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet eligendi
+        inventore, ipsum libero officia officiis voluptas! Ad autem distinctio
+        explicabo, iure maiores maxime nihil qui, ratione, saepe tempore unde
+        ut.
       </div>
       <br />
       <br />
@@ -146,3 +177,48 @@ const App: Component = () => {
 };
 
 export default App;
+
+const CustomInput = (props: {
+  value: PickerValue;
+  setDate: Setter<PickerValue>;
+  showDate: () => void;
+}) => {
+  // createEffect(() => console.log("inner effect", { value: props.value }));
+  const handleOnChange = (event: any) => {
+    // console.log("on blur", event.target.value);
+    if (!event.target.value) return;
+    const formattedDateValue = utils().formatDate(event.target.value, {
+      format: "dd.mm.yyyy",
+    });
+
+    const newSelectedDate = DateMath.set(event.target.value);
+
+    const newDate: PickerValue = {
+      label: formattedDateValue,
+      value: {
+        selected: newSelectedDate.toISO(),
+        selectedDateObject: newSelectedDate.toObject(),
+      },
+    };
+
+    // console.log("from input", newDate);
+
+    props.setDate(newDate);
+  };
+
+  return (
+    <input
+      type="date"
+      onClick={props.showDate} // this opens the date picker
+      placeholder="I'm a custom input"
+      onChange={() => {}}
+      value={utils().formatDate(
+        new Date(props.value.value.selected as string),
+        {
+          format: "yyyy-mm-dd",
+        }
+      )}
+      onBlur={handleOnChange}
+    />
+  );
+};

@@ -130,7 +130,6 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       </Show>
 
       <Show when={!props.monthYearSelectorJSX} keyed>
-        {props.monthYearSelectorJSX}
         <DatePickerMonthAndYearSelector {...props} />
       </Show>
 
