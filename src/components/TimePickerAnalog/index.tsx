@@ -1,12 +1,15 @@
-import "./style.scss";
 import { createEffect, createSignal, For, Show } from "solid-js";
 import clsx from "clsx";
-import { Button } from "../Button";
 import { ITimeView } from "../../interface/general";
 import { TimeNumber } from "../TimeNumber";
-import style from "../TimePicker/TimeSJ.module.scss";
 
-export const Test = () => {
+interface ITimePickerAnalog {
+  timeAnalogNumberClass?: string;
+  timeAnalogWrapperClass?: string;
+  timeAnalogClockHandClass?: string;
+  timeAnalogClockCenterDotClass?: string;
+}
+export const TimePickerAnalog = (props: ITimePickerAnalog) => {
   const [selectedHour, setSelectedHour] = createSignal(0);
   const [selectedMinute, setSelectedMinute] = createSignal(0);
   const [selectedSeconds, setSelectedSeconds] = createSignal(0);
@@ -37,12 +40,15 @@ export const Test = () => {
       setIsPicking(false);
       return;
     }
-    console.log("handleNext");
     handleNext();
     setIsPicking(false);
   });
 
-  const handlePointerEnter = (e: any, type: ITimeView, value?: number) => {
+  const handlePointerEnter = (
+    e: PointerEvent & { currentTarget: HTMLButtonElement; target: Element },
+    type: ITimeView,
+    value?: number
+  ) => {
     if (value === undefined) return;
     const handleMouseDown = () => {
       if (!mouseDown()) {
@@ -65,6 +71,16 @@ export const Test = () => {
       setSelectedSeconds(value);
       handleMouseDown();
     }
+  };
+
+  const handleTouchEnd = (
+    e: TouchEvent & { currentTarget: HTMLButtonElement; target: Element },
+    type: ITimeView,
+    value?: number
+  ) => {
+    console.log("handleTouchEnd", value);
+    if (value === undefined) return;
+    handleClick(type, value)
   };
 
   const handleClick = (type: ITimeView, value?: number) => {
@@ -91,32 +107,48 @@ export const Test = () => {
     }
   };
 
-  const getPointerPosition = () => {};
-
   return (
     <div
-      class={
-        " rn-w-[237px] rn-h-[237px] rn-bg-blue-200 rn-flex rn-justify-center rn-items-center rn-rounded-full"
-      }
+      class={clsx(
+        `
+        time-analog-wrapper
+        rn-w-[237px] 
+        rn-h-[237px] 
+        rn-bg-blue-200 
+        rn-relative 
+        rn-flex 
+        rn-justify-center 
+        rn-items-center 
+        rn-rounded-full
+        `,
+        props.timeAnalogWrapperClass
+      )}
+      data-time-analog-wrapper={true}
       aria-label={`Select minutes. Selected time is 11:01AM`}
       role={"listbox"}
       tabindex={0}
     >
-      <div class={clsx(`
-      clock-line
-      rn-w-[2px] 
-      rn-bg-primary
-      rn-absolute
-      rn-left-[calc(50% - 1px)]
-      rn-bottom-1/2
-      rn-origin-center-bottom
-      rn-h-[10%]
-
-      
-      `)} style={{ transform: linePosition() }}></div>
       <div
         class={clsx(
           `
+          time-analog-center-hand
+          rn-w-[2px] 
+          rn-bg-primary
+          rn-absolute
+          rn-left-[calc(50% - 1px)]
+          rn-bottom-1/2
+          rn-origin-center-bottom
+          rn-h-[39%]
+          `,
+          props.timeAnalogClockHandClass
+        )}
+        style={{ transform: linePosition() }}
+        data-time-analog-center-hand={true}
+      />
+      <div
+        class={clsx(
+          `
+          time-analog-center-dot
           rn-bg-primary
           rn-w-[5px] 
           rn-h-[5px] 
@@ -124,11 +156,20 @@ export const Test = () => {
           rn-top-1/2 rn-left-1/2 
           rn-transform rn--translate-x-1/2 rn--translate-y-1/2
           rn-rounded-full
-          `
+          `,
+          props.timeAnalogClockCenterDotClass
         )}
-      ></div>
+        data-time-analog-center-dot={true}
+      />
 
-      <div class={"parent"}>
+      <div
+        class={clsx(`
+          rn-w-[50px]
+          rn-h-[50px]
+          rn-bg-transparent
+          rn-relative
+      `)}
+      >
         <Show when={type() === "hour"} keyed>
           <For each={Array.from(Array(12).keys(), (v) => v + 1)}>
             {(item, index) => {
@@ -139,10 +180,12 @@ export const Test = () => {
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
                   onPointerEnter={handlePointerEnter}
-                  onTouchStart={() => setMouseDown(false)}
+                  onTouchStart={() => setOnTouch(true)}
+                  onTouchEnd={handleTouchEnd}
                   onPointerUp={() => setMouseDown(false)}
                   onPointerCancel={() => setMouseDown(false)}
                   index={index}
+                  class={props.timeAnalogNumberClass}
                 />
               );
             }}
@@ -159,10 +202,12 @@ export const Test = () => {
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
                   onPointerEnter={handlePointerEnter}
-                  onTouchStart={() => setMouseDown(false)}
+                  onTouchStart={() => setOnTouch(true)}
+                  onTouchEnd={handleTouchEnd}
                   onPointerUp={() => setMouseDown(false)}
                   onPointerCancel={() => setMouseDown(false)}
                   index={index}
+                  class={props.timeAnalogNumberClass}
                 />
               );
             }}
@@ -179,10 +224,11 @@ export const Test = () => {
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
                   onPointerEnter={handlePointerEnter}
-                  onTouchStart={() => setMouseDown(false)}
+                  onTouchStart={() => setOnTouch(true)}
                   onPointerUp={() => setMouseDown(false)}
                   onPointerCancel={() => setMouseDown(false)}
                   index={index}
+                  class={props.timeAnalogNumberClass}
                 />
               );
             }}

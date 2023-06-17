@@ -11,7 +11,7 @@ import { YearSelector } from "./components/YearSelector";
 import {utils} from "./utils";
 import {DateMath} from "./index";
 import {TimeSJ} from "./components/TimePicker";
-import {Test} from "./components/Test";
+import {TimePickerAnalog} from "./components/TimePickerAnalog";
 
 const App: Component = () => {
   const [value, setValue] = createSignal<ITimePickerFormat>({});
@@ -37,12 +37,12 @@ const App: Component = () => {
       <div
         style={{
           display: "flex",
-            "justify-content": "center",
-            "align-items": "center",
-            height: "100vh",
+            // "justify-content": "center",
+            // "align-items": "center",
+            // height: "100vh",
         }}
       >
-          <Test />
+          <TimePickerAnalog />
 
       </div>
 

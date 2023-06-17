@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -12,6 +12,17 @@ module.exports = {
       },
       transformOrigin: {
         "center-bottom": "center bottom ",
+      },
+      height: {
+        time: "20px",
+        "time-2": "36px",
+      },
+      width: {
+        time: "20px",
+        "time-2": "36px",
+      },
+      lineHeight: {
+        time: "20px",
       }
     },
     screens: {
