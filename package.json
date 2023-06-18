@@ -36,7 +36,10 @@
     "solidjs-multi-date-picker",
     "solidjs-multi-date",
     "mulitple-date-picker",
-    "solidjs-multiple-date-picker"
+    "solidjs-multiple-date-picker",
+    "solidjs time picker",
+    "solidjs timepicker",
+    "solidjs time"
   ],
   "author": "rnwonder",
   "scripts": {

@@ -55,9 +55,18 @@ export interface IRenderInputJSXProps {
   showDate: () => void;
 }
 
+export interface IRenderTimeInputJSXProps {
+  value: Accessor<TimeValue>;
+  showTime: () => void;
+}
+
 export type IRenderInput =
   | JSX.Element
   | ((props: IRenderInputJSXProps) => JSX.Element);
+
+export type IRenderTimeInput =
+  | JSX.Element
+  | ((props: IRenderTimeInputJSXProps) => JSX.Element);
 
 export interface IRenderJSXProps {
   month: Accessor<number>;
@@ -193,7 +202,6 @@ export interface ClassNames {
   daysActivePrimaryWrapperClass?: string;
   daysActiveRangeBetweenWrapperClass?: string;
 
-  dataPickerContainerClass?: string;
   datePickerCalendarDaysArea?: string;
 }
 
@@ -213,18 +221,19 @@ export type DateMathDiffUnit =
 export interface DateMathDiff
   extends Partial<Record<DateMathDiffUnit, number>> {}
 
-export interface DateTimeObject extends DateObjectUnits {
+export interface DateTimeObject extends DateObjectUnits, ITimePickerFormat {}
+
+export interface ITimePickerFormat {
   hour?: number;
   minute?: number;
   second?: number;
 }
 
-export interface ITimePickerFormat {
-  hour: number | undefined;
-  minute: number | undefined;
-  second: number | undefined;
-}
-
 export type ITimeView = "hour" | "minute" | "second";
 
 export type ITimeMeridiem = "AM" | "PM";
+
+export interface TimeValue {
+  value: ITimePickerFormat;
+  label: string;
+}

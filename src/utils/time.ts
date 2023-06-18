@@ -1,40 +1,54 @@
+import { ITimeMeridiem } from "../interface/general";
+
 export const leadingZeros = (value: number, numberOfLeadingZero?: number) => {
-    return String(Math.ceil(value)).padStart(numberOfLeadingZero ?? 2, "0");
+  return String(Math.ceil(value)).padStart(numberOfLeadingZero ?? 2, "0");
 };
 
-export const convert24HourTo12Hour = (time: number) => {
-    if (time === 0) {
-        return 12;
-    }
-    if (time > 12) {
-        return time - 12;
-    }
-    return time;
+export const convert24HourTo12Hour = (hour: number) => {
+  if (hour === 0) {
+    return 12;
+  }
+  if (hour === 12) {
+    return 0;
+  }
+  if (hour > 12) {
+    return hour - 12;
+  }
+  return hour;
 };
 
-export const getAmPm = (time: number) => {
-    return time >= 12 ? "PM" : "AM";
+export const getAmPm = (hour: number): ITimeMeridiem => {
+  return hour >= 12 ? "PM" : "AM";
 };
 
-export const convert12HourTo24Hour = (time: number, meridiem: "AM" | "PM") => {
-    if (meridiem === "AM") {
-        return time === 12 ? 0 : time;
-    }
-    return time === 12 ? time : time + 12;
+export const convert12HourTo24Hour = (hour: number, meridiem: "AM" | "PM") => {
+  if (meridiem === "AM") {
+    return hour === 12 ? 0 : hour;
+  }
+  return hour === 12 ? hour : hour + 12;
 };
 
-export const getCurrentDate = () => {
-    const formatter = new Intl.DateTimeFormat(undefined, {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-    });
+export function getCurrentTime() {
+  const date = new Date();
+  let hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+  let meridiem: ITimeMeridiem = "AM";
 
-    const [weekday, month, day] = formatter.format(new Date()).split(" ");
-    return {
-        weekday,
-        month,
-        day,
-        formattedDate: `${weekday} ${day} ${month}`,
-    };
-};
+  if (hour > 12) {
+    hour -= 12;
+    meridiem = "PM";
+  }
+  if (hour === 12) {
+    meridiem = "PM";
+  }
+  if (hour === 0) {
+    hour = 12;
+  }
+  return {
+    hour: hour,
+    minute: minute,
+    second: second,
+    meridiem,
+  };
+}

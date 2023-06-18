@@ -5,7 +5,7 @@ import { ITimeView } from "../../interface/general";
 
 interface ITimeNumberProps {
   type: ITimeView;
-  selectedValue: Accessor<number>;
+  selectedValue: Accessor<number | undefined>;
   onClick: (type: ITimeView, value?: number) => void;
   onMouseUp: () => void;
   onPointerEnter: (
@@ -134,7 +134,7 @@ export const TimeNumber = (props: ITimeNumberProps) => {
           rn-pointer-events-none
           
           `]: isSelected(),
-          "rn-z-[1]": props.index() % teilBar() === 0
+          "": props.index() % teilBar() === 0
         },
         props.class
       )}
