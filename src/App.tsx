@@ -12,6 +12,7 @@ import {utils} from "./utils";
 import {DateMath} from "./index";
 import {TimeSJ} from "./components/TimePicker";
 import {TimePickerAnalog} from "./components/TimePickerAnalog";
+import {TimePickerAnalogGroup} from "./components/TimePickerAnalogGroup";
 
 const App: Component = () => {
   const [value, setValue] = createSignal<ITimePickerFormat>({});
@@ -42,7 +43,7 @@ const App: Component = () => {
             // height: "100vh",
         }}
       >
-          <TimePickerAnalog />
+          <TimePickerAnalogGroup />
 
       </div>
 

@@ -1,4 +1,12 @@
-import { createEffect, createSignal, For, Show } from "solid-js";
+import {
+  Accessor,
+  Setter,
+  createEffect,
+  createSignal,
+  For,
+  Show,
+  onMount,
+} from "solid-js";
 import clsx from "clsx";
 import { ITimeView } from "../../interface/general";
 import { TimeNumber } from "../TimeNumber";
@@ -8,6 +16,10 @@ interface ITimePickerAnalog {
   timeAnalogWrapperClass?: string;
   timeAnalogClockHandClass?: string;
   timeAnalogClockCenterDotClass?: string;
+  view: Accessor<ITimeView>;
+  setView: Setter<ITimeView>;
+  allowedView: ITimeView[];
+  handleNext: () => void;
 }
 export const TimePickerAnalog = (props: ITimePickerAnalog) => {
   const [selectedHour, setSelectedHour] = createSignal(0);
@@ -17,30 +29,51 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
   const [mouseDown, setMouseDown] = createSignal(false);
   const [isPicking, setIsPicking] = createSignal(false);
   const [onTouch, setOnTouch] = createSignal(false);
-  const [type, setType] = createSignal<ITimeView>("hour");
   const [linePosition, setLinePosition] = createSignal("rotateZ(0deg)");
 
+  onMount(() => {
+    if (props.allowedView.includes("hour")) return;
+    if (props.allowedView.includes("minute")) {
+      props.setView("minute");
+      return;
+    }
+    if (props.allowedView.includes("second")) {
+      props.setView("second");
+    }
+
+    document.body.addEventListener("mouseup", () => {
+      console.log("mouseup");
+      setMouseDown(false)
+    });
+
+    // document.addEventListener("mouseleave", () => {
+    //   setOnTouch(true)
+    // }
+  });
+
   createEffect(() => {
-    if (type() === "hour") {
+    if (props.view() === "hour") {
       setLinePosition(`rotateZ(${selectedHour() * 30}deg)`);
     }
-    if (type() === "minute") {
+    if (props.view() === "minute") {
       setLinePosition(`rotateZ(${selectedMinute() * 6}deg)`);
     }
-    if (type() === "second") {
+    if (props.view() === "second") {
       setLinePosition(`rotateZ(${selectedSeconds() * 6}deg)`);
     }
   });
 
   createEffect(() => {
+    console.log("isPicking", isPicking(), mouseDown());
     if (!isPicking()) return;
     if (mouseDown()) return;
     if (onTouch()) {
       setOnTouch(false);
       setIsPicking(false);
+      props.handleNext();
       return;
     }
-    handleNext();
+    props.handleNext();
     setIsPicking(false);
   });
 
@@ -50,6 +83,7 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
     value?: number
   ) => {
     if (value === undefined) return;
+
     const handleMouseDown = () => {
       if (!mouseDown()) {
         setMouseDown(true);
@@ -78,9 +112,8 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
     type: ITimeView,
     value?: number
   ) => {
-    console.log("handleTouchEnd", value);
     if (value === undefined) return;
-    handleClick(type, value)
+    handleClick(type, value);
   };
 
   const handleClick = (type: ITimeView, value?: number) => {
@@ -94,18 +127,10 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
     if (type === "second") {
       setSelectedSeconds(value);
     }
-    handleNext();
+    props.handleNext();
   };
 
-  const handleNext = () => {
-    if (type() === "hour") {
-      setType("minute");
-      return;
-    }
-    if (type() === "minute") {
-      setType("second");
-    }
-  };
+
 
   return (
     <div
@@ -114,7 +139,7 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
         time-analog-wrapper
         rn-w-[237px] 
         rn-h-[237px] 
-        rn-bg-blue-200 
+        rn-bg-slate-100 
         rn-relative 
         rn-flex 
         rn-justify-center 
@@ -170,12 +195,12 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
           rn-relative
       `)}
       >
-        <Show when={type() === "hour"} keyed>
+        <Show when={props.view() === "hour"} keyed>
           <For each={Array.from(Array(12).keys(), (v) => v + 1)}>
             {(item, index) => {
               return (
                 <TimeNumber
-                  type={type()}
+                  type={props.view()}
                   selectedValue={selectedHour}
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
@@ -192,12 +217,12 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
           </For>
         </Show>
 
-        <Show when={type() === "minute"} keyed>
+        <Show when={props.view() === "minute"} keyed>
           <For each={Array.from(Array(60).keys(), (v) => v + 1)}>
             {(item, index) => {
               return (
                 <TimeNumber
-                  type={type()}
+                  type={props.view()}
                   selectedValue={selectedMinute}
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
@@ -214,17 +239,18 @@ export const TimePickerAnalog = (props: ITimePickerAnalog) => {
           </For>
         </Show>
 
-        <Show when={type() === "second"} keyed>
+        <Show when={props.view() === "second"} keyed>
           <For each={Array.from(Array(60).keys(), (v) => v + 1)}>
             {(item, index) => {
               return (
                 <TimeNumber
-                  type={type()}
+                  type={props.view()}
                   selectedValue={selectedSeconds}
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
                   onPointerEnter={handlePointerEnter}
                   onTouchStart={() => setOnTouch(true)}
+                  onTouchEnd={handleTouchEnd}
                   onPointerUp={() => setMouseDown(false)}
                   onPointerCancel={() => setMouseDown(false)}
                   index={index}

@@ -149,12 +149,13 @@ export const TimeNumber = (props: ITimeNumberProps) => {
       onMouseUp={props.onMouseUp}
       onPointerCancel={props.onPointerCancel}
       onTouchStart={props.onTouchStart}
-      onTouchEnd={(e) => props.onTouchEnd(e, props.type, attr())}
+      // onPointerLeave={props.onPointerCancel}
+      // onTouchEnd={(e) => props.onTouchEnd(e, props.type, attr())}
       tabindex={isSelected() ? 0 : -1}
       data-selected={isSelected()}
     >
       <span
-        class={clsx("rn-font-medium rn-relative rn-z-[1]", {
+        class={clsx(" rn-relative rn-z-[1]", {
           [`
             after:rn-content['']
             after:rn-absolute

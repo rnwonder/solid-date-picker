@@ -55,6 +55,7 @@ export const TimeSJ: Component<ITimeSJProps> = (props) => {
   });
 
   createEffect(() => {
+    console.log("isPicking", isPicking());
     if (!isPicking()) return;
     if (mouseDown()) return;
     if (onTouch()) {
@@ -83,11 +84,13 @@ export const TimeSJ: Component<ITimeSJProps> = (props) => {
   };
 
   const handlePointerEnter = (value: number, e: any, type: ITimeView) => {
+    console.log("handlePointerEnter");
     const handleMouseDown = () => {
-      if (!mouseDown) {
+      console.log("handleMouseDown");
+      if (!mouseDown()) {
         setMouseDown(true);
       }
-      if (!isPicking) {
+      if (!isPicking()) {
         setIsPicking(true);
       }
     };
