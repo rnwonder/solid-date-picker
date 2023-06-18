@@ -13,7 +13,7 @@
   color: var(--before-color);
 }
 
-button:hover {
+.date-picker-main-btn:hover {
   background-color: var(--hover-color);
 }
 
