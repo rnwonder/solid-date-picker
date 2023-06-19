@@ -1,7 +1,7 @@
 import type { Component, Setter } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { DatePickerGroup } from "./components/DatePickerGroup";
-import { ITimePickerFormat, PickerValue, TimeValue } from "./interface/general";
+import { PickerValue, TimeValue } from "./interface/general";
 import { MonthSelector } from "./components/MonthSelector";
 import { YearSelector } from "./components/YearSelector";
 // import { utils } from "./utils";
@@ -10,8 +10,6 @@ import { YearSelector } from "./components/YearSelector";
 // import "./themes/temptress/temptress.css";
 import { utils } from "./utils";
 import { DateMath } from "./index";
-import { TimeAnalog } from "./components/TimeAnalog";
-import { TimeAnalogGroup } from "./components/TimeAnalogGroup";
 import  TimeAnalogPicker  from "./components/TimeAnalogPicker";
 
 const App: Component = () => {
