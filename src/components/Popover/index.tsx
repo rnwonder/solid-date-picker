@@ -147,7 +147,13 @@ export const Popover = (props: PopoverProps) => {
   };
 
   return (
-    <div>
+    <div
+      onkeyup={(e) => {
+        if (e.key === "Escape" && (props.isShown || shown())) {
+          handleClose();
+        }
+      }}
+    >
       <div
         style={{
           ...(props.width && { width: props.width || "100%" }),
@@ -194,13 +200,20 @@ export const Popover = (props: PopoverProps) => {
           ref={setPopoverRef}
         >
           <div
-            class={clsx(`
-            ${delayShown() ? `rn-opacity-100 scale-100` : `rn-opacity-0 scale-90`}
+            class={clsx(
+              `
+            ${
+              delayShown()
+                ? `rn-opacity-100 scale-100`
+                : `rn-opacity-0 scale-90`
+            }
             rn-duration-350 
             rn-ease-in-out
             rn-transition-opacity
             motion-reduce:rn-transition-none
-        `, props.contentClassName)}
+        `,
+              props.contentClassName
+            )}
           >
             {renderContent()}
           </div>

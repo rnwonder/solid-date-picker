@@ -236,8 +236,14 @@ export const DatePicker = (props: DatePickerProps) => {
       if (!multipleDateObject) return;
       setMultipleObject(multipleDateObject);
       const lastDate = multipleDateObject.at(-1);
-      lastDate?.month && setMonth(lastDate.month);
-      lastDate?.year && setYear(lastDate.year);
+      if (lastDate?.month) {
+        setMonth(lastDate.month);
+        props.setMonth?.(lastDate.month);
+      }
+      if (lastDate?.year) {
+        setYear(lastDate.year);
+        props.setYear?.(lastDate.year);
+      }
     }
   });
 
@@ -275,7 +281,6 @@ export const DatePicker = (props: DatePickerProps) => {
     };
     onChange(agg);
   });
-
   createEffect(() => {
     if (props.type !== "multiple") return;
     if (!mounted()) return;
@@ -494,13 +499,14 @@ export const DatePicker = (props: DatePickerProps) => {
   const nextButtonAreaJSX = renderCustomJSX(props.afterNextButtonAreaJSX);
   const prevButtonAreaJSX = renderCustomJSX(props.beforePrevButtonAreaJSX);
   const weekDaysJSX = renderCustomJSX(props.weekDaysJSX);
-  const calendarAboveTopAreaJSX = renderCustomJSX(props.calendarAboveTopAreaJSX)
+  const calendarAboveTopAreaJSX = renderCustomJSX(
+    props.calendarAboveTopAreaJSX
+  );
 
   return (
-
-      <div
-        class={clsx(
-          `date-picker-wrapper 
+    <div
+      class={clsx(
+        `date-picker-wrapper 
           rn-shadow-lg 
           rn-border-t 
           rn-border-gray-300 
@@ -514,92 +520,91 @@ export const DatePicker = (props: DatePickerProps) => {
 
           ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "rn-w-max"}
           `,
-          props.datePickerWrapperClass
+        props.datePickerWrapperClass
+      )}
+      data-type={"date-picker-wrapper"}
+      ref={props.ref}
+      style={{
+        ...(props.backgroundColor && {
+          "background-color": props.backgroundColor,
+        }),
+      }}
+      data-scope={"date-picker"}
+      data-part={"content"}
+      role={"application"}
+      aria-label={"calendar"}
+      aria-roledescription={"date-picker"}
+    >
+      <Show when={!props.hideTopArea} keyed>
+        {calendarAboveTopAreaJSX}
+        {calendarTopAreaJSX || (
+          <DatePickerTop
+            {...props}
+            setYear={props.setYear || setYear}
+            setMonth={props.setMonth || setMonth}
+            month={props.month || month}
+            year={props.year || year}
+            render={render}
+            handleNextMonth={handleNextMonth}
+            handlePrevMonth={handlePrevMonth}
+            monthSelectorJSX={monthSelectorJSX}
+            yearSelectorJSX={yearSelectorJSX}
+            zIndex={props.zIndex}
+            setAllowedComponents={props.setAllowedComponents}
+            monthSelectorFormat={props.monthSelectorFormat}
+            monthYearSelectorFlexDirection={
+              props.monthYearSelectorFlexDirection
+            }
+            yearRange={props.yearRange}
+            locale={props.locale}
+            nextIcon={props.nextIcon}
+            prevIcon={props.prevIcon}
+            removeNavButtons={props.removeNavButtons}
+            nextButtonAreaJSX={nextButtonAreaJSX}
+            prevButtonAreaJSX={prevButtonAreaJSX}
+            primaryColor={props.primaryColor}
+            primaryTextColor={props.primaryTextColor}
+            secondaryColor={props.secondaryColor}
+            secondaryTextColor={props.secondaryTextColor}
+          />
         )}
-        data-type={"date-picker-wrapper"}
-        ref={props.ref}
-        style={{
-          ...(props.backgroundColor && {
-            "background-color": props.backgroundColor,
-          }),
-        }}
-        data-scope={"date-picker"}
-        data-part={"content"}
-        role={"application"}
-        aria-label={"calendar"}
-        aria-roledescription={"date-picker"}
+      </Show>
+
+      <div
+        class={clsx(
+          "rn-flex rn-justify-center date-picker-body",
+          props.datePickerBodyAreaClass
+        )}
       >
-        <Show when={!props.hideTopArea} keyed>
-          {calendarAboveTopAreaJSX}
-          {calendarTopAreaJSX || (
-            <DatePickerTop
+        <Show when={calendarLeftAreaJSX} keyed>
+          {calendarLeftAreaJSX}
+        </Show>
+
+        <Show when={!props.hideCalendar} keyed>
+          {calendarJSX || (
+            <CalendarArea
               {...props}
-              setYear={props.setYear || setYear}
-              setMonth={props.setMonth || setMonth}
-              month={props.month || month}
               year={props.year || year}
-              render={render}
-              handleNextMonth={handleNextMonth}
-              handlePrevMonth={handlePrevMonth}
-              monthSelectorJSX={monthSelectorJSX}
-              yearSelectorJSX={yearSelectorJSX}
-              zIndex={props.zIndex}
-              setAllowedComponents={props.setAllowedComponents}
-              monthSelectorFormat={props.monthSelectorFormat}
-              monthYearSelectorFlexDirection={
-                props.monthYearSelectorFlexDirection
-              }
-              yearRange={props.yearRange}
-              locale={props.locale}
-              nextIcon={props.nextIcon}
-              prevIcon={props.prevIcon}
-              removeNavButtons={props.removeNavButtons}
-              nextButtonAreaJSX={nextButtonAreaJSX}
-              prevButtonAreaJSX={prevButtonAreaJSX}
-              primaryColor={props.primaryColor}
-              primaryTextColor={props.primaryTextColor}
-              secondaryColor={props.secondaryColor}
-              secondaryTextColor={props.secondaryTextColor}
+              month={props.month || month}
+              endDay={endDay}
+              startDay={startDay}
+              handleDayClick={handleDayClick}
+              multipleObject={multipleObject}
+              weekDaysJSX={weekDaysJSX}
+              onHoverDay={onHoverDay}
+              hoverRangeValue={hoverRangeValue}
+              onHoverDayEnd={onHoverDayEnd}
             />
           )}
         </Show>
 
-        <div
-          class={clsx(
-            "rn-flex rn-justify-center date-picker-body",
-            props.datePickerBodyAreaClass
-          )}
-        >
-          <Show when={calendarLeftAreaJSX} keyed>
-            {calendarLeftAreaJSX}
-          </Show>
-
-          <Show when={!props.hideCalendar} keyed>
-            {calendarJSX || (
-              <CalendarArea
-                {...props}
-                year={props.year || year}
-                month={props.month || month}
-                endDay={endDay}
-                startDay={startDay}
-                handleDayClick={handleDayClick}
-                multipleObject={multipleObject}
-                weekDaysJSX={weekDaysJSX}
-                onHoverDay={onHoverDay}
-                hoverRangeValue={hoverRangeValue}
-                onHoverDayEnd={onHoverDayEnd}
-              />
-            )}
-          </Show>
-
-          <Show when={calendarRightAreaJSX} keyed>
-            {calendarRightAreaJSX}
-          </Show>
-        </div>
-        <Show when={calendarBottomAreaJSX} keyed>
-          {calendarBottomAreaJSX}
+        <Show when={calendarRightAreaJSX} keyed>
+          {calendarRightAreaJSX}
         </Show>
       </div>
-
+      <Show when={calendarBottomAreaJSX} keyed>
+        {calendarBottomAreaJSX}
+      </Show>
+    </div>
   );
 };

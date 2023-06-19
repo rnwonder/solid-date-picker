@@ -21,8 +21,8 @@ export interface DatePickerInputSJProps
   onChange?: (data: IDatePickerOnChange) => void;
   componentsToAllowOutsideClick?: Array<HTMLElement>;
   renderInput?: IRenderInput;
-  calendarPositionX?: IPopOverPositionX;
-  calendarPositionY?: IPopOverPositionY;
+  pickerPositionX?: IPopOverPositionX;
+  pickerPositionY?: IPopOverPositionY;
   placeholder?: string;
   onClose?: () => void;
   onOpen?: () => void;
@@ -243,13 +243,12 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         }
         setShown?.(false);
       }}
-      positionX={props.calendarPositionX}
-      positionY={props.calendarPositionY}
+      positionX={props.pickerPositionX}
+      positionY={props.pickerPositionY}
       zIndex={props.zIndex}
       handleChildrenClick={inputJSX ? () => {} : undefined}
       width={props.inputWrapperWidth}
       className={clsx(props.inputWrapperClass, "date-picker-input-wrapper")}
-      contentClassName={props.dataPickerContainerClass}
     >
       <div
         class={"date-picker-input-area"}
@@ -270,13 +269,13 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
             aria-label={"date picker input"}
             placeholder={props.placeholder}
             value={props.inputLabel?.() || props.value?.().label || ""}
+            data-type={"date-picker-input"}
             {...{ ...props.inputProps, class: undefined }}
             class={clsx(
-              `rn-w-full date-picker-input px-1`,
+              `rn-w-full date-picker-input rn-px-1`,
               props.inputProps?.class,
               props.inputClass
             )}
-            data-type={"date-picker-input"}
           />
         </Show>
       </div>

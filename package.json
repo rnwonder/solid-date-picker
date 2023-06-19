@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.7.4",
+  "version": "0.7.7",
   "description": "",
   "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
@@ -36,16 +36,20 @@
     "solidjs-multi-date-picker",
     "solidjs-multi-date",
     "mulitple-date-picker",
-    "solidjs-multiple-date-picker"
+    "solidjs-multiple-date-picker",
+    "solidjs time picker",
+    "solidjs timepicker",
+    "solidjs time"
   ],
   "author": "rnwonder",
   "scripts": {
     "start": "vite",
     "dev": "vite",
     "types": "tsc",
-    "build": "vitest run && rm -r types && vite build --mode lib",
+    "build": "vitest run && pnpm run clean && vite build --mode lib",
     "serve": "vite preview",
-    "test": "vitest --ui"
+    "test": "vitest --ui",
+    "clean": "IF EXIST \"types\" ( rmdir /s /q \"types\" )"
   },
   "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
   "homepage": "https://soliddatepicker.live",

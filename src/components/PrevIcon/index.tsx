@@ -2,6 +2,7 @@ import { Component } from "solid-js";
 
 interface IProps {
   color?: string;
+  class?: string;
 }
 
 export const PrevIcon: Component<IProps> = (props) => {
@@ -12,7 +13,9 @@ export const PrevIcon: Component<IProps> = (props) => {
       height="24"
       fill={props.color || "currentColor"}
       viewBox="0 0 256 256"
-       data-scope="button" data-part="icon"
+      data-scope="button"
+      data-part="icon"
+      class={props.class}
     >
       <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
     </svg>

@@ -138,7 +138,7 @@ describe("getMonthName", () => {
 
 
 /* Tests for regional formatting */
-describe("Test for getMonthName function", () => {
+describe("TimeAnalog for getMonthName function", () => {
   test("should return month name in Spanish long format", () => {
     expect(getMonthName(0, "long", "es-MX")).toBe("enero");
     expect(getMonthName(1, "long", "es-MX")).toBe("febrero");
