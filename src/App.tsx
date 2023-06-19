@@ -7,7 +7,6 @@ import { YearSelector } from "./components/YearSelector";
 // import { utils } from "./utils";
 // import style from "./App.module.css";
 // import "./themes/ark-ui/ark-ui.css";
-// import "./themes/temptress/temptress.css";
 import { utils } from "./utils";
 import { DateMath } from "./index";
 import  TimeAnalogPicker  from "./components/TimeAnalogPicker";
