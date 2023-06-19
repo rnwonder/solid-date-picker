@@ -1,16 +1,7 @@
-import { Popover } from "../Popover";
-import { ITimePickerAnalog, TimeAnalog } from "../TimeAnalog";
+import { createSignal, JSX, onMount, Show } from "solid-js";
 import clsx from "clsx";
-import { Accessor, createSignal, onMount, Setter, Show } from "solid-js";
-import {
-  ITimeMeridiem,
-  ITimePickerFormat,
-  ITimeView,
-} from "../../interface/general";
-import { NextIcon } from "../NextIcon";
-import { Button } from "../Button";
-import { PrevIcon } from "../PrevIcon";
-import { getAmPm, getCurrentTime } from "../../utils/time";
+import { ITimePickerAnalog, TimeAnalog } from "../TimeAnalog";
+import { ITimeMeridiem, ITimeView } from "../../interface/general";
 import { TimeAnalogGroupTop } from "../TimeAnalogGroupTop";
 import { TimeAnalogBottom } from "../TimeAnalogBottom";
 
@@ -27,6 +18,9 @@ export interface ITimeAnalogGroupProps
     | "setMeridiem"
   > {
   allowedView?: ITimeView[];
+  arrowsColor?: string;
+  prevIcon?: JSX.Element;
+  nextIcon?: JSX.Element;
 }
 export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
   const [view, setView] = createSignal<ITimeView>("hour");
@@ -64,8 +58,9 @@ export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
 
   return (
     <div
-      class={clsx(` 
-          date-picker-wrapper 
+      class={clsx(
+        ` 
+          time-picker-wrapper 
           rn-shadow-lg 
           rn-border-t 
           rn-border-gray-300 
@@ -77,9 +72,12 @@ export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
           rn-pt-[0.625rem] 
           rn-pb-[0.5rem]
           rn-px-[1rem]
-          `)}
+          `,
+        props.timePickerWrapperClass
+      )}
     >
       <TimeAnalogGroupTop
+        {...props}
         view={view}
         handleNext={handleNext}
         handlePrev={handlePrev}
@@ -95,8 +93,12 @@ export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
         setMeridiem={setMeridiem}
       />
 
-      <Show when={allowedView().includes("hour")}>
-        <TimeAnalogBottom meridiem={meridiem} setMeridiem={setMeridiem} />
+      <Show when={allowedView().includes("hour")} keyed>
+        <TimeAnalogBottom
+          {...props}
+          meridiem={meridiem}
+          setMeridiem={setMeridiem}
+        />
       </Show>
     </div>
   );

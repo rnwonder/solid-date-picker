@@ -12,7 +12,7 @@ import { utils } from "./utils";
 import { DateMath } from "./index";
 import { TimeAnalog } from "./components/TimeAnalog";
 import { TimeAnalogGroup } from "./components/TimeAnalogGroup";
-import { TimeAnalogPicker } from "./components/TimeAnalogPicker";
+import  TimeAnalogPicker  from "./components/TimeAnalogPicker";
 
 const App: Component = () => {
     const [value, setValue] = createSignal<TimeValue>({
@@ -36,7 +36,7 @@ const App: Component = () => {
     });
 
     createEffect(() => {
-        console.log("value", value());
+        // console.log("value", value());
     });
 
     return (
@@ -44,13 +44,10 @@ const App: Component = () => {
             <div
                 style={{
                     display: "flex",
-                    // "justify-content": "center",
-                    // "align-items": "center",
-                    // height: "100vh",
                 }}
             ></div>
             <TimeAnalogPicker
-                allowedView={["second", "minute", "hour"]}
+                // allowedView={["second", "minute", "hour"]}
                 value={value}
                 setValue={setValue}
             />

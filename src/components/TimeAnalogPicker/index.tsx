@@ -30,7 +30,7 @@ interface ITimeAnalogPickerProps
   inputWrapperWidth?: JSX.CSSProperties["width"];
   zIndex?: number;
 }
-export const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
+const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
   const [isShown, setIsShown] = createSignal(false);
   const handleTimeChange = (
     time: ITimePickerFormat,
@@ -182,3 +182,5 @@ export const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
     </Popover>
   );
 };
+
+export default TimeAnalogPicker;

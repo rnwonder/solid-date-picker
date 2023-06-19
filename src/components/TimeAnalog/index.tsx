@@ -12,6 +12,7 @@ import {
   ITimeMeridiem,
   ITimePickerFormat,
   ITimeView,
+  TimeAnalogClassNames,
 } from "../../interface/general";
 import { TimeNumber } from "../TimeNumber";
 import {
@@ -21,12 +22,8 @@ import {
   getCurrentTime,
 } from "../../utils/time";
 
-export interface ITimePickerAnalog {
+export interface ITimePickerAnalog extends TimeAnalogClassNames {
   close: () => void;
-  timeAnalogNumberClass?: string;
-  timeAnalogWrapperClass?: string;
-  timeAnalogClockHandClass?: string;
-  timeAnalogClockCenterDotClass?: string;
   view: Accessor<ITimeView>;
   setView: Setter<ITimeView>;
   allowedView: ITimeView[];
@@ -50,33 +47,38 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
   const [showHand, setShowHand] = createSignal(false);
 
   onMount(() => {
+    let currentTime: any = {};
+
     if (props.setCurrentTimeOnOpen) {
-      const currentTime = getCurrentTime();
+      currentTime = getCurrentTime();
+    }
 
-      if (props.allowedView.includes("hour")) {
-        if (props.value.hour === undefined) {
-          setSelectedHour(currentTime.hour);
-          props.setMeridiem(currentTime.meridiem);
-        } else {
-          props.setMeridiem(getAmPm(props.value.hour));
-          setSelectedHour(convert24HourTo12Hour(props.value.hour));
-        }
+    if (props.allowedView.includes("hour")) {
+      if (props.value.hour === undefined) {
+        if (!props.setCurrentTimeOnOpen) return;
+        setSelectedHour(currentTime.hour);
+        props.setMeridiem(currentTime.meridiem);
+      } else {
+        props.setMeridiem(getAmPm(props.value.hour));
+        setSelectedHour(convert24HourTo12Hour(props.value.hour));
       }
+    }
 
-      if (props.allowedView.includes("minute")) {
-        if (props.value.minute === undefined) {
-          setSelectedMinute(currentTime.minute);
-        } else {
-          setSelectedMinute(props.value.minute);
-        }
+    if (props.allowedView.includes("minute")) {
+      if (props.value.minute === undefined) {
+        if (!props.setCurrentTimeOnOpen) return;
+        setSelectedMinute(currentTime.minute);
+      } else {
+        setSelectedMinute(props.value.minute);
       }
+    }
 
-      if (props.allowedView.includes("second")) {
-        if (props.value.second === undefined) {
-          setSelectedSeconds(currentTime.second);
-        } else {
-          setSelectedSeconds(props.value.second);
-        }
+    if (props.allowedView.includes("second")) {
+      if (props.value.second === undefined) {
+        if (!props.setCurrentTimeOnOpen) return;
+        setSelectedSeconds(currentTime.second);
+      } else {
+        setSelectedSeconds(props.value.second);
       }
     }
 
@@ -193,9 +195,13 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
     if (value === undefined) return;
     if (type === "hour") {
       setSelectedHour(value);
+      props.handleNext();
+      return;
     }
     if (type === "minute") {
       setSelectedMinute(value);
+      props.handleNext();
+      return;
     }
     if (type === "second") {
       setSelectedSeconds(value);
@@ -216,6 +222,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
         rn-justify-center 
         rn-items-center 
         rn-rounded-full
+        dark:rn-bg-eerie-black
         `,
         props.timeAnalogWrapperClass
       )}
@@ -276,6 +283,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
             {(item, index) => {
               return (
                 <TimeNumber
+                  {...props}
                   type={props.view()}
                   selectedValue={selectedHour}
                   onClick={handleClick}
@@ -298,6 +306,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
             {(item, index) => {
               return (
                 <TimeNumber
+                  {...props}
                   type={props.view()}
                   selectedValue={selectedMinute}
                   onClick={handleClick}
@@ -320,6 +329,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
             {(item, index) => {
               return (
                 <TimeNumber
+                  {...props}
                   type={props.view()}
                   selectedValue={selectedSeconds}
                   onClick={handleClick}

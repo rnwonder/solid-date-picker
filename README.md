@@ -7,6 +7,7 @@ A simple and reusable Datepicker component for SolidJS ([Demo](https://stackblit
 ![Screenshot 2023-05-20 084944.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569302/Screenshot_2023-05-20_085338_ruwgsx.jpg)
 ![Screenshot 2023-05-20 084945.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569301/Screenshot_2023-05-20_085412_imossu.jpg)
 ![Screenshot 2023-05-20 084946.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684899114/Screenshot_2023-05-24_043041_to0svp.jpg)
+![Screenshot 2023-05-20 084946.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1687156697/Screenshot_2023-06-19_073704_q6rzgx.jpg)
 
 ## Installation
 
@@ -87,6 +88,27 @@ After importing the `DatePicker` component, you can use it the same way as above
 
 ### Other Components
 - We have some other components that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/other-components/)
+
+### Time Picker
+- This is in beta and can be used like this
+
+```tsx
+import { TimeValue, TimePicker } from "@rnwonder/solid-date-picker";
+
+const App = () => {
+  const [value, setValue] = createSignal<TimeValue>({
+    value: {},
+    label: "",
+  });
+
+  return (
+    <TimePicker
+      value={value}
+      setValue={setValue}
+    />
+  );
+};
+```
 
 ### Contributing
 - Send a message to the author on [twitter](https://twitter.com/Rnwonder101) if you have any questions or suggestions. Don't forget to follow me on twitter.
