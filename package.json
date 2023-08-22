@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "",
   "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
@@ -8,7 +8,7 @@
   "types": "./types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./types/index.d.ts",
       "default": "./dist/index.es.js"
     }
   },
@@ -49,7 +49,8 @@
     "build": "vitest run && pnpm run clean && vite build --mode lib",
     "serve": "vite preview",
     "test": "vitest --ui",
-    "clean": "IF EXIST \"types\" ( rmdir /s /q \"types\" )"
+    "clean": "IF EXIST \"types\" ( rmdir /s /q \"types\" )",
+    "publish": "pnpm run build && npm publish --access public"
   },
   "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
   "homepage": "https://soliddatepicker.live",
