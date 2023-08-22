@@ -142,6 +142,7 @@ export const TimeNumber = (props: ITimeNumberProps) => {
             aria-label={leadingZeros(attr() || 0) + " " + props.type + "s"}
             role={"option"}
             data-time-analog-number={true}
+            type={"button"}
             style={{ left: x() + offsetX + "px", top: y() + offsetY + "px" }}
             data-value={attr()}
             onClick={() => props.onClick(props.type, attr())}

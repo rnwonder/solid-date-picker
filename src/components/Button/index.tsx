@@ -9,7 +9,6 @@ interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
   selected?: boolean;
 }
 
-
 export const Button: Component<ButtonProps> = (props) => {
   return (
     <button
@@ -28,6 +27,7 @@ export const Button: Component<ButtonProps> = (props) => {
         props.class
       )}
       data-type={"date-picker-main-btn"}
+      type={"button"}
     >
       {props.children}
     </button>
