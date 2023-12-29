@@ -47,7 +47,7 @@ export const DatePickerMonthAndYearSelector: Component<
             ref={setMonthSelectorRef}
             month={props.month}
             setMonth={props.setMonth}
-            type={props.monthSelectorFormat || "short"}
+            monthSelectorType={props.monthSelectorFormat || "short"}
             zIndex={props.zIndex}
             locale={props.locale}
             primaryColor={props.primaryColor}

@@ -34,6 +34,7 @@ import {
   convertDateToDateObject,
   currentYear,
   getDatePickerRefactoredMonth,
+  getOnChangeSingleData,
   handleDateRange,
 } from "../../utils";
 import { CalendarArea } from "../CalendarArea";
@@ -265,14 +266,6 @@ export const DatePicker = (props: DatePickerProps) => {
   });
 
   createEffect(() => {
-    props.onMonthChange?.(month());
-  });
-
-  createEffect(() => {
-    props.onYearChange?.(year());
-  });
-
-  createEffect(() => {
     if (props.type !== "single") return;
     if (!mounted()) return;
     const agg = {
@@ -387,20 +380,36 @@ export const DatePicker = (props: DatePickerProps) => {
     props.shouldCloseOnSelect && props.close?.();
   };
 
+  const setMonthAndYear = (newMonth: number, newYear?: number) => {
+    setMonth(newMonth);
+    props.setMonth?.(newMonth);
+    props.onMonthChange?.(newMonth);
+
+    if(newYear){
+      setYear(newYear);
+      props.setYear?.(newYear);
+      props.onYearChange?.(newYear);
+    }
+
+    const changeData = getOnChangeSingleData({
+      startDay: startDay(),
+      month: newMonth,
+      year: newYear,
+      type: props.type,
+      setStartDay: setStartDay,
+    });
+    changeData ? onChange(changeData) : null;
+  }
+
   const handleNextMonth = () => {
     if ((props.month?.() || month()) === 11) {
       const newMonth = 0;
       const newYear = year() + 1;
-      setMonth(newMonth);
-      props.setMonth?.(newMonth);
-
-      setYear(newYear);
-      props.setYear?.(newYear);
+      setMonthAndYear(newMonth, newYear);
       return;
     }
     const newMonth = (props.month?.() || month()) + 1;
-    setMonth(newMonth);
-    props.setMonth?.(newMonth);
+    setMonthAndYear(newMonth);
     setRender(false);
   };
 
@@ -408,17 +417,11 @@ export const DatePicker = (props: DatePickerProps) => {
     if ((props.month?.() || month()) === 0) {
       const newMonth = 11;
       const newYear = year() - 1;
-
-      setMonth(newMonth);
-      props.setMonth?.(newMonth);
-
-      setYear(newYear);
-      props.setYear?.(newYear);
+      setMonthAndYear(newMonth, newYear);
       return;
     }
     const newMonth = (props.month?.() || month()) - 1;
-    setMonth(newMonth);
-    props.setMonth?.(newMonth);
+    setMonthAndYear(newMonth);
     setRender(false);
   };
 
@@ -555,6 +558,9 @@ export const DatePicker = (props: DatePickerProps) => {
             monthYearSelectorFlexDirection={
               props.monthYearSelectorFlexDirection
             }
+            onChange={onChange}
+            startDay={startDay()}
+            setStartDay={setStartDay}
             yearRange={props.yearRange}
             locale={props.locale}
             nextIcon={props.nextIcon}

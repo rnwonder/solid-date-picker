@@ -8,8 +8,14 @@ import {
   IColors,
   MakeOptionalRequired,
   ClassNames,
+  IDatePickerOnChange,
+  IDatePickerType,
 } from "../../interface/general";
-import { getMonthName, isNotPartOfEnabledDays } from "../../utils";
+import {
+  getMonthName,
+  getOnChangeSingleData,
+  isNotPartOfEnabledDays,
+} from "../../utils";
 
 interface SelectorProps extends IColors, ClassNames {
   option: Accessor<number>;
@@ -26,7 +32,12 @@ interface SelectorProps extends IColors, ClassNames {
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
   enabledDays?: DateArray[];
-
+  onYearChange?: (year: number) => void;
+  onMonthChange?: (month: number) => void;
+  onChange?: (data: IDatePickerOnChange) => void;
+  type: IDatePickerType;
+  startDay?: DateObjectUnits;
+  setStartDay: Setter<DateObjectUnits | undefined>;
   twoMonthsDisplay?: boolean;
 }
 
@@ -34,9 +45,30 @@ export const Selector = (props: SelectorProps) => {
   const [open, setOpen] = createSignal(false);
   const handleOptionClick = (index: number, value: string, fn?: () => void) => {
     if (props.useValueAsName) {
-      props.setOption(Number(value));
+      const year = Number(value);
+      props.setOption(year);
+      props.onYearChange?.(year);
+      const changeData = getOnChangeSingleData({
+        startDay: props.startDay,
+        year: year,
+        type: props.type,
+        setStartDay: props.setStartDay,
+      });
+      if (changeData) {
+        props.onChange?.(changeData);
+      }
     } else {
       props.setOption(index);
+      props.onMonthChange?.(index);
+      const changeData = getOnChangeSingleData({
+        startDay: props.startDay,
+        month: index,
+        type: props.type,
+        setStartDay: props.setStartDay,
+      });
+      if (changeData) {
+        props.onChange?.(changeData);
+      }
     }
     fn?.();
   };
@@ -99,7 +131,9 @@ export const Selector = (props: SelectorProps) => {
       zIndex={props.zIndex}
       onOpen={() => {
         setOpen(true);
-        const selectedOption = document.querySelector("[date-selector-option-selected=true]");
+        const selectedOption = document.querySelector(
+          "[date-selector-option-selected=true]"
+        );
         selectedOption?.scrollIntoView({
           block: "center",
           inline: "center",
@@ -139,7 +173,6 @@ export const Selector = (props: SelectorProps) => {
           }
           //@ts-ignore
           role={"grid"}
-
           aria-multiselectable={false}
           aria-readonly={false}
           aria-disabled={false}

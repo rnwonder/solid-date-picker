@@ -10,7 +10,7 @@ import {
   MakeOptionalRequired,
   DateObjectUnits,
   DateArray,
-  ClassNames,
+  ClassNames, IDatePickerOnChange, IDatePickerType,
 } from "../../interface/general";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
@@ -46,8 +46,12 @@ export interface DatePickerTopProps extends IColors, ClassNames {
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
   enabledDays?: DateArray[];
-
+  onMonthChange?: (month: number) => void;
+  onChange?: (data: IDatePickerOnChange) => void;
   twoMonthsDisplay?: boolean;
+  type: IDatePickerType;
+  startDay?: DateObjectUnits;
+  setStartDay: Setter<DateObjectUnits | undefined>;
 }
 
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {

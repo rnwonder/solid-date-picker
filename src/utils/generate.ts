@@ -1,10 +1,13 @@
 import {
   DateObjectUnits,
+  IDatePickerOnChange,
+  IDatePickerType,
   IMonthDaysObject,
   IMonthStatus,
   Locale,
   MakeOptionalRequired,
 } from "../interface/general";
+import { Setter } from "solid-js";
 
 // Gets the current month and year days array
 export const getMonthDaysArray = (
@@ -118,3 +121,31 @@ export function breakArrayIntoSubArrays(array: Array<any>, maxSize: number) {
   }
   return newArray;
 }
+
+export const getOnChangeSingleData = ({
+  startDay,
+  month,
+  year,
+  type,
+  setStartDay,
+}: {
+  month?: number;
+  year?: number;
+  type: IDatePickerType;
+  startDay?: DateObjectUnits;
+  setStartDay: Setter<DateObjectUnits | undefined>;
+}): IDatePickerOnChange | null => {
+  if (type === "single") {
+    const newDate = {
+      ...(startDay ? startDay : getToday()),
+      ...(month !== undefined && { month }),
+      ...(year !== undefined && { year }),
+    };
+    setStartDay?.(newDate);
+    return {
+      selectedDate: newDate,
+      type,
+    };
+  }
+  return null;
+};
