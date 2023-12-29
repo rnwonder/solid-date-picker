@@ -110,6 +110,17 @@ const App = () => {
 };
 ```
 
+### Road Map
+- Time Picker (In progress)
+- Internationalization (In progress)
+- More themes
+- More utility functions
+- Expose internal components for more flexibility
+- Refactor setup logic to make it more flexible
+- Add more tests
+- Add more documentation
+- Better support for SSR
+
 ### Contributing
 - Send a message to the author on [twitter](https://twitter.com/Rnwonder101) if you have any questions or suggestions. Don't forget to follow me on twitter.
 - Feel free to open an issue [here](https://github.com/rnwonder/solid-date-picker/issues) if you run into any problem while using this library.
