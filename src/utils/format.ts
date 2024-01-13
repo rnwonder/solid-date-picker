@@ -5,6 +5,7 @@ import {
   LocaleOptions,
   MakeOptionalRequired,
 } from "../interface/general";
+import {leadingZeros} from "./time";
 
 export const formatDateWithString = (
   dateToFormat: Date | DateObjectUnits,
@@ -153,4 +154,12 @@ const checkIfItStartsWithM = (string: string) => {
   } else {
     return string;
   }
+};
+
+export const formatHourWithLeadingZero = (hour?: number) => {
+  return hour === 0 ? 12 : hour !== undefined ? leadingZeros(hour) : "";
+};
+
+export const formatMinuteSecondWithLeadingZero = (minSec?: number) => {
+  return minSec !== undefined ? leadingZeros(minSec) : "";
 };

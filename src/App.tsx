@@ -2,8 +2,6 @@ import type { Component, Setter } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { DatePickerGroup } from "./components/DatePickerGroup";
 import { PickerValue, TimeValue } from "./interface/general";
-import { MonthSelector } from "./components/MonthSelector";
-import { YearSelector } from "./components/YearSelector";
 // import { utils } from "./utils";
 // import style from "./App.module.css";
 // import "./themes/ark-ui/ark-ui.css";
@@ -34,6 +32,11 @@ const App: Component = () => {
     value: {},
   });
 
+  const [time, setTime] = createSignal<TimeValue>({
+    value: {},
+    label: "",
+  });
+
   createEffect(() => {
     // console.log("value", value());
   });
@@ -42,48 +45,17 @@ const App: Component = () => {
     <div class={"rn-min-h-screen rn-bg-red-400"}>
       <DatePickerGroup
         value={date}
-        // type={"range"}
         setValue={setDate}
         onChange={(data) => {
           console.log(data);
         }}
-        // hideCalendar
-        // onMonthChange={(month) => {
-        //   const obj = {
-        //     ...date().value.selectedDateObject,
-        //     month: month,
-        //   };
-        //   console.log(obj);
-        //   setDate((prev) => ({
-        //     value: {
-        //       selectedDateObject: {
-        //         ...prev.value.selectedDateObject,
-        //         month: month,
-        //       },
-        //     },
-        //     label: utils().formatDate(obj, {
-        //       format: "MMM-yyyy",
-        //     }),
-        //   }));
-        // }}
-        // onYearChange={(year) => {
-        //   const obj = {
-        //     ...date().value.selectedDateObject,
-        //     year,
-        //   };
-        //   console.log(obj);
-        //   setDate((prev) => ({
-        //     value: {
-        //       selectedDateObject: {
-        //         ...prev.value.selectedDateObject,
-        //         year,
-        //       },
-        //     },
-        //     label: utils().formatDate(obj, {
-        //       format: "MMM-yyyy",
-        //     }),
-        //   }));
-        // }}
+      />
+
+      <TimeAnalogPicker
+        allowedView={["hour", "minute", "second"]}
+        shouldCloseOnSelect={true}
+        value={time}
+        setValue={setTime}
       />
     </div>
   );

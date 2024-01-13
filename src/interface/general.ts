@@ -79,7 +79,7 @@ export interface IRenderJSXProps {
     handleNextMonth: () => void;
     handlePrevMonth: () => void;
     handleDayClick: HandleDayClick;
-    setRefToAllowOutsideClick: Setter<HTMLElement | undefined>;
+    setRefToAllowOutsideClick: Setter<HTMLDivElement | undefined>;
 }
 
 export type HandleDayClick = (

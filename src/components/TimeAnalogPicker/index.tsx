@@ -9,9 +9,10 @@ import {
 import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
 import { convert12HourTo24Hour, leadingZeros } from "../../utils/time";
 import clsx from "clsx";
+import {formatHourWithLeadingZero, formatMinuteSecondWithLeadingZero} from "../../utils";
 
 interface ITimeAnalogPickerProps
-  extends Omit<ITimeAnalogGroupProps, "handleTimeChange" | "value" | "close"> {
+  extends Omit<ITimeAnalogGroupProps, "handleTimeChange" | "value" | "close" | "setIsShown"> {
   value: Accessor<TimeValue>;
   setValue: Setter<TimeValue>;
   onClose?: () => void;
@@ -32,6 +33,7 @@ interface ITimeAnalogPickerProps
 }
 const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
   const [isShown, setIsShown] = createSignal(false);
+
   const handleTimeChange = (
     time: ITimePickerFormat,
     meridiem: ITimeMeridiem
@@ -39,20 +41,12 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
     let label = "";
     let suffix = "";
 
-    const formatHour = (hour?: number) => {
-      return hour === 0 ? 12 : hour !== undefined ? leadingZeros(hour) : "";
-    };
-
-    const formatMinuteSecond = (minSec?: number) => {
-      return minSec !== undefined ? leadingZeros(minSec) : "";
-    };
-
     if (!props.allowedView) {
-      label = `${formatHour(time.hour)}:${formatMinuteSecond(time.minute)}`;
+      label = `${formatHourWithLeadingZero(time.hour)}:${formatMinuteSecondWithLeadingZero(time.minute)}`;
       suffix = meridiem;
     }
     if (props.allowedView?.includes("hour")) {
-      label = `${formatHour(time.hour)}`;
+      label = `${formatHourWithLeadingZero(time.hour)}`;
       suffix = meridiem;
 
       if (
@@ -85,14 +79,14 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
     }
 
     if (props.allowedView?.includes("minute")) {
-      label += `${formatMinuteSecond(time.minute)}`;
+      label += `${formatMinuteSecondWithLeadingZero(time.minute)}`;
       if (props.allowedView?.includes("second") && time.second) {
         label += `:`;
       }
     }
 
     if (props.allowedView?.includes("second")) {
-      label += `${formatMinuteSecond(time.second)}`;
+      label += `${formatMinuteSecondWithLeadingZero(time.second)}`;
     }
     label += ` ${suffix}`;
 
@@ -142,6 +136,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
           value={props.value().value}
           handleTimeChange={handleTimeChange}
           close={close}
+          setIsShown={setIsShown}
         />
       )}
       positionX={props.pickerPositionX}

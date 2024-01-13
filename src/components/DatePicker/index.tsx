@@ -465,7 +465,7 @@ export const DatePicker = (props: DatePickerProps) => {
   const renderCustomJSX = (renderJSX?: IRenderJSX) => {
     if (!renderJSX) return undefined;
     if (typeof renderJSX === "function") {
-      const [ref, setRef] = createSignal<HTMLElement>();
+      const [ref, setRef] = createSignal<HTMLDivElement>();
 
       createEffect(() => {
         if (!ref()) return;

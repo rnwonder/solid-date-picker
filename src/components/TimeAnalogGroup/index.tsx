@@ -1,4 +1,4 @@
-import { createSignal, JSX, onMount, Show } from "solid-js";
+import { createSignal, JSX, onMount, Setter, Show } from "solid-js";
 import clsx from "clsx";
 import { ITimePickerAnalog, TimeAnalog } from "../TimeAnalog";
 import { ITimeMeridiem, ITimeView } from "../../interface/general";
@@ -21,6 +21,8 @@ export interface ITimeAnalogGroupProps
   arrowsColor?: string;
   prevIcon?: JSX.Element;
   nextIcon?: JSX.Element;
+  setIsShown: Setter<boolean>;
+  shouldCloseOnSelect?: boolean;
 }
 export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
   const [view, setView] = createSignal<ITimeView>("hour");
@@ -34,6 +36,21 @@ export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
     if (props.allowedView) {
       setAllowedView(props.allowedView);
     }
+
+    if (
+      !props.allowedView?.includes("hour") &&
+      props.allowedView?.includes("minute")
+    ) {
+      setView("minute");
+    }
+
+    if (
+      !props.allowedView?.includes("hour") &&
+      !props.allowedView?.includes("minute") &&
+      props.allowedView?.includes("second")
+    ) {
+      setView("second");
+    }
   });
 
   const handleNext = () => {
@@ -43,6 +60,11 @@ export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
     }
     if (view() === "minute" && allowedView().includes("second")) {
       setView("second");
+      return;
+    }
+
+    if (props.shouldCloseOnSelect) {
+      props.setIsShown?.(false);
     }
   };
 
@@ -79,6 +101,7 @@ export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
       <TimeAnalogGroupTop
         {...props}
         view={view}
+        allowedView={allowedView()}
         handleNext={handleNext}
         handlePrev={handlePrev}
       />

@@ -10,8 +10,8 @@ interface DatePickerMonthAndYearSelectorProps
 export const DatePickerMonthAndYearSelector: Component<
   DatePickerMonthAndYearSelectorProps
 > = (props) => {
-  const [monthSelectorRef, setMonthSelectorRef] = createSignal<HTMLElement>();
-  const [yearSelectorRef, setYearSelectorRef] = createSignal<HTMLElement>();
+  const [monthSelectorRef, setMonthSelectorRef] = createSignal<HTMLDivElement>();
+  const [yearSelectorRef, setYearSelectorRef] = createSignal<HTMLDivElement>();
 
   createEffect(() => {
     if (!monthSelectorRef()) return;
