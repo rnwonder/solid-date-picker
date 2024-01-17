@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
+import {Accessor, createSignal, JSX, Setter, Show} from "solid-js";
 import {
   IDatePickerOnChange,
   IDatePickerType,
@@ -9,6 +9,7 @@ import {
 import { convertDateObjectToDate, labelFormat } from "../../utils";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
+import {createButtonAnimation} from "../../hooks/createButtonAnimation";
 
 export interface DatePickerInputSJProps
   extends Omit<
@@ -37,11 +38,14 @@ export interface DatePickerInputSJProps
   formatInputLabel?: string;
   formatInputLabelRangeStart?: string;
   formatInputLabelRangeEnd?: string;
+  noButtonAnimation?: boolean
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   const [isShown, setIsShown] = createSignal(false);
   const [allowedComponents, setAllowedComponents] = createSignal<any[]>([]);
+
+  createButtonAnimation(props.noButtonAnimation)
 
   const handleOnChange = (data: IDatePickerOnChange) => {
     if (data.type === "single") {

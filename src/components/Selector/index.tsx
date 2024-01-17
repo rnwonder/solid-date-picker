@@ -52,7 +52,6 @@ export const Selector = (props: SelectorProps) => {
         startDay: props.startDay,
         year: year,
         type: props.type,
-        setStartDay: props.setStartDay,
       });
       if (changeData) {
         props.onChange?.(changeData);
@@ -64,7 +63,6 @@ export const Selector = (props: SelectorProps) => {
         startDay: props.startDay,
         month: index,
         type: props.type,
-        setStartDay: props.setStartDay,
       });
       if (changeData) {
         props.onChange?.(changeData);
@@ -261,9 +259,11 @@ export const Selector = (props: SelectorProps) => {
         rn-text-[15px]
         rn-animate-none
         rn-font-bold
-        date-selector-trigger
+        
         breakTwoCalendar:rn-text-sm
-        dark:rn-text-slate-300`,
+        dark:rn-text-slate-300
+        
+        date-selector-trigger`,
           props.monthYearTriggerBtnClass
         )}
         aria-haspopup={true}

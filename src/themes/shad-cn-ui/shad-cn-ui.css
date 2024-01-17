@@ -1,0 +1,274 @@
+/**
+ * Ark-UI Datepicker theme
+ *
+ * Adapted theme based on:
+ * shadcn datepicker (https://ui.shadcn.com/docs/components/date-picker)
+ *
+ * This only styles the datepicker only and not the input field
+ &
+ * @author @rnwonder <rnwonder@gmail.com>
+ * @version 1.0
+ *
+ * @supported picker version ^0.8.7
+ *
+ */
+
+:root {
+  --shad-white: #fff;
+
+  --shad-size-1: 0.875rem;
+  --shad-size-2: 2rem;
+  --shad-size-3: 2.5rem;
+  --shad-spacing-1: 1.5rem;
+
+  --shad-background: 0 0% 100%;
+  --shad-foreground: 240 10% 3.9%;
+  --shad-card: 0 0% 100%;
+  --shad-card-foreground: 240 10% 3.9%;
+  --shad-popover: 0 0% 100%;
+  --shad-popover-foreground: 240 10% 3.9%;
+  --shad-primary: 240 5.9% 10%;
+  --shad-primary-foreground: 0 0% 98%;
+  --shad-secondary: 240 4.8% 95.9%;
+  --shad-secondary-foreground: 240 5.9% 10%;
+  --shad-muted: 240 4.8% 95.9%;
+  --shad-muted-foreground: 240 3.8% 46.1%;
+  --shad-accent: 240 4.8% 95.9%;
+  --shad-accent-foreground: 240 5.9% 10%;
+  --shad-destructive: 0 72.22% 50.59%;
+  --shad-destructive-foreground: 0 0% 98%;
+  --shad-border: 240 5.9% 90%;
+  --shad-input: 240 5.9% 90%;
+  --shad-ring: 240 5% 64.9%;
+  --shad-radius: 0.5rem;
+  --shad-weekend-color: red;
+}
+
+/*style all buttons*/
+.date-picker-main-btn {
+  height: var(--shad-size-2);
+  min-width: var(--shad-size-2);
+  text-transform: capitalize;
+  color: hsl(var(--shad-popover-foreground));
+}
+
+/*style all buttons when disabled*/
+.date-picker-main-btn:disabled,
+.dark .date-picker-main-btn:disabled {
+  background-color: transparent;
+  color: hsl(var(--shad-muted-foreground));
+}
+
+.date-picker-main-btn:disabled:hover,
+.dark .date-picker-main-btn:disabled:hover {
+  background-color: transparent;
+  color: hsl(var(--shad-muted-foreground));
+}
+
+/*style all buttons when hovered*/
+.date-picker-main-btn:hover,
+.dark .date-picker-main-btn:hover {
+  background-color: hsl(var(--shad-accent));
+}
+
+/*style arrow button*/
+.date-prev-next-btn {
+  min-width: 1.75rem;
+  height: 1.75rem;
+  background-color: transparent;
+  border-radius: calc(var(--shad-radius) - 2px);
+  border: 1px solid hsl(var(--shad-input));
+}
+
+/*style arrow buttons, month year selector trigger buttons when hovered and when not hovered*/
+.date-prev-next-btn:hover,
+.dark .date-prev-next-btn:hover {
+  border: 1px solid hsl(var(--shad-input));
+  background-color: hsl(var(--shad-accent));
+}
+
+/*styled arrow buttons svg*/
+.date-prev-next-btn > svg {
+  width: 1em;
+  height: 1em;
+  fill: hsl(var(--shad-popover-foreground));
+  opacity: 0.7;
+}
+
+.date-prev-next-btn:hover > svg {
+  opacity: 1;
+}
+
+/*style month year selector trigger buttons*/
+.date-selector-trigger {
+  font-size: var(--shad-size-1);
+  text-transform: capitalize;
+  font-weight: 500;
+  color: hsl(var(--shad-popover-foreground));
+}
+
+/*style month year selector dropdown container div*/
+.date-selector-wrapper {
+  max-height: 13rem;
+}
+
+/*style month year selector dropdown options buttons*/
+.date-selector-option,
+.dark .date-selector-option {
+  min-height: var(--shad-size-3);
+  font-weight: 400;
+  color: hsl(var(--shad-popover-foreground));
+}
+
+/*style selected/active month year selector dropdown options button when hovered and when not hovered*/
+[date-selector-option-selected="true"],
+[date-selector-option-selected="true"]:hover,
+.dark [date-selector-option-selected="true"],
+.dark [date-selector-option-selected="true"]:hover {
+  background-color: hsl(var(--shad-primary));
+  color: var(--shad-white);
+}
+
+.date-picker-calendar-days-area {
+  row-gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/*styled week day names*/
+.date-picker-weekday-name,
+.dark .date-picker-weekday-name {
+  height: var(--shad-size-2);
+  width: var(--shad-size-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: hsl(var(--shad-muted-foreground));
+  text-transform: capitalize;
+}
+
+.date-picker-calendar-row {
+  grid-template-columns: repeat(7, minmax(0, 2rem));
+}
+
+/*style day number area/container div before selector*/
+.date-picker-day-number-area::before,
+.dark .date-picker-day-number-area::before {
+  background-color: hsl(var(--shad-accent));
+}
+
+.date-picker-day-number-area {
+  height: var(--shad-size-2);
+  width: var(--shad-size-2);
+}
+
+/*style day number area/container containing outside days that are hidden*/
+.date-picker-day-number-area:empty {
+  width: 0;
+  height: 0;
+}
+
+/*style day number buttons*/
+.date-picker-day-number,
+.dark .date-picker-day-number {
+  min-height: var(--shad-size-2);
+  min-width: var(--shad-size-2);
+  border-radius: calc(var(--shad-radius) - 2px);
+
+  font-size: var(--shad-size-1);
+  font-weight: 400;
+  color: hsl(var(--shad-popover-foreground));
+}
+
+/*styled current day number button*/
+[data-day-number-current-day="true"],
+[data-day-number-current-day="true"]:hover {
+  border: none;
+  background-color: hsl(var(--shad-accent));
+}
+
+.day-number-not-current-month {
+  color: hsl(var(--shad-muted-foreground));
+  opacity: 0.5;
+}
+
+.day-number-not-current-month:hover {
+  opacity: 0.7;
+}
+
+/*styled day number buttons between selected range*/
+[data-day-number-area-range-between="true"],
+.dark [data-day-number-area-range-between="true"] {
+  background-color: hsl(var(--shad-accent));
+  color: hsl(var(--shad-muted-foreground));
+}
+
+/*styled weekend day number buttons when shouldHighlightWeekends props is true*/
+[data-highlight-weekend="true"][data-day-number-is-weekend="true"],
+.dark [data-highlight-weekend="true"][data-day-number-is-weekend="true"] {
+  color: var(--shad-weekend-color);
+}
+
+/*styled selected day number buttons when hovered and not hovered*/
+[data-day-number-selected="true"],
+[data-day-number-selected="true"]:hover,
+[data-day-number-selected="true"][data-highlight-weekend="true"],
+.dark [data-day-number-selected="true"],
+.dark [data-day-number-selected="true"]:hover,
+.dark [data-day-number-selected="true"][data-highlight-weekend="true"] {
+  background-color: hsl(var(--shad-primary));
+  color: var(--shad-white);
+}
+
+/*
+ * styled hover day number range end buttons not selected yet just hovered over.
+ * I know its confusing since data-day-number-selected="true"
+ * but again its not selected yet, its just hovered over.
+ * meaning data-day-number-selected is true when hovering over the end day of a range
+ * but data-day-number-range-end-selected is false because it hasn't actually been selected just hovered over.
+ */
+[data-day-number-range-end-selected="false"][data-day-number-selected="true"],
+.dark
+  [data-day-number-range-end-selected="false"][data-day-number-selected="true"] {
+  background-color: hsl(var(--shad-accent));
+  font-weight: 500;
+  color: hsl(var(--shad-popover-foreground));
+}
+
+[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before,
+.dark
+  [data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before {
+  color: var(--shad-white);
+}
+
+/*I believe everything else is pretty self explanatory, but if you have any questions feel free to ask here https://github.com/rnwonder/solid-date-picker/discussions/7*/
+@media (max-width: 620px) {
+  .date-picker-calendar-wrapper {
+    flex-direction: column;
+  }
+}
+
+.dark {
+  --shad-white: #000000;
+  --shad-background: 240 10% 3.9%;
+  --shad-foreground: 0 0% 98%;
+  --shad-card: 240 10% 3.9%;
+  --shad-card-foreground: 0 0% 98%;
+  --shad-popover: 240 10% 3.9%;
+  --shad-popover-foreground: 0 0% 98%;
+  --shad-primary: 0 0% 98%;
+  --shad-primary-foreground: 240 5.9% 10%;
+  --shad-secondary: 240 3.7% 15.9%;
+  --shad-secondary-foreground: 0 0% 98%;
+  --shad-muted: 240 3.7% 15.9%;
+  --shad-muted-foreground: 240 5% 64.9%;
+  --shad-accent: 240 3.7% 15.9%;
+  --shad-accent-foreground: 0 0% 98%;
+  --shad-destructive: 0 62.8% 30.6%;
+  --shad-destructive-foreground: 0 85.7% 97.3%;
+  --shad-border: 240 3.7% 15.9%;
+  --shad-input: 240 3.7% 15.9%;
+  --shad-ring: 240 4.9% 83.9%;
+}

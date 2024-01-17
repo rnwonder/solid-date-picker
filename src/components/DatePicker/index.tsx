@@ -33,7 +33,7 @@ import {
   convertDateObjectToDate,
   convertDateToDateObject,
   currentYear,
-  getDatePickerRefactoredMonth,
+  getDatePickerRefactoredMonth, getDatePickerRefactoredYear,
   getOnChangeSingleData,
   handleDateRange,
 } from "../../utils";
@@ -52,6 +52,7 @@ export interface DatePickerProps extends IColors, ClassNames {
   onChange?: (data: IDatePickerOnChange) => void;
   onYearChange?: (year: number) => void;
   onMonthChange?: (month: number) => void;
+  onValueChange?: (value: IDatePickerOnChange) => void;
 
   ref?: any;
   value?: IDatePickerInputValueTypes;
@@ -108,15 +109,15 @@ export const DatePicker = (props: DatePickerProps) => {
   const [year, setYear] = createSignal(currentYear);
   const [startDay, setStartDay] = createSignal<DateObjectUnits | undefined>();
   const [endDay, setEndDay] = createSignal<DateObjectUnits | undefined>(
-    undefined
+    undefined,
   );
   const [multipleObject, setMultipleObject] = createSignal<DateObjectUnits[]>(
-    []
+    [],
   );
   const [render, setRender] = createSignal(true);
   const [mounted, setMounted] = createSignal(false);
   const [hoverRangeValue, setHoverRangeValue] = createSignal<HoverRangeValue>(
-    {}
+    {},
   );
 
   onMount(() => {
@@ -161,13 +162,13 @@ export const DatePicker = (props: DatePickerProps) => {
       const startDate = props.value.start
         ? new Date(props.value.start)
         : props.value.startDateObject?.day
-        ? convertDateObjectToDate(props.value.startDateObject)
-        : undefined;
+          ? convertDateObjectToDate(props.value.startDateObject)
+          : undefined;
       const endDate = props.value.end
         ? new Date(props.value.end)
         : props.value.endDateObject?.day
-        ? convertDateObjectToDate(props.value.endDateObject)
-        : undefined;
+          ? convertDateObjectToDate(props.value.endDateObject)
+          : undefined;
 
       if (!startDate && !endDate) return;
       if (!startDate && endDate) {
@@ -229,10 +230,10 @@ export const DatePicker = (props: DatePickerProps) => {
       const multipleDateObject = props.value.multipleDateObject?.length
         ? props.value.multipleDateObject
         : props.value.multiple
-        ? props.value.multiple.map((date) =>
-            convertDateToDateObject(new Date(date))
-          )
-        : undefined;
+          ? props.value.multiple.map((date) =>
+              convertDateToDateObject(new Date(date)),
+            )
+          : undefined;
 
       if (!multipleDateObject) return;
       setMultipleObject(multipleDateObject);
@@ -251,6 +252,7 @@ export const DatePicker = (props: DatePickerProps) => {
   const onChange = (data: IDatePickerOnChange) => {
     props.handleOnChange(data);
     props?.onChange?.(data);
+    props.onValueChange?.(data);
   };
 
   const startingDate = () => {
@@ -299,24 +301,14 @@ export const DatePicker = (props: DatePickerProps) => {
     day: IMonthDaysObject,
     month: Accessor<number>,
     year: Accessor<number>,
-    nextMonth: boolean = false
+    nextMonth: boolean = false,
   ) => {
     if (!mounted()) {
       setMounted(true);
     }
     const initialMonth = Number(month());
-    let newMonth = initialMonth;
-    let newYear = Number(year());
-
-    if (day.month === "prev") {
-      newMonth = month() === 0 ? 11 : month() - 1;
-      newYear = month() === 0 ? year() - 1 : year();
-    }
-
-    if (day.month === "next") {
-      newMonth = month() === 11 ? 0 : month() + 1;
-      newYear = month() === 11 ? year() + 1 : year();
-    }
+    const newMonth = getDatePickerRefactoredMonth(initialMonth, day.month);
+    const newYear = getDatePickerRefactoredYear(year(), month(), day.month);
 
     if (props.type === "range") {
       const { end, start, initial } = handleDateRange({
@@ -345,7 +337,7 @@ export const DatePicker = (props: DatePickerProps) => {
       const selectedDay = new Date(
         newYear,
         getDatePickerRefactoredMonth(initialMonth, day.month),
-        day.value
+        day.value,
       );
       setStartDay(convertDateToDateObject(selectedDay));
     }
@@ -357,11 +349,11 @@ export const DatePicker = (props: DatePickerProps) => {
         day: day.value,
       };
       const findDate = multipleObject().find((date) =>
-        compareObjectDate(date, selectedDay)
+        compareObjectDate(date, selectedDay),
       );
       if (findDate) {
         const newMultipleObject = multipleObject().filter(
-          (date) => !compareObjectDate(date, findDate)
+          (date) => !compareObjectDate(date, findDate),
         );
         setMultipleObject(newMultipleObject);
         return;
@@ -385,7 +377,7 @@ export const DatePicker = (props: DatePickerProps) => {
     props.setMonth?.(newMonth);
     props.onMonthChange?.(newMonth);
 
-    if(newYear){
+    if (newYear) {
       setYear(newYear);
       props.setYear?.(newYear);
       props.onYearChange?.(newYear);
@@ -396,10 +388,9 @@ export const DatePicker = (props: DatePickerProps) => {
       month: newMonth,
       year: newYear,
       type: props.type,
-      setStartDay: setStartDay,
     });
-    changeData ? onChange(changeData) : null;
-  }
+    changeData ? props.onValueChange?.(changeData) : null;
+  };
 
   const handleNextMonth = () => {
     if ((props.month?.() || month()) === 11) {
@@ -428,7 +419,7 @@ export const DatePicker = (props: DatePickerProps) => {
   const onHoverDay = (
     day: IMonthDaysObject,
     month: Accessor<number>,
-    year: Accessor<number>
+    year: Accessor<number>,
   ) => {
     if (props.disableRangeHoverEffect) return;
     if (props.type !== "range") return;
@@ -503,27 +494,27 @@ export const DatePicker = (props: DatePickerProps) => {
   const prevButtonAreaJSX = renderCustomJSX(props.beforePrevButtonAreaJSX);
   const weekDaysJSX = renderCustomJSX(props.weekDaysJSX);
   const calendarAboveTopAreaJSX = renderCustomJSX(
-    props.calendarAboveTopAreaJSX
+    props.calendarAboveTopAreaJSX,
   );
 
   return (
     <div
       class={clsx(
         `date-picker-wrapper 
-          rn-shadow-lg 
-          rn-border-t 
-          rn-border-gray-300 
-          rn-bg-white
-          dark:rn-border-gray-700
-          dark:rn-bg-dreamless-sleep
-          rn-border-solid 
           rn-rounded-md 
-          rn-pt-[0.625rem] 
+          rn-border-t 
+          rn-border-solid 
+          rn-border-gray-300
+          rn-bg-white
           rn-pb-[0.5rem]
+          rn-pt-[0.625rem] 
+          rn-shadow-lg 
+          dark:rn-border-gray-700 
+          dark:rn-bg-dreamless-sleep
 
           ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "rn-w-max"}
           `,
-        props.datePickerWrapperClass
+        props.datePickerWrapperClass,
       )}
       data-type={"date-picker-wrapper"}
       ref={props.ref}
@@ -542,7 +533,7 @@ export const DatePicker = (props: DatePickerProps) => {
         {calendarAboveTopAreaJSX}
         {calendarTopAreaJSX || (
           <DatePickerTop
-            {...props}
+            {...{ ...props, onChange: undefined }}
             setYear={props.setYear || setYear}
             setMonth={props.setMonth || setMonth}
             month={props.month || month}
@@ -558,7 +549,7 @@ export const DatePicker = (props: DatePickerProps) => {
             monthYearSelectorFlexDirection={
               props.monthYearSelectorFlexDirection
             }
-            onChange={onChange}
+            onChange={props.onValueChange}
             startDay={startDay()}
             setStartDay={setStartDay}
             yearRange={props.yearRange}
@@ -578,8 +569,8 @@ export const DatePicker = (props: DatePickerProps) => {
 
       <div
         class={clsx(
-          "rn-flex rn-justify-center date-picker-body",
-          props.datePickerBodyAreaClass
+          "date-picker-body rn-flex rn-justify-center",
+          props.datePickerBodyAreaClass,
         )}
       >
         <Show when={calendarLeftAreaJSX} keyed>

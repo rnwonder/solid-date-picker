@@ -15,12 +15,12 @@ export const getMonthDaysArray = (
   year: number,
   option?: {
     weekStartDay?: number;
-  }
+  },
 ): IMonthDaysObject[] => {
   const firstDayOfMonth = new Date(
     year,
     month,
-    1 - (option?.weekStartDay || 0)
+    1 - (option?.weekStartDay || 0),
   );
   const startDayOfWeekIndex = firstDayOfMonth.getDay();
 
@@ -33,7 +33,7 @@ export const getMonthDaysArray = (
   const numDaysInPrevMonth = new Date(
     prevMonthYear,
     prevMonth + 1,
-    0
+    0,
   ).getDate();
 
   let prevMonthStart = numDaysInPrevMonth - startDayOfWeekIndex + 1;
@@ -52,7 +52,10 @@ export const getMonthDaysArray = (
     daysOfMonth.push({ value: i, month: "current" });
   }
 
-  const numDaysLeft = 42 - daysOfMonth.length;
+  const numDaysLeft =
+    35 - daysOfMonth.length >= 0
+      ? 35 - daysOfMonth.length
+      : 42 - daysOfMonth.length;
 
   // Next month days
   for (let i = 1; i <= numDaysLeft; i++) {
@@ -82,9 +85,10 @@ export function generateYearsArray(startYear: number, endYear: number) {
 
 const now = new Date();
 export const currentYear = now.getFullYear();
+
 export const getDatePickerRefactoredMonth = (
   month: number,
-  monthStatus: IMonthStatus
+  monthStatus: IMonthStatus,
 ) => {
   if (monthStatus === "prev") {
     return month === 0 ? 11 : month - 1;
@@ -93,6 +97,20 @@ export const getDatePickerRefactoredMonth = (
   }
   return month;
 };
+
+export const getDatePickerRefactoredYear = (
+  year: number,
+  month: number,
+  monthStatus: IMonthStatus,
+) => {
+  if (monthStatus === "prev") {
+    return month === 0 ? year - 1 : year;
+  } else if (monthStatus === "next") {
+    return month === 11 ? year + 1 : year;
+  }
+  return year;
+};
+
 export const getRefactoredPrevDate = (year: number, month: number) => {
   return {
     year: month === 0 ? year - 1 : year,
@@ -108,7 +126,7 @@ export const getRefactoredNextDate = (year: number, month: number) => {
 export const getMonthName = (
   month: number,
   format: "narrow" | "long" | "short" = "long",
-  locale?: Locale
+  locale?: Locale,
 ) => {
   const date = new Date(2000, month, 1);
   return date.toLocaleString(locale ?? "en", { month: format });
@@ -133,7 +151,7 @@ export const getOnChangeSingleData = ({
   year?: number;
   type: IDatePickerType;
   startDay?: DateObjectUnits;
-  setStartDay: Setter<DateObjectUnits | undefined>;
+  setStartDay?: Setter<DateObjectUnits | undefined>;
 }): IDatePickerOnChange | null => {
   if (type === "single") {
     const newDate = {

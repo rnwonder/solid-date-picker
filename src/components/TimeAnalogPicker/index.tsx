@@ -6,10 +6,11 @@ import {
   ITimePickerFormat,
   TimeValue,
 } from "../../interface/general";
-import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
-import { convert12HourTo24Hour, leadingZeros } from "../../utils/time";
+import {Accessor, createSignal, JSX, Setter, Show} from "solid-js";
+import { convert12HourTo24Hour } from "../../utils/time";
 import clsx from "clsx";
 import {formatHourWithLeadingZero, formatMinuteSecondWithLeadingZero} from "../../utils";
+import {createButtonAnimation} from "../../hooks/createButtonAnimation";
 
 interface ITimeAnalogPickerProps
   extends Omit<ITimeAnalogGroupProps, "handleTimeChange" | "value" | "close" | "setIsShown"> {
@@ -30,9 +31,12 @@ interface ITimeAnalogPickerProps
   inputProps?: JSX.InputHTMLAttributes<HTMLInputElement>;
   inputWrapperWidth?: JSX.CSSProperties["width"];
   zIndex?: number;
+  noButtonAnimation?: boolean
 }
 const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
   const [isShown, setIsShown] = createSignal(false);
+
+  createButtonAnimation(props.noButtonAnimation)
 
   const handleTimeChange = (
     time: ITimePickerFormat,

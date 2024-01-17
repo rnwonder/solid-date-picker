@@ -1,4 +1,4 @@
-import { Component, JSX } from "solid-js";
+import {Component, createSignal, JSX} from "solid-js";
 import clsx from "clsx";
 
 interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
@@ -8,6 +8,8 @@ interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
   style?: JSX.CSSProperties;
   selected?: boolean;
 }
+
+export const [showAnimation, setShowAnimation] = createSignal(true)
 
 export const Button: Component<ButtonProps> = (props) => {
   return (
@@ -23,7 +25,11 @@ export const Button: Component<ButtonProps> = (props) => {
         rn-min-h-0 
         date-picker-main-btn
         motion-reduce:rn-transition-none
+       
         `,
+          {
+              'rn-no-animation': !showAnimation()
+          },
         props.class
       )}
       data-type={"date-picker-main-btn"}

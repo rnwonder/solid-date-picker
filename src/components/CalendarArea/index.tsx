@@ -31,7 +31,7 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
   });
   return (
     <div
-      class={clsx("date-picker-calendar-wrapper rn-flex breakTwoCalendar:rn-flex-col", props.calendarWrapperClass)}
+      class={clsx("date-picker-calendar-wrapper rn-flex breakTwoCalendar:rn-flex-col rn-min-w-max", props.calendarWrapperClass)}
     >
       <div
         class={clsx(

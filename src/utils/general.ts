@@ -1,9 +1,18 @@
-import type {Accessor} from "solid-js";
-import type {DateObjectUnits, IMonthDaysObject, IMonthStatus, MakeOptionalRequired,} from "../interface/general";
-import {DateArray,} from "../interface/general";
-import {convertDateObjectToDate} from "./format";
+import type { Accessor } from "solid-js";
+import type {
+  DateObjectUnits,
+  IMonthDaysObject,
+  IMonthStatus,
+  MakeOptionalRequired,
+} from "../interface/general";
+import { DateArray } from "../interface/general";
+import { convertDateObjectToDate } from "./format";
 
-import {getDatePickerRefactoredMonth, getToday} from "./generate";
+import {
+  getDatePickerRefactoredMonth,
+  getDatePickerRefactoredYear,
+  getToday,
+} from "./generate";
 
 export const isDayInBetweenRange = ({
   day,
@@ -22,9 +31,9 @@ export const isDayInBetweenRange = ({
 }) => {
   if (!startDate || !endDate) return false;
   const date = new Date(
-    year,
+    getDatePickerRefactoredYear(year, month, monthStatus),
     getDatePickerRefactoredMonth(month, monthStatus),
-    day
+    day,
   );
   const start = new Date(startDate.year!, startDate.month!, startDate.day);
   const end = new Date(endDate.year!, endDate.month!, endDate.day);
@@ -48,16 +57,16 @@ export const isDayTipRange = ({
 }) => {
   if (!dateRange) return false;
   const date = new Date(
-    year,
+    getDatePickerRefactoredYear(year, month, monthStatus),
     getDatePickerRefactoredMonth(month, monthStatus),
-    day
+    day,
   );
   const start = new Date(dateRange.year!, dateRange.month!, dateRange.day);
   return date.getTime() === start.getTime();
 };
 
 export const checkIfItsTodayDate = (
-  date: Date | MakeOptionalRequired<DateObjectUnits>
+  date: Date | MakeOptionalRequired<DateObjectUnits>,
 ) => {
   const today = getToday();
 
@@ -91,9 +100,9 @@ export const isMinMaxDate = ({
   if (!minDate && !maxDate) return false;
 
   const date = new Date(
-    year(),
+    getDatePickerRefactoredYear(year(), month(), day.month),
     getDatePickerRefactoredMonth(month(), day.month),
-    day.value
+    day.value,
   );
 
   if (minDate && maxDate) {
@@ -129,14 +138,14 @@ export const isPartOfDisabledDays = ({
       const targetDate = convertDateObjectToDate({
         day: day.value,
         month: getDatePickerRefactoredMonth(month, day.month),
-        year,
+        year: getDatePickerRefactoredYear(year, month, day.month),
       });
       return targetDate >= startDate && targetDate <= endDate;
     } else {
       return (
         data.day === day.value &&
         data.month === getDatePickerRefactoredMonth(month, day.month) &&
-        data.year === year
+        data.year === getDatePickerRefactoredYear(year, month, day.month)
       );
     }
   });
@@ -165,7 +174,7 @@ export const isNotPartOfEnabledDays = ({
       ? {
           day: day.value,
           month: getDatePickerRefactoredMonth(month, day.month),
-          year,
+          year: getDatePickerRefactoredYear(year, month, day.month),
         }
       : {
           year,
@@ -208,7 +217,7 @@ function isDateWithinRange(
   option?: {
     next?: boolean;
     prev?: boolean;
-  }
+  },
 ): boolean {
   if (option?.next) {
     return (
@@ -266,7 +275,7 @@ function isDateWithinRange(
 export const isDateRangeDisabled = (
   startDate: Date,
   endDate: Date,
-  disabledDays?: DateArray[]
+  disabledDays?: DateArray[],
 ): boolean => {
   for (
     let date = new Date(startDate);
@@ -294,7 +303,7 @@ export const isDateRangeDisabled = (
 export const isDateRangeEnabled = (
   startDate: Date,
   endDate: Date,
-  enabledDays?: DateArray[]
+  enabledDays?: DateArray[],
 ) => {
   for (
     let date = new Date(startDate);
@@ -331,7 +340,8 @@ export const isWeekendStatus = ({
   isSunday: boolean;
 } => {
   const refactorMonth = getDatePickerRefactoredMonth(month, day.month);
-  const date = new Date(year, refactorMonth, day.value);
+  const refactorYear = getDatePickerRefactoredYear(year, month, day.month);
+  const date = new Date(refactorYear, refactorMonth, day.value);
   const dayOfWeek = date.getDay();
 
   return {
@@ -343,7 +353,7 @@ export const isWeekendStatus = ({
 
 export const compareObjectDate = (
   first: DateObjectUnits,
-  second: DateObjectUnits
+  second: DateObjectUnits,
 ) => {
   return (
     first.day === second.day &&
@@ -354,7 +364,7 @@ export const compareObjectDate = (
 
 export const isBeforeDate = (
   first: MakeOptionalRequired<DateObjectUnits> | Date,
-  second: MakeOptionalRequired<DateObjectUnits> | Date
+  second: MakeOptionalRequired<DateObjectUnits> | Date,
 ) => {
   const firstDate =
     first instanceof Date ? first : convertDateObjectToDate(first);

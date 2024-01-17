@@ -4,7 +4,10 @@ import {
   IMonthDaysObject,
 } from "../interface/general";
 import { Accessor } from "solid-js";
-import { getDatePickerRefactoredMonth } from "./generate";
+import {
+  getDatePickerRefactoredMonth,
+  getDatePickerRefactoredYear,
+} from "./generate";
 import { convertDateToDateObject } from "./format";
 import { isDateRangeDisabled, isDateRangeEnabled } from "./general";
 
@@ -39,7 +42,7 @@ export const handleDateRange = ({
     !hoverEndDay
   ) {
     const dateObject = {
-      year: year(),
+      year: getDatePickerRefactoredYear(year(), month(), day.month),
       month: getDatePickerRefactoredMonth(month(), day.month),
       day: day.value,
     };
@@ -53,12 +56,12 @@ export const handleDateRange = ({
     const startDayDate = new Date(
       startDay?.year!,
       startDay?.month!,
-      startDay?.day
+      startDay?.day,
     );
     const endDayDate = new Date(
-      year(),
+      getDatePickerRefactoredYear(year(), month(), day.month),
       getDatePickerRefactoredMonth(month(), day.month),
-      day.value
+      day.value,
     );
 
     if (startDayDate.getTime() === endDayDate.getTime()) {

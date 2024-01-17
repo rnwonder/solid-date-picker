@@ -8,7 +8,7 @@ import {
   MakeOptionalRequired,
 } from "../interface/general";
 import { Accessor } from "solid-js";
-import { getDatePickerRefactoredMonth } from "./generate";
+import {getDatePickerRefactoredMonth, getDatePickerRefactoredYear} from "./generate";
 import {
   checkIfItsTodayDate,
   compareObjectDate,
@@ -103,7 +103,7 @@ export const applyDateRangeProps = ({
     daysCurrent:
       checkIfItsTodayDate(
         new Date(
-          year(),
+          getDatePickerRefactoredYear(year(), month(), day.month),
           getDatePickerRefactoredMonth(month(), day.month),
           day.value
         )
@@ -116,13 +116,13 @@ export const applyDateRangeProps = ({
     }),
     customDayClass: customDaysClassName?.find(
       (customDay) =>
-        customDay.year === year() &&
+        customDay.year === getDatePickerRefactoredYear(year(), month(), day.month) &&
         customDay.month === getDatePickerRefactoredMonth(month(), day.month) &&
         customDay.day === day.value
     )?.className,
     isMultipleSelected: !!multipleObject?.find(
       (multiple) =>
-        multiple.year === year() &&
+        multiple.year === getDatePickerRefactoredYear(year(), month(), day.month) &&
         multiple.month === getDatePickerRefactoredMonth(month(), day.month) &&
         multiple.day === day.value
     ),
@@ -164,14 +164,14 @@ const checkHoverEnd = (
   if (!startDay?.day) return false;
   if (isBeforeDate(hoverRangeValue().start as any, startDay as any)) {
     return compareObjectDate(hoverRangeValue().start!, {
-      year: year(),
+      year: getDatePickerRefactoredYear(year(), month(), day.month),
       month: getDatePickerRefactoredMonth(month(), day.month),
       day: day.value,
     });
   }
   if (isBeforeDate(startDay as any, hoverRangeValue().end as any)) {
     return compareObjectDate(hoverRangeValue().end!, {
-      year: year(),
+      year: getDatePickerRefactoredYear(year(), month(), day.month),
       month: getDatePickerRefactoredMonth(month(), day.month),
       day: day.value,
     });

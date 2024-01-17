@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "0.8.7",
+  "version": "0.9.0",
   "description": "",
   "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
@@ -67,6 +67,8 @@
     "daisyui": "^4.6.0",
     "postcss": "^8.4.33",
     "postcss-cli": "^10.1.0",
+    "prettier": "^3.2.2",
+    "prettier-plugin-tailwindcss": "^0.5.11",
     "rollup": "^4.9.5",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-visualizer": "^5.12.0",

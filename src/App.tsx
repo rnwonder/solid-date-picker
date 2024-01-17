@@ -5,6 +5,7 @@ import { PickerValue, TimeValue } from "./interface/general";
 // import { utils } from "./utils";
 // import style from "./App.module.css";
 // import "./themes/ark-ui/ark-ui.css";
+import "./themes/shad-cn-ui/shad-cn-ui.css";
 import { utils } from "./utils";
 import { DateMath } from "./index";
 import TimeAnalogPicker from "./components/TimeAnalogPicker";
@@ -46,9 +47,14 @@ const App: Component = () => {
       <DatePickerGroup
         value={date}
         setValue={setDate}
+        onValueChange={(data) => {
+          console.log("onValueChange", data);
+        }}
         onChange={(data) => {
           console.log(data);
         }}
+        weekDaysType="double"
+        monthSelectorFormat={"long"}
       />
 
       <TimeAnalogPicker
@@ -101,7 +107,7 @@ const CustomInput = (props: {
         new Date(props.value.value.selected as string),
         {
           format: "yyyy-mm-dd",
-        }
+        },
       )}
       onBlur={handleOnChange}
     />
