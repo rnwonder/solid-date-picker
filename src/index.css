@@ -3,20 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --before-bg: #aad1e9;
-  --before-color: #0277bd;
-  --hover-color: #d2d4d7;
+  --date-picker-before-bg: #aad1e9;
+  --date-picker-before-color: #0277bd;
+  --date-picker-hover-color: #d2d4d7;
 }
 
 .date-picker-day-number-area::before {
-  background-color: var(--before-bg);
-  color: var(--before-color);
+  background-color: var(--date-picker-before-bg);
+  color: var(--date-picker-before-color);
 }
 
 .date-picker-main-btn:hover {
-  background-color: var(--hover-color);
+  background-color: var(--date-picker-hover-color);
 }
 
-.dark {
-  --before-bg: #335a72;
+.dark,
+[data-theme="dark"] {
+  --date-picker-before-bg: #335a72;
 }

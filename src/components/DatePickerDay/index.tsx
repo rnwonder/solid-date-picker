@@ -63,14 +63,14 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
     if (!ref()) return;
     if (props.secondaryColor) {
       document.documentElement.style.setProperty(
-        "--before-bg",
+        "--date-picker-before-bg",
         props.secondaryColor
       );
     }
 
     if (props.secondaryTextColor) {
       document.documentElement.style.setProperty(
-        "--before-color",
+        "--date-picker-before-color",
         props.secondaryTextColor
       );
     }

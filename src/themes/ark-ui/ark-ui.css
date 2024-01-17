@@ -7,9 +7,9 @@
  * This only styles the datepicker only and not the input field
  &
  * @author @rnwonder <rnwonder@gmail.com>
- * @version 1.6.1
+ * @version 1.6.3
  *
- * @supported picker version ^0.6.8
+ * @supported picker version ^0.9.4
  *
  */
 
@@ -210,7 +210,8 @@
   }
 }
 
-.dark {
+.dark,
+[data-theme="dark"] {
   --ark-colors-bg-subtle: #343434;
   --ark-colors-fg-emphasized: #e1e1e1;
   --ark-colors-fg-default: #e8e8e8;
