@@ -55,6 +55,10 @@ const App: Component = () => {
         }}
         weekDaysType="double"
         monthSelectorFormat={"long"}
+        calendarLeftAreaJSX={(props) => <div>Left</div>}
+        calendarRightAreaJSX={(props) => <div>Right</div>}
+        calendarBottomAreaJSX={(props) => <div>Bottom</div>}
+        pickerPositionX={'right'}
       />
 
       <TimeAnalogPicker
