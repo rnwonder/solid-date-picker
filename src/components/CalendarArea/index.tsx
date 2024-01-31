@@ -7,10 +7,18 @@ import {
 } from "solid-js";
 import { CalendarDays, CalendarDaysProps } from "../CalendarDays";
 import { WeekDays } from "../WeekDays";
-import { Locale, WeekDaysType } from "../../interface/general";
-import clsx from "clsx";
+import { ClassNames, Locale, WeekDaysType } from "../../interface/general";
+import {cn} from "../../utils/class";
 
-interface CalendarAreaProps extends CalendarDaysProps {
+interface CalendarAreaProps
+  extends CalendarDaysProps,
+    Pick<
+      ClassNames,
+      | "calendarWrapperClass"
+      | "calendarDividerClass"
+      | "calendarOneAreaClass"
+      | "calendarTwoAreaClass"
+    > {
   locale?: Locale;
   weekDaysJSX?: JSXElement;
   weekDaysType?: WeekDaysType;
@@ -31,17 +39,20 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
   });
   return (
     <div
-      class={clsx("date-picker-calendar-wrapper rn-flex breakTwoCalendar:rn-flex-col rn-min-w-max", props.calendarWrapperClass)}
+      class={cn(
+        "date-picker-calendar-wrapper rn-flex rn-min-w-max breakTwoCalendar:rn-flex-col",
+        props.calendarWrapperClass,
+      )}
     >
       <div
-        class={clsx(
-            'date-picker-calendar-area-one',
+        class={cn(
+          "date-picker-calendar-area-one",
           {
             "rn-px-4": !props.twoMonthsDisplay,
-            "aboveBreakTwoCalendar:rn-pl-4 breakTwoCalendar:rn-px-4":
+            "breakTwoCalendar:rn-px-4 aboveBreakTwoCalendar:rn-pl-4":
               props.twoMonthsDisplay,
           },
-          props.calendarOneAreaClass
+          props.calendarOneAreaClass,
         )}
         data-scope={"date-picker"}
         data-part={"grid"}
@@ -64,19 +75,19 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
 
       <Show when={props.twoMonthsDisplay} keyed>
         <div
-          class={clsx(
+          class={cn(
             "date-picker-calendar-area-divider rn-divider aboveBreakTwoCalendar:rn-divider-horizontal aboveBreakTwoCalendar:rn-mx-2 aboveBreakTwoCalendar:rn-w-fit ",
-            props.calendarDividerClass
+            props.calendarDividerClass,
           )}
         ></div>
         <div
-          class={clsx(
-              'date-picker-calendar-area-two',
+          class={cn(
+            "date-picker-calendar-area-two",
             {
-              "aboveBreakTwoCalendar:rn-pr-4 breakTwoCalendar:rn-px-4":
+              "breakTwoCalendar:rn-px-4 aboveBreakTwoCalendar:rn-pr-4":
                 props.twoMonthsDisplay,
             },
-            props.calendarTwoAreaClass
+            props.calendarTwoAreaClass,
           )}
         >
           {props.weekDaysJSX || (

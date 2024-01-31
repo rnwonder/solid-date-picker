@@ -1,7 +1,7 @@
 import { Accessor, Setter } from "solid-js";
-import clsx from "clsx";
 import { Button } from "../Button";
 import { ITimeMeridiem, TimeAnalogClassNames } from "../../interface/general";
+import {cn} from "../../utils/class";
 
 interface ITimeAnalogBottomProps extends TimeAnalogClassNames {
     meridiem: Accessor<ITimeMeridiem>;
@@ -10,7 +10,7 @@ interface ITimeAnalogBottomProps extends TimeAnalogClassNames {
 export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
     return (
         <div
-            class={clsx(
+            class={cn(
                 `
                 time-picker-analog-bottom
                 rn-flex
@@ -20,7 +20,7 @@ export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
             )}
         >
             <Button
-                class={clsx(
+                class={cn(
                     `
                     time-picker-meridiem-btn
                     rn-w-[2.3rem]
@@ -43,7 +43,7 @@ export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
             </Button>
 
             <Button
-                class={clsx(
+                class={cn(
                     `
                         time-picker-meridiem-btn
                         rn-w-[2.3rem]

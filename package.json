@@ -2,14 +2,75 @@
   "name": "@rnwonder/solid-date-picker",
   "version": "0.9.4",
   "description": "",
-  "main": "./dist/index.es.js",
-  "module": "./dist/index.es.js",
   "type": "module",
-  "types": "./types/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./types/index.d.ts",
-      "default": "./dist/index.es.js"
+      "default": "./dist/index.js"
+    },
+    "./timePicker": {
+      "default": "./dist/timePicker.js"
+    },
+    "./rnPortal": {
+      "default": "./dist/rnPortal.js"
+    },
+    "./monthSelector": {
+      "default": "./dist/monthSelector.js"
+    },
+    "./dateMath": {
+      "default": "./dist/dateMath.js"
+    },
+    "./calendarArea": {
+      "default": "./dist/calendarArea.js"
+    },
+    "./popover": {
+      "default": "./dist/popover.js"
+    },
+    "./yearSelector": {
+      "default": "./dist/yearSelector.js"
+    },
+    "./datePickerStandAlone": {
+      "default": "./dist/datePickerStandAlone.js"
+    },
+    "./utilities": {
+      "default": "./dist/utilities.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "typesVersions": {
+    "*": {
+      "index": [
+        "./dist/index.d.ts"
+      ],
+      "timePicker": [
+        "./dist/timePicker.d.ts"
+      ],
+      "rnPortal": [
+        "./dist/rnPortal.d.ts"
+      ],
+      "monthSelector": [
+        "./dist/monthSelector.d.ts"
+      ],
+      "dateMath": [
+        "./dist/dateMath.d.ts"
+      ],
+      "calendarArea": [
+        "./dist/calendarArea.d.ts"
+      ],
+      "popover": [
+        "./dist/popover.d.ts"
+      ],
+      "yearSelector": [
+        "./dist/yearSelector.d.ts"
+      ],
+      "datePickerStandAlone": [
+        "./dist/datePickerStandAlone.d.ts"
+      ],
+      "utilities": [
+        "./dist/utilities.d.ts"
+      ]
     }
   },
   "keywords": [
@@ -74,6 +135,7 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "rollup-preset-solid": "^2.0.1",
     "sass": "^1.69.7",
+    "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^4.9.5",
     "vite": "^5.0.11",
@@ -98,6 +160,5 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "browser": {},
-  "typesVersions": {}
+  "browser": {}
 }

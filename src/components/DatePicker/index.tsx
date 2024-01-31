@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import {
   Accessor,
   createEffect,
@@ -39,6 +38,7 @@ import {
 } from "../../utils";
 import { CalendarArea } from "../CalendarArea";
 import { DatePickerTop } from "../DatePickerTop";
+import {cn} from "../../utils/class";
 
 export interface DatePickerProps extends IColors, ClassNames {
   type: IDatePickerType;
@@ -499,7 +499,7 @@ export const DatePicker = (props: DatePickerProps) => {
 
   return (
     <div
-      class={clsx(
+      class={cn(
         `date-picker-wrapper 
           rn-rounded-md 
           rn-border-t 
@@ -568,7 +568,7 @@ export const DatePicker = (props: DatePickerProps) => {
       </Show>
 
       <div
-        class={clsx(
+        class={cn(
           "date-picker-body rn-flex rn-justify-center",
           props.datePickerBodyAreaClass,
         )}

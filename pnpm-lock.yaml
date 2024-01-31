@@ -55,6 +55,9 @@ devDependencies:
   sass:
     specifier: ^1.69.7
     version: 1.69.7
+  tailwind-merge:
+    specifier: ^2.2.1
+    version: 2.2.1
   tailwindcss:
     specifier: ^3.4.1
     version: 3.4.1
@@ -4639,6 +4642,12 @@ packages:
       csso: 4.2.0
       picocolors: 1.0.0
       stable: 0.1.8
+    dev: true
+
+  /tailwind-merge@2.2.1:
+    resolution: {integrity: sha512-o+2GTLkthfa5YUt4JxPfzMIpQzZ3adD1vLVkvKE1Twl9UAhGsEbIZhHHZVRttyW177S8PDJI3bTQNaebyofK3Q==}
+    dependencies:
+      '@babel/runtime': 7.23.8
     dev: true
 
   /tailwindcss@3.4.1:

@@ -1,9 +1,9 @@
 import { createSignal, JSX, onMount, Setter, Show } from "solid-js";
-import clsx from "clsx";
 import { ITimePickerAnalog, TimeAnalog } from "../TimeAnalog";
 import { ITimeMeridiem, ITimeView } from "../../interface/general";
 import { TimeAnalogGroupTop } from "../TimeAnalogGroupTop";
 import { TimeAnalogBottom } from "../TimeAnalogBottom";
+import {cn} from "../../utils/class";
 
 export interface ITimeAnalogGroupProps
   extends Omit<
@@ -80,7 +80,7 @@ export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
 
   return (
     <div
-      class={clsx(
+      class={cn(
         ` 
           time-picker-wrapper 
           rn-shadow-lg 

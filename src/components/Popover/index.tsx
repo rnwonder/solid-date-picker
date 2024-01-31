@@ -9,7 +9,7 @@ import {
 } from "solid-js";
 import { CustomPortal } from "../CustomPortal";
 import { upgradedSmartDropDown } from "../../utils";
-import clsx from "clsx";
+import { cn } from "../../utils/class";
 
 export type IPopOverSJContentPropType =
   | JSX.Element
@@ -158,7 +158,7 @@ export const Popover = (props: PopoverProps) => {
         style={{
           ...(props.width && { width: props.width || "100%" }),
         }}
-        class={clsx("rn-w-full", props.className)}
+        class={cn(props.className)}
         ref={setElementRef}
         onClick={handleElementClick}
       >
@@ -188,31 +188,31 @@ export const Popover = (props: PopoverProps) => {
           class={`
             ${
               delayShown()
-                ? `rn-opacity-100 rn-translate-y-[0rem]`
-                : `rn-opacity-0 -rn-translate-y-[1rem]`
+                ? `rn-translate-y-[0rem] rn-opacity-100`
+                : `-rn-translate-y-[1rem] rn-opacity-0`
             }
             rn-duration-350 
-            rn-ease-in-out
             rn-delay-50
             rn-transition-transform
+            rn-ease-in-out
             motion-reduce:rn-transition-none
         `}
           ref={setPopoverRef}
         >
           <div
-            class={clsx(
+            class={cn(
               `
             ${
               delayShown()
-                ? `rn-opacity-100 scale-100`
-                : `rn-opacity-0 scale-90`
+                ? `scale-100 rn-opacity-100`
+                : `scale-90 rn-opacity-0`
             }
             rn-duration-350 
-            rn-ease-in-out
             rn-transition-opacity
+            rn-ease-in-out
             motion-reduce:rn-transition-none
         `,
-              props.contentClassName
+              props.contentClassName,
             )}
           >
             {renderContent()}

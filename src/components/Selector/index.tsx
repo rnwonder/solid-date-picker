@@ -1,23 +1,22 @@
 import { Accessor, createSignal, For, Setter } from "solid-js";
-import clsx from "clsx";
 import { Popover } from "../Popover";
 import { Button } from "../Button";
 import {
   DateObjectUnits,
   DateArray,
-  IColors,
   MakeOptionalRequired,
-  ClassNames,
   IDatePickerOnChange,
   IDatePickerType,
+  SelectorColorsAndClassNames,
 } from "../../interface/general";
 import {
   getMonthName,
   getOnChangeSingleData,
   isNotPartOfEnabledDays,
 } from "../../utils";
+import { cn } from "../../utils/class";
 
-interface SelectorProps extends IColors, ClassNames {
+export interface SelectorProps extends SelectorColorsAndClassNames {
   option: Accessor<number>;
   setOption: Setter<number>;
   optionsArray: string[];
@@ -35,9 +34,8 @@ interface SelectorProps extends IColors, ClassNames {
   onYearChange?: (year: number) => void;
   onMonthChange?: (month: number) => void;
   onChange?: (data: IDatePickerOnChange) => void;
-  type: IDatePickerType;
+  type?: IDatePickerType;
   startDay?: DateObjectUnits;
-  setStartDay: Setter<DateObjectUnits | undefined>;
   twoMonthsDisplay?: boolean;
 }
 
@@ -51,7 +49,7 @@ export const Selector = (props: SelectorProps) => {
       const changeData = getOnChangeSingleData({
         startDay: props.startDay,
         year: year,
-        type: props.type,
+        type: props.type || "single",
       });
       if (changeData) {
         props.onChange?.(changeData);
@@ -62,7 +60,7 @@ export const Selector = (props: SelectorProps) => {
       const changeData = getOnChangeSingleData({
         startDay: props.startDay,
         month: index,
-        type: props.type,
+        type: props.type || "single",
       });
       if (changeData) {
         props.onChange?.(changeData);
@@ -127,10 +125,11 @@ export const Selector = (props: SelectorProps) => {
   return (
     <Popover
       zIndex={props.zIndex}
+      className={cn("rn-w-fit", props.monthYearTriggerBtnWrapperClass)}
       onOpen={() => {
         setOpen(true);
         const selectedOption = document.querySelector(
-          "[date-selector-option-selected=true]"
+          "[date-selector-option-selected=true]",
         );
         selectedOption?.scrollIntoView({
           block: "center",
@@ -140,13 +139,13 @@ export const Selector = (props: SelectorProps) => {
       onClose={() => setOpen(false)}
       content={({ close }) => (
         <div
-          class={clsx(
+          class={cn(
             `
             date-selector-wrapper
-            rn-bg-white
-            rn-rounded-lg
-            rn-drop-shadow-lg
             rn-grid
+            rn-rounded-lg
+            rn-bg-white
+            rn-drop-shadow-lg
             ${
               props.gridTemplateColumnsNo
                 ? props.gridTemplateColumnsNo === "3"
@@ -154,14 +153,14 @@ export const Selector = (props: SelectorProps) => {
                   : `rn-grid-cols-4`
                 : "rn-grid-cols-4"
             }
-            rn-gap-2
-            rn-p-2
             rn-max-h-[10.625rem]
             rn-max-w-[25rem]
+            rn-gap-2
             rn-overflow-y-auto
+            rn-p-2
             dark:rn-bg-eerie-black
           `,
-            props.monthYearSelectorWrapperClass
+            props.monthYearSelectorWrapperClass,
           )}
           ref={props.ref}
           data-part={"grid"}
@@ -184,18 +183,18 @@ export const Selector = (props: SelectorProps) => {
           <For each={props.optionsArray}>
             {(value, index) => (
               <Button
-                class={clsx(
+                class={cn(
                   `
                   date-selector-option
                   rn-px-[5px] 
-                  rn-text-black 
-                  dark:rn-text-slate-300
-                  rn-text-sm
-                  smallMobile:rn-text-[12px]
+                  rn-text-sm 
+                  rn-text-black
                   disabled:rn-opacity-40
+                  dark:rn-text-slate-300
+                  smallMobile:rn-text-[12px]
                   ${
                     isSelected(value, index)
-                      ? "rn-bg-primary rn-text-white dark:rn-text-white hover:rn-bg-primary dark:hover:rn-bg-primary hover:rn-text-white rn-selector-option-selected"
+                      ? "rn-selector-option-selected rn-bg-primary rn-text-white hover:rn-bg-primary hover:rn-text-white dark:rn-text-white dark:hover:rn-bg-primary"
                       : ""
                   }
 
@@ -205,9 +204,9 @@ export const Selector = (props: SelectorProps) => {
                   {
                     [props.monthYearOptionBtnActiveClass || ""]: isSelected(
                       value,
-                      index
+                      index,
                     ),
-                  }
+                  },
                 )}
                 style={{
                   ...(isSelected(value, index)
@@ -252,19 +251,19 @@ export const Selector = (props: SelectorProps) => {
       )}
     >
       <Button
-        class={clsx(
+        class={cn(
           `
-        rn-p-[5px]
-        rn-text-black
-        rn-text-[15px]
+        date-selector-trigger
         rn-animate-none
+        rn-p-[5px]
+        rn-text-[15px]
         rn-font-bold
         
-        breakTwoCalendar:rn-text-sm
+        rn-text-black
         dark:rn-text-slate-300
         
-        date-selector-trigger`,
-          props.monthYearTriggerBtnClass
+        breakTwoCalendar:rn-text-sm`,
+          props.monthYearTriggerBtnClass,
         )}
         aria-haspopup={true}
         aria-label={props.useValueAsName ? "Select a year" : "Select a month"}
@@ -279,12 +278,12 @@ export const Selector = (props: SelectorProps) => {
         {props.useValueAsName
           ? props.option()
           : props.twoMonthsDisplay
-          ? `${props.optionsArray[props.option()]} - ${
-              props.option() === 11
-                ? props.optionsArray[0]
-                : props.optionsArray[props.option() + 1]
-            }`
-          : props.optionsArray[props.option()]}
+            ? `${props.optionsArray[props.option()]} - ${
+                props.option() === 11
+                  ? props.optionsArray[0]
+                  : props.optionsArray[props.option() + 1]
+              }`
+            : props.optionsArray[props.option()]}
       </Button>
     </Popover>
   );

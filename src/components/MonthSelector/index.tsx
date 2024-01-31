@@ -1,20 +1,19 @@
 import { Accessor, createSignal, onMount, Setter } from "solid-js";
 import {
-  ClassNames,
   DateObjectUnits,
-  IColors,
   IDatePickerType,
   IMonthSelectorType,
   Locale,
   MakeOptionalRequired,
+  SelectorColorsAndClassNames,
 } from "../../interface/general";
 import { Selector } from "../Selector";
 
-interface MonthSelectorProps extends IColors, ClassNames {
+export interface MonthSelectorProps extends SelectorColorsAndClassNames {
   month: Accessor<number>;
   setMonth: Setter<number>;
   ref?: Setter<HTMLDivElement | undefined>;
-  type: IDatePickerType;
+  type?: IDatePickerType;
   monthSelectorType?: IMonthSelectorType;
   zIndex?: number;
   locale?: Locale;
@@ -24,7 +23,6 @@ interface MonthSelectorProps extends IColors, ClassNames {
   twoMonthsDisplay?: boolean;
   onMonthChange?: (month: number) => void;
   startDay?: DateObjectUnits;
-  setStartDay: Setter<DateObjectUnits | undefined>;
 }
 export const MonthSelector = (props: MonthSelectorProps) => {
   const [monthArray, setMonthArray] = createSignal<string[]>([]);
@@ -53,8 +51,6 @@ export const MonthSelector = (props: MonthSelectorProps) => {
       zIndex={props.zIndex}
       primaryColor={props.primaryColor}
       primaryTextColor={props.primaryTextColor}
-      secondaryColor={props.secondaryColor}
-      secondaryTextColor={props.secondaryTextColor}
       twoMonthsDisplay={props.twoMonthsDisplay}
     />
   );

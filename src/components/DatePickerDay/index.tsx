@@ -5,22 +5,19 @@ import {
   createEffect,
   createSignal,
   Accessor,
-  JSX,
 } from "solid-js";
 import { Button } from "../Button";
-import clsx from "clsx";
 import {
   ApplyDateRange,
-  ClassNames,
   DateArray,
+  DatePickerDayClassNamesAndColors,
   HoverRangeValue,
-  IColors,
 } from "../../interface/general";
+import {cn} from "../../utils/class";
 
 interface DatePickerDayProps
-  extends IColors,
-    Partial<ApplyDateRange>,
-    ClassNames {
+  extends DatePickerDayClassNamesAndColors,
+    Partial<ApplyDateRange> {
   header?: boolean;
   children?: JSXElement;
   onClick?: () => void;
@@ -64,14 +61,14 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
     if (props.secondaryColor) {
       document.documentElement.style.setProperty(
         "--date-picker-before-bg",
-        props.secondaryColor
+        props.secondaryColor,
       );
     }
 
     if (props.secondaryTextColor) {
       document.documentElement.style.setProperty(
         "--date-picker-before-color",
-        props.secondaryTextColor
+        props.secondaryTextColor,
       );
     }
   });
@@ -79,42 +76,42 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
   return (
     <div
       ref={setref}
-      class={clsx(
+      class={cn(
         `
         ${
           props.header
             ? `
             date-picker-weekday-name
-            rn-text-[0.75rem]
-            rn-block`
+            rn-block
+            rn-text-[0.75rem]`
             : `
               date-picker-day-number-area
               rn-flex
-              rn-justify-center
               rn-items-center
+              rn-justify-center
               rn-text-[0.9375rem]
             `
         }
-        rn-font-bold
-        
-        rn-text-[#909090]
-        rn-tracking-[0.02em]
-        rn-text-center
-        rn-uppercase
         rn-relative
+        
+        rn-text-center
+        rn-font-bold
+        rn-uppercase
+        rn-tracking-[0.02em]
+        rn-text-[#909090]
         dark:rn-text-slate-300
-        ${props.hidden && "rn-pointer-events-none day-number-area-outside-days"}
+        ${props.hidden && "day-number-area-outside-days rn-pointer-events-none"}
         ${
           props.dayRangeBetween && !props.hidden
             ? `rn-bg-[#56A4D3] rn-bg-opacity-50`
             : ""
         }
-        before:rn-content-[""]
         before:rn-absolute
         before:rn-top-0
         before:rn-h-full
+        before:rn-bg-opacity-50
         
-        before:rn-bg-opacity-50 
+        before:rn-content-[""] 
         ${
           (props.dayRangeStart && props.dayRangeStartEnd && !props.hidden) ||
           (props.dayRangeEnd && props.dayRangeStartEnd && !props.hidden)
@@ -124,12 +121,12 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         ${
           props.dayRangeStart &&
           props.dayRangeStartEnd &&
-          "before:rn-left-[15%] before:rn-w-[86%] before:rn-rounded-l-full before:rn-block"
+          "before:rn-left-[15%] before:rn-block before:rn-w-[86%] before:rn-rounded-l-full"
         }
         ${
           props.dayRangeEnd &&
           props.dayRangeStartEnd &&
-          "before:rn-right-[15%] before:rn-w-[85%] before:rn-rounded-r-full before:rn-block"
+          "before:rn-right-[15%] before:rn-block before:rn-w-[85%] before:rn-rounded-r-full"
         }
         ${isSelected() && "date-picker-day-number-area-selected"}
         `,
@@ -141,7 +138,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           [props.daysActivePrimaryWrapperClass || ""]: isSelected(),
           [props.daysActiveRangeBetweenWrapperClass || ""]:
             props.dayRangeBetween,
-        }
+        },
       )}
       aria-selected={isSelected()}
       data-value={props.header ? props.headerValue : props.dateValue}
@@ -190,40 +187,40 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
           setHeight
           // @ts-ignore
           tabindex={isSelected() ? 0 : -1}
-          class={clsx(
+          class={cn(
             `
           date-picker-day-number
-          rn-text-center          
-          rn-relative
+          rn-relative          
+          rn-text-center
           rn-transition-none
           ${
             props.dayRangeStart || props.dayRangeEnd
-              ? "rn-text-white dark:rn-text-white day-number-range-start-or-end"
+              ? "day-number-range-start-or-end rn-text-white dark:rn-text-white"
               : props.isMultipleSelected
-              ? "rn-text-white dark:rn-text-white day-number-multiple-select"
-              : props.dayRangeBetween
-              ? "rn-text-primary day-range-between"
-              : "rn-text-black"
+                ? "day-number-multiple-select rn-text-white dark:rn-text-white"
+                : props.dayRangeBetween
+                  ? "day-range-between rn-text-primary"
+                  : "rn-text-black"
           }
+          rn-z-10
           rn-h-8
           rn-w-8
-          rn-text-[0.9375rem]
           rn-p-0
-          rn-z-10
+          rn-text-[0.9375rem]
           
           ${
             props.daysNotCurrentMonth
               ? !props.dayRangeStart && !props.dayRangeEnd
-                ? "rn-opacity-50 day-number-not-current-month"
+                ? "day-number-not-current-month rn-opacity-50"
                 : "rn-opacity-95"
-              : "rn-opacity-100 day-number-current-month"
+              : "day-number-current-month rn-opacity-100"
           }
           ${
             isSelected()
-              ? "rn-bg-primary hover:rn-bg-primary dark:hover:rn-bg-primary dark:rn-bg-primary"
+              ? "rn-bg-primary hover:rn-bg-primary dark:rn-bg-primary dark:hover:rn-bg-primary"
               : props.daysCurrent
-              ? "day-number-current-day rn-border rn-border-dashed rn-border-black hover:rn-border hover:rn-border-dashed hover:rn-border-black"
-              : ""
+                ? "day-number-current-day rn-border rn-border-dashed rn-border-black hover:rn-border hover:rn-border-dashed hover:rn-border-black"
+                : ""
           }
           ${props.dayRangeBetween && "hover:rn-bg-transparent"}
           ${
@@ -231,10 +228,10 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
               ? "rn-text-red-500 dark:rn-text-red-500"
               : "dark:rn-text-slate-300"
           }
+          rn-cursor-pointer
+          rn-rounded-full
           disabled:rn-text-black
           disabled:rn-opacity-30
-          rn-rounded-full
-          rn-cursor-pointer
           `,
             props.daysBtnClass,
             props.customDayClass,
@@ -250,7 +247,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
                 props.daysNotCurrentMonth,
               [props.daysActiveRangeStartBtnClass || ""]: props.dayRangeStart,
               [props.daysActiveRangeEndBtnClass || ""]: props.dayRangeEnd,
-            }
+            },
           )}
           data-day-number={true}
           data-day-number-selected={isSelected()}
@@ -312,7 +309,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         <Show keyed when={props.disabled}>
           <div
             onClick={props.onDisabledDayError}
-            class="rn-absolute rn-w-full rn-h-full rn-top-0 rn-left-0 rn-rounded-full"
+            class="rn-absolute rn-left-0 rn-top-0 rn-h-full rn-w-full rn-rounded-full"
           />
         </Show>
       </Show>

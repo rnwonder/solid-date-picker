@@ -1,5 +1,5 @@
 import { Component, Setter, Show, JSX } from "solid-js";
-import { Portal, style } from "solid-js/web";
+import { Portal } from "solid-js/web";
 import { clickOutsideSJ } from "../../utils";
 export interface ModalProps {
   children: any;

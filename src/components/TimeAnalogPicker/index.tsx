@@ -8,9 +8,9 @@ import {
 } from "../../interface/general";
 import {Accessor, createSignal, JSX, Setter, Show} from "solid-js";
 import { convert12HourTo24Hour } from "../../utils/time";
-import clsx from "clsx";
 import {formatHourWithLeadingZero, formatMinuteSecondWithLeadingZero} from "../../utils";
 import {createButtonAnimation} from "../../hooks/createButtonAnimation";
+import {cn} from "../../utils/class";
 
 interface ITimeAnalogPickerProps
   extends Omit<ITimeAnalogGroupProps, "handleTimeChange" | "value" | "close" | "setIsShown"> {
@@ -147,7 +147,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
       positionY={props.pickerPositionY}
       zIndex={props.zIndex}
       width={props.inputWrapperWidth}
-      className={clsx(props.inputWrapperClass, "time-picker-input-wrapper")}
+      className={cn(props.inputWrapperClass, "time-picker-input-wrapper")}
     >
       <div
         class={"time-picker-input-area"}
@@ -170,7 +170,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
             type="text"
             value={props.inputLabel?.() || props.value().label}
             {...{ ...props.inputProps, class: undefined }}
-            class={clsx(
+            class={cn(
               `rn-w-full time-picker-input rn-px-1`,
               props.inputProps?.class,
               props.inputClass

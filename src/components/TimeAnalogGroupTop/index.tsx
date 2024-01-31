@@ -1,9 +1,9 @@
-import clsx from "clsx";
 import { Button } from "../Button";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
 import { Accessor, JSX } from "solid-js";
 import { ITimeView, TimeAnalogClassNames } from "../../interface/general";
+import {cn} from "../../utils/class";
 
 interface ITimeAnalogGroupTopProps extends TimeAnalogClassNames {
   view: Accessor<ITimeView>;
@@ -17,7 +17,7 @@ interface ITimeAnalogGroupTopProps extends TimeAnalogClassNames {
 export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
   return (
     <div
-      class={clsx(`
+      class={cn(`
             rn-flex
             rn-justify-between
             rn-mb-2`)}
@@ -32,7 +32,7 @@ export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
 
       <div>
         <Button
-          class={clsx(
+          class={cn(
             `
               time-analog-prev-next-btn
               time-analog-prev-btn
@@ -69,7 +69,7 @@ export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
           )}
         </Button>
         <Button
-          class={clsx(
+          class={cn(
             `
               time-analog-prev-next-btn
               time-analog-next-btn

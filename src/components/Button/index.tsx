@@ -1,5 +1,5 @@
 import {Component, createSignal, JSX} from "solid-js";
-import clsx from "clsx";
+import {cn} from "../../utils";
 
 interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
   class?: string;
@@ -15,7 +15,7 @@ export const Button: Component<ButtonProps> = (props) => {
   return (
     <button
       {...{ ...props, class: undefined }}
-      class={clsx(
+      class={cn(
         `
         rn-btn 
         rn-btn-ghost 

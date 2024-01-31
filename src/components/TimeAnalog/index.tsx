@@ -7,7 +7,6 @@ import {
   Show,
   onMount,
 } from "solid-js";
-import clsx from "clsx";
 import {
   ITimeMeridiem,
   ITimePickerFormat,
@@ -21,6 +20,7 @@ import {
   getAmPm,
   getCurrentTime,
 } from "../../utils/time";
+import {cn} from "../../utils/class";
 
 export interface ITimePickerAnalog extends TimeAnalogClassNames {
   close: () => void;
@@ -211,7 +211,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
 
   return (
     <div
-      class={clsx(
+      class={cn(
         `
         time-analog-wrapper
         rn-w-[237px] 
@@ -233,7 +233,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
       onMouseUp={() => setMouseDown(false)}
     >
       <div
-        class={clsx(
+        class={cn(
           `
           time-analog-center-hand
           rn-w-[2px] 
@@ -254,7 +254,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
         data-time-analog-center-hand={true}
       />
       <div
-        class={clsx(
+        class={cn(
           `
           time-analog-center-dot
           rn-bg-primary
@@ -271,7 +271,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
       />
 
       <div
-        class={clsx(`
+        class={cn(`
           rn-w-[50px]
           rn-h-[50px]
           rn-bg-transparent

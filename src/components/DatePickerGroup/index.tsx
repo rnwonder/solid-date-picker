@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import {Accessor, createSignal, JSX, Setter, Show} from "solid-js";
 import {
   IDatePickerOnChange,
@@ -10,6 +9,7 @@ import { convertDateObjectToDate, labelFormat } from "../../utils";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
 import {createButtonAnimation} from "../../hooks/createButtonAnimation";
+import {cn} from "../../utils/class";
 
 export interface DatePickerInputSJProps
   extends Omit<
@@ -252,7 +252,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       zIndex={props.zIndex}
       handleChildrenClick={inputJSX ? () => {} : undefined}
       width={props.inputWrapperWidth}
-      className={clsx(props.inputWrapperClass, "date-picker-input-wrapper")}
+      className={cn(props.inputWrapperClass, "date-picker-input-wrapper")}
     >
       <div
         class={"date-picker-input-area"}
@@ -275,7 +275,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
             value={props.inputLabel?.() || props.value?.().label || ""}
             data-type={"date-picker-input"}
             {...{ ...props.inputProps, class: undefined }}
-            class={clsx(
+            class={cn(
               `rn-w-full date-picker-input rn-px-1`,
               props.inputProps?.class,
               props.inputClass
