@@ -1,69 +1,52 @@
 import { Accessor, Setter } from "solid-js";
 import { Button } from "../Button";
 import { ITimeMeridiem, TimeAnalogClassNames } from "../../interface/general";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils";
 
 interface ITimeAnalogBottomProps extends TimeAnalogClassNames {
-    meridiem: Accessor<ITimeMeridiem>;
-    setMeridiem: Setter<ITimeMeridiem>;
+  meridiem: Accessor<ITimeMeridiem>;
+  setMeridiem: Setter<ITimeMeridiem>;
 }
 export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
-    return (
-        <div
-            class={cn(
-                `
-                time-picker-analog-bottom
-                rn-flex
-                rn-justify-between
-              `,
-                props.timePickerBottomAreaClass
-            )}
-        >
-            <Button
-                class={cn(
-                    `
-                    time-picker-meridiem-btn
-                    rn-w-[2.3rem]
-                    rn-rounded-full
-                    rn-flex-shrink-0
-                    rn-aspect-square
-                    dark:rn-text-slate-200`,
-                    {
-                        [`
-                            rn-bg-primary
-                            rn-text-white
-                            hover:rn-bg-primary
-                        `]: props.meridiem() === "AM",
-                    },
-                    props.timePickerMeridiemBtnClass
-                )}
-                onClick={() => props.setMeridiem("AM")}
-            >
-                AM
-            </Button>
-
-            <Button
-                class={cn(
-                    `
-                        time-picker-meridiem-btn
-                        rn-w-[2.3rem]
-                        rn-aspect-square
-                        rn-rounded-full
-                        rn-flex-shrink-0
-                        dark:rn-text-slate-200`,
-                    {
-                        [`
-                            rn-bg-primary
-                            rn-text-white
-                            hover:rn-bg-primary
-                        `]: props.meridiem() === "PM",
-                    },
-                    props.timePickerMeridiemBtnClass
-                )}
-                onClick={() => props.setMeridiem("PM")}
-            >
-                PM
-            </Button>
-        </div>
+  const classString = (meridiem: ITimeMeridiem) =>
+    cn(
+      `
+        time-picker-meridiem-btn
+        rn-aspect-square
+        rn-w-[2.3rem]
+        rn-flex-shrink-0
+        rn-rounded-full
+        dark:rn-text-white
+        `,
+      {
+        [`
+        dark:rn-bg-dark-time
+        dark:hover:rn-bg-dark-time
+        rn-bg-dark-time
+        rn-text-white
+        hover:rn-bg-dark-time
+    `]: props.meridiem() === meridiem,
+      },
+      props.timePickerMeridiemBtnClass,
     );
+  return (
+    <div
+      class={cn(
+`
+        time-picker-analog-bottom
+        rn-flex
+        rn-justify-between
+      `,
+        props.timePickerBottomAreaClass,
+      )}
+    >
+      <Button class={classString("AM")} onClick={() => props.setMeridiem("AM")}>
+        AM
+      </Button>
+
+      <Button class={classString("PM")} onClick={() => props.setMeridiem("PM")}>
+        PM
+      </Button>
+    </div>
+  );
 };

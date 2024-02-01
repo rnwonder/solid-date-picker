@@ -1,8 +1,8 @@
 import { YearSelector, YearSelectorProps } from "./YearSelector";
 
-interface Props extends Omit<YearSelectorProps, "type"> {}
+export interface YearSelectorExportProps extends Omit<YearSelectorProps, "type"> {}
 
-const YearSelectorExport = (props: Props) => {
+const YearSelectorExport = (props: YearSelectorExportProps) => {
   return <YearSelector {...props} />;
 };
 

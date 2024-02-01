@@ -8,8 +8,7 @@ import {
   Setter,
 } from "solid-js";
 import { CustomPortal } from "../CustomPortal";
-import { upgradedSmartDropDown } from "../../utils";
-import { cn } from "../../utils/class";
+import { upgradedSmartDropDown, cn } from "../../utils";
 
 export type IPopOverSJContentPropType =
   | JSX.Element
@@ -18,7 +17,7 @@ export type IPopOverSJContentPropType =
 export type IPopOverPositionX = "left" | "right" | "center";
 export type IPopOverPositionY = "top" | "bottom" | "auto";
 
-interface PopoverProps {
+export interface PopoverProps {
   children: JSXElement;
   content: IPopOverSJContentPropType;
   positionX?: IPopOverPositionX;
@@ -186,32 +185,32 @@ export const Popover = (props: PopoverProps) => {
       >
         <div
           class={`
-            ${
-              delayShown()
-                ? `rn-translate-y-[0rem] rn-opacity-100`
-                : `-rn-translate-y-[1rem] rn-opacity-0`
-            }
-            rn-duration-350 
-            rn-delay-50
-            rn-transition-transform
-            rn-ease-in-out
-            motion-reduce:rn-transition-none
-        `}
+              ${
+                delayShown()
+                  ? `rn-translate-y-[0rem] rn-opacity-100`
+                  : `-rn-translate-y-[1rem] rn-opacity-0`
+              }
+              rn-duration-350 
+              rn-delay-50
+              rn-transition-transform
+              rn-ease-in-out
+              motion-reduce:rn-transition-none
+          `}
           ref={setPopoverRef}
         >
           <div
             class={cn(
               `
-            ${
-              delayShown()
-                ? `scale-100 rn-opacity-100`
-                : `scale-90 rn-opacity-0`
-            }
-            rn-duration-350 
-            rn-transition-opacity
-            rn-ease-in-out
-            motion-reduce:rn-transition-none
-        `,
+                ${
+                  delayShown()
+                    ? `scale-100 rn-opacity-100`
+                    : `scale-90 rn-opacity-0`
+                }
+                rn-duration-350 
+                rn-transition-opacity
+                rn-ease-in-out
+                motion-reduce:rn-transition-none
+            `,
               props.contentClassName,
             )}
           >

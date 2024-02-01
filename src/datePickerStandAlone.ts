@@ -1,4 +1,3 @@
-import { DatePicker } from "./components/DatePicker";
+import DatePickerStandAlone from "./components/DatePickerStandAloneExport";
 import "./index.css";
-const DatePickerStandAlone = DatePicker;
 export default DatePickerStandAlone;

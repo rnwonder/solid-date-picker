@@ -3,7 +3,7 @@ import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
 import { Accessor, JSX } from "solid-js";
 import { ITimeView, TimeAnalogClassNames } from "../../interface/general";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils/class";
 
 interface ITimeAnalogGroupTopProps extends TimeAnalogClassNames {
   view: Accessor<ITimeView>;
@@ -18,16 +18,16 @@ export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
   return (
     <div
       class={cn(`
-            rn-flex
-            rn-justify-between
-            rn-mb-2`)}
+        rn-mb-2
+        rn-flex
+        rn-justify-between`)}
     >
-      <div class="rn-flex rn-justify-center rn-items-center rn-font-medium dark:rn-text-slate-300">
+      <div class="rn-flex rn-items-center rn-justify-center rn-font-medium dark:rn-text-white">
         {props.view() === "hour"
           ? "HH"
           : props.view() === "minute"
-          ? "MM"
-          : "SS"}
+            ? "MM"
+            : "SS"}
       </div>
 
       <div>
@@ -36,16 +36,16 @@ export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
             `
               time-analog-prev-next-btn
               time-analog-prev-btn
+              rn-h-[2rem]
+              rn-w-[2rem]
+              rn-rounded-full 
+              rn-text-black
               disabled:rn-cursor-not-allowed
               disabled:rn-bg-transparent
-              rn-text-black 
-              dark:rn-text-slate-200
-              rn-rounded-full
-              rn-w-[2rem]
-              rn-h-[2rem]
+              dark:rn-text-white
               `,
             props.prevTimeViewBtnClass,
-            props.prevNextTimeViewBtnClass
+            props.prevNextTimeViewBtnClass,
           )}
           data-prev={true}
           data-type={"time-analog-prev-next-btn"}
@@ -73,16 +73,16 @@ export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
             `
               time-analog-prev-next-btn
               time-analog-next-btn
+              rn-h-[2rem]
+              rn-w-[2rem]
+              rn-rounded-full 
+              rn-text-black
               disabled:rn-cursor-not-allowed
               disabled:rn-bg-transparent
-              rn-text-black 
-              dark:rn-text-slate-200
-              rn-rounded-full
-              rn-w-[2rem]
-              rn-h-[2rem]
+              dark:rn-text-white
               `,
             props.nextTimeViewBtnClass,
-            props.prevNextTimeViewBtnClass
+            props.prevNextTimeViewBtnClass,
           )}
           data-next={true}
           aria-label={"Move forward to switch to the next time view."}

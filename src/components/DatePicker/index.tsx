@@ -32,15 +32,18 @@ import {
   convertDateObjectToDate,
   convertDateToDateObject,
   currentYear,
-  getDatePickerRefactoredMonth, getDatePickerRefactoredYear,
+  getDatePickerRefactoredMonth,
+  getDatePickerRefactoredYear,
   getOnChangeSingleData,
   handleDateRange,
 } from "../../utils";
 import { CalendarArea } from "../CalendarArea";
 import { DatePickerTop } from "../DatePickerTop";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils";
 
-export interface DatePickerProps extends IColors, ClassNames {
+export interface DatePickerProps
+  extends IColors,
+    Omit<ClassNames, "inputClass" | "inputWrapperClass"> {
   type: IDatePickerType;
   close?: () => void;
   handleOnChange: (data: IDatePickerOnChange) => void;

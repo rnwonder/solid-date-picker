@@ -1,20 +1,22 @@
-import { Component, Setter, Show, JSX } from "solid-js";
+import { Component, Setter, Show, JSX, Accessor, createEffect } from "solid-js";
 import { Portal } from "solid-js/web";
-import { clickOutsideSJ } from "../../utils";
+import { clickOutsideSJ, cn, utils } from "../../utils";
 export interface ModalProps {
   children: any;
   isShown?: boolean;
-  reference?: any;
-  className?: string;
+  reference?: Accessor<HTMLElement | undefined>;
+  class?: string;
   setIsShown: Setter<boolean>;
   onClose?: () => void;
   useRefWidth?: boolean;
   style?: JSX.CSSProperties | undefined;
-  removeMaxWidth?: boolean;
   referenceId?: string;
   hideDefaultStyle?: boolean;
-  onClickOutside?: (e?: any) => void;
+  onClickOutside?: (e?: MouseEvent) => void;
   ignoreClickOutside?: boolean;
+  innerWrapperClass?: string;
+  clickOutsideRef?: Accessor<HTMLElement | undefined>;
+  onClickOutsideRef?: (e?: MouseEvent) => void;
 }
 
 function clickOutside(el: any, accessor: any) {
@@ -22,13 +24,25 @@ function clickOutside(el: any, accessor: any) {
 }
 
 export const CustomPortal: Component<ModalProps> = (props) => {
+  createEffect(() => {
+    if (!props.clickOutsideRef?.()) return;
+    utils().clickOutside(props.clickOutsideRef?.()!, (e) => {
+      if (!props.isShown) return;
+      if (props.ignoreClickOutside) return;
+      if (props.onClickOutsideRef) {
+        props.onClickOutsideRef(e);
+        return;
+      }
+      props.setIsShown(false);
+    });
+  });
   return (
     <Show when={props.isShown} keyed>
       <Portal
         mount={
           props?.referenceId
             ? document.getElementById(props.referenceId)
-            : props?.reference?.() || document.getElementById("modal")
+            : props?.reference?.() || (document.getElementById("modal") as any)
         }
       >
         <div
@@ -42,31 +56,41 @@ export const CustomPortal: Component<ModalProps> = (props) => {
             props.setIsShown(false);
             props.onClose && props.onClose();
           }}
-          class={props.className}
+          class={props.class}
           style={{
-            ...(props.isShown &&
-              props.useRefWidth && {
-                width: props.reference()?.clientWidth + "px",
+            ...(props.useRefWidth &&
+              (props.reference?.() ||
+                (props.referenceId &&
+                  document.getElementById(props.referenceId))) && {
+                width: props.reference?.()
+                  ? props.reference?.()?.clientWidth + "px"
+                  : document.getElementById(props.referenceId || "")
+                    ? document.getElementById(props.referenceId || "")
+                        ?.clientWidth + "px"
+                    : "",
               }),
             ...props.style,
           }}
         >
           <div
-            class={`
-            ${
-              props.hideDefaultStyle
-                ? ""
-                : `
-                rn-bg-transparent
-                rn-w-full
-                rn-absolute
-                rn-z-10
-                rn-flex
-                rn-flex-col
-            `
-            }
-            `}
-            {...props}
+            class={cn(
+              {
+                [`
+                    rn-absolute
+                    rn-z-10
+                    rn-flex
+                    rn-w-full
+                    rn-flex-col
+                    rn-bg-transparent
+                `]: !props.hideDefaultStyle,
+              },
+              props.innerWrapperClass,
+            )}
+            style={{
+              ...(props.useRefWidth && {
+                width: props.reference?.()?.clientWidth + "px",
+              }),
+            }}
           >
             {props.children}
           </div>

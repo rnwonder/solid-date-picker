@@ -110,7 +110,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={cn(
-            "date-prev-next-btn date-prev-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-slate-200",
+            "date-prev-next-btn date-prev-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-white",
             props.prevMonthBtnClass,
             props.prevNextMonthBtnClass
           )}
@@ -140,7 +140,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={cn(
-            "date-prev-next-btn date-next-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-slate-200",
+            "date-prev-next-btn date-next-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-white",
             props.nextMonthBtnClass,
             props.prevNextMonthBtnClass
           )}

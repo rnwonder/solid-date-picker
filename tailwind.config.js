@@ -5,10 +5,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#0277bd",
-        "primary-focus": "#02639d",
+        primary: "#18181B",
+        "primary-focus": "#e0e0e0",
         "eerie-black": "#1b1b1b",
         "dreamless-sleep": "#111111",
+        "black-tie": "#474747",
+        "dark-time": '#8f8f8f'
       },
       transformOrigin: {
         "center-bottom": "center bottom ",
@@ -23,7 +25,7 @@ module.exports = {
       },
       lineHeight: {
         time: "20px",
-      }
+      },
     },
     screens: {
       smallMobile: {

@@ -1,8 +1,8 @@
 import { MonthSelector, MonthSelectorProps } from "./MonthSelector";
 
-interface Props extends Omit<MonthSelectorProps, "type"> {}
+export interface MonthSelectorExportProps extends Omit<MonthSelectorProps, "type"> {}
 
-const MonthSelectorExport = (props: Props) => {
+const MonthSelectorExport = (props: MonthSelectorExportProps) => {
   return <MonthSelector {...props} />;
 };
 

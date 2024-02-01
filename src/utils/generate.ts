@@ -7,7 +7,7 @@ import {
   Locale,
   MakeOptionalRequired,
 } from "../interface/general";
-import { Setter } from "solid-js";
+import { onCleanup, Setter } from "solid-js";
 
 // Gets the current month and year days array
 export const getMonthDaysArray = (
@@ -166,4 +166,20 @@ export const getOnChangeSingleData = ({
     };
   }
   return null;
+};
+
+export const clickOutside = (
+  ref: HTMLElement,
+  callback: (e: MouseEvent) => void,
+) => {
+  const handleClick = (e: MouseEvent) => {
+    if (ref && !ref.contains(e.target as Node)) {
+      callback(e);
+    }
+  };
+  document.addEventListener("click", handleClick);
+
+  onCleanup(() => {
+    document.removeEventListener("click", handleClick);
+  });
 };

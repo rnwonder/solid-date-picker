@@ -13,7 +13,8 @@ import {
   DatePickerDayClassNamesAndColors,
   HoverRangeValue,
 } from "../../interface/general";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils";
+import { clsx } from "clsx";
 
 interface DatePickerDayProps
   extends DatePickerDayClassNamesAndColors,
@@ -99,11 +100,11 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         rn-uppercase
         rn-tracking-[0.02em]
         rn-text-[#909090]
-        dark:rn-text-slate-300
+        dark:rn-text-white
         ${props.hidden && "day-number-area-outside-days rn-pointer-events-none"}
         ${
           props.dayRangeBetween && !props.hidden
-            ? `rn-bg-[#56A4D3] rn-bg-opacity-50`
+            ? `dark:rn-bg-black-tie rn-bg-primary-focus rn-bg-opacity-50`
             : ""
         }
         before:rn-absolute
@@ -191,48 +192,53 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
             `
           date-picker-day-number
           rn-relative          
-          rn-text-center
-          rn-transition-none
-          ${
-            props.dayRangeStart || props.dayRangeEnd
-              ? "day-number-range-start-or-end rn-text-white dark:rn-text-white"
-              : props.isMultipleSelected
-                ? "day-number-multiple-select rn-text-white dark:rn-text-white"
-                : props.dayRangeBetween
-                  ? "day-range-between rn-text-primary"
-                  : "rn-text-black"
-          }
           rn-z-10
           rn-h-8
+          
           rn-w-8
           rn-p-0
+          rn-text-center
           rn-text-[0.9375rem]
+          rn-transition-none
           
           ${
             props.daysNotCurrentMonth
               ? !props.dayRangeStart && !props.dayRangeEnd
-                ? "day-number-not-current-month rn-opacity-50"
+                ? "day-number-not-current-month rn-opacity-50 dark:rn-text-white"
                 : "rn-opacity-95"
               : "day-number-current-month rn-opacity-100"
           }
-          ${
-            isSelected()
-              ? "rn-bg-primary hover:rn-bg-primary dark:rn-bg-primary dark:hover:rn-bg-primary"
-              : props.daysCurrent
-                ? "day-number-current-day rn-border rn-border-dashed rn-border-black hover:rn-border hover:rn-border-dashed hover:rn-border-black"
-                : ""
-          }
-          ${props.dayRangeBetween && "hover:rn-bg-transparent"}
+
+          ${props.dayRangeBetween && "dark:hover:rn-bg-black-tie hover:rn-bg-transparent"}
           ${
             props.shouldHighlightWeekends && props.isWeekend && isNotSelected()
               ? "rn-text-red-500 dark:rn-text-red-500"
-              : "dark:rn-text-slate-300"
+              : ""
           }
+        ${
+          isSelected()
+            ? "rn-bg-primary hover:rn-bg-primary dark:rn-bg-white dark:rn-text-black dark:hover:rn-bg-white"
+            : props.daysCurrent
+              ? "day-number-current-day rn-border rn-border-dashed rn-border-black hover:rn-border hover:rn-border-dashed hover:rn-border-black dark:rn-border-white"
+              : ""
+        }
+        ${
+          props.dayRangeStart || props.dayRangeEnd
+            ? "day-number-range-start-or-end rn-text-white dark:rn-text-black"
+            : props.isMultipleSelected
+              ? "day-number-multiple-select rn-text-white dark:rn-text-black"
+              : props.dayRangeBetween
+                ? "day-range-between rn-text-black"
+                : "rn-text-black"
+        }
           rn-cursor-pointer
           rn-rounded-full
           disabled:rn-text-black
           disabled:rn-opacity-30
           `,
+            {
+              "dark:rn-text-white": isNotSelected(),
+            },
             props.daysBtnClass,
             props.customDayClass,
             {

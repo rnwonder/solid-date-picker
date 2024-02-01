@@ -1,4 +1,12 @@
 import { Accessor, JSX, Setter } from "solid-js";
+import { DatePickerInputSJProps } from "../components/DatePickerGroup";
+import { ITimeAnalogGroupProps } from "../components/TimeAnalogGroup";
+import { CalendarAreaProps } from "../components/CalendarArea";
+import { MonthSelectorExportProps } from "../components/MonthSelectorExport";
+import { YearSelectorExportProps } from "../components/YearSelectorExport";
+import { PopoverProps } from "../components/Popover";
+import { ModalProps } from "../components/CustomPortal";
+import { DatePickerStandAloneProps } from "../components/DatePickerStandAloneExport";
 
 export interface DateObjectUnits {
   // a year, such as 1987
@@ -130,7 +138,7 @@ export interface SelectorColorsAndClassNames
     Pick<
       ClassNames,
       | "monthYearTriggerBtnClass"
-        |"monthYearTriggerBtnWrapperClass"
+      | "monthYearTriggerBtnWrapperClass"
       | "monthYearSelectorWrapperClass"
       | "monthYearOptionBtnClass"
       | "monthYearOptionBtnActiveClass"
@@ -300,3 +308,11 @@ export interface TimeAnalogClassNames {
   timePickerBottomAreaClass?: string;
   timePickerMeridiemBtnClass?: string;
 }
+
+// lib type exports
+export interface DatePickerProps extends DatePickerInputSJProps {}
+export interface TimePickerProps extends ITimeAnalogGroupProps {}
+export interface MonthSelectorProps extends MonthSelectorExportProps {}
+export interface YearSelectorProps extends YearSelectorExportProps {}
+export interface RnPortalProps extends ModalProps {}
+export type { CalendarAreaProps, PopoverProps, DatePickerStandAloneProps };

@@ -20,7 +20,7 @@ import {
   getAmPm,
   getCurrentTime,
 } from "../../utils/time";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils";
 
 export interface ITimePickerAnalog extends TimeAnalogClassNames {
   close: () => void;
@@ -34,12 +34,14 @@ export interface ITimePickerAnalog extends TimeAnalogClassNames {
   setMeridiem: Setter<ITimeMeridiem>;
   setCurrentTimeOnOpen?: boolean;
   handleTimeChange: (time: ITimePickerFormat, meridiem: ITimeMeridiem) => void;
+  selectedHour: Accessor<number | undefined>;
+  selectedMinute: Accessor<number | undefined>;
+  selectedSeconds: Accessor<number | undefined>;
+  setSelectedHour: Setter<number | undefined>;
+  setSelectedMinute: Setter<number | undefined>;
+  setSelectedSeconds: Setter<number | undefined>;
 }
 export const TimeAnalog = (props: ITimePickerAnalog) => {
-  const [selectedHour, setSelectedHour] = createSignal<number>();
-  const [selectedMinute, setSelectedMinute] = createSignal<number>();
-  const [selectedSeconds, setSelectedSeconds] = createSignal<number>();
-
   const [mouseDown, setMouseDown] = createSignal(false);
   const [isPicking, setIsPicking] = createSignal(false);
   const [onTouch, setOnTouch] = createSignal(false);
@@ -56,29 +58,29 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
     if (props.allowedView.includes("hour")) {
       if (props.value.hour === undefined) {
         if (!props.setCurrentTimeOnOpen) return;
-        setSelectedHour(currentTime.hour);
+        props.setSelectedHour(currentTime.hour);
         props.setMeridiem(currentTime.meridiem);
       } else {
         props.setMeridiem(getAmPm(props.value.hour));
-        setSelectedHour(convert24HourTo12Hour(props.value.hour));
+        props.setSelectedHour(convert24HourTo12Hour(props.value.hour));
       }
     }
 
     if (props.allowedView.includes("minute")) {
       if (props.value.minute === undefined) {
         if (!props.setCurrentTimeOnOpen) return;
-        setSelectedMinute(currentTime.minute);
+        props.setSelectedMinute(currentTime.minute);
       } else {
-        setSelectedMinute(props.value.minute);
+        props.setSelectedMinute(props.value.minute);
       }
     }
 
     if (props.allowedView.includes("second")) {
       if (props.value.second === undefined) {
         if (!props.setCurrentTimeOnOpen) return;
-        setSelectedSeconds(currentTime.second);
+        props.setSelectedSeconds(currentTime.second);
       } else {
-        setSelectedSeconds(props.value.second);
+        props.setSelectedSeconds(props.value.second);
       }
     }
 
@@ -95,32 +97,33 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
   createEffect(() => {
     if (!showHand()) return;
     props.onChange?.({
-      hour: selectedHour()
-        ? convert12HourTo24Hour(selectedHour()!, props.meridiem())
-        : undefined,
-      minute: selectedMinute(),
-      second: selectedSeconds(),
+      hour:
+        props.selectedHour() !== undefined
+          ? convert12HourTo24Hour(props.selectedHour()!, props.meridiem())
+          : undefined,
+      minute: props.selectedMinute(),
+      second: props.selectedSeconds(),
     });
 
     props.handleTimeChange(
       {
-        hour: selectedHour(),
-        minute: selectedMinute(),
-        second: selectedSeconds(),
+        hour: props.selectedHour(),
+        minute: props.selectedMinute(),
+        second: props.selectedSeconds(),
       },
-      props.meridiem()
+      props.meridiem(),
     );
   });
 
   createEffect(() => {
     if (props.view() === "hour") {
-      setLinePosition(`rotateZ(${(selectedHour() || 0) * 30}deg)`);
+      setLinePosition(`rotateZ(${(props.selectedHour() || 0) * 30}deg)`);
     }
     if (props.view() === "minute") {
-      setLinePosition(`rotateZ(${(selectedMinute() || 0) * 6}deg)`);
+      setLinePosition(`rotateZ(${(props.selectedMinute() || 0) * 6}deg)`);
     }
     if (props.view() === "second") {
-      setLinePosition(`rotateZ(${(selectedSeconds() || 0) * 6}deg)`);
+      setLinePosition(`rotateZ(${(props.selectedSeconds() || 0) * 6}deg)`);
     }
   });
 
@@ -137,15 +140,15 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
   });
 
   createEffect(() => {
-    if (props.view() === "hour" && selectedHour() !== undefined) {
+    if (props.view() === "hour" && props.selectedHour() !== undefined) {
       setShowHand(true);
       return;
     }
-    if (props.view() === "minute" && selectedMinute() !== undefined) {
+    if (props.view() === "minute" && props.selectedMinute() !== undefined) {
       setShowHand(true);
       return;
     }
-    if (props.view() === "second" && selectedSeconds() !== undefined) {
+    if (props.view() === "second" && props.selectedSeconds() !== undefined) {
       setShowHand(true);
       return;
     }
@@ -155,7 +158,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
   const handlePointerEnter = (
     e: PointerEvent & { currentTarget: HTMLButtonElement; target: Element },
     type: ITimeView,
-    value?: number
+    value?: number,
   ) => {
     if (value === undefined) return;
 
@@ -169,15 +172,15 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
     };
 
     if (e.pressure > 0 && type === "hour") {
-      setSelectedHour(value);
+      props.setSelectedHour(value);
       handleMouseDown();
     }
     if (e.pressure > 0 && type === "minute") {
-      setSelectedMinute(value);
+      props.setSelectedMinute(value);
       handleMouseDown();
     }
     if (e.pressure > 0 && type === "second") {
-      setSelectedSeconds(value);
+      props.setSelectedSeconds(value);
       handleMouseDown();
     }
   };
@@ -185,7 +188,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
   const handleTouchEnd = (
     e: TouchEvent & { currentTarget: HTMLButtonElement; target: Element },
     type: ITimeView,
-    value?: number
+    value?: number,
   ) => {
     if (value === undefined) return;
     handleClick(type, value);
@@ -194,17 +197,17 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
   const handleClick = (type: ITimeView, value?: number) => {
     if (value === undefined) return;
     if (type === "hour") {
-      setSelectedHour(value);
+      props.setSelectedHour(value);
       props.handleNext();
       return;
     }
     if (type === "minute") {
-      setSelectedMinute(value);
+      props.setSelectedMinute(value);
       props.handleNext();
       return;
     }
     if (type === "second") {
-      setSelectedSeconds(value);
+      props.setSelectedSeconds(value);
     }
     props.handleNext();
   };
@@ -214,17 +217,17 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
       class={cn(
         `
         time-analog-wrapper
-        rn-w-[237px] 
-        rn-h-[237px] 
-        rn-bg-slate-100 
         rn-relative 
         rn-flex 
-        rn-justify-center 
+        rn-h-[237px] 
+        rn-w-[237px] 
         rn-items-center 
-        rn-rounded-full
+        rn-justify-center 
+        rn-rounded-full 
+        rn-bg-slate-100
         dark:rn-bg-eerie-black
         `,
-        props.timeAnalogWrapperClass
+        props.timeAnalogWrapperClass,
       )}
       data-time-analog-wrapper={true}
       aria-label={`Select minutes. Selected time is 11:01AM`}
@@ -236,19 +239,20 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
         class={cn(
           `
           time-analog-center-hand
-          rn-w-[2px] 
-          rn-bg-primary
-          rn-absolute
-          rn-left-[calc(50% - 1px)]
-          rn-bottom-1/2
-          rn-origin-center-bottom
+          rn-left-[calc(50% 
+          -
+          1px)]
+          rn-bg-dark-time rn-absolute rn-bottom-1/2
           rn-h-[39%]
+          rn-w-[2px]
+          rn-origin-center-bottom
+          dark:rn-bg-[#8f8f8f]
           `,
           {
             "rn-hidden": !showHand(),
             "rn-block": showHand(),
           },
-          props.timeAnalogClockHandClass
+          props.timeAnalogClockHandClass,
         )}
         style={{ transform: linePosition() }}
         data-time-analog-center-hand={true}
@@ -257,25 +261,26 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
         class={cn(
           `
           time-analog-center-dot
-          rn-bg-primary
-          rn-w-[5px] 
-          rn-h-[5px] 
+          rn-bg-dark-time
+          dark:rn-bg-dark-time 
           rn-absolute 
-          rn-top-1/2 rn-left-1/2 
-          rn-transform rn--translate-x-1/2 rn--translate-y-1/2
+          rn-left-1/2 
+          rn-top-1/2 rn-h-[5px] 
+          rn-w-[5px] rn--translate-x-1/2 rn--translate-y-1/2
+          rn-transform
           rn-rounded-full
           `,
-          props.timeAnalogClockCenterDotClass
+          props.timeAnalogClockCenterDotClass,
         )}
         data-time-analog-center-dot={true}
       />
 
       <div
         class={cn(`
-          rn-w-[50px]
-          rn-h-[50px]
-          rn-bg-transparent
           rn-relative
+          rn-h-[50px]
+          rn-w-[50px]
+          rn-bg-transparent
       `)}
       >
         <Show when={props.view() === "hour"} keyed>
@@ -285,7 +290,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
                 <TimeNumber
                   {...props}
                   type={props.view()}
-                  selectedValue={selectedHour}
+                  selectedValue={props.selectedHour}
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
                   onPointerEnter={handlePointerEnter}
@@ -308,7 +313,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
                 <TimeNumber
                   {...props}
                   type={props.view()}
-                  selectedValue={selectedMinute}
+                  selectedValue={props.selectedMinute}
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
                   onPointerEnter={handlePointerEnter}
@@ -331,7 +336,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
                 <TimeNumber
                   {...props}
                   type={props.view()}
-                  selectedValue={selectedSeconds}
+                  selectedValue={props.selectedSeconds}
                   onClick={handleClick}
                   onMouseUp={() => setMouseDown(false)}
                   onPointerEnter={handlePointerEnter}

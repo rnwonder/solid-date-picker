@@ -2,12 +2,14 @@
 
 A simple and reusable Datepicker component for SolidJS ([Demo](https://stackblitz.com/edit/solidjs-templates-dof6jl?file=src%2FApp.tsx))
 
+Version 1.0.0 is out. Check out the [changelog](https://soliddatepicker.live/docs) for more details
+
 [Documentation](https://soliddatepicker.live/)
 
-![Screenshot 2023-05-20 084944.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569302/Screenshot_2023-05-20_085338_ruwgsx.jpg)
-![Screenshot 2023-05-20 084945.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684569301/Screenshot_2023-05-20_085412_imossu.jpg)
-![Screenshot 2023-05-20 084946.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1684899114/Screenshot_2023-05-24_043041_to0svp.jpg)
-![Screenshot 2023-05-20 084946.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1687156697/Screenshot_2023-06-19_073704_q6rzgx.jpg)
+![Screenshot 2023-05-20 084944.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1706819632/Screenshot_2024-02-01_212902_un7lqa.jpg)
+![Screenshot 2023-05-20 084945.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1706819632/Screenshot_2024-02-01_213012_ay4sa9.jpg)
+![Screenshot 2023-05-20 084946.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1706819632/Screenshot_2024-02-01_213053_q1qbdl.jpg)
+![Screenshot 2023-05-20 084946.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1706819632/Screenshot_2024-02-01_213124_pz8t1p.jpg)
 
 ## Installation
 
@@ -59,11 +61,9 @@ const App = () => {
 For Solid Start, you want to use the `DatePicker` component as a client-side component. You can do this by using the `unstable_clientOnly` from `solid-start`.
 
 ```tsx
-import { unstable_clientOnly } from "solid-start";
+import { clientOnly } from "@solidjs/start";
 import { PickerValue } from "@rnwonder/solid-date-picker";
-const DatePicker = unstable_clientOnly(
-    () => import("@rnwonder/solid-date-picker")
-);
+const DatePicker = clientOnly(() => import("@rnwonder/solid-date-picker"));
 ```
 
 After importing the `DatePicker` component, you can use it the same way as above.
@@ -93,7 +93,9 @@ After importing the `DatePicker` component, you can use it the same way as above
 - This is in beta and can be used like this
 
 ```tsx
-import { TimeValue, TimePicker } from "@rnwonder/solid-date-picker";
+import {createSignal} from 'solid-js';
+import { TimeValue } from '@rnwonder/solid-date-picker';
+import TimePicker from "@rnwonder/solid-date-picker/timePicker";
 
 const App = () => {
   const [value, setValue] = createSignal<TimeValue>({

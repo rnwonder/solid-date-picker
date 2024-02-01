@@ -98,7 +98,10 @@ export const TimeNumber = (props: ITimeNumberProps) => {
   });
 
   createEffect(() => {
-    if (props.selectedValue() === attr()) {
+    if (
+      props.selectedValue() === attr() ||
+      (props.selectedValue() === 12 && attr() === 0 && props.type === "hour")
+    ) {
       setIsSelected(true);
     } else {
       setIsSelected(false);
@@ -117,10 +120,12 @@ export const TimeNumber = (props: ITimeNumberProps) => {
           rn-rounded-full
           rn-leading-time
           hover:rn-bg-transparent
-          dark:rn-text-slate-200`,
+          `,
         {
           [`
             before:rn-content[''] 
+            before:rn-bg-dark-time 
+            dark:before:rn-bg-dark-time 
             rn-text-white 
             before:rn-pointer-events-none 
             before:rn-absolute 
@@ -128,14 +133,15 @@ export const TimeNumber = (props: ITimeNumberProps) => {
             before:rn-top-1/2 
             before:rn-h-time-2 
             before:rn-w-time-2 
-            before:rn--translate-x-1/2 
-            before:rn--translate-y-1/2 
+            before:rn--translate-x-1/2
+            before:rn--translate-y-1/2
             before:rn-transform
             before:rn-rounded-full
-            before:rn-bg-primary
-            
+            dark:rn-text-white
+            dark:before:rn-text-white
             `]: isSelected(),
           "": props.index() % teilBar() === 0,
+          "dark:rn-text-white": !isSelected(),
         },
         props.class,
       )}
@@ -158,6 +164,8 @@ export const TimeNumber = (props: ITimeNumberProps) => {
         class={cn(" rn-relative rn-z-[1]", {
           [`
             after:rn-content['']
+            dark:rn-text-red
+            dark:after:rn-bg-red
             after:rn-absolute
             after:rn-left-1/2
             after:rn-top-1/2
@@ -168,8 +176,6 @@ export const TimeNumber = (props: ITimeNumberProps) => {
             after:rn-transform
             after:rn-rounded-full
             after:rn-bg-white
-            dark:rn-text-slate-200
-            
             
             `]: props.type !== "hour" && !value() && isSelected(),
         })}

@@ -6,14 +6,20 @@ import {
   ITimePickerFormat,
   TimeValue,
 } from "../../interface/general";
-import {Accessor, createSignal, JSX, Setter, Show} from "solid-js";
+import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
 import { convert12HourTo24Hour } from "../../utils/time";
-import {formatHourWithLeadingZero, formatMinuteSecondWithLeadingZero} from "../../utils";
-import {createButtonAnimation} from "../../hooks/createButtonAnimation";
-import {cn} from "../../utils/class";
+import {
+  formatHourWithLeadingZero,
+  formatMinuteSecondWithLeadingZero,
+} from "../../utils";
+import { createButtonAnimation } from "../../hooks/createButtonAnimation";
+import { cn } from "../../utils";
 
 interface ITimeAnalogPickerProps
-  extends Omit<ITimeAnalogGroupProps, "handleTimeChange" | "value" | "close" | "setIsShown"> {
+  extends Omit<
+    ITimeAnalogGroupProps,
+    "handleTimeChange" | "value" | "close" | "setIsShown"
+  > {
   value: Accessor<TimeValue>;
   setValue: Setter<TimeValue>;
   onClose?: () => void;
@@ -31,16 +37,16 @@ interface ITimeAnalogPickerProps
   inputProps?: JSX.InputHTMLAttributes<HTMLInputElement>;
   inputWrapperWidth?: JSX.CSSProperties["width"];
   zIndex?: number;
-  noButtonAnimation?: boolean
+  noButtonAnimation?: boolean;
 }
 const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
   const [isShown, setIsShown] = createSignal(false);
 
-  createButtonAnimation(props.noButtonAnimation)
+  createButtonAnimation(props.noButtonAnimation);
 
   const handleTimeChange = (
     time: ITimePickerFormat,
-    meridiem: ITimeMeridiem
+    meridiem: ITimeMeridiem,
   ) => {
     let label = "";
     let suffix = "";
@@ -54,8 +60,10 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
       suffix = meridiem;
 
       if (
-        (props.allowedView?.includes("minute") && time.minute) ||
-        (props.allowedView?.includes("second") && time.second)
+        (props.allowedView?.includes("minute") &&
+          (time.minute || time.minute !== undefined)) ||
+        (props.allowedView?.includes("second") &&
+          (time.second || time.second !== undefined))
       ) {
         label += `:`;
       }
@@ -84,7 +92,10 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
 
     if (props.allowedView?.includes("minute")) {
       label += `${formatMinuteSecondWithLeadingZero(time.minute)}`;
-      if (props.allowedView?.includes("second") && time.second) {
+      if (
+        props.allowedView?.includes("second") &&
+        (time.second || time.second !== undefined)
+      ) {
         label += `:`;
       }
     }
@@ -171,9 +182,9 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
             value={props.inputLabel?.() || props.value().label}
             {...{ ...props.inputProps, class: undefined }}
             class={cn(
-              `rn-w-full time-picker-input rn-px-1`,
+              `time-picker-input rn-w-full rn-px-1`,
               props.inputProps?.class,
-              props.inputClass
+              props.inputClass,
             )}
           />
         </Show>

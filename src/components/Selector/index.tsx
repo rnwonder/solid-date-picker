@@ -143,23 +143,25 @@ export const Selector = (props: SelectorProps) => {
             `
             date-selector-wrapper
             rn-grid
-            rn-rounded-lg
-            rn-bg-white
-            rn-drop-shadow-lg
-            ${
-              props.gridTemplateColumnsNo
-                ? props.gridTemplateColumnsNo === "3"
-                  ? `rn-grid-cols-3`
-                  : `rn-grid-cols-4`
-                : "rn-grid-cols-4"
-            }
             rn-max-h-[10.625rem]
             rn-max-w-[25rem]
             rn-gap-2
             rn-overflow-y-auto
+            rn-rounded-lg
+            rn-bg-white
             rn-p-2
+            rn-drop-shadow-lg
             dark:rn-bg-eerie-black
           `,
+            {
+              "rn-grid-cols-3":
+                props.gridTemplateColumnsNo === "3" &&
+                props.gridTemplateColumnsNo,
+              "rn-grid-cols-4":
+                !props.gridTemplateColumnsNo ||
+                (props.gridTemplateColumnsNo &&
+                  props.gridTemplateColumnsNo !== "3"),
+            },
             props.monthYearSelectorWrapperClass,
           )}
           ref={props.ref}
@@ -190,18 +192,14 @@ export const Selector = (props: SelectorProps) => {
                   rn-text-sm 
                   rn-text-black
                   disabled:rn-opacity-40
-                  dark:rn-text-slate-300
                   smallMobile:rn-text-[12px]
-                  ${
-                    isSelected(value, index)
-                      ? "rn-selector-option-selected rn-bg-primary rn-text-white hover:rn-bg-primary hover:rn-text-white dark:rn-text-white dark:hover:rn-bg-primary"
-                      : ""
-                  }
-
                 `,
                   props.className,
                   props.monthYearOptionBtnClass,
                   {
+                    "rn-selector-option-selected rn-bg-primary rn-text-white hover:rn-bg-primary hover:rn-text-white dark:rn-bg-white dark:rn-text-black dark:hover:rn-bg-white dark:hover:rn-text-black":
+                      isSelected(value, index),
+                    "dark:rn-text-white": !isSelected(value, index),
                     [props.monthYearOptionBtnActiveClass || ""]: isSelected(
                       value,
                       index,
@@ -260,7 +258,7 @@ export const Selector = (props: SelectorProps) => {
         rn-font-bold
         
         rn-text-black
-        dark:rn-text-slate-300
+        dark:rn-text-white
         
         breakTwoCalendar:rn-text-sm`,
           props.monthYearTriggerBtnClass,

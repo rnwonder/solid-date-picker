@@ -20,7 +20,7 @@ export const Button: Component<ButtonProps> = (props) => {
         rn-btn 
         rn-btn-ghost 
         ${props.setHeight ? "" : "rn-h-full"} 
-        ${props.selected ? "" : "dark:hover:rn-bg-slate-700"}
+        ${props.selected ? "" : "dark:hover:rn-bg-black-tie"}
         rn-p-0 
         rn-min-h-0 
         date-picker-main-btn

@@ -19,7 +19,6 @@ export interface YearSelectorProps extends SelectorColorsAndClassNames {
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
   type?: IDatePickerType;
   startDay?: DateObjectUnits;
-  setStartDay: Setter<DateObjectUnits | undefined>;
 }
 
 export const YearSelector: Component<YearSelectorProps> = (props) => {

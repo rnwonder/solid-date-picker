@@ -5,7 +5,7 @@ import {
   formatDate,
 } from "./format";
 
-import { getMonthName, getToday } from "./generate";
+import { clickOutside, getMonthName, getToday } from "./generate";
 
 export * from "./general";
 export * from "./portal";
@@ -24,4 +24,5 @@ export const utils = () => ({
   isBeforeDate,
   getMonthName,
   formatDate,
+  clickOutside,
 });

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --date-picker-before-bg: #aad1e9;
+  --date-picker-before-bg: #e0e0e0;
   --date-picker-before-color: #0277bd;
   --date-picker-hover-color: #d2d4d7;
 }
@@ -19,5 +19,5 @@
 
 .dark,
 [data-theme="dark"] {
-  --date-picker-before-bg: #335a72;
+  --date-picker-before-bg: #474747;
 }
