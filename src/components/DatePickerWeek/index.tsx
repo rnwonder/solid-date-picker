@@ -1,15 +1,16 @@
 import { Component, JSXElement } from "solid-js";
 import { ClassNames } from "../../interface/general";
-import clsx from "clsx";
+import {cn} from "../../utils/class";
 
-interface DatePickerWeekDaysProps extends ClassNames {
+interface DatePickerWeekDaysProps
+  extends Pick<ClassNames, "weekNamesRowClass" | "daysRowClass"> {
   children: JSXElement;
   header?: boolean;
 }
 export const DatePickerWeek: Component<DatePickerWeekDaysProps> = (props) => {
   return (
     <div
-      class={clsx(
+      class={cn(
         `
           rn-grid
           rn-grid-cols-7

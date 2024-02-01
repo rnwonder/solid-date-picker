@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import {Accessor, createSignal, JSX, Setter, Show} from "solid-js";
+import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
 import {
+  ClassNames,
   IDatePickerOnChange,
   IDatePickerType,
   IRenderInput,
@@ -9,13 +9,15 @@ import {
 import { convertDateObjectToDate, labelFormat } from "../../utils";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
-import {createButtonAnimation} from "../../hooks/createButtonAnimation";
+import { createButtonAnimation } from "../../hooks/createButtonAnimation";
+import { cn } from "../../utils";
 
 export interface DatePickerInputSJProps
   extends Omit<
-    DatePickerProps,
-    "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"
-  > {
+      DatePickerProps,
+      "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"
+    >,
+    Pick<ClassNames, "inputWrapperClass" | "inputClass"> {
   type?: IDatePickerType;
   value: Accessor<PickerValue>;
   setValue?: Setter<PickerValue>;
@@ -38,14 +40,14 @@ export interface DatePickerInputSJProps
   formatInputLabel?: string;
   formatInputLabelRangeStart?: string;
   formatInputLabelRangeEnd?: string;
-  noButtonAnimation?: boolean
+  noButtonAnimation?: boolean;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   const [isShown, setIsShown] = createSignal(false);
   const [allowedComponents, setAllowedComponents] = createSignal<any[]>([]);
 
-  createButtonAnimation(props.noButtonAnimation)
+  createButtonAnimation(props.noButtonAnimation);
 
   const handleOnChange = (data: IDatePickerOnChange) => {
     if (data.type === "single") {
@@ -173,7 +175,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       });
 
       const newMultipleDateISO = newMultipleDateObject.map(
-        (date) => convertDateObjectToDate(date)?.toISOString() || ""
+        (date) => convertDateObjectToDate(date)?.toISOString() || "",
       );
 
       const arrangeDateISO = newMultipleDateISO.sort((a, b) => {
@@ -213,6 +215,18 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   };
 
   const inputJSX = renderCustomJSX(props.renderInput);
+
+  const onKeyDown =
+    (e: KeyboardEvent) =>
+    (handleNext?: () => void, handlePrev?: () => void) => {
+      console.log(e.key);
+      if (e.key === "ArrowRight") {
+        handleNext?.();
+      }
+      if (e.key === "ArrowLeft") {
+        handlePrev?.();
+      }
+    };
   return (
     <Popover
       isShown={isShown()}
@@ -252,13 +266,16 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       zIndex={props.zIndex}
       handleChildrenClick={inputJSX ? () => {} : undefined}
       width={props.inputWrapperWidth}
-      className={clsx(props.inputWrapperClass, "date-picker-input-wrapper")}
+      className={cn(props.inputWrapperClass, "date-picker-input-wrapper")}
     >
       <div
         class={"date-picker-input-area"}
         data-date-picker-input-area={true}
         data-scope="date-picker"
         data-part="control"
+        onKeyDown={(e) => {
+          console.log(e.key);
+        }}
       >
         <Show when={inputJSX} keyed>
           {inputJSX}
@@ -275,10 +292,10 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
             value={props.inputLabel?.() || props.value?.().label || ""}
             data-type={"date-picker-input"}
             {...{ ...props.inputProps, class: undefined }}
-            class={clsx(
-              `rn-w-full date-picker-input rn-px-1`,
+            class={cn(
+              `date-picker-input rn-w-full rn-px-1`,
               props.inputProps?.class,
-              props.inputClass
+              props.inputClass,
             )}
           />
         </Show>

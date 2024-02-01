@@ -8,18 +8,17 @@ import { DatePickerDay } from "../DatePickerDay";
 import { DatePickerWeek } from "../DatePickerWeek";
 import {
   DateObjectUnits,
-  IColors,
   DateArray,
   MakeOptionalRequired,
   CustomDaysClassName,
   HandleDayClick,
   HoverRangeValue,
-  ClassNames,
   IMonthDaysObject,
+  CalendarDaysClassNamesAndColors,
 } from "../../interface/general";
-import clsx from "clsx";
+import {cn} from "../../utils/class";
 
-export interface CalendarDaysProps extends IColors, ClassNames {
+export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   month: Accessor<number>;
   year: Accessor<number>;
   handleDayClick: HandleDayClick;
@@ -59,9 +58,9 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
     <div
       data-type={"calendar-days-area"}
       data-scope={"date-picker"}
-      class={clsx(
+      class={cn(
         "date-picker-calendar-days-area",
-        props.datePickerCalendarDaysArea
+        props.datePickerCalendarDaysArea,
       )}
     >
       <For each={dayRowsArray()}>
@@ -91,7 +90,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
                       day,
                       props.month,
                       props.year,
-                      props.nextMonth || false
+                      props.nextMonth || false,
                     )
                   }
                   onHover={() =>
@@ -99,7 +98,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
                       day,
                       props.month,
                       props.year,
-                      props.nextMonth || false
+                      props.nextMonth || false,
                     )
                   }
                   onHoverEnd={() =>
@@ -107,7 +106,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
                       day,
                       props.month,
                       props.year,
-                      props.nextMonth || false
+                      props.nextMonth || false,
                     )
                   }
                   primaryColor={props.primaryColor}

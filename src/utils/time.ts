@@ -25,7 +25,7 @@ export const convert12HourTo24Hour = (hour: number, meridiem: "AM" | "PM") => {
   if (meridiem === "AM") {
     return hour === 12 ? 0 : hour;
   }
-  return hour === 12 ? hour : hour + 12;
+  return hour === 0 ? 12 : hour === 12 ? hour : hour + 12;
 };
 
 export function getCurrentTime() {

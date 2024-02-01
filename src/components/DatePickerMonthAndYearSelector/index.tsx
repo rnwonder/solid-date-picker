@@ -2,7 +2,7 @@ import { Component, createEffect, createSignal, Show } from "solid-js";
 import { DatePickerTopProps } from "../DatePickerTop";
 import { MonthSelector } from "../MonthSelector";
 import { YearSelector } from "../YearSelector";
-import clsx from "clsx";
+import {cn} from "../../utils/class";
 
 interface DatePickerMonthAndYearSelectorProps
   extends Omit<DatePickerTopProps, "handlePrevMonth" | "handleNextMonth"> {}
@@ -29,7 +29,7 @@ export const DatePickerMonthAndYearSelector: Component<
 
   return (
     <div
-      class={clsx(
+      class={cn(
         `rn-flex date-month-year-selector-area rn-justify-center rn-items-center ${
           props.monthYearSelectorFlexDirection === "column" ? "rn-flex-col" : ""
         }`,
@@ -52,8 +52,6 @@ export const DatePickerMonthAndYearSelector: Component<
             locale={props.locale}
             primaryColor={props.primaryColor}
             primaryTextColor={props.primaryTextColor}
-            secondaryColor={props.secondaryColor}
-            secondaryTextColor={props.secondaryTextColor}
             minDate={props.minDate}
             maxDate={props.maxDate}
             twoMonthsDisplay={props.twoMonthsDisplay}
@@ -72,8 +70,6 @@ export const DatePickerMonthAndYearSelector: Component<
             yearRange={props.yearRange}
             primaryColor={props.primaryColor}
             primaryTextColor={props.primaryTextColor}
-            secondaryColor={props.secondaryColor}
-            secondaryTextColor={props.secondaryTextColor}
             minDate={props.minDate}
             maxDate={props.maxDate}
           />

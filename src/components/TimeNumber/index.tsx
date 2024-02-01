@@ -1,7 +1,7 @@
 import { Accessor, createEffect, createSignal, onMount } from "solid-js";
-import clsx from "clsx";
 import { leadingZeros } from "../../utils/time";
 import { ITimeView, TimeAnalogClassNames } from "../../interface/general";
+import { cn } from "../../utils/class";
 
 interface ITimeNumberProps extends TimeAnalogClassNames {
   type: ITimeView;
@@ -11,12 +11,12 @@ interface ITimeNumberProps extends TimeAnalogClassNames {
   onPointerEnter: (
     e: PointerEvent & { currentTarget: HTMLButtonElement; target: Element },
     type: ITimeView,
-    attr?: number
+    attr?: number,
   ) => void;
   onTouchEnd: (
     e: TouchEvent & { currentTarget: HTMLButtonElement; target: Element },
     type: ITimeView,
-    attr?: number
+    attr?: number,
   ) => void;
   onTouchStart: () => void;
   onPointerUp: () => void;
@@ -98,7 +98,10 @@ export const TimeNumber = (props: ITimeNumberProps) => {
   });
 
   createEffect(() => {
-    if (props.selectedValue() === attr()) {
+    if (
+      props.selectedValue() === attr() ||
+      (props.selectedValue() === 12 && attr() === 0 && props.type === "hour")
+    ) {
       setIsSelected(true);
     } else {
       setIsSelected(false);
@@ -107,37 +110,40 @@ export const TimeNumber = (props: ITimeNumberProps) => {
 
   return (
     <button
-      class={clsx(
+      class={cn(
         `
-              time-analog-number
-              rn-select-none
-              rn-absolute
-              rn-h-time
-              rn-w-time
-              rn-leading-time
-              rn-rounded-full
-              dark:rn-text-slate-200
-              hover:rn-bg-transparent`,
+          time-analog-number
+          rn-absolute
+          rn-h-time
+          rn-w-time
+          rn-select-none
+          rn-rounded-full
+          rn-leading-time
+          hover:rn-bg-transparent
+          `,
         {
           [`
-                rn-text-white 
-                before:rn-content[''] 
-                before:rn-bg-primary 
-                before:rn-h-time-2 
-                before:rn-w-time-2 
-                before:rn-absolute 
-                before:rn-top-1/2 
-                before:rn-left-1/2 
-                before:rn-transform 
-                before:rn--translate-x-1/2 
-                before:rn--translate-y-1/2
-                before:rn-rounded-full
-                before:rn-pointer-events-none
-                
-                `]: isSelected(),
+            before:rn-content[''] 
+            before:rn-bg-dark-time 
+            dark:before:rn-bg-dark-time 
+            rn-text-white 
+            before:rn-pointer-events-none 
+            before:rn-absolute 
+            before:rn-left-1/2 
+            before:rn-top-1/2 
+            before:rn-h-time-2 
+            before:rn-w-time-2 
+            before:rn--translate-x-1/2
+            before:rn--translate-y-1/2
+            before:rn-transform
+            before:rn-rounded-full
+            dark:rn-text-white
+            dark:before:rn-text-white
+            `]: isSelected(),
           "": props.index() % teilBar() === 0,
+          "dark:rn-text-white": !isSelected(),
         },
-        props.class
+        props.class,
       )}
       aria-label={leadingZeros(attr() || 0) + " " + props.type + "s"}
       role={"option"}
@@ -155,23 +161,23 @@ export const TimeNumber = (props: ITimeNumberProps) => {
       data-selected={isSelected()}
     >
       <span
-        class={clsx(" rn-relative rn-z-[1]", {
+        class={cn(" rn-relative rn-z-[1]", {
           [`
-                      after:rn-content['']
-                      after:rn-absolute
-                      after:rn-top-1/2
-                      after:rn-left-1/2
-                      after:rn-transform
-                      after:rn--translate-x-1/2
-                      after:rn--translate-y-1/2
-                      after:rn-w-[3px]
-                      after:rn-h-[3px]
-                      after:rn-rounded-full
-                      after:rn-bg-white
-                      dark:rn-text-slate-200
-                      
-                      
-                      `]: props.type !== "hour" && !value() && isSelected(),
+            after:rn-content['']
+            dark:rn-text-red
+            dark:after:rn-bg-red
+            after:rn-absolute
+            after:rn-left-1/2
+            after:rn-top-1/2
+            after:rn-h-[3px]
+            after:rn-w-[3px]
+            after:rn--translate-x-1/2
+            after:rn--translate-y-1/2
+            after:rn-transform
+            after:rn-rounded-full
+            after:rn-bg-white
+            
+            `]: props.type !== "hour" && !value() && isSelected(),
         })}
       >
         {value()}

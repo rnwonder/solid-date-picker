@@ -2,15 +2,14 @@ import { Accessor, Component, Setter } from "solid-js";
 import { Selector } from "../Selector";
 import {
   IYearRange,
-  IColors,
   MakeOptionalRequired,
   DateObjectUnits,
-  ClassNames,
-  IDatePickerType
+  IDatePickerType,
+  SelectorColorsAndClassNames,
 } from "../../interface/general";
 import { currentYear, generateYearsArray } from "../../utils";
 
-interface YearSelectorProps extends IColors, ClassNames {
+export interface YearSelectorProps extends SelectorColorsAndClassNames {
   year: Accessor<number>;
   setYear: Setter<number>;
   ref?: Setter<HTMLDivElement | undefined>;
@@ -18,9 +17,8 @@ interface YearSelectorProps extends IColors, ClassNames {
   yearRange?: IYearRange;
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
-  type: IDatePickerType;
+  type?: IDatePickerType;
   startDay?: DateObjectUnits;
-  setStartDay: Setter<DateObjectUnits | undefined>;
 }
 
 export const YearSelector: Component<YearSelectorProps> = (props) => {
@@ -29,7 +27,7 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
       {...props}
       optionsArray={generateYearsArray(
         props.yearRange?.start || currentYear - 51,
-        props.yearRange?.end || currentYear + 20
+        props.yearRange?.end || currentYear + 20,
       ).map((year) => year.toString())}
       option={props.year}
       setOption={props.setYear}
@@ -42,8 +40,6 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
       zIndex={props.zIndex}
       primaryColor={props.primaryColor}
       primaryTextColor={props.primaryTextColor}
-      secondaryColor={props.secondaryColor}
-      secondaryTextColor={props.secondaryTextColor}
     />
   );
 };
