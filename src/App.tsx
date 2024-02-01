@@ -9,14 +9,10 @@ import { PickerValue, TimeValue } from "./interface/general";
 import { clickOutsideSJ, utils } from "./utils";
 import TimeAnalogPicker from "./components/TimeAnalogPicker";
 import DateMath from "./utils/math";
-import { Portal } from "solid-js/web";
 import { CustomPortal } from "./components/CustomPortal";
 import { Popover } from "./components/Popover";
 import DatePickerStandAloneExport from "./components/DatePickerStandAloneExport";
 
-function clickOutside(el: any, accessor: any) {
-  clickOutsideSJ(el, accessor);
-}
 
 const App: Component = () => {
   const [value, setValue] = createSignal<TimeValue>({

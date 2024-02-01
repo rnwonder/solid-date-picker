@@ -14,7 +14,6 @@ import {
   HoverRangeValue,
 } from "../../interface/general";
 import { cn } from "../../utils";
-import { clsx } from "clsx";
 
 interface DatePickerDayProps
   extends DatePickerDayClassNamesAndColors,

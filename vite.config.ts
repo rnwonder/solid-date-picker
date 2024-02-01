@@ -3,8 +3,6 @@ import { resolve } from "path";
 import solidPlugin from "vite-plugin-solid";
 import dts from "vite-plugin-dts";
 import terser from "@rollup/plugin-terser";
-import {CalendarArea} from "./src/components/CalendarArea";
-import DatePickerStandAlone from "./src/datePickerStandAlone";
 
 export default defineConfig({
   build: {
