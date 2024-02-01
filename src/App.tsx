@@ -6,7 +6,7 @@ import { PickerValue, TimeValue } from "./interface/general";
 // import style from "./App.module.css";
 // import "./themes/ark-ui/ark-ui.css";
 // import "./themes/shad-cn-ui/shad-cn-ui.css";
-import { clickOutsideSJ, utils } from "./utils";
+import { utils } from "./utils";
 import TimeAnalogPicker from "./components/TimeAnalogPicker";
 import DateMath from "./utils/math";
 import { CustomPortal } from "./components/CustomPortal";
