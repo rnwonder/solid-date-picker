@@ -30,18 +30,11 @@ This package depends on `solid-js` so you need to have it installed
 ## Usage
 
 ```tsx
-import DatePicker, { PickerValue } from "@rnwonder/solid-date-picker";
+import DatePicker from "@rnwonder/solid-date-picker";
 
 const App = () => {
-  const [value, setValue] = createSignal<PickerValue>({
-    value: {},
-    label: "",
-  });
-
   return (
     <DatePicker
-      value={value}
-      setValue={setValue}
       onChange={(data) => {
         if (data.type === "range") {
           console.log(data.startDate, data.endDate);
@@ -62,7 +55,6 @@ For Solid Start, you want to use the `DatePicker` component as a client-side com
 
 ```tsx
 import { clientOnly } from "@solidjs/start";
-import { PickerValue } from "@rnwonder/solid-date-picker";
 const DatePicker = clientOnly(() => import("@rnwonder/solid-date-picker"));
 ```
 
@@ -93,22 +85,10 @@ After importing the `DatePicker` component, you can use it the same way as above
 - This is in beta and can be used like this
 
 ```tsx
-import {createSignal} from 'solid-js';
-import { TimeValue } from '@rnwonder/solid-date-picker';
 import TimePicker from "@rnwonder/solid-date-picker/timePicker";
 
 const App = () => {
-  const [value, setValue] = createSignal<TimeValue>({
-    value: {},
-    label: "",
-  });
-
-  return (
-    <TimePicker
-      value={value}
-      setValue={setValue}
-    />
-  );
+  return <TimePicker />
 };
 ```
 
@@ -118,10 +98,8 @@ const App = () => {
 - More themes
 - More utility functions
 - Expose internal components for more flexibility
-- Refactor setup logic to make it more flexible
 - Add more tests
 - Add more documentation
-- Better support for SSR
 
 ### Contributing
 - Send a message to the author on [twitter](https://twitter.com/Rnwonder101) if you have any questions or suggestions. Don't forget to follow me on twitter.

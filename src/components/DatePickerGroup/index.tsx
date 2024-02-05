@@ -19,7 +19,7 @@ export interface DatePickerInputSJProps
     >,
     Pick<ClassNames, "inputWrapperClass" | "inputClass"> {
   type?: IDatePickerType;
-  value: Accessor<PickerValue>;
+  value?: Accessor<PickerValue>;
   setValue?: Setter<PickerValue>;
   onChange?: (data: IDatePickerOnChange) => void;
   componentsToAllowOutsideClick?: Array<HTMLElement>;
@@ -44,12 +44,19 @@ export interface DatePickerInputSJProps
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
+  const [value, setValue] = createSignal<PickerValue>({
+    label: "",
+    value: {},
+  });
   const [isShown, setIsShown] = createSignal(false);
   const [allowedComponents, setAllowedComponents] = createSignal<any[]>([]);
 
   createButtonAnimation(props.noButtonAnimation);
 
   const handleOnChange = (data: IDatePickerOnChange) => {
+    const pickerValue = props.value || value;
+    const setPickerValue = props.setValue || setValue;
+
     if (data.type === "single") {
       const dateTime = convertDateObjectToDate(data?.selectedDate || {});
       const label = labelFormat({
@@ -62,7 +69,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         format: props.formatInputLabel,
         locale: props.locale,
       });
-      props.setValue?.({
+      setPickerValue({
         value: {
           selected: dateTime?.toISOString() || "",
           selectedDateObject: data?.selectedDate || {},
@@ -136,7 +143,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       label = `${startDateFormatted} ${
         props.rangeDatesSeparator || "-"
       } ${endDateFormatted}`;
-      props.setValue?.({
+      setPickerValue({
         value: {
           start: startDateTime?.toISOString() || "",
           startDateObject: data?.startDate || {},
@@ -148,15 +155,15 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
     }
 
     if (data.type === "multiple") {
-      const savedValue = props.value().value;
+      const savedValue = pickerValue().value;
       const savedMultipleDateObject = savedValue.multipleDateObject || [];
       const newMultipleDateObject = data.multipleDates || [];
 
-      if (!props.value().label && newMultipleDateObject.length === 0) return;
+      if (!pickerValue().label && newMultipleDateObject.length === 0) return;
       if (
         savedMultipleDateObject.toString() ===
           newMultipleDateObject.toString() &&
-        props.value().label
+        pickerValue().label
       )
         return;
 
@@ -188,7 +195,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         return isoA.localeCompare(isoB);
       });
 
-      props.setValue?.({
+      setPickerValue({
         value: {
           multiple: arrangeDateISO,
           multipleDateObject: arrangeDateObject,
@@ -206,7 +213,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
     if (!renderJSX) return undefined;
     if (typeof renderJSX === "function") {
       const content = renderJSX({
-        value: props.value,
+        value: props.value || value,
         showDate: handleChildrenClick,
       });
       return <>{content}</>;
@@ -216,17 +223,6 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
 
   const inputJSX = renderCustomJSX(props.renderInput);
 
-  const onKeyDown =
-    (e: KeyboardEvent) =>
-    (handleNext?: () => void, handlePrev?: () => void) => {
-      console.log(e.key);
-      if (e.key === "ArrowRight") {
-        handleNext?.();
-      }
-      if (e.key === "ArrowLeft") {
-        handlePrev?.();
-      }
-    };
   return (
     <Popover
       isShown={isShown()}
@@ -242,7 +238,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         <DatePicker
           {...props}
           type={props.type || "single"}
-          value={props.value?.().value}
+          value={props.value?.()?.value || value().value}
           handleOnChange={handleOnChange}
           onChange={props.onChange}
           maxDate={props.maxDate}
@@ -273,9 +269,6 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         data-date-picker-input-area={true}
         data-scope="date-picker"
         data-part="control"
-        onKeyDown={(e) => {
-          console.log(e.key);
-        }}
       >
         <Show when={inputJSX} keyed>
           {inputJSX}
@@ -289,7 +282,9 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
             data-part="input"
             aria-label={"date picker input"}
             placeholder={props.placeholder}
-            value={props.inputLabel?.() || props.value?.().label || ""}
+            value={
+              props.inputLabel?.() || props.value?.()?.label || value().label
+            }
             data-type={"date-picker-input"}
             {...{ ...props.inputProps, class: undefined }}
             class={cn(

@@ -13,7 +13,6 @@ import { CustomPortal } from "./components/CustomPortal";
 import { Popover } from "./components/Popover";
 import DatePickerStandAloneExport from "./components/DatePickerStandAloneExport";
 
-
 const App: Component = () => {
   const [value, setValue] = createSignal<TimeValue>({
     label: "",
@@ -56,49 +55,8 @@ const App: Component = () => {
 
   return (
     <div class={"rn-min-h-screen rn-bg-red-400"}>
-      <DatePickerGroup
-        value={date}
-        setValue={setDate}
-        onValueChange={(data) => {
-          console.log("onValueChange", data);
-        }}
-        onChange={(data) => {
-          console.log(data);
-        }}
-        minDate={utils().getToday()}
-        weekDaysType="double"
-        monthSelectorFormat={"long"}
-        calendarLeftAreaJSX={(props) => <div>Left</div>}
-        calendarRightAreaJSX={(props) => <div>Right</div>}
-        calendarBottomAreaJSX={(props) => <div>Bottom</div>}
-        pickerPositionX={"right"}
-        type={"range"}
-      />
-
-      <TimeAnalogPicker
-        value={time}
-        setValue={setTime}
-        allowedView={["hour"]}
-        hideTopArea
-        topAreaJSX={(data) => {
-          // available props
-          console.log(
-            data.time(),
-            data.view(),
-            data.setView,
-            data.meridiem(),
-            data.setMeridiem,
-            data.handleNext,
-            data.handlePrev,
-          );
-          return (
-            <div class={"rn-text-center"}>top jsx hour{data.time()?.hour}</div>
-          );
-        }}
-        leftAreaJSX={<div>left jsx</div>}
-        rightAreaJSX={<div>right jsx</div>}
-        bottomAreaJSX={<div class={"rn-text-center"}>bottom jsx</div>}
-      />
+      <DatePickerGroup />
+      <TimeAnalogPicker />
       <button
         class={"rn-w-[10rem] rn-bg-white"}
         id={"portal"}
@@ -161,47 +119,3 @@ const App: Component = () => {
 
 export default App;
 
-const CustomInput = (props: {
-  value: PickerValue;
-  setDate: Setter<PickerValue>;
-  showDate: () => void;
-}) => {
-  // createEffect(() => console.log("inner effect", { value: props.value }));
-  const handleOnChange = (event: any) => {
-    // console.log("on blur", event.target.value);
-    if (!event.target.value) return;
-    const formattedDateValue = utils().formatDate(event.target.value, {
-      format: "dd.mm.yyyy",
-    });
-
-    const newSelectedDate = DateMath.set(event.target.value);
-
-    const newDate: PickerValue = {
-      label: formattedDateValue,
-      value: {
-        selected: newSelectedDate.toISO(),
-        selectedDateObject: newSelectedDate.toObject(),
-      },
-    };
-
-    // console.log("from input", newDate);
-
-    props.setDate(newDate);
-  };
-
-  return (
-    <input
-      type="date"
-      onClick={props.showDate} // this opens the date picker
-      placeholder="I'm a custom input"
-      onChange={() => {}}
-      value={utils().formatDate(
-        new Date(props.value.value.selected as string),
-        {
-          format: "yyyy-mm-dd",
-        },
-      )}
-      onBlur={handleOnChange}
-    />
-  );
-};

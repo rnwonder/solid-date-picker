@@ -20,8 +20,8 @@ interface ITimeAnalogPickerProps
     ITimeAnalogGroupProps,
     "handleTimeChange" | "value" | "close" | "setIsShown"
   > {
-  value: Accessor<TimeValue>;
-  setValue: Setter<TimeValue>;
+  value?: Accessor<TimeValue>;
+  setValue?: Setter<TimeValue>;
   onClose?: () => void;
   onOpen?: () => void;
 
@@ -41,6 +41,10 @@ interface ITimeAnalogPickerProps
 }
 const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
   const [isShown, setIsShown] = createSignal(false);
+  const [value, setValue] = createSignal<TimeValue>({
+    value: {},
+    label: "",
+  });
 
   createButtonAnimation(props.noButtonAnimation);
 
@@ -48,6 +52,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
     time: ITimePickerFormat,
     meridiem: ITimeMeridiem,
   ) => {
+    const setPickerValue = props.setValue || setValue;
     let label = "";
     let suffix = "";
 
@@ -105,7 +110,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
     }
     label += ` ${suffix}`;
 
-    props.setValue({
+    setPickerValue({
       value: {
         ...time,
         hour:
@@ -125,7 +130,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
     if (!renderJSX) return undefined;
     if (typeof renderJSX === "function") {
       const content = renderJSX({
-        value: props.value,
+        value: props.value || value,
         showTime: handleChildrenClick,
       });
       return <>{content}</>;
@@ -148,7 +153,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
       content={({ close }) => (
         <TimeAnalogGroup
           {...props}
-          value={props.value().value}
+          value={props.value?.()?.value || value().value}
           handleTimeChange={handleTimeChange}
           close={close}
           setIsShown={setIsShown}
@@ -179,7 +184,9 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
             aria-label={"time picker input"}
             placeholder={props.placeholder}
             type="text"
-            value={props.inputLabel?.() || props.value().label}
+            value={
+              props.inputLabel?.() || props.value?.()?.label || value().label
+            }
             {...{ ...props.inputProps, class: undefined }}
             class={cn(
               `time-picker-input rn-w-full rn-px-1`,
