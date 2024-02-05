@@ -76,10 +76,10 @@ After importing the `DatePicker` component, you can use it the same way as above
 - Check out the [documentation](https://soliddatepicker.live/docs/formatting/) for more details
 
 ### Utility Functions
-- We have some utility functions that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/utilities/)
+- We have some utility functions that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/helpers-utilities/)
 
 ### Other Components
-- We have some other components that can be useful when working with the datepicker. Please check them out [here](https://soliddatepicker.live/docs/other-components/)
+- We have some other components that you may find useful. Please check them out [here](https://soliddatepicker.live/docs/popover/)
 
 ### Time Picker
 - This is in beta and can be used like this
