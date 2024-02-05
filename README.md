@@ -99,7 +99,6 @@ const App = () => {
 - More utility functions
 - Expose internal components for more flexibility
 - Add more tests
-- Add more documentation
 
 ### Contributing
 - Send a message to the author on [twitter](https://twitter.com/Rnwonder101) if you have any questions or suggestions. Don't forget to follow me on twitter.
