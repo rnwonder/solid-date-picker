@@ -4,13 +4,13 @@ import { Button } from "../Button";
 import {
   IMonthSelectorType,
   IMonthYearSelectorFlexDirection,
-  IYearRange,
+  YearRange,
   Locale,
-  IColors,
+  RnColor,
   MakeOptionalRequired,
   DateObjectUnits,
   DateArray,
-  ClassNames, IDatePickerOnChange, IDatePickerType,
+  RnClassName, DatePickerOnChange, DatePickerType,
 } from "../../interface/general";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
@@ -21,7 +21,7 @@ import {
 } from "../../utils";
 import {cn} from "../../utils/class";
 
-export interface DatePickerTopProps extends IColors, ClassNames {
+export interface DatePickerTopProps extends RnColor, RnClassName {
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
   setMonth: Setter<number>;
@@ -36,7 +36,7 @@ export interface DatePickerTopProps extends IColors, ClassNames {
   setAllowedComponents?: Setter<HTMLElement[]>;
   monthSelectorFormat?: IMonthSelectorType;
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
-  yearRange?: IYearRange;
+  yearRange?: YearRange;
   locale?: Locale;
   nextIcon?: JSXElement;
   prevIcon?: JSXElement;
@@ -47,9 +47,9 @@ export interface DatePickerTopProps extends IColors, ClassNames {
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
   enabledDays?: DateArray[];
   onMonthChange?: (month: number) => void;
-  onChange?: (data: IDatePickerOnChange) => void;
+  onChange?: (data: DatePickerOnChange) => void;
   twoMonthsDisplay?: boolean;
-  type: IDatePickerType;
+  type: DatePickerType;
   startDay?: DateObjectUnits;
   setStartDay: Setter<DateObjectUnits | undefined>;
 }

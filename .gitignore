@@ -7,3 +7,6 @@ stats.html
 tsconfig.tsbuildinfo
 vite.config.ts.timestamp-1685973042077.mjs
 .DS_Store
+themes
+gulpfile.js
+./gulpfile.js

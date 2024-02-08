@@ -1,9 +1,9 @@
 import { DatePicker, DatePickerProps } from "./DatePicker";
-import { IDatePickerType } from "../interface/general";
+import { DatePickerType } from "../interface/general";
 
 export interface DatePickerStandAloneProps
   extends Omit<DatePickerProps, "handleOnChange" | "type"> {
-  type?: IDatePickerType;
+  type?: DatePickerType;
 }
 
 const DatePickerStandAloneExport = (props: DatePickerStandAloneProps) => {

@@ -1,4 +1,4 @@
-import { ITimeMeridiem } from "../interface/general";
+import { TimeMeridiem } from "../interface/general";
 
 export const leadingZeros = (value: number, numberOfLeadingZero?: number) => {
   return String(Math.ceil(value)).padStart(numberOfLeadingZero ?? 2, "0");
@@ -17,7 +17,7 @@ export const convert24HourTo12Hour = (hour: number) => {
   return hour;
 };
 
-export const getAmPm = (hour: number): ITimeMeridiem => {
+export const getAmPm = (hour: number): TimeMeridiem => {
   return hour >= 12 ? "PM" : "AM";
 };
 
@@ -33,7 +33,7 @@ export function getCurrentTime() {
   let hour = date.getHours();
   const minute = date.getMinutes();
   const second = date.getSeconds();
-  let meridiem: ITimeMeridiem = "AM";
+  let meridiem: TimeMeridiem = "AM";
 
   if (hour > 12) {
     hour -= 12;

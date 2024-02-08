@@ -1,8 +1,8 @@
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
 import { ITimeAnalogGroupProps, TimeAnalogGroup } from "../TimeAnalogGroup";
 import {
-  IRenderTimeInput,
-  ITimeMeridiem,
+  TimeInputJSX,
+  TimeMeridiem,
   ITimePickerFormat,
   TimeValue,
 } from "../../interface/general";
@@ -30,7 +30,7 @@ interface ITimeAnalogPickerProps
   inputClass?: string;
   inputWrapperClass?: string;
 
-  renderInput?: IRenderTimeInput;
+  renderInput?: TimeInputJSX;
   pickerPositionX?: IPopOverPositionX;
   pickerPositionY?: IPopOverPositionY;
 
@@ -50,7 +50,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
 
   const handleTimeChange = (
     time: ITimePickerFormat,
-    meridiem: ITimeMeridiem,
+    meridiem: TimeMeridiem,
   ) => {
     const setPickerValue = props.setValue || setValue;
     let label = "";
@@ -126,7 +126,7 @@ const TimeAnalogPicker = (props: ITimeAnalogPickerProps) => {
     setIsShown(true);
   };
 
-  const renderCustomJSX = (renderJSX?: IRenderTimeInput) => {
+  const renderCustomJSX = (renderJSX?: TimeInputJSX) => {
     if (!renderJSX) return undefined;
     if (typeof renderJSX === "function") {
       const content = renderJSX({

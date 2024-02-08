@@ -1,10 +1,10 @@
 import { Accessor, Component, Setter } from "solid-js";
 import { Selector } from "../Selector";
 import {
-  IYearRange,
+  YearRange,
   MakeOptionalRequired,
   DateObjectUnits,
-  IDatePickerType,
+  DatePickerType,
   SelectorColorsAndClassNames,
 } from "../../interface/general";
 import { currentYear, generateYearsArray } from "../../utils";
@@ -14,10 +14,10 @@ export interface YearSelectorProps extends SelectorColorsAndClassNames {
   setYear: Setter<number>;
   ref?: Setter<HTMLDivElement | undefined>;
   zIndex?: number;
-  yearRange?: IYearRange;
+  yearRange?: YearRange;
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
-  type?: IDatePickerType;
+  type?: DatePickerType;
   startDay?: DateObjectUnits;
 }
 

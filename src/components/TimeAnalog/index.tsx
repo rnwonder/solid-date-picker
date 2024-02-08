@@ -8,10 +8,10 @@ import {
   onMount,
 } from "solid-js";
 import {
-  ITimeMeridiem,
+  TimeMeridiem,
   ITimePickerFormat,
-  ITimeView,
-  TimeAnalogClassNames,
+  TimeView,
+  TimeClassName,
 } from "../../interface/general";
 import { TimeNumber } from "../TimeNumber";
 import {
@@ -22,18 +22,18 @@ import {
 } from "../../utils/time";
 import { cn } from "../../utils";
 
-export interface ITimePickerAnalog extends TimeAnalogClassNames {
+export interface ITimePickerAnalog extends TimeClassName {
   close: () => void;
-  view: Accessor<ITimeView>;
-  setView: Setter<ITimeView>;
-  allowedView: ITimeView[];
+  view: Accessor<TimeView>;
+  setView: Setter<TimeView>;
+  allowedView: TimeView[];
   value: ITimePickerFormat;
   handleNext: () => void;
   onChange?: (time: ITimePickerFormat) => void;
-  meridiem: Accessor<ITimeMeridiem>;
-  setMeridiem: Setter<ITimeMeridiem>;
+  meridiem: Accessor<TimeMeridiem>;
+  setMeridiem: Setter<TimeMeridiem>;
   setCurrentTimeOnOpen?: boolean;
-  handleTimeChange: (time: ITimePickerFormat, meridiem: ITimeMeridiem) => void;
+  handleTimeChange: (time: ITimePickerFormat, meridiem: TimeMeridiem) => void;
   selectedHour: Accessor<number | undefined>;
   selectedMinute: Accessor<number | undefined>;
   selectedSeconds: Accessor<number | undefined>;
@@ -157,7 +157,7 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
 
   const handlePointerEnter = (
     e: PointerEvent & { currentTarget: HTMLButtonElement; target: Element },
-    type: ITimeView,
+    type: TimeView,
     value?: number,
   ) => {
     if (value === undefined) return;
@@ -187,14 +187,14 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
 
   const handleTouchEnd = (
     e: TouchEvent & { currentTarget: HTMLButtonElement; target: Element },
-    type: ITimeView,
+    type: TimeView,
     value?: number,
   ) => {
     if (value === undefined) return;
     handleClick(type, value);
   };
 
-  const handleClick = (type: ITimeView, value?: number) => {
+  const handleClick = (type: TimeView, value?: number) => {
     if (value === undefined) return;
     if (type === "hour") {
       props.setSelectedHour(value);

@@ -8,20 +8,20 @@ import {
   Show,
 } from "solid-js";
 import {
-  ClassNames,
+  RnClassName,
   CustomDaysClassName,
   DateArray,
   DateObjectUnits,
   HoverRangeValue,
-  IColors,
-  IDatePickerInputValueTypes,
-  IDatePickerOnChange,
-  IDatePickerType,
-  IMonthDaysObject,
+  RnColor,
+  PickerAloneValue,
+  DatePickerOnChange,
+  DatePickerType,
+  MonthDaysObject,
   IMonthSelectorType,
   IMonthYearSelectorFlexDirection,
-  IRenderJSX,
-  IYearRange,
+  PickerRenderJSX,
+  YearRange,
   Locale,
   LocaleOptions,
   MakeOptionalRequired,
@@ -42,23 +42,23 @@ import { DatePickerTop } from "../DatePickerTop";
 import { cn } from "../../utils";
 
 export interface DatePickerProps
-  extends IColors,
-    Omit<ClassNames, "inputClass" | "inputWrapperClass"> {
-  type: IDatePickerType;
+  extends RnColor,
+    Omit<RnClassName, "inputClass" | "inputWrapperClass"> {
+  type: DatePickerType;
   close?: () => void;
-  handleOnChange: (data: IDatePickerOnChange) => void;
+  handleOnChange: (data: DatePickerOnChange) => void;
   onDisabledDayError?: () => void;
 
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
 
-  onChange?: (data: IDatePickerOnChange) => void;
+  onChange?: (data: DatePickerOnChange) => void;
   onYearChange?: (year: number) => void;
   onMonthChange?: (month: number) => void;
-  onValueChange?: (value: IDatePickerOnChange) => void;
+  onValueChange?: (value: DatePickerOnChange) => void;
 
   ref?: any;
-  value?: IDatePickerInputValueTypes;
+  value?: PickerAloneValue;
   setAllowedComponents?: Setter<HTMLElement[]>;
 
   month?: Accessor<number>;
@@ -66,21 +66,21 @@ export interface DatePickerProps
   year?: Accessor<number>;
   setYear?: Setter<number>;
 
-  monthSelectorJSX?: IRenderJSX;
-  yearSelectorJSX?: IRenderJSX;
-  calendarAboveTopAreaJSX?: IRenderJSX;
-  calendarTopAreaJSX?: IRenderJSX;
-  calendarBottomAreaJSX?: IRenderJSX;
-  calendarLeftAreaJSX?: IRenderJSX;
-  calendarRightAreaJSX?: IRenderJSX;
-  calendarJSX?: IRenderJSX;
-  afterNextButtonAreaJSX?: IRenderJSX;
-  beforePrevButtonAreaJSX?: IRenderJSX;
-  weekDaysJSX?: IRenderJSX;
+  monthSelectorJSX?: PickerRenderJSX;
+  yearSelectorJSX?: PickerRenderJSX;
+  calendarAboveTopAreaJSX?: PickerRenderJSX;
+  calendarTopAreaJSX?: PickerRenderJSX;
+  calendarBottomAreaJSX?: PickerRenderJSX;
+  calendarLeftAreaJSX?: PickerRenderJSX;
+  calendarRightAreaJSX?: PickerRenderJSX;
+  calendarJSX?: PickerRenderJSX;
+  afterNextButtonAreaJSX?: PickerRenderJSX;
+  beforePrevButtonAreaJSX?: PickerRenderJSX;
+  weekDaysJSX?: PickerRenderJSX;
 
   monthSelectorFormat?: IMonthSelectorType;
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
-  yearRange?: IYearRange;
+  yearRange?: YearRange;
   locale?: Locale;
   localeOptions?: LocaleOptions;
   nextIcon?: JSXElement;
@@ -252,7 +252,7 @@ export const DatePicker = (props: DatePickerProps) => {
     }
   });
 
-  const onChange = (data: IDatePickerOnChange) => {
+  const onChange = (data: DatePickerOnChange) => {
     props.handleOnChange(data);
     props?.onChange?.(data);
     props.onValueChange?.(data);
@@ -301,7 +301,7 @@ export const DatePicker = (props: DatePickerProps) => {
   });
 
   const handleDayClick = (
-    day: IMonthDaysObject,
+    day: MonthDaysObject,
     month: Accessor<number>,
     year: Accessor<number>,
     nextMonth: boolean = false,
@@ -420,7 +420,7 @@ export const DatePicker = (props: DatePickerProps) => {
   };
 
   const onHoverDay = (
-    day: IMonthDaysObject,
+    day: MonthDaysObject,
     month: Accessor<number>,
     year: Accessor<number>,
   ) => {
@@ -456,7 +456,7 @@ export const DatePicker = (props: DatePickerProps) => {
   };
 
   // Render Custom JSX
-  const renderCustomJSX = (renderJSX?: IRenderJSX) => {
+  const renderCustomJSX = (renderJSX?: PickerRenderJSX) => {
     if (!renderJSX) return undefined;
     if (typeof renderJSX === "function") {
       const [ref, setRef] = createSignal<HTMLDivElement>();

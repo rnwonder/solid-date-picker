@@ -4,7 +4,7 @@ import {
   DateArray,
   DateObjectUnits,
   HoverRangeValue,
-  IMonthDaysObject,
+  MonthDaysObject,
   MakeOptionalRequired,
 } from "../interface/general";
 import { Accessor } from "solid-js";
@@ -40,7 +40,7 @@ export const applyDateRangeProps = ({
   endDay: DateObjectUnits | undefined;
   year: Accessor<number>;
   month: Accessor<number>;
-  day: IMonthDaysObject;
+  day: MonthDaysObject;
   customDaysClassName?: CustomDaysClassName[];
   multipleObject: DateObjectUnits[];
   hideOutSideDays?: boolean;
@@ -155,7 +155,7 @@ export const applyDateRangeProps = ({
 const checkHoverEnd = (
   hoverRangeValue: Accessor<HoverRangeValue>,
   startDay: DateObjectUnits | undefined,
-  day: IMonthDaysObject,
+  day: MonthDaysObject,
   year: Accessor<number>,
   month: Accessor<number>
 ) => {

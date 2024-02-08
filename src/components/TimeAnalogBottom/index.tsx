@@ -1,14 +1,14 @@
 import { Accessor, Setter } from "solid-js";
 import { Button } from "../Button";
-import { ITimeMeridiem, TimeAnalogClassNames } from "../../interface/general";
+import { TimeMeridiem, TimeClassName } from "../../interface/general";
 import { cn } from "../../utils";
 
-interface ITimeAnalogBottomProps extends TimeAnalogClassNames {
-  meridiem: Accessor<ITimeMeridiem>;
-  setMeridiem: Setter<ITimeMeridiem>;
+interface ITimeAnalogBottomProps extends TimeClassName {
+  meridiem: Accessor<TimeMeridiem>;
+  setMeridiem: Setter<TimeMeridiem>;
 }
 export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
-  const classString = (meridiem: ITimeMeridiem) =>
+  const classString = (meridiem: TimeMeridiem) =>
     cn(
       `
         time-picker-meridiem-btn

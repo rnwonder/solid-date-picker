@@ -9,9 +9,9 @@ import {
 } from "solid-js";
 import { ITimePickerAnalog, TimeAnalog } from "../TimeAnalog";
 import {
-  ITimeMeridiem,
+  TimeMeridiem,
   ITimePickerFormat,
-  ITimeView,
+  TimeView,
 } from "../../interface/general";
 import { TimeAnalogGroupTop } from "../TimeAnalogGroupTop";
 import { TimeAnalogBottom } from "../TimeAnalogBottom";
@@ -19,10 +19,10 @@ import { cn } from "../../utils";
 import { convert12HourTo24Hour } from "../../utils/time";
 
 interface IRenderTimeJSXProps {
-  view: Accessor<ITimeView>;
-  setView: Setter<ITimeView>;
-  meridiem: Accessor<ITimeMeridiem>;
-  setMeridiem: Setter<ITimeMeridiem>;
+  view: Accessor<TimeView>;
+  setView: Setter<TimeView>;
+  meridiem: Accessor<TimeMeridiem>;
+  setMeridiem: Setter<TimeMeridiem>;
   handleNext: () => void;
   handlePrev: () => void;
   time: Accessor<ITimePickerFormat | undefined>;
@@ -50,7 +50,7 @@ export interface ITimeAnalogGroupProps
     | "setSelectedHour"
     | "setSelectedSeconds"
   > {
-  allowedView?: ITimeView[];
+  allowedView?: TimeView[];
   arrowsColor?: string;
   prevIcon?: JSX.Element;
   nextIcon?: JSX.Element;
@@ -65,12 +65,12 @@ export interface ITimeAnalogGroupProps
   rightAreaJSX?: IRenderTimeJSX;
 }
 export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
-  const [view, setView] = createSignal<ITimeView>("hour");
-  const [allowedView, setAllowedView] = createSignal<ITimeView[]>([
+  const [view, setView] = createSignal<TimeView>("hour");
+  const [allowedView, setAllowedView] = createSignal<TimeView[]>([
     "hour",
     "minute",
   ]);
-  const [meridiem, setMeridiem] = createSignal<ITimeMeridiem>("AM");
+  const [meridiem, setMeridiem] = createSignal<TimeMeridiem>("AM");
   const [selectedHour, setSelectedHour] = createSignal<number>();
   const [selectedMinute, setSelectedMinute] = createSignal<number>();
   const [selectedSeconds, setSelectedSeconds] = createSignal<number>();

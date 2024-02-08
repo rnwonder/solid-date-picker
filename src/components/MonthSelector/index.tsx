@@ -1,7 +1,7 @@
 import { Accessor, createSignal, onMount, Setter } from "solid-js";
 import {
   DateObjectUnits,
-  IDatePickerType,
+  DatePickerType,
   IMonthSelectorType,
   Locale,
   MakeOptionalRequired,
@@ -13,7 +13,7 @@ export interface MonthSelectorProps extends SelectorColorsAndClassNames {
   month: Accessor<number>;
   setMonth: Setter<number>;
   ref?: Setter<HTMLDivElement | undefined>;
-  type?: IDatePickerType;
+  type?: DatePickerType;
   monthSelectorType?: IMonthSelectorType;
   zIndex?: number;
   locale?: Locale;

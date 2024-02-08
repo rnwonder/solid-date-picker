@@ -7,13 +7,13 @@ import {
 } from "solid-js";
 import { CalendarDays, CalendarDaysProps } from "../CalendarDays";
 import { WeekDays } from "../WeekDays";
-import { ClassNames, Locale, WeekDaysType } from "../../interface/general";
+import { RnClassName, Locale, WeekDaysType } from "../../interface/general";
 import {cn} from "../../utils/class";
 
 export interface CalendarAreaProps
   extends CalendarDaysProps,
     Pick<
-      ClassNames,
+      RnClassName,
       | "calendarWrapperClass"
       | "calendarDividerClass"
       | "calendarOneAreaClass"

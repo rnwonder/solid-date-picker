@@ -3,6 +3,8 @@
 - Feel free to use any other props that you want to use or even ignore these props
 
 ```js
+import "@rnwonder/solid-date-picker/themes/ark-ui";
+
 <DatePickerGroup
   weekDaysType="single"
   shouldHighlightWeekends

@@ -1,9 +1,9 @@
 import {
   DateObjectUnits,
-  IDatePickerOnChange,
-  IDatePickerType,
-  IMonthDaysObject,
-  IMonthStatus,
+  DatePickerOnChange,
+  DatePickerType,
+  MonthDaysObject,
+  MonthStatus,
   Locale,
   MakeOptionalRequired,
 } from "../interface/general";
@@ -16,7 +16,7 @@ export const getMonthDaysArray = (
   option?: {
     weekStartDay?: number;
   },
-): IMonthDaysObject[] => {
+): MonthDaysObject[] => {
   const firstDayOfMonth = new Date(
     year,
     month,
@@ -26,7 +26,7 @@ export const getMonthDaysArray = (
 
   const numDaysInMonth = new Date(year, month + 1, 0).getDate();
 
-  const daysOfMonth: IMonthDaysObject[] = [];
+  const daysOfMonth: MonthDaysObject[] = [];
 
   const prevMonth = month === 0 ? 11 : month - 1;
   const prevMonthYear = prevMonth === 11 ? year - 1 : year;
@@ -88,7 +88,7 @@ export const currentYear = now.getFullYear();
 
 export const getDatePickerRefactoredMonth = (
   month: number,
-  monthStatus: IMonthStatus,
+  monthStatus: MonthStatus,
 ) => {
   if (monthStatus === "prev") {
     return month === 0 ? 11 : month - 1;
@@ -101,7 +101,7 @@ export const getDatePickerRefactoredMonth = (
 export const getDatePickerRefactoredYear = (
   year: number,
   month: number,
-  monthStatus: IMonthStatus,
+  monthStatus: MonthStatus,
 ) => {
   if (monthStatus === "prev") {
     return month === 0 ? year - 1 : year;
@@ -149,10 +149,10 @@ export const getOnChangeSingleData = ({
 }: {
   month?: number;
   year?: number;
-  type: IDatePickerType;
+  type: DatePickerType;
   startDay?: DateObjectUnits;
   setStartDay?: Setter<DateObjectUnits | undefined>;
-}): IDatePickerOnChange | null => {
+}): DatePickerOnChange | null => {
   if (type === "single") {
     const newDate = {
       ...(startDay ? startDay : getToday()),

@@ -18,16 +18,16 @@ export interface DateObjectUnits {
   // day of the year, 1-365 or 366
 }
 
-export type IMonthStatus = "prev" | "current" | "next";
+export type MonthStatus = "prev" | "current" | "next";
 
-export interface IMonthDaysObject {
+export interface MonthDaysObject {
   value: number;
-  month: IMonthStatus;
+  month: MonthStatus;
 }
 
-export type IDatePickerType = "single" | "range" | "multiple";
+export type DatePickerType = "single" | "range" | "multiple";
 
-export type IDatePickerOnChange =
+export type DatePickerOnChange =
   | {
       selectedDate?: DateObjectUnits;
       type: "single";
@@ -43,11 +43,11 @@ export type IDatePickerOnChange =
     };
 
 export interface PickerValue {
-  value: IDatePickerInputValueTypes;
+  value: PickerAloneValue;
   label: string;
 }
 
-export interface IDatePickerInputValueTypes {
+export interface PickerAloneValue {
   start?: string;
   startDateObject?: DateObjectUnits;
   end?: string;
@@ -58,25 +58,25 @@ export interface IDatePickerInputValueTypes {
   multipleDateObject?: DateObjectUnits[];
 }
 
-export interface IRenderInputJSXProps {
+export interface PickerInputJSXProps {
   value: Accessor<PickerValue>;
   showDate: () => void;
 }
 
-export interface IRenderTimeInputJSXProps {
+export interface TimeInputJSXProps {
   value: Accessor<TimeValue>;
   showTime: () => void;
 }
 
-export type IRenderInput =
+export type PickerInputJSX =
   | JSX.Element
-  | ((props: IRenderInputJSXProps) => JSX.Element);
+  | ((props: PickerInputJSXProps) => JSX.Element);
 
-export type IRenderTimeInput =
+export type TimeInputJSX =
   | JSX.Element
-  | ((props: IRenderTimeInputJSXProps) => JSX.Element);
+  | ((props: TimeInputJSXProps) => JSX.Element);
 
-export interface IRenderJSXProps {
+export interface PickerRenderJSXProps {
   month: Accessor<number>;
   setMonth: Setter<number>;
   year: Accessor<number>;
@@ -91,21 +91,21 @@ export interface IRenderJSXProps {
 }
 
 export type HandleDayClick = (
-  day: IMonthDaysObject,
+  day: MonthDaysObject,
   month: Accessor<number>,
   year: Accessor<number>,
   nextMonth: boolean,
 ) => void;
 
-export type IRenderJSX =
+export type PickerRenderJSX =
   | JSX.Element
-  | ((props: IRenderJSXProps) => JSX.Element);
+  | ((props: PickerRenderJSXProps) => JSX.Element);
 
 export type IMonthSelectorType = "short" | "long";
 
 export type IMonthYearSelectorFlexDirection = "row" | "column";
 
-export interface IYearRange {
+export interface YearRange {
   start: number;
   end: number;
 }
@@ -113,7 +113,7 @@ export interface IYearRange {
 export type Locale = Intl.LocalesArgument;
 export type LocaleOptions = Intl.DateTimeFormatOptions;
 
-export interface IColors {
+export interface RnColor {
   primaryColor?: string;
   primaryTextColor?: string;
   secondaryColor?: string;
@@ -132,11 +132,11 @@ export interface IColors {
 
 export interface SelectorColorsAndClassNames
   extends Pick<
-      IColors,
+      RnColor,
       "primaryColor" | "primaryTextColor" | "textColor" | "backgroundColor"
     >,
     Pick<
-      ClassNames,
+      RnClassName,
       | "monthYearTriggerBtnClass"
       | "monthYearTriggerBtnWrapperClass"
       | "monthYearSelectorWrapperClass"
@@ -186,7 +186,7 @@ export interface HoverRangeValue {
   end?: DateObjectUnits;
 }
 
-export interface ClassNames {
+export interface RnClassName {
   inputClass?: string;
   inputWrapperClass?: string;
   datePickerWrapperClass?: string;
@@ -230,7 +230,7 @@ export interface ClassNames {
 
 export interface DatePickerDayClassNames
   extends Pick<
-    ClassNames,
+    RnClassName,
     | "weekNamesClass"
     | "daysWrapperClass"
     | "daysActivePrimaryWrapperClass"
@@ -251,7 +251,7 @@ export interface DatePickerDayClassNames
   > {}
 
 export interface DatePickerDayColors
-  extends Omit<IColors, "arrowsColor" | "backgroundColor"> {}
+  extends Omit<RnColor, "arrowsColor" | "backgroundColor"> {}
 
 export interface DatePickerDayClassNamesAndColors
   extends DatePickerDayColors,
@@ -260,7 +260,7 @@ export interface DatePickerDayClassNamesAndColors
 export interface CalendarDaysClassNamesAndColors
   extends DatePickerDayColors,
     DatePickerDayClassNames,
-    Pick<ClassNames, "daysRowClass" | "datePickerCalendarDaysArea"> {}
+    Pick<RnClassName, "daysRowClass" | "datePickerCalendarDaysArea"> {}
 
 export type DateOption = Date | DateObjectUnits | string | number;
 
@@ -286,16 +286,16 @@ export interface ITimePickerFormat {
   second?: number;
 }
 
-export type ITimeView = "hour" | "minute" | "second";
+export type TimeView = "hour" | "minute" | "second";
 
-export type ITimeMeridiem = "AM" | "PM";
+export type TimeMeridiem = "AM" | "PM";
 
 export interface TimeValue {
   value: ITimePickerFormat;
   label: string;
 }
 
-export interface TimeAnalogClassNames {
+export interface TimeClassName {
   prevTimeViewBtnClass?: string;
   nextTimeViewBtnClass?: string;
   prevNextTimeViewBtnClass?: string;

@@ -1,7 +1,7 @@
 import {
   DateArray,
   DateObjectUnits,
-  IMonthDaysObject,
+  MonthDaysObject,
 } from "../interface/general";
 import { Accessor } from "solid-js";
 import {
@@ -26,7 +26,7 @@ export const handleDateRange = ({
   endDay: DateObjectUnits | undefined;
   year: Accessor<number>;
   month: Accessor<number>;
-  day: IMonthDaysObject;
+  day: MonthDaysObject;
   disabledDays?: DateArray[];
   enabledDays?: DateArray[];
   hover?: boolean;

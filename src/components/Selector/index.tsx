@@ -5,8 +5,8 @@ import {
   DateObjectUnits,
   DateArray,
   MakeOptionalRequired,
-  IDatePickerOnChange,
-  IDatePickerType,
+  DatePickerOnChange,
+  DatePickerType,
   SelectorColorsAndClassNames,
 } from "../../interface/general";
 import {
@@ -33,8 +33,8 @@ export interface SelectorProps extends SelectorColorsAndClassNames {
   enabledDays?: DateArray[];
   onYearChange?: (year: number) => void;
   onMonthChange?: (month: number) => void;
-  onChange?: (data: IDatePickerOnChange) => void;
-  type?: IDatePickerType;
+  onChange?: (data: DatePickerOnChange) => void;
+  type?: DatePickerType;
   startDay?: DateObjectUnits;
   twoMonthsDisplay?: boolean;
 }

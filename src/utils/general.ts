@@ -1,8 +1,8 @@
 import type { Accessor } from "solid-js";
 import type {
   DateObjectUnits,
-  IMonthDaysObject,
-  IMonthStatus,
+  MonthDaysObject,
+  MonthStatus,
   MakeOptionalRequired,
 } from "../interface/general";
 import { DateArray } from "../interface/general";
@@ -27,7 +27,7 @@ export const isDayInBetweenRange = ({
   year: number;
   startDate: DateObjectUnits | undefined;
   endDate: DateObjectUnits | undefined;
-  monthStatus: IMonthStatus;
+  monthStatus: MonthStatus;
 }) => {
   if (!startDate || !endDate) return false;
   const date = new Date(
@@ -53,7 +53,7 @@ export const isDayTipRange = ({
   month: number;
   year: number;
   dateRange: DateObjectUnits | undefined;
-  monthStatus: IMonthStatus;
+  monthStatus: MonthStatus;
 }) => {
   if (!dateRange) return false;
   const date = new Date(
@@ -93,7 +93,7 @@ export const isMinMaxDate = ({
 }: {
   minDate: MakeOptionalRequired<DateObjectUnits> | undefined;
   maxDate: MakeOptionalRequired<DateObjectUnits> | undefined;
-  day: IMonthDaysObject;
+  day: MonthDaysObject;
   year: Accessor<number>;
   month: Accessor<number>;
 }): boolean => {
@@ -126,7 +126,7 @@ export const isPartOfDisabledDays = ({
   year,
 }: {
   disabledDays?: DateArray[];
-  day: IMonthDaysObject;
+  day: MonthDaysObject;
   month: number;
   year: number;
 }) => {
@@ -161,7 +161,7 @@ export const isNotPartOfEnabledDays = ({
   prev,
 }: {
   enabledDays?: DateArray[];
-  day?: IMonthDaysObject;
+  day?: MonthDaysObject;
   month: number;
   year: number;
   next?: boolean;
@@ -331,7 +331,7 @@ export const isWeekendStatus = ({
   month,
   day,
 }: {
-  day: IMonthDaysObject;
+  day: MonthDaysObject;
   month: number;
   year: number;
 }): {

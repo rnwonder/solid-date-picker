@@ -1,9 +1,9 @@
 import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
 import {
-  ClassNames,
-  IDatePickerOnChange,
-  IDatePickerType,
-  IRenderInput,
+  RnClassName,
+  DatePickerOnChange,
+  DatePickerType,
+  PickerInputJSX,
   PickerValue,
 } from "../../interface/general";
 import { convertDateObjectToDate, labelFormat } from "../../utils";
@@ -17,13 +17,13 @@ export interface DatePickerInputSJProps
       DatePickerProps,
       "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"
     >,
-    Pick<ClassNames, "inputWrapperClass" | "inputClass"> {
-  type?: IDatePickerType;
+    Pick<RnClassName, "inputWrapperClass" | "inputClass"> {
+  type?: DatePickerType;
   value?: Accessor<PickerValue>;
   setValue?: Setter<PickerValue>;
-  onChange?: (data: IDatePickerOnChange) => void;
+  onChange?: (data: DatePickerOnChange) => void;
   componentsToAllowOutsideClick?: Array<HTMLElement>;
-  renderInput?: IRenderInput;
+  renderInput?: PickerInputJSX;
   pickerPositionX?: IPopOverPositionX;
   pickerPositionY?: IPopOverPositionY;
   placeholder?: string;
@@ -53,7 +53,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
 
   createButtonAnimation(props.noButtonAnimation);
 
-  const handleOnChange = (data: IDatePickerOnChange) => {
+  const handleOnChange = (data: DatePickerOnChange) => {
     const pickerValue = props.value || value;
     const setPickerValue = props.setValue || setValue;
 
@@ -209,7 +209,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
     setIsShown(true);
   };
 
-  const renderCustomJSX = (renderJSX?: IRenderInput) => {
+  const renderCustomJSX = (renderJSX?: PickerInputJSX) => {
     if (!renderJSX) return undefined;
     if (typeof renderJSX === "function") {
       const content = renderJSX({

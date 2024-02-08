@@ -2,17 +2,17 @@ import { Button } from "../Button";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
 import { Accessor, JSX } from "solid-js";
-import { ITimeView, TimeAnalogClassNames } from "../../interface/general";
+import { TimeView, TimeClassName } from "../../interface/general";
 import { cn } from "../../utils/class";
 
-interface ITimeAnalogGroupTopProps extends TimeAnalogClassNames {
-  view: Accessor<ITimeView>;
+interface ITimeAnalogGroupTopProps extends TimeClassName {
+  view: Accessor<TimeView>;
   handlePrev: () => void;
   handleNext: () => void;
   arrowsColor?: string;
   prevIcon?: JSX.Element;
   nextIcon?: JSX.Element;
-  allowedView?: ITimeView[];
+  allowedView?: TimeView[];
 }
 export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
   return (

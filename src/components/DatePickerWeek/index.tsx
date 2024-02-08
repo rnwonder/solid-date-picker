@@ -1,9 +1,9 @@
 import { Component, JSXElement } from "solid-js";
-import { ClassNames } from "../../interface/general";
+import { RnClassName } from "../../interface/general";
 import {cn} from "../../utils/class";
 
 interface DatePickerWeekDaysProps
-  extends Pick<ClassNames, "weekNamesRowClass" | "daysRowClass"> {
+  extends Pick<RnClassName, "weekNamesRowClass" | "daysRowClass"> {
   children: JSXElement;
   header?: boolean;
 }

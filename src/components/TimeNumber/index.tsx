@@ -1,21 +1,21 @@
 import { Accessor, createEffect, createSignal, onMount } from "solid-js";
 import { leadingZeros } from "../../utils/time";
-import { ITimeView, TimeAnalogClassNames } from "../../interface/general";
+import { TimeView, TimeClassName } from "../../interface/general";
 import { cn } from "../../utils/class";
 
-interface ITimeNumberProps extends TimeAnalogClassNames {
-  type: ITimeView;
+interface ITimeNumberProps extends TimeClassName {
+  type: TimeView;
   selectedValue: Accessor<number | undefined>;
-  onClick: (type: ITimeView, value?: number) => void;
+  onClick: (type: TimeView, value?: number) => void;
   onMouseUp: () => void;
   onPointerEnter: (
     e: PointerEvent & { currentTarget: HTMLButtonElement; target: Element },
-    type: ITimeView,
+    type: TimeView,
     attr?: number,
   ) => void;
   onTouchEnd: (
     e: TouchEvent & { currentTarget: HTMLButtonElement; target: Element },
-    type: ITimeView,
+    type: TimeView,
     attr?: number,
   ) => void;
   onTouchStart: () => void;

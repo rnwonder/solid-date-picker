@@ -13,7 +13,7 @@ import {
   CustomDaysClassName,
   HandleDayClick,
   HoverRangeValue,
-  IMonthDaysObject,
+  MonthDaysObject,
   CalendarDaysClassNamesAndColors,
 } from "../../interface/general";
 import {cn} from "../../utils/class";
@@ -45,7 +45,7 @@ export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
   const [dayRowsArray, setDayRowsArray] = createSignal<
-    Array<Array<IMonthDaysObject>>
+    Array<Array<MonthDaysObject>>
   >([]);
 
   createEffect(() => {
