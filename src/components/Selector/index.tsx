@@ -125,7 +125,7 @@ export const Selector = (props: SelectorProps) => {
   return (
     <Popover
       zIndex={props.zIndex}
-      className={cn("rn-w-fit", props.monthYearTriggerBtnWrapperClass)}
+      className={cn("rn-w-fit date-selector-trigger-wrapper", props.monthYearTriggerBtnWrapperClass)}
       onOpen={() => {
         setOpen(true);
         const selectedOption = document.querySelector(
