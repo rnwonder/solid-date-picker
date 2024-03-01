@@ -14,7 +14,8 @@
   export let useRefWidth: boolean = false;
   export let hideDefaultStyle: boolean = false;
   export let ignoreClickOutside: boolean = false;
-  export let onClickOutside: ((e: MouseEvent) => void) | undefined = undefined;
+  export let onClickOutside: ((e: PointerEvent) => void) | undefined =
+    undefined;
   export let innerWrapperClass: string = "";
 
   $: {
@@ -42,6 +43,7 @@
       }
 
       if (ignoreClickOutside) return;
+      dispatch("clickOutside", { e });
       if (onClickOutside) {
         onClickOutside(e);
         return;
@@ -51,9 +53,7 @@
       dispatch("close");
     }}
     class={className}
-    style="width: {useRefWidth && ref
-      ? ref.clientWidth + 'px'
-      : 'none'}; {style}"
+    style="width: {useRefWidth && ref ? ref.clientWidth + 'px' : ''}; {style}"
   >
     <div
       class={cn(

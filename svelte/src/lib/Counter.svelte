@@ -10,7 +10,8 @@
   const increment = () => {
     // count += 1
     // mymodal?.toggle();
-    isShown = !isShown;
+    mymodal?.close();
+    // isShown = !isShown;
   };
 
   $: {
@@ -29,12 +30,21 @@
 
   <Portal
     bind:isShown
-    bind:this={mymodal}
     on:open={() => console.log("open")}
     on:close={() => console.log("close")}
   >
     <p>Custom modal content from InnerContent.</p>
   </Portal>
 
-  <Popover content={({close}) => <button slot="content" on:click={close}> button Hello</button>}>Click me</Popover>
+  <Popover bind:this={mymodal}>
+    <div slot="content" class="rn-bg-slate-200">
+      <h1 class="rn-text-white">Hello</h1>
+      <p class="rn-text-white">This is a popover</p>
+      <button on:click={mymodal.handleClose} class="rn-text-white">
+        button Hello</button
+      >
+    </div>
+
+    <div>Click me</div>
+  </Popover>
 </div>

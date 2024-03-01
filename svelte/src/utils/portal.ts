@@ -46,29 +46,29 @@ export const upgradedSmartDropDown = ({
   positionX,
   positionY,
 }: {
-  inputRef: any;
-  dropDownRef: any;
+  inputRef: HTMLElement | null;
+  dropDownRef: HTMLElement | null;
   positionY?: "top" | "bottom" | "auto";
   positionX?: "center" | "left" | "right";
 }): {
   top?: string;
   left?: string;
 } => {
-  const inputRect = inputRef()?.getBoundingClientRect();
-  const pickerHeight = dropDownRef()?.offsetHeight;
-  const pickerWidth = dropDownRef()?.offsetWidth;
+  const inputRect = inputRef?.getBoundingClientRect();
+  const pickerHeight = dropDownRef?.offsetHeight;
+  const pickerWidth = dropDownRef?.offsetWidth;
   const windowHeight = window.innerHeight;
-  const spaceBelow = windowHeight - inputRect?.bottom;
+  const spaceBelow = windowHeight - (inputRect?.bottom || 0);
   const spaceAbove = inputRect?.top;
   const spaceLeft = inputRect?.left;
-  const spaceRight = window.innerWidth - inputRect?.right;
+  const spaceRight = window.innerWidth - (inputRect?.right || 0);
   const windowWidth = window.innerWidth;
 
   let top, left;
 
   const isTopOrBottom = positionY === "top" || positionY === "bottom";
 
-  const topDimension = `${inputRect?.top - pickerHeight - 10}px`;
+  const topDimension = `${(inputRect?.top || 0) - (pickerHeight || 0) - 10}px`;
   const bottomDimension = `${inputRect?.bottom}px`;
 
   if (positionY === "top") {
@@ -79,26 +79,26 @@ export const upgradedSmartDropDown = ({
     top = bottomDimension;
   }
 
-  if (spaceBelow > pickerHeight && !isTopOrBottom) {
+  if (spaceBelow > (pickerHeight || 0) && !isTopOrBottom) {
     top = bottomDimension;
-  } else if (spaceAbove > pickerHeight && !isTopOrBottom) {
+  } else if ((spaceAbove || 0) > (pickerHeight || 0) && !isTopOrBottom) {
     top = topDimension;
   } else if (
-    spaceBelow < pickerHeight &&
+    spaceBelow < (pickerHeight || 0) &&
     positionY === "bottom" &&
-    spaceAbove > pickerHeight
+    (spaceAbove || 0) > (pickerHeight || 0)
   ) {
     top = topDimension;
   }
 
   if (
-    (!(spaceBelow > pickerHeight) &&
-      !(spaceAbove > pickerHeight) &&
+    (!(spaceBelow > (pickerHeight || 0)) &&
+      !((spaceAbove || 0) > (pickerHeight || 0)) &&
       !isTopOrBottom) ||
-    (positionY === "top" && !(spaceAbove > pickerHeight)) ||
+    (positionY === "top" && !((spaceAbove || 0) > (pickerHeight || 0))) ||
     (positionY === "bottom" &&
-      !(spaceBelow > pickerHeight) &&
-      !(spaceAbove > pickerHeight))
+      !(spaceBelow > (pickerHeight || 0)) &&
+      !((spaceAbove || 0) > (pickerHeight || 0)))
   ) {
     top = `${0}px`;
   }
@@ -106,14 +106,19 @@ export const upgradedSmartDropDown = ({
   let leftSpace = 0;
 
   if (positionX === "left") {
-    leftSpace = spaceLeft >= pickerWidth ? spaceLeft - pickerWidth : 0;
+    leftSpace =
+      (spaceLeft || 0) >= (pickerWidth || 0)
+        ? (spaceLeft || 0) - (pickerWidth || 0)
+        : 0;
   } else if (positionX === "right") {
     leftSpace =
-      spaceRight >= pickerWidth ? inputRect?.right : windowWidth - pickerWidth;
+      (spaceRight >= (pickerWidth || 0)
+        ? inputRect?.right
+        : windowWidth - (pickerWidth || 0)) || 0;
   } else {
     // center position
-    const center = inputRect?.left + inputRect?.width / 2;
-    const halfPickerWidth = pickerWidth / 2;
+    const center = (inputRect?.left || 0) + (inputRect?.width || 0) / 2;
+    const halfPickerWidth = (pickerWidth || 0) / 2;
     if (
       center - halfPickerWidth >= 0 &&
       center + halfPickerWidth <= windowWidth
@@ -122,7 +127,7 @@ export const upgradedSmartDropDown = ({
     } else if (center - halfPickerWidth < 0) {
       leftSpace = 0;
     } else {
-      leftSpace = windowWidth - pickerWidth;
+      leftSpace = windowWidth - (pickerWidth || 0);
     }
   }
   left = `${leftSpace}px`;

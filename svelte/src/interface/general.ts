@@ -1,12 +1,15 @@
-import {Accessor, JSX, Setter} from "solid-js";
-import { DatePickerInputSJProps } from "../components/DatePickerGroup";
-import { ITimeAnalogGroupProps } from "../components/TimeAnalogGroup";
-import { CalendarAreaProps } from "../components/CalendarArea";
-import { MonthSelectorExportProps } from "../components/MonthSelectorExport";
-import { YearSelectorExportProps } from "../components/YearSelectorExport";
-import { PopoverProps } from "../components/Popover";
-import { ModalProps } from "../components/CustomPortal";
-import { DatePickerStandAloneProps } from "../components/DatePickerStandAloneExport";
+// import {Accessor, JSX, Setter} from "solid-js";
+// import { DatePickerInputSJProps } from "../components/DatePickerGroup";
+// import { ITimeAnalogGroupProps } from "../components/TimeAnalogGroup";
+// import { CalendarAreaProps } from "../components/CalendarArea";
+// import { MonthSelectorExportProps } from "../components/MonthSelectorExport";
+// import { YearSelectorExportProps } from "../components/YearSelectorExport";
+// import { PopoverProps } from "../components/Popover";
+// import { ModalProps } from "../components/CustomPortal";
+// import { DatePickerStandAloneProps } from "../components/DatePickerStandAloneExport";
+
+export type IPopOverPositionX = "left" | "right" | "center";
+export type IPopOverPositionY = "top" | "bottom" | "auto";
 
 export interface DateObjectUnits {
   // a year, such as 1987
@@ -58,48 +61,48 @@ export interface PickerAloneValue {
   multipleDateObject?: DateObjectUnits[];
 }
 
-export interface PickerInputJSXProps {
-  value: Accessor<PickerValue>;
-  showDate: () => void;
-}
+// export interface PickerInputJSXProps {
+//   value: Accessor<PickerValue>;
+//   showDate: () => void;
+// }
+//
+// export interface TimeInputJSXProps {
+//   value: Accessor<TimeValue>;
+//   showTime: () => void;
+// }
 
-export interface TimeInputJSXProps {
-  value: Accessor<TimeValue>;
-  showTime: () => void;
-}
+// export type PickerInputJSX =
+//   | JSX.Element
+//   | ((props: PickerInputJSXProps) => JSX.Element);
+//
+// export type TimeInputJSX =
+//   | JSX.Element
+//   | ((props: TimeInputJSXProps) => JSX.Element);
 
-export type PickerInputJSX =
-  | JSX.Element
-  | ((props: PickerInputJSXProps) => JSX.Element);
+// export interface PickerRenderJSXProps {
+//   month: Accessor<number>;
+//   setMonth: Setter<number>;
+//   year: Accessor<number>;
+//   setYear: Setter<number>;
+//   selectedDate: Accessor<DateObjectUnits | undefined>;
+//   endDate: Accessor<DateObjectUnits | undefined>;
+//   multipleDates: Accessor<DateObjectUnits[] | undefined>;
+//   handleNextMonth: () => void;
+//   handlePrevMonth: () => void;
+//   handleDayClick: HandleDayClick;
+//   setRefToAllowOutsideClick: Setter<HTMLDivElement | undefined>;
+// }
 
-export type TimeInputJSX =
-  | JSX.Element
-  | ((props: TimeInputJSXProps) => JSX.Element);
+// export type HandleDayClick = (
+//   day: MonthDaysObject,
+//   month: Accessor<number>,
+//   year: Accessor<number>,
+//   nextMonth: boolean,
+// ) => void;
 
-export interface PickerRenderJSXProps {
-  month: Accessor<number>;
-  setMonth: Setter<number>;
-  year: Accessor<number>;
-  setYear: Setter<number>;
-  selectedDate: Accessor<DateObjectUnits | undefined>;
-  endDate: Accessor<DateObjectUnits | undefined>;
-  multipleDates: Accessor<DateObjectUnits[] | undefined>;
-  handleNextMonth: () => void;
-  handlePrevMonth: () => void;
-  handleDayClick: HandleDayClick;
-  setRefToAllowOutsideClick: Setter<HTMLDivElement | undefined>;
-}
-
-export type HandleDayClick = (
-  day: MonthDaysObject,
-  month: Accessor<number>,
-  year: Accessor<number>,
-  nextMonth: boolean,
-) => void;
-
-export type PickerRenderJSX =
-  | JSX.Element
-  | ((props: PickerRenderJSXProps) => JSX.Element);
+// export type PickerRenderJSX =
+//   | JSX.Element
+//   | ((props: PickerRenderJSXProps) => JSX.Element);
 
 export type IMonthSelectorType = "short" | "long";
 
@@ -310,9 +313,9 @@ export interface TimeClassName {
 }
 
 // lib type exports
-export interface DatePickerProps extends DatePickerInputSJProps {}
-export interface TimePickerProps extends ITimeAnalogGroupProps {}
-export interface MonthSelectorProps extends MonthSelectorExportProps {}
-export interface YearSelectorProps extends YearSelectorExportProps {}
-export interface RnPortalProps extends ModalProps {}
-export type { CalendarAreaProps, PopoverProps, DatePickerStandAloneProps };
+// export interface DatePickerProps extends DatePickerInputSJProps {}
+// export interface TimePickerProps extends ITimeAnalogGroupProps {}
+// export interface MonthSelectorProps extends MonthSelectorExportProps {}
+// export interface YearSelectorProps extends YearSelectorExportProps {}
+// export interface RnPortalProps extends ModalProps {}
+// export type { CalendarAreaProps, PopoverProps, DatePickerStandAloneProps };
