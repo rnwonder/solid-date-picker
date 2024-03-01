@@ -1,4 +1,4 @@
-node_modules
+solidjs/node_modules
 dist
 time-picker
 .env
@@ -10,3 +10,4 @@ vite.config.ts.timestamp-1685973042077.mjs
 themes
 gulpfile.js
 ./gulpfile.js
+

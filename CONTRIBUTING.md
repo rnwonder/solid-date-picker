@@ -7,7 +7,7 @@ In this guide you will get an overview of the contribution workflow from opening
 
 ## New contributor guide
 
-To get an overview of the project, read the [README](README.md). Here are some resources to help you get started with open source contributions:
+To get an overview of the project, read the [README](solidjs/README.md). Here are some resources to help you get started with open source contributions:
 
 - [Fork the library](https://github.com/rnwonder/solid-date-picker/fork)
 - [Create an issue](https://github.com/rnwonder/solid-date-picker/issues)
