@@ -1,7 +1,7 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import svelteLogo from "./assets/svelte.svg";
+  import viteLogo from "/vite.svg";
+  import Counter from "./lib/Counter.svelte";
   import Button from "./lib/Button.svelte";
 </script>
 
@@ -18,18 +18,23 @@
 
   <div class="card">
     <Counter />
-    <Button className="rn-bg-amber-600">
-      Hello Daisy
-    </Button>
+
+    <Button>Hello Daisy</Button>
   </div>
 
   <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
+    Check out <a
+      href="https://github.com/sveltejs/kit#readme"
+      target="_blank"
+      rel="noreferrer">SvelteKit</a
+    >, the official Svelte app framework powered by Vite!
   </p>
 
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
+
+  <div id="portal-island">
+    <p>modals</p>
+  </div>
 </main>
 
 <style>

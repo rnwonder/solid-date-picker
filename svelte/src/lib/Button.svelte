@@ -1,52 +1,54 @@
 <script lang="ts">
-  import { cn } from '../../utils';
-  import type { HTMLButtonAttributes } from 'svelte/elements'
+  import { cn } from "../utils";
+  import type { HTMLButtonAttributes } from "svelte/elements";
 
-  export let className: string;
-  export let setHeight: boolean = true;
-  export let disabled: boolean = false;
-  export let style: string;
-  export let selected: boolean = false;
-  export let onClick: () => void;
+  export let className = "";
+  export let setHeight = false;
+  export let disabled = false;
+  export let style = "";
+  export let selected = false;
+  export let onClick = () => {};
+
   let showAnimation = true;
 
-  interface ButtonAttributes extends Partial<HTMLButtonAttributes> {
-      class?: string;
-      setHeight?: boolean;
-      disabled?: boolean;
-      style?: string;
-      selected?: boolean;
+  interface $$Props extends HTMLButtonAttributes {
+    className?: string;
+    setHeight?: boolean;
+    disabled?: boolean;
+    style?: string;
+    selected?: boolean;
+    onClick?: () => void;
+    showAnimation?: boolean;
   }
-
-    export let props: ButtonAttributes ;
 </script>
 
 <button
-        {...props}
-  class={cn(`
-      rn-btn
-      rn-btn-ghost
-      rn-p-0
-      rn-min-h-0
-      date-picker-main-btn
-      motion-reduce:rn-transition-none
-    `,
+  {...$$restProps}
+  class={cn(
+    `
+        rn-btn
+        rn-btn-ghost
+        rn-p-0
+        rn-min-h-0
+        date-picker-main-btn
+        motion-reduce:rn-transition-none
+      `,
     {
-      'rn-no-animation': !showAnimation,
-      'rn-h-full': !setHeight,
-      'dark:hover:rn-bg-black-tie': !selected,
+      "rn-no-animation": !showAnimation,
+      "rn-h-full": !setHeight,
+      "dark:hover:rn-bg-black-tie": !selected,
     },
-    className
+    className,
   )}
-        style={style}
-        data-type={"date-picker-main-btn"}
-        type={"button"}
-        on:click={onClick}
-        {disabled}
+  {style}
+  data-type={"date-picker-main-btn"}
+  type={"button"}
+  on:click={onClick}
+  {disabled}
 >
-    <slot></slot>
+  <slot />
 </button>
 
 <style>
-    /* Add your styles here */
+  /* Add your styles here */
 </style>

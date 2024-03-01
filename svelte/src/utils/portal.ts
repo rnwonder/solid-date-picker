@@ -1,10 +1,43 @@
-import { Accessor, onCleanup } from "solid-js";
-
-export function clickOutsideSJ(el: any, accessor: any) {
-  const onClick = (e: any) => !el.contains(e.target) && accessor(e)?.(e);
+export function clickOutside(node: HTMLElement, func: (e: any) => void) {
+  const onClick = (e: any) => !node.contains(e.target) && func(e);
   document.body.addEventListener("click", onClick);
 
-  onCleanup(() => document.body.removeEventListener("click", onClick));
+  return {
+    destroy() {
+      document.body.removeEventListener("click", onClick);
+    },
+  };
+}
+
+export function teleport(node: HTMLElement, reference?: string | HTMLElement) {
+  let teleportContainer = getReferencedElement(reference);
+  teleportContainer?.appendChild(node);
+  return {
+    destroy() {
+      node.remove();
+    },
+  };
+}
+
+export function getReferencedElement(
+  reference?: string | HTMLElement,
+): HTMLElement | null {
+  if (!reference) {
+    const island = document.getElementById("portal-island");
+    if (!island) {
+      const newIsland = document.createElement("div");
+      newIsland.id = "portal-island";
+      document.body.appendChild(newIsland);
+      return newIsland;
+    }
+    return island;
+  }
+
+  if (typeof reference === "string") {
+    return document.getElementById(reference);
+  } else {
+    return reference;
+  }
 }
 
 export const upgradedSmartDropDown = ({
@@ -13,8 +46,8 @@ export const upgradedSmartDropDown = ({
   positionX,
   positionY,
 }: {
-  inputRef: Accessor<any>;
-  dropDownRef: Accessor<any>;
+  inputRef: any;
+  dropDownRef: any;
   positionY?: "top" | "bottom" | "auto";
   positionX?: "center" | "left" | "right";
 }): {
