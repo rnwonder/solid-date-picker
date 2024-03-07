@@ -2,7 +2,7 @@ import { Component, createEffect, createSignal, Show } from "solid-js";
 import { DatePickerTopProps } from "../DatePickerTop";
 import { MonthSelector } from "../MonthSelector";
 import { YearSelector } from "../YearSelector";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils";
 
 interface DatePickerMonthAndYearSelectorProps
   extends Omit<DatePickerTopProps, "handlePrevMonth" | "handleNextMonth"> {}
@@ -10,7 +10,8 @@ interface DatePickerMonthAndYearSelectorProps
 export const DatePickerMonthAndYearSelector: Component<
   DatePickerMonthAndYearSelectorProps
 > = (props) => {
-  const [monthSelectorRef, setMonthSelectorRef] = createSignal<HTMLDivElement>();
+  const [monthSelectorRef, setMonthSelectorRef] =
+    createSignal<HTMLDivElement>();
   const [yearSelectorRef, setYearSelectorRef] = createSignal<HTMLDivElement>();
 
   createEffect(() => {
@@ -30,10 +31,10 @@ export const DatePickerMonthAndYearSelector: Component<
   return (
     <div
       class={cn(
-        `rn-flex date-month-year-selector-area rn-justify-center rn-items-center ${
+        `date-month-year-selector-area rn-flex rn-items-center rn-justify-center ${
           props.monthYearSelectorFlexDirection === "column" ? "rn-flex-col" : ""
         }`,
-        props.datePickerTopMonthYearAreaClass
+        props.datePickerTopMonthYearAreaClass,
       )}
       data-type={"date-month-year-selector-area"}
     >
@@ -47,7 +48,7 @@ export const DatePickerMonthAndYearSelector: Component<
             ref={setMonthSelectorRef}
             month={props.month}
             setMonth={props.setMonth}
-            monthSelectorType={props.monthSelectorFormat || "short"}
+            monthSelectorFormat={props.monthSelectorFormat}
             zIndex={props.zIndex}
             locale={props.locale}
             primaryColor={props.primaryColor}

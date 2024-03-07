@@ -133,7 +133,7 @@ export const getMonthName = (
 };
 
 export function breakArrayIntoSubArrays(array: Array<any>, maxSize: number) {
-  const newArray = [];
+  const newArray: any[][] = [];
   for (let i = 0; i < array.length; i += maxSize) {
     newArray.push(array.slice(i, i + maxSize));
   }

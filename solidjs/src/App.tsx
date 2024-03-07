@@ -8,7 +8,6 @@ import { PickerValue, TimeValue } from "./interface/general";
 // import "./themes/shad-cn-ui/shad-cn-ui.css";
 import { utils } from "./utils";
 import TimeAnalogPicker from "./components/TimeAnalogPicker";
-import DateMath from "../../utils/math";
 import { CustomPortal } from "./components/CustomPortal";
 import { Popover } from "./components/Popover";
 import DatePickerStandAloneExport from "./components/DatePickerStandAloneExport";
@@ -112,10 +111,12 @@ const App: Component = () => {
         onValueChange={(value) => {
           console.log("onValueChange", value);
         }}
+        monthSelectorType={"full-size"}
+        yearSelectorType={"full-size"}
+        yearRange={{ start: 1998, end: 2030 }}
       />
     </div>
   );
 };
 
 export default App;
-

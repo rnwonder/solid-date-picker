@@ -26,6 +26,7 @@ import {
   LocaleOptions,
   MakeOptionalRequired,
   WeekDaysType,
+  SelectorType,
 } from "../../interface/general";
 import {
   compareObjectDate,
@@ -40,6 +41,7 @@ import {
 import { CalendarArea } from "../CalendarArea";
 import { DatePickerTop } from "../DatePickerTop";
 import { cn } from "../../utils";
+import SelectorTwo, { selectorTwoProps, showSelectorTwo } from "../SelectorTwo";
 
 export interface DatePickerProps
   extends RnColor,
@@ -105,6 +107,9 @@ export interface DatePickerProps
   enabledDays?: DateArray[];
   customDaysClassName?: CustomDaysClassName[];
   weekDaysType?: WeekDaysType;
+
+  yearSelectorType?: SelectorType;
+  monthSelectorType?: SelectorType;
 }
 
 export const DatePicker = (props: DatePickerProps) => {
@@ -504,19 +509,21 @@ export const DatePicker = (props: DatePickerProps) => {
     <div
       class={cn(
         `date-picker-wrapper 
+          rn-relative 
           rn-rounded-md 
           rn-border-t 
-          rn-border-solid 
+          rn-border-solid
           rn-border-gray-300
           rn-bg-white
-          rn-pb-[0.5rem]
+          rn-pb-[0.5rem] 
           rn-pt-[0.625rem] 
           rn-shadow-lg 
-          dark:rn-border-gray-700 
+          dark:rn-border-gray-700
           dark:rn-bg-dreamless-sleep
-
-          ${calendarLeftAreaJSX || calendarRightAreaJSX ? "" : "rn-w-max"}
           `,
+        {
+          "rn-w-max": !calendarLeftAreaJSX && !calendarRightAreaJSX,
+        },
         props.datePickerWrapperClass,
       )}
       data-type={"date-picker-wrapper"}
@@ -532,6 +539,10 @@ export const DatePicker = (props: DatePickerProps) => {
       aria-label={"calendar"}
       aria-roledescription={"date-picker"}
     >
+      <Show when={showSelectorTwo()}>
+        <SelectorTwo {...selectorTwoProps()} />
+      </Show>
+
       <Show when={!props.hideTopArea} keyed>
         {calendarAboveTopAreaJSX}
         {calendarTopAreaJSX || (
@@ -576,7 +587,7 @@ export const DatePicker = (props: DatePickerProps) => {
           props.datePickerBodyAreaClass,
         )}
       >
-        <Show when={calendarLeftAreaJSX} keyed>
+        <Show when={calendarLeftAreaJSX && !showSelectorTwo()} keyed>
           {calendarLeftAreaJSX}
         </Show>
 
@@ -598,11 +609,11 @@ export const DatePicker = (props: DatePickerProps) => {
           )}
         </Show>
 
-        <Show when={calendarRightAreaJSX} keyed>
+        <Show when={calendarRightAreaJSX && !showSelectorTwo()} keyed>
           {calendarRightAreaJSX}
         </Show>
       </div>
-      <Show when={calendarBottomAreaJSX} keyed>
+      <Show when={calendarBottomAreaJSX && !showSelectorTwo()} keyed>
         {calendarBottomAreaJSX}
       </Show>
     </div>

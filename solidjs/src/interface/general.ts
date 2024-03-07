@@ -1,4 +1,4 @@
-import {Accessor, JSX, Setter} from "solid-js";
+import { Accessor, JSX, Setter } from "solid-js";
 import { DatePickerInputSJProps } from "../components/DatePickerGroup";
 import { ITimeAnalogGroupProps } from "../components/TimeAnalogGroup";
 import { CalendarAreaProps } from "../components/CalendarArea";
@@ -133,7 +133,11 @@ export interface RnColor {
 export interface SelectorColorsAndClassNames
   extends Pick<
       RnColor,
-      "primaryColor" | "primaryTextColor" | "textColor" | "backgroundColor"
+      | "primaryColor"
+      | "primaryTextColor"
+      | "textColor"
+      | "backgroundColor"
+      | "arrowsColor"
     >,
     Pick<
       RnClassName,
@@ -180,6 +184,8 @@ export interface CustomDaysClassName
 }
 
 export type WeekDaysType = "short" | "single" | "double";
+
+export type SelectorType = "full-size" | "compact-dropdown";
 
 export interface HoverRangeValue {
   start?: DateObjectUnits;

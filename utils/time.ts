@@ -1,4 +1,4 @@
-import { TimeMeridiem } from "../solidjs/src/interface/general";
+import { TimeMeridiem, YearRange } from "../solidjs/src/interface/general";
 
 export const leadingZeros = (value: number, numberOfLeadingZero?: number) => {
   return String(Math.ceil(value)).padStart(numberOfLeadingZero ?? 2, "0");
@@ -50,5 +50,59 @@ export function getCurrentTime() {
     minute: minute,
     second: second,
     meridiem,
+  };
+}
+
+export function getYearRange({
+  startYear,
+  endYear,
+  count,
+  year,
+  yearRange,
+}: {
+  count: number;
+  year?: number;
+  startYear?: number;
+  endYear?: number;
+  yearRange?: YearRange;
+}): { array: string[]; range: string; startYear: number; endYear: number } {
+  const currentYear = year || new Date().getFullYear();
+
+  if (!startYear) {
+    const calculatedStartYear = Math.floor(currentYear / count) * count;
+    if (calculatedStartYear === currentYear) {
+      startYear = currentYear - count + 1;
+    } else {
+      startYear = calculatedStartYear + 1;
+    }
+  }
+
+  if (!endYear) {
+    endYear = startYear + count - 1;
+  }
+
+  const array: string[] = [];
+  let rangeStart = startYear;
+  let rangeEnd = endYear;
+
+  for (let year = startYear; year <= endYear; year++) {
+    if (yearRange?.start && year < yearRange?.start) {
+      array.push("");
+      rangeStart = yearRange?.start;
+      continue;
+    }
+    if (yearRange?.end && year > yearRange?.end) {
+      array.push("");
+      rangeEnd = yearRange?.end;
+      continue;
+    }
+    array.push(year + "");
+  }
+
+  return {
+    array,
+    range: `${rangeStart} - ${rangeEnd}`,
+    startYear,
+    endYear,
   };
 }
