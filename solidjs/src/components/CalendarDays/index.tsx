@@ -13,7 +13,6 @@ import {
 } from "../../interface/general";
 import { cn } from "../../utils";
 import { createDaysArray, dayRowsArray } from "../../hooks/createDaysArray";
-import { showSelectorTwo } from "../SelectorTwo";
 
 export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   month: Accessor<number>;
@@ -39,6 +38,8 @@ export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   hoverRangeValue: Accessor<HoverRangeValue>;
 
   weekStartDay?: number;
+
+  showSelectorTwo?: Accessor<boolean>;
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
   createDaysArray({
@@ -60,7 +61,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
           <DatePickerWeek
             daysRowClass={cn(
               {
-                "rn-hidden": showSelectorTwo() && index() > 0,
+                "rn-hidden": props.showSelectorTwo?.() && index() > 0,
               },
               props.daysRowClass,
             )}

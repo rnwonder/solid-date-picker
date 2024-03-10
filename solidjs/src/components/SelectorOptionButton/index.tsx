@@ -7,7 +7,7 @@ import {
 import { SelectorProps } from "../Selector";
 import { Accessor } from "solid-js";
 
-interface SelectorOptionButtonProps extends SelectorProps {
+interface SelectorOptionButtonProps extends Partial<SelectorProps> {
   value: string;
   index: Accessor<number>;
   handleOptionClick: (

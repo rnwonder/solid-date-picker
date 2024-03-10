@@ -17,7 +17,7 @@ var vite_config_default = defineConfig({
         calendarArea: resolve(__vite_injected_original_dirname, "src/calendarArea.ts"),
         popover: resolve(__vite_injected_original_dirname, "src/popover.ts"),
         yearSelector: resolve(__vite_injected_original_dirname, "src/yearSelector.ts"),
-        datePickerStandAlone: resolve(__vite_injected_original_dirname, "src/datePickerStandAlone.ts"),
+        datePickerStandAlone: resolve(__vite_injected_original_dirname, "src/calendar.ts"),
         utilities: resolve(__vite_injected_original_dirname, "src/utilities.ts")
       },
       formats: ["es"]

@@ -5,7 +5,7 @@ import { Button } from "../Button";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
 
-interface SelectorTwoTopProps extends SelectorProps {
+interface SelectorTwoTopProps extends Partial<SelectorProps> {
   isYear?: boolean;
 }
 
@@ -15,10 +15,11 @@ function SelectorTwoTop(props: SelectorTwoTopProps) {
 
   createEffect(() => {
     setIsPrevButtonDisabled(
-      !!props.yearRange?.start &&
+      (!!props.yearRange?.start &&
         !!props.startYear?.() &&
         !!props.count?.() &&
-        props.startYear?.()! - 1 < props.yearRange?.start,
+        props.startYear?.()! - 1 < props.yearRange?.start) ||
+        (props.startYear?.() || 0) - 20 <= 0,
     );
     setIsNextButtonDisabled(
       !!props.yearRange?.end &&
@@ -45,7 +46,13 @@ function SelectorTwoTop(props: SelectorTwoTopProps) {
       <Show when={props.isYear}>
         <Button
           class={cn(
-            "selector-prev-next-btn selector-prev-btn rn-text-black disabled:rn-opacity-10 dark:rn-text-white",
+            `
+            selector-prev-next-btn 
+            selector-prev-btn 
+            rn-text-black 
+            disabled:rn-opacity-10 
+            dark:rn-text-white
+          `,
           )}
           data-prev={true}
           data-type={"selector-prev-next-btn"}
@@ -99,7 +106,13 @@ function SelectorTwoTop(props: SelectorTwoTopProps) {
       <Show when={props.isYear}>
         <Button
           class={cn(
-            "selector-prev-next-btn selector-next-btn rn-text-black disabled:rn-opacity-10 dark:rn-text-white",
+            `
+            selector-prev-next-btn 
+            selector-next-btn 
+            rn-text-black 
+            disabled:rn-opacity-10 
+            dark:rn-text-white
+           `,
           )}
           data-next={true}
           aria-label={"Show next 20 years."}

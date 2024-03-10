@@ -1,2 +1,2 @@
-import DateMath from "../../utils/math";
+import DateMath from "./utils/math";
 export default DateMath;

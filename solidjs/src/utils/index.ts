@@ -3,20 +3,20 @@ import {
   convertDateObjectToDate,
   convertDateToDateObject,
   formatDate,
-} from "../../../utils/format";
+} from "./format";
 
 import { clickOutside, getMonthName, getToday } from "./generate";
 
 export * from "./general";
 export * from "./portal";
-export * from "../../../utils/format";
+export * from "./format";
 export * from "./generate";
 export * from "./action";
 export * from "./dayProps";
-export * from "../../../utils/math";
+export * from "./math";
 export * from "./class";
 export * from "./selector";
-export * from "../../../utils/time";
+export * from "./time";
 
 export const utils = () => ({
   getToday,

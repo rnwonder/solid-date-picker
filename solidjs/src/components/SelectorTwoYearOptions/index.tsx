@@ -3,7 +3,7 @@ import { cn } from "../../utils";
 import { For } from "solid-js";
 import { SelectorOptionButton } from "../SelectorOptionButton";
 
-interface SelectorTwoYearOptionsProps extends SelectorProps {
+interface SelectorTwoYearOptionsProps extends Partial<SelectorProps> {
   array: string[];
   handleOptionClick: (
     index: number,

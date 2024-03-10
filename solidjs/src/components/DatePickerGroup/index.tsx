@@ -11,11 +11,21 @@ import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
 import { createButtonAnimation } from "../../hooks/createButtonAnimation";
 import { cn } from "../../utils";
+import { SelectorProps } from "../Selector";
+import { defaultSelectorProps } from "../SelectorTwo";
 
 export interface DatePickerInputSJProps
   extends Omit<
       DatePickerProps,
-      "type" | "value" | "setAllowedComponents" | "close" | "handleOnChange"
+      | "type"
+      | "value"
+      | "setAllowedComponents"
+      | "close"
+      | "handleOnChange"
+      | "showSelectorTwo"
+      | "setShowSelectorTwo"
+      | "setSelectorTwoProps"
+      | "selectorTwoProps"
     >,
     Pick<RnClassName, "inputWrapperClass" | "inputClass"> {
   type?: DatePickerType;
@@ -50,6 +60,9 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   });
   const [isShown, setIsShown] = createSignal(false);
   const [allowedComponents, setAllowedComponents] = createSignal<any[]>([]);
+  const [showSelectorTwo, setShowSelectorTwo] = createSignal(false);
+  const [selectorTwoProps, setSelectorTwoProps] =
+    createSignal<SelectorProps>(defaultSelectorProps);
 
   createButtonAnimation(props.noButtonAnimation);
 
@@ -229,6 +242,8 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
       setIsShown={setIsShown}
       onClose={() => {
         setAllowedComponents([]);
+        setShowSelectorTwo(false);
+        setSelectorTwoProps(defaultSelectorProps);
         props.onClose?.();
       }}
       onOpen={() => {
@@ -245,6 +260,10 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           minDate={props.minDate}
           setAllowedComponents={setAllowedComponents}
           close={close}
+          setShowSelectorTwo={setShowSelectorTwo}
+          showSelectorTwo={showSelectorTwo}
+          setSelectorTwoProps={setSelectorTwoProps}
+          selectorTwoProps={selectorTwoProps}
         />
       )}
       onClickOutside={(e, setShown) => {

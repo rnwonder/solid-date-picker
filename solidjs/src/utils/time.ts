@@ -1,4 +1,4 @@
-import { TimeMeridiem, YearRange } from "../solidjs/src/interface/general";
+import { TimeMeridiem, YearRange } from "../interface/general";
 
 export const leadingZeros = (value: number, numberOfLeadingZero?: number) => {
   return String(Math.ceil(value)).padStart(numberOfLeadingZero ?? 2, "0");

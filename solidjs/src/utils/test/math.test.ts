@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import DateMath from "../../../../utils/math";
+import DateMath from "../math";
 
 describe("DateMath.diff", () => {
   test("should return the difference between two dates in milliseconds", () => {
@@ -123,7 +123,7 @@ describe("DateMath.diff", () => {
         "weeks",
         "quarters",
         "years",
-      ])
+      ]),
     ).toMatchInlineSnapshot(`
       {
         "days": 393,
@@ -144,7 +144,7 @@ describe("DateMath.plus", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(DateMath.set(date).plus({ day: 2 }).toISO()).toMatchInlineSnapshot(
-      '"2023-02-15T23:00:00.000Z"'
+      '"2023-02-15T23:00:00.000Z"',
     );
   });
 
@@ -165,7 +165,7 @@ describe("DateMath.plus", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).plus({ day: 2 }).toMillis()
+      DateMath.set(date).plus({ day: 2 }).toMillis(),
     ).toMatchInlineSnapshot("1676502000000");
   });
 
@@ -179,35 +179,35 @@ describe("DateMath.plus", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).plus({ day: 2 }).toString()
+      DateMath.set(date).plus({ day: 2 }).toString(),
     ).toMatchInlineSnapshot('"Feb 16, 2023"');
   });
   test("Add 2 years to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).plus({ year: 2 }).toString()
+      DateMath.set(date).plus({ year: 2 }).toString(),
     ).toMatchInlineSnapshot('"Feb 14, 2025"');
   });
   test("Add 2 months to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).plus({ month: 2 }).toString()
+      DateMath.set(date).plus({ month: 2 }).toString(),
     ).toMatchInlineSnapshot('"Apr 14, 2023"');
   });
   test("Add 24 hours to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).plus({ hour: 24 }).toString()
+      DateMath.set(date).plus({ hour: 24 }).toString(),
     ).toMatchInlineSnapshot('"Feb 15, 2023"');
   });
   test("Add 1440 minutes to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).plus({ minute: 1440 }).toString()
+      DateMath.set(date).plus({ minute: 1440 }).toString(),
     ).toMatchInlineSnapshot('"Feb 15, 2023"');
   });
 
@@ -217,7 +217,7 @@ describe("DateMath.plus", () => {
     expect(
       DateMath.set(date)
         .plus({ second: 86400 })
-        .toString({ format: "DDD, MMM dd yyyy" })
+        .toString({ format: "DDD, MMM dd yyyy" }),
     ).toMatchInlineSnapshot('"Wednesday, February 15 2023"');
   });
 
@@ -234,7 +234,7 @@ describe("DateMath.plus", () => {
           minute: 1440,
           second: 86400,
         })
-        .toString()
+        .toString(),
     ).toMatchInlineSnapshot('"Apr 19, 2025"');
   });
 });
@@ -244,7 +244,7 @@ describe("DateMath.minus", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(DateMath.set(date).minus({ day: 2 }).toISO()).toMatchInlineSnapshot(
-      '"2023-02-11T23:00:00.000Z"'
+      '"2023-02-11T23:00:00.000Z"',
     );
   });
 
@@ -265,7 +265,7 @@ describe("DateMath.minus", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).minus({ day: 2 }).toMillis()
+      DateMath.set(date).minus({ day: 2 }).toMillis(),
     ).toMatchInlineSnapshot("1676156400000");
   });
 
@@ -273,35 +273,35 @@ describe("DateMath.minus", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).minus({ day: 2 }).toString()
+      DateMath.set(date).minus({ day: 2 }).toString(),
     ).toMatchInlineSnapshot('"Feb 12, 2023"');
   });
   test("Subtract 2 years to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).minus({ year: 2 }).toString()
+      DateMath.set(date).minus({ year: 2 }).toString(),
     ).toMatchInlineSnapshot('"Feb 14, 2021"');
   });
   test("Subtract 2 months to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).minus({ month: 2 }).toString()
+      DateMath.set(date).minus({ month: 2 }).toString(),
     ).toMatchInlineSnapshot('"Dec 14, 2022"');
   });
   test("Subtract 24 hours to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).minus({ hour: 24 }).toString()
+      DateMath.set(date).minus({ hour: 24 }).toString(),
     ).toMatchInlineSnapshot('"Feb 13, 2023"');
   });
   test("Subtract 1440 minutes to a given date and return date in string format string", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).minus({ minute: 1440 }).toString()
+      DateMath.set(date).minus({ minute: 1440 }).toString(),
     ).toMatchInlineSnapshot('"Feb 13, 2023"');
   });
 
@@ -309,7 +309,7 @@ describe("DateMath.minus", () => {
     const date = { month: 1, day: 14, year: 2023 };
 
     expect(
-      DateMath.set(date).minus({ second: 86400 }).toString()
+      DateMath.set(date).minus({ second: 86400 }).toString(),
     ).toMatchInlineSnapshot('"Feb 13, 2023"');
   });
 
@@ -326,7 +326,7 @@ describe("DateMath.minus", () => {
           minute: 1440,
           second: 86400,
         })
-        .toString({ localeOptions: { dateStyle: "full" } })
+        .toString({ localeOptions: { dateStyle: "full" } }),
     ).toMatchInlineSnapshot('"Wednesday, December 9, 2020"');
   });
 });

@@ -3,7 +3,7 @@ import {
   convertDateObjectToDate,
   convertDateToDateObject,
   formatDate,
-} from "../../../../utils/format";
+} from "../format";
 
 describe("convertDateObjectToDate", () => {
   test("should return Date from date object", () => {
@@ -52,7 +52,7 @@ describe("formatDate", () => {
           month: "long",
           day: "2-digit",
         },
-      })
+      }),
     ).toMatchInlineSnapshot('"February 01, 2021"');
   });
 
@@ -66,7 +66,7 @@ describe("formatDate", () => {
     expect(
       formatDate(date, {
         locale: "en-GB",
-      })
+      }),
     ).toMatchInlineSnapshot('"1 Feb 2021"');
   });
 
@@ -80,7 +80,7 @@ describe("formatDate", () => {
       formatDate(date, {
         locale: "en-GB",
         localeOptions: { dateStyle: "long" },
-      })
+      }),
     ).toMatchInlineSnapshot('"1 February 2021"');
   });
 
@@ -94,7 +94,7 @@ describe("formatDate", () => {
       formatDate(date, {
         locale: "en-GB",
         localeOptions: { dateStyle: "full" },
-      })
+      }),
     ).toMatchInlineSnapshot('"Monday, 1 February 2021"');
   });
 
@@ -108,7 +108,7 @@ describe("formatDate", () => {
     expect(
       formatDate(date, {
         locale: "es-MX",
-      })
+      }),
     ).toMatchInlineSnapshot('"1 feb 2021"');
   });
 
@@ -122,7 +122,7 @@ describe("formatDate", () => {
       formatDate(date, {
         locale: "es-MX",
         localeOptions: { dateStyle: "long" },
-      })
+      }),
     ).toMatchInlineSnapshot('"1 de febrero de 2021"');
   });
 
@@ -136,7 +136,7 @@ describe("formatDate", () => {
       formatDate(date, {
         locale: "es-MX",
         localeOptions: { dateStyle: "full" },
-      })
+      }),
     ).toMatchInlineSnapshot('"lunes, 1 de febrero de 2021"');
   });
 
@@ -150,7 +150,7 @@ describe("formatDate", () => {
     expect(
       formatDate(date, {
         locale: "fr-FR",
-      })
+      }),
     ).toMatchInlineSnapshot('"1 févr. 2021"');
   });
 
@@ -164,7 +164,7 @@ describe("formatDate", () => {
     expect(
       formatDate(date, {
         format: "d dd D DD DDD m",
-      })
+      }),
     ).toMatchInlineSnapshot('"1 01 M Mon Monday 2"');
   });
 
@@ -177,7 +177,7 @@ describe("formatDate", () => {
     expect(
       formatDate(date, {
         format: "m mm M MM MMM",
-      })
+      }),
     ).toMatchInlineSnapshot('"2 02 F Feb February"');
   });
 
@@ -186,7 +186,7 @@ describe("formatDate", () => {
     expect(
       formatDate(date, {
         format: "yy yyyy",
-      })
+      }),
     ).toMatchInlineSnapshot('"21 2021"');
   });
 
@@ -195,19 +195,18 @@ describe("formatDate", () => {
     expect(
       formatDate(date, {
         format: "dd/MMM/yy",
-      })
+      }),
     ).toMatchInlineSnapshot('"01/December/21"');
   });
 
   test("should return string in format string `dd/mm/yy`", () => {
     const date = "2021 12 12";
     expect(
-        formatDate(date, {
-          format: "dd/mm/yy",
-        })
+      formatDate(date, {
+        format: "dd/mm/yy",
+      }),
     ).toMatchInlineSnapshot('"12/12/21"');
   });
-
 
   test("should return string in format string `DDD - MMM - yyyy` in Spanish", () => {
     const date = 1612134000000;
@@ -215,7 +214,7 @@ describe("formatDate", () => {
       formatDate(date, {
         format: "DDD - MMM - yyyy",
         locale: "es-MX",
-      })
+      }),
     ).toMatchInlineSnapshot('"lunes - febrero - 2021"');
   });
 });

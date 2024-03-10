@@ -19,7 +19,7 @@ import {
   convert24HourTo12Hour,
   getAmPm,
   getCurrentTime,
-} from "../../../../utils/time";
+} from "../../utils/time";
 import { cn } from "../../utils";
 
 export interface ITimePickerAnalog extends TimeClassName {
@@ -242,10 +242,10 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
           rn-left-[calc(50% 
           -
           1px)]
-          rn-bg-dark-time rn-absolute rn-bottom-1/2
-          rn-h-[39%]
+          rn-absolute rn-bottom-1/2 rn-h-[39%]
           rn-w-[2px]
           rn-origin-center-bottom
+          rn-bg-dark-time
           dark:rn-bg-[#8f8f8f]
           `,
           {
@@ -261,14 +261,14 @@ export const TimeAnalog = (props: ITimePickerAnalog) => {
         class={cn(
           `
           time-analog-center-dot
-          rn-bg-dark-time
-          dark:rn-bg-dark-time 
-          rn-absolute 
+          rn-absolute
           rn-left-1/2 
-          rn-top-1/2 rn-h-[5px] 
-          rn-w-[5px] rn--translate-x-1/2 rn--translate-y-1/2
-          rn-transform
-          rn-rounded-full
+          rn-top-1/2 
+          rn-h-[5px] 
+          rn-w-[5px] rn--translate-x-1/2 
+          rn--translate-y-1/2 rn-transform rn-rounded-full
+          rn-bg-dark-time
+          dark:rn-bg-dark-time
           `,
           props.timeAnalogClockCenterDotClass,
         )}

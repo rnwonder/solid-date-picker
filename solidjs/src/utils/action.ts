@@ -8,7 +8,7 @@ import {
   getDatePickerRefactoredMonth,
   getDatePickerRefactoredYear,
 } from "./generate";
-import { convertDateToDateObject } from "../../../utils/format";
+import { convertDateToDateObject } from "./format";
 import { isDateRangeDisabled, isDateRangeEnabled } from "./general";
 
 export const handleDateRange = ({

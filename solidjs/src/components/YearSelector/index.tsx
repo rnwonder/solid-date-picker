@@ -5,7 +5,7 @@ import {
   createSignal,
   Setter,
 } from "solid-js";
-import { Selector } from "../Selector";
+import { Selector, SelectorProps } from "../Selector";
 import {
   YearRange,
   MakeOptionalRequired,
@@ -21,11 +21,6 @@ import {
   getYearRange,
 } from "../../utils";
 import { SelectorTriggerButton } from "../SelectorTriggerButton";
-import {
-  setSelectorTwoProps,
-  setShowSelectorTwo,
-  showSelectorTwo,
-} from "../SelectorTwo";
 
 export interface YearSelectorProps extends SelectorColorsAndClassNames {
   year: Accessor<number>;
@@ -38,6 +33,9 @@ export interface YearSelectorProps extends SelectorColorsAndClassNames {
   type?: DatePickerType;
   startDay?: DateObjectUnits;
   yearSelectorType?: SelectorType;
+  setShowSelectorTwo?: Setter<boolean>;
+  setSelectorTwoProps?: Setter<SelectorProps>;
+  showSelectorTwo?: Accessor<boolean>;
 }
 
 export const YearSelector: Component<YearSelectorProps> = (props) => {
@@ -48,7 +46,7 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
   const [count, _] = createSignal(20);
 
   createEffect(() => {
-    if (props.yearSelectorType !== "full-size") return;
+    if (props.yearSelectorType === "compact-dropdown") return;
     const {
       range,
       array,
@@ -69,6 +67,16 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
     setEndYear(end);
   });
 
+  createEffect(() => {
+    if (props.yearSelectorType === "compact-dropdown") return;
+    if (!props.showSelectorTwo) return;
+
+    if (!props.showSelectorTwo()) {
+      setStartYear();
+      setEndYear();
+    }
+  });
+
   const handleNext = () => {
     if (!startYear() || !endYear()) return;
     const end = endYear()!;
@@ -84,7 +92,7 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
   };
 
   const handleFullSizeSelector = () => {
-    setSelectorTwoProps({
+    props.setSelectorTwoProps?.({
       ...props,
       optionsArray: [],
       yearArray,
@@ -106,22 +114,12 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
       endYear,
       count,
     });
-    setShowSelectorTwo(true);
+    props.setShowSelectorTwo?.(true);
   };
 
   return (
     <>
-      {props.yearSelectorType === "full-size" ? (
-        <SelectorTriggerButton
-          option={props.year}
-          optionsArray={[]}
-          type={"full-size"}
-          isOpen={showSelectorTwo()}
-          onClick={handleFullSizeSelector}
-        >
-          {props.year()}
-        </SelectorTriggerButton>
-      ) : (
+      {props.yearSelectorType === "compact-dropdown" ? (
         <Selector
           {...props}
           optionsArray={generateYearsArray(
@@ -140,6 +138,16 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
           primaryColor={props.primaryColor}
           primaryTextColor={props.primaryTextColor}
         />
+      ) : (
+        <SelectorTriggerButton
+          option={props.year}
+          optionsArray={[]}
+          type={"full-size"}
+          isOpen={props.showSelectorTwo?.() || false}
+          onClick={handleFullSizeSelector}
+        >
+          {props.year()}
+        </SelectorTriggerButton>
       )}
     </>
   );

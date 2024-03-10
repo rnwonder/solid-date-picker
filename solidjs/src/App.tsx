@@ -10,7 +10,9 @@ import { utils } from "./utils";
 import TimeAnalogPicker from "./components/TimeAnalogPicker";
 import { CustomPortal } from "./components/CustomPortal";
 import { Popover } from "./components/Popover";
-import DatePickerStandAloneExport from "./components/DatePickerStandAloneExport";
+import CalendarExport from "./components/CalendarExport";
+import YearSelectorExport from "./components/YearSelectorExport";
+import MonthSelectorExport from "./components/MonthSelectorExport";
 
 const App: Component = () => {
   const [value, setValue] = createSignal<TimeValue>({
@@ -44,6 +46,8 @@ const App: Component = () => {
     label: "01:30 PM",
   });
 
+  const [value33, setValue33] = createSignal(2024);
+  const [valueM, setValueM] = createSignal(1);
   createEffect(() => {
     // console.log("value", value());
   });
@@ -53,7 +57,7 @@ const App: Component = () => {
   const [ref, setRef] = createSignal<HTMLButtonElement>();
 
   return (
-    <div class={"rn-min-h-screen rn-bg-red-400"}>
+    <div class={"rn-min-h-screen rn-bg-white"}>
       <DatePickerGroup />
       <TimeAnalogPicker />
       <button
@@ -104,7 +108,7 @@ const App: Component = () => {
         <button>Click to see a popover</button>
       </Popover>
 
-      <DatePickerStandAloneExport
+      <CalendarExport
         onChange={(value) => {
           console.log("onChange", value);
         }}
@@ -114,6 +118,20 @@ const App: Component = () => {
         monthSelectorType={"full-size"}
         yearSelectorType={"full-size"}
         yearRange={{ start: 1998, end: 2030 }}
+      />
+
+      <YearSelectorExport
+        setYear={setValue33}
+        year={value33}
+        yearSelectorType={"compact-dropdown"}
+      />
+
+      <YearSelectorExport setYear={setValue33} year={value33} />
+      <MonthSelectorExport
+        setMonth={setValueM}
+        month={valueM}
+        monthSelectorType={"full-size"}
+        twoMonthsDisplay
       />
     </div>
   );

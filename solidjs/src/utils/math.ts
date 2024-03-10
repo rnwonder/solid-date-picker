@@ -5,7 +5,7 @@ import {
   DateTimeObject,
   Locale,
   LocaleOptions,
-} from "../solidjs/src/interface/general";
+} from "../interface/general";
 import {
   convertDateToDateObject,
   getJSDateFormat,

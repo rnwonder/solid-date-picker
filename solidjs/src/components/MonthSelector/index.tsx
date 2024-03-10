@@ -8,13 +8,8 @@ import {
   SelectorColorsAndClassNames,
   SelectorType,
 } from "../../interface/general";
-import { Selector } from "../Selector";
+import { Selector, SelectorProps } from "../Selector";
 import { SelectorTriggerButton } from "../SelectorTriggerButton";
-import {
-  setSelectorTwoProps,
-  setShowSelectorTwo,
-  showSelectorTwo,
-} from "../SelectorTwo";
 
 export interface MonthSelectorProps extends SelectorColorsAndClassNames {
   month: Accessor<number>;
@@ -31,6 +26,9 @@ export interface MonthSelectorProps extends SelectorColorsAndClassNames {
   onMonthChange?: (month: number) => void;
   startDay?: DateObjectUnits;
   monthSelectorType?: SelectorType;
+  setShowSelectorTwo?: Setter<boolean>;
+  setSelectorTwoProps?: Setter<SelectorProps>;
+  showSelectorTwo?: Accessor<boolean>;
 }
 export const MonthSelector = (props: MonthSelectorProps) => {
   const [monthArray, setMonthArray] = createSignal<string[]>([]);
@@ -40,7 +38,7 @@ export const MonthSelector = (props: MonthSelectorProps) => {
       return new Date(0, i + 1, 0).toLocaleDateString(props.locale || "en", {
         month: props?.monthSelectorFormat
           ? props.monthSelectorFormat
-          : props.monthSelectorType !== "full-size"
+          : props.monthSelectorType === "compact-dropdown"
             ? "short"
             : "long",
       });
@@ -49,7 +47,7 @@ export const MonthSelector = (props: MonthSelectorProps) => {
   });
 
   const handleFullSizeSelector = () => {
-    setSelectorTwoProps({
+    props.setSelectorTwoProps?.({
       ...props,
       optionsArray: monthArray(),
       option: props.month,
@@ -64,21 +62,12 @@ export const MonthSelector = (props: MonthSelectorProps) => {
       primaryColor: props.primaryColor,
       twoMonthsDisplay: props.twoMonthsDisplay,
     });
-    setShowSelectorTwo(true);
+    props.setShowSelectorTwo?.(true);
   };
 
   return (
     <>
-      {props.monthSelectorType === "full-size" ? (
-        <SelectorTriggerButton
-          option={props.month}
-          optionsArray={monthArray()}
-          type={"full-size"}
-          isOpen={showSelectorTwo()}
-          twoMonthsDisplay={props.twoMonthsDisplay}
-          onClick={handleFullSizeSelector}
-        />
-      ) : (
+      {props.monthSelectorType === "compact-dropdown" ? (
         <Selector
           {...props}
           optionsArray={monthArray()}
@@ -96,6 +85,15 @@ export const MonthSelector = (props: MonthSelectorProps) => {
           primaryColor={props.primaryColor}
           primaryTextColor={props.primaryTextColor}
           twoMonthsDisplay={props.twoMonthsDisplay}
+        />
+      ) : (
+        <SelectorTriggerButton
+          option={props.month}
+          optionsArray={monthArray()}
+          type={"full-size"}
+          isOpen={props.showSelectorTwo?.() || false}
+          twoMonthsDisplay={props.twoMonthsDisplay}
+          onClick={handleFullSizeSelector}
         />
       )}
     </>

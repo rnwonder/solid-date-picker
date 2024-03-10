@@ -4,7 +4,7 @@ import {
   Locale,
   LocaleOptions,
   MakeOptionalRequired,
-} from "../solidjs/src/interface/general";
+} from "../interface/general";
 import { leadingZeros } from "./time";
 
 export const formatDateWithString = (

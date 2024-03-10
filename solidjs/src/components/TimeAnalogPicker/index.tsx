@@ -7,7 +7,7 @@ import {
   TimeValue,
 } from "../../interface/general";
 import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
-import { convert12HourTo24Hour } from "../../../../utils/time";
+import { convert12HourTo24Hour } from "../../utils/time";
 import {
   formatHourWithLeadingZero,
   formatMinuteSecondWithLeadingZero,

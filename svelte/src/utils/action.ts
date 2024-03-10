@@ -8,7 +8,7 @@ import {
   getDatePickerRefactoredMonth,
   getDatePickerRefactoredYear,
 } from "./generate";
-import { convertDateToDateObject } from "../../../utils/format";
+import { convertDateToDateObject } from "../../../solidjs/src/utils/format";
 import { isDateRangeDisabled, isDateRangeEnabled } from "./general";
 
 export const handleDateRange = ({

@@ -6,7 +6,7 @@
 // import { YearSelectorExportProps } from "../components/YearSelectorExport";
 // import { PopoverProps } from "../components/Popover";
 // import { ModalProps } from "../components/CustomPortal";
-// import { DatePickerStandAloneProps } from "../components/DatePickerStandAloneExport";
+// import { DatePickerStandAloneProps } from "../components/CalendarExport";
 
 export type IPopOverPositionX = "left" | "right" | "center";
 export type IPopOverPositionY = "top" | "bottom" | "auto";

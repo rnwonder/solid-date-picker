@@ -7,22 +7,18 @@ import {
   MakeOptionalRequired,
 } from "../interface/general";
 import { getOnChangeSingleData } from "./generate";
-import {
-  setSelectorTwoProps,
-  setShowSelectorTwo,
-} from "../components/SelectorTwo";
 
 export const isOptionSelectedOnSelector = (
   value: string,
   index: Accessor<number>,
   props: {
     useValueAsName?: boolean;
-    option: Accessor<number>;
+    option?: Accessor<number>;
   },
 ): boolean => {
   return props.useValueAsName
-    ? props.option() === Number(value)
-    : props.option() === index();
+    ? props.option?.() === Number(value)
+    : props.option?.() === index();
 };
 
 export const isOptionDisabledOnSelector = (
@@ -88,7 +84,7 @@ export const handleSelectorOptionClick = (
   value: string,
   props: {
     useValueAsName?: boolean;
-    setOption: Setter<number>;
+    setOption?: Setter<number>;
     onYearChange?: (year: number) => void;
     onMonthChange?: (month: number) => void;
     onChange?: (data: DatePickerOnChange) => void;
@@ -99,7 +95,7 @@ export const handleSelectorOptionClick = (
 ) => {
   if (props.useValueAsName) {
     const year = Number(value);
-    props.setOption(year);
+    props.setOption?.(year);
     props.onYearChange?.(year);
     const changeData = getOnChangeSingleData({
       startDay: props.startDay,
@@ -110,7 +106,7 @@ export const handleSelectorOptionClick = (
       props.onChange?.(changeData);
     }
   } else {
-    props.setOption(index);
+    props.setOption?.(index);
     props.onMonthChange?.(index);
     const changeData = getOnChangeSingleData({
       startDay: props.startDay,

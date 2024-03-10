@@ -16,7 +16,7 @@ import {
 import { TimeAnalogGroupTop } from "../TimeAnalogGroupTop";
 import { TimeAnalogBottom } from "../TimeAnalogBottom";
 import { cn } from "../../utils";
-import { convert12HourTo24Hour } from "../../../../utils/time";
+import { convert12HourTo24Hour } from "../../utils/time";
 
 interface IRenderTimeJSXProps {
   view: Accessor<TimeView>;

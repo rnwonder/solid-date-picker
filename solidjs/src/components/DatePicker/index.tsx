@@ -41,7 +41,8 @@ import {
 import { CalendarArea } from "../CalendarArea";
 import { DatePickerTop } from "../DatePickerTop";
 import { cn } from "../../utils";
-import SelectorTwo, { selectorTwoProps, showSelectorTwo } from "../SelectorTwo";
+import SelectorTwo from "../SelectorTwo";
+import { SelectorProps } from "../Selector";
 
 export interface DatePickerProps
   extends RnColor,
@@ -110,6 +111,11 @@ export interface DatePickerProps
 
   yearSelectorType?: SelectorType;
   monthSelectorType?: SelectorType;
+
+  showSelectorTwo?: Accessor<boolean>;
+  setShowSelectorTwo?: Setter<boolean>;
+  setSelectorTwoProps?: Setter<SelectorProps>;
+  selectorTwoProps?: Accessor<SelectorProps>;
 }
 
 export const DatePicker = (props: DatePickerProps) => {
@@ -517,12 +523,12 @@ export const DatePicker = (props: DatePickerProps) => {
           rn-bg-white
           rn-pb-[0.5rem] 
           rn-pt-[0.625rem] 
-          rn-shadow-lg 
           dark:rn-border-gray-700
           dark:rn-bg-dreamless-sleep
           `,
         {
           "rn-w-max": !calendarLeftAreaJSX && !calendarRightAreaJSX,
+          "rn-shadow-lg": !props.showSelectorTwo?.(),
         },
         props.datePickerWrapperClass,
       )}
@@ -539,8 +545,12 @@ export const DatePicker = (props: DatePickerProps) => {
       aria-label={"calendar"}
       aria-roledescription={"date-picker"}
     >
-      <Show when={showSelectorTwo()}>
-        <SelectorTwo {...selectorTwoProps()} />
+      <Show when={props.showSelectorTwo?.()}>
+        <SelectorTwo
+          {...props.selectorTwoProps?.()}
+          setShowSelectorTwo={props.setShowSelectorTwo}
+          setSelectorTwoProps={props.setSelectorTwoProps}
+        />
       </Show>
 
       <Show when={!props.hideTopArea} keyed>
@@ -577,6 +587,9 @@ export const DatePicker = (props: DatePickerProps) => {
             primaryTextColor={props.primaryTextColor}
             secondaryColor={props.secondaryColor}
             secondaryTextColor={props.secondaryTextColor}
+            setShowSelectorTwo={props.setShowSelectorTwo}
+            setSelectorTwoProps={props.setSelectorTwoProps}
+            showSelectorTwo={props.showSelectorTwo}
           />
         )}
       </Show>
@@ -587,7 +600,7 @@ export const DatePicker = (props: DatePickerProps) => {
           props.datePickerBodyAreaClass,
         )}
       >
-        <Show when={calendarLeftAreaJSX && !showSelectorTwo()} keyed>
+        <Show when={calendarLeftAreaJSX && !props.showSelectorTwo?.()} keyed>
           {calendarLeftAreaJSX}
         </Show>
 
@@ -605,15 +618,16 @@ export const DatePicker = (props: DatePickerProps) => {
               onHoverDay={onHoverDay}
               hoverRangeValue={hoverRangeValue}
               onHoverDayEnd={onHoverDayEnd}
+              showSelectorTwo={props.showSelectorTwo}
             />
           )}
         </Show>
 
-        <Show when={calendarRightAreaJSX && !showSelectorTwo()} keyed>
+        <Show when={calendarRightAreaJSX && !props.showSelectorTwo?.()} keyed>
           {calendarRightAreaJSX}
         </Show>
       </div>
-      <Show when={calendarBottomAreaJSX && !showSelectorTwo()} keyed>
+      <Show when={calendarBottomAreaJSX && !props.showSelectorTwo?.()} keyed>
         {calendarBottomAreaJSX}
       </Show>
     </div>

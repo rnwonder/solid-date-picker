@@ -10,4 +10,6 @@ vite.config.ts.timestamp-1685973042077.mjs
 themes
 gulpfile.js
 ./gulpfile.js
+solidjs/datepicker.css
+solidjs/gulpfile.js
 

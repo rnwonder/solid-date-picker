@@ -1,19 +1,15 @@
-import { SelectorProps } from "../Selector";
 import { cn, handleSelectorOptionClick } from "../../utils";
 import { For, Show } from "solid-js";
 import { SelectorOptionButton } from "../SelectorOptionButton";
-import {
-  defaultSelectorProps,
-  setSelectorTwoProps,
-  setShowSelectorTwo,
-} from "../SelectorTwo";
+import { defaultSelectorProps, SelectorTwoProps } from "../SelectorTwo";
 import SelectorTwoYearOptions from "../SelectorTwoYearOptions";
 
-function SelectorTwoArea(props: SelectorProps) {
+function SelectorTwoArea(props: SelectorTwoProps) {
   const handleOptionClick = (index: number, value: string) => {
     handleSelectorOptionClick(index, value, props, () => {
-      setSelectorTwoProps(defaultSelectorProps);
-      setShowSelectorTwo(false);
+      props.setSelectorTwoProps?.(defaultSelectorProps);
+      props.setShowSelectorTwo?.(false);
+      props.close?.();
     });
   };
 

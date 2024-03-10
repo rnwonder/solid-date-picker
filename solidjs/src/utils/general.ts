@@ -6,7 +6,7 @@ import type {
   MakeOptionalRequired,
 } from "../interface/general";
 import { DateArray } from "../interface/general";
-import { convertDateObjectToDate } from "../../../utils/format";
+import { convertDateObjectToDate } from "./format";
 
 import {
   getDatePickerRefactoredMonth,
