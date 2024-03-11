@@ -1,4 +1,5 @@
 solidjs/node_modules
+node_modules
 dist
 time-picker
 .env
@@ -12,4 +13,5 @@ gulpfile.js
 ./gulpfile.js
 solidjs/datepicker.css
 solidjs/gulpfile.js
+datepicker.css
 
