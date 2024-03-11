@@ -1,9 +1,5 @@
-import { Accessor, Component, createEffect, createSignal, For } from "solid-js";
-import {
-  applyDateRangeProps,
-  breakArrayIntoSubArrays,
-  getMonthDaysArray,
-} from "../../utils";
+import { Accessor, Component, For } from "solid-js";
+import { applyDateRangeProps } from "../../utils";
 import { DatePickerDay } from "../DatePickerDay";
 import { DatePickerWeek } from "../DatePickerWeek";
 import {
@@ -13,10 +9,10 @@ import {
   CustomDaysClassName,
   HandleDayClick,
   HoverRangeValue,
-  MonthDaysObject,
   CalendarDaysClassNamesAndColors,
 } from "../../interface/general";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils";
+import { createDaysArray, dayRowsArray } from "../../hooks/createDaysArray";
 
 export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   month: Accessor<number>;
@@ -42,17 +38,14 @@ export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   hoverRangeValue: Accessor<HoverRangeValue>;
 
   weekStartDay?: number;
+
+  showSelectorTwo?: Accessor<boolean>;
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
-  const [dayRowsArray, setDayRowsArray] = createSignal<
-    Array<Array<MonthDaysObject>>
-  >([]);
-
-  createEffect(() => {
-    const days = getMonthDaysArray(props.month(), props.year(), {
-      weekStartDay: props.weekStartDay,
-    });
-    setDayRowsArray(breakArrayIntoSubArrays(days, 7));
+  createDaysArray({
+    month: props.month,
+    year: props.year,
+    weekStartDay: props.weekStartDay,
   });
   return (
     <div
@@ -64,8 +57,15 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
       )}
     >
       <For each={dayRowsArray()}>
-        {(daysRow) => (
-          <DatePickerWeek daysRowClass={props.daysRowClass}>
+        {(daysRow, index) => (
+          <DatePickerWeek
+            daysRowClass={cn(
+              {
+                "rn-hidden": props.showSelectorTwo?.() && index() > 0,
+              },
+              props.daysRowClass,
+            )}
+          >
             <For each={daysRow}>
               {(day) => (
                 <DatePickerDay

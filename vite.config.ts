@@ -16,7 +16,7 @@ export default defineConfig({
         calendarArea: resolve(__dirname, "src/calendarArea.ts"),
         popover: resolve(__dirname, "src/popover.ts"),
         yearSelector: resolve(__dirname, "src/yearSelector.ts"),
-        datePickerStandAlone: resolve(__dirname, "src/datePickerStandAlone.ts"),
+        calendar: resolve(__dirname, "src/calendar.ts"),
         utilities: resolve(__dirname, "src/utilities.ts"),
       },
       formats: ["es"],

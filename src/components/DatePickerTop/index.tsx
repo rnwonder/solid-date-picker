@@ -1,4 +1,11 @@
-import { Accessor, Component, JSXElement, Setter, Show } from "solid-js";
+import {
+  Accessor,
+  Component,
+  createEffect,
+  JSXElement,
+  Setter,
+  Show,
+} from "solid-js";
 import { DatePickerMonthAndYearSelector } from "../DatePickerMonthAndYearSelector";
 import { Button } from "../Button";
 import {
@@ -10,7 +17,9 @@ import {
   MakeOptionalRequired,
   DateObjectUnits,
   DateArray,
-  RnClassName, DatePickerOnChange, DatePickerType,
+  RnClassName,
+  DatePickerOnChange,
+  DatePickerType,
 } from "../../interface/general";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
@@ -19,7 +28,8 @@ import {
   getRefactoredPrevDate,
   isNotPartOfEnabledDays,
 } from "../../utils";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils/class";
+import { SelectorProps } from "../Selector";
 
 export interface DatePickerTopProps extends RnColor, RnClassName {
   handlePrevMonth: () => void;
@@ -29,6 +39,9 @@ export interface DatePickerTopProps extends RnColor, RnClassName {
   month: Accessor<number>;
   year: Accessor<number>;
   render: Accessor<boolean>;
+  setShowSelectorTwo?: Setter<boolean>;
+  setSelectorTwoProps?: Setter<SelectorProps>;
+  showSelectorTwo?: Accessor<boolean>;
   monthSelectorJSX?: JSXElement;
   yearSelectorJSX?: JSXElement;
   monthYearSelectorJSX?: JSXElement;
@@ -93,13 +106,13 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       class={cn(
         `
         date-picker-top 
-        rn-flex 
-        rn-justify-between 
-        rn-items-center 
         rn-mb-[0.3125rem] 
+        rn-flex 
+        rn-items-center 
+        rn-justify-between 
         rn-px-2
       `,
-        props.datePickerTopAreaClass
+        props.datePickerTopAreaClass,
       )}
       data-type={"date-picker-top"}
     >
@@ -110,9 +123,9 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={cn(
-            "date-prev-next-btn date-prev-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-white",
+            "date-prev-next-btn date-prev-btn rn-text-black disabled:rn-opacity-10 dark:rn-text-white",
             props.prevMonthBtnClass,
-            props.prevNextMonthBtnClass
+            props.prevNextMonthBtnClass,
           )}
           data-prev={true}
           data-type={"date-prev-next-btn"}
@@ -140,9 +153,9 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
       <Show when={!props.removeNavButtons} keyed>
         <Button
           class={cn(
-            "date-prev-next-btn date-next-btn disabled:rn-opacity-10 rn-text-black dark:rn-text-white",
+            "date-prev-next-btn date-next-btn rn-text-black disabled:rn-opacity-10 dark:rn-text-white",
             props.nextMonthBtnClass,
-            props.prevNextMonthBtnClass
+            props.prevNextMonthBtnClass,
           )}
           data-next={true}
           aria-label={"Move forward to switch to the next month."}

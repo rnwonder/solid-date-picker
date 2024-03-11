@@ -8,7 +8,7 @@ import {
 import { CalendarDays, CalendarDaysProps } from "../CalendarDays";
 import { WeekDays } from "../WeekDays";
 import { RnClassName, Locale, WeekDaysType } from "../../interface/general";
-import {cn} from "../../utils/class";
+import { cn } from "../../utils";
 
 export interface CalendarAreaProps
   extends CalendarDaysProps,

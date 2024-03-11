@@ -124,8 +124,6 @@ export const TimeNumber = (props: ITimeNumberProps) => {
         {
           [`
             before:rn-content[''] 
-            before:rn-bg-dark-time 
-            dark:before:rn-bg-dark-time 
             rn-text-white 
             before:rn-pointer-events-none 
             before:rn-absolute 
@@ -133,11 +131,13 @@ export const TimeNumber = (props: ITimeNumberProps) => {
             before:rn-top-1/2 
             before:rn-h-time-2 
             before:rn-w-time-2 
-            before:rn--translate-x-1/2
-            before:rn--translate-y-1/2
+            before:rn--translate-x-1/2 
+            before:rn--translate-y-1/2 
             before:rn-transform
             before:rn-rounded-full
+            before:rn-bg-dark-time
             dark:rn-text-white
+            dark:before:rn-bg-dark-time
             dark:before:rn-text-white
             `]: isSelected(),
           "": props.index() % teilBar() === 0,

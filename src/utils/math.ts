@@ -72,7 +72,7 @@ class DateMath {
 
   diff(
     other: DateMath,
-    units: DateMathDiffUnit[] = ["milliseconds"]
+    units: DateMathDiffUnit[] = ["milliseconds"],
   ): DateMathDiff {
     const diffTime = this.date.getTime() - other.date.getTime();
     const diffObject: DateMathDiff = {};
@@ -154,4 +154,3 @@ class DateMath {
 }
 
 export default DateMath;
-

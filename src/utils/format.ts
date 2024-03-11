@@ -5,63 +5,63 @@ import {
   LocaleOptions,
   MakeOptionalRequired,
 } from "../interface/general";
-import {leadingZeros} from "./time";
+import { leadingZeros } from "./time";
 
 export const formatDateWithString = (
   dateToFormat: Date | DateObjectUnits,
   format: string,
-  locale: Locale = "en-US"
+  locale: Locale = "en-US",
 ) => {
   const date = getJSDateFormat(dateToFormat);
 
   format = format
     .replace(
       /(?<!~)(?<!y)yyyy(?!y)/g,
-      date.toLocaleString(locale, { year: "numeric" })
+      date.toLocaleString(locale, { year: "numeric" }),
     )
     .replace(
       /(?<!~)(?<!y)yy(?!y)/g,
-      date.toLocaleString(locale, { year: "2-digit" })
+      date.toLocaleString(locale, { year: "2-digit" }),
     )
     .replace(
       /(?<!~)(?<!m)m(?!m)/g,
-      date.toLocaleString(locale, { month: "numeric" })
+      date.toLocaleString(locale, { month: "numeric" }),
     )
     .replace(
       /(?<!~)(?<!m)mm(?!m)/g,
-      date.toLocaleString(locale, { month: "2-digit" })
+      date.toLocaleString(locale, { month: "2-digit" }),
     )
     .replace(
       /(?<!~)(?<!d)dd(?!d)/g,
-      date.toLocaleString(locale, { day: "2-digit" })
+      date.toLocaleString(locale, { day: "2-digit" }),
     )
     .replace(
       /(?<!~)(?<!d)d(?!d)/g,
-      date.toLocaleString(locale, { day: "numeric" })
+      date.toLocaleString(locale, { day: "numeric" }),
     )
     .replace(
       /(?<!~)(?<!D)DDD(?!D)/g,
-      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "long" }))
+      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "long" })),
     )
     .replace(
       /(?<!~)(?<!D)DD(?!D)/g,
-      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "short" }))
+      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "short" })),
     )
     .replace(
       /(?<!~)(?<!D)D(?!D)/g,
-      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "narrow" }))
+      checkIfItStartsWithM(date.toLocaleString(locale, { weekday: "narrow" })),
     )
     .replace(
       /(?<!~)(?<!M)MMM(?!M)/g,
-      date.toLocaleString(locale, { month: "long" })
+      date.toLocaleString(locale, { month: "long" }),
     )
     .replace(
       /(?<!~)(?<!M)MM(?!M)/g,
-      date.toLocaleString(locale, { month: "short" })
+      date.toLocaleString(locale, { month: "short" }),
     )
     .replace(
       /(?<!~)(?<!M)M(?!M)/g,
-      date.toLocaleString(locale, { month: "narrow" })
+      date.toLocaleString(locale, { month: "narrow" }),
     )
 
     .replace(/~y/g, "y")
@@ -83,14 +83,14 @@ export const getJSDateFormat = (date: DateOption): Date => {
     newDate = new Date(
       date.year || 2023,
       !date.month && date.month !== 0 ? 1 : date.month,
-      date.day
+      date.day,
     );
   }
   return newDate;
 };
 
 export const convertDateToDateObject = (
-  date: Date
+  date: Date,
 ): MakeOptionalRequired<DateObjectUnits> => {
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -116,7 +116,7 @@ export const formatDate = (
     localeOptions?: LocaleOptions;
     locale?: Locale;
     format?: string;
-  }
+  },
 ) => {
   const { localeOptions, locale, format } = options || {};
   const newDate = getJSDateFormat(date);

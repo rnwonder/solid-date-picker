@@ -15,6 +15,8 @@ export * from "./action";
 export * from "./dayProps";
 export * from "./math";
 export * from "./class";
+export * from "./selector";
+export * from "./time";
 
 export const utils = () => ({
   getToday,

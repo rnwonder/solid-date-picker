@@ -1,0 +1,113 @@
+{
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-svelte"],
+  "overrides": [
+    {
+      "files": "**/*.svelte",
+      "options": {
+        "parser": "svelte"
+      }
+    },
+    {
+      "files": "**/*.css",
+      "options": {
+        "parser": "css"
+      }
+    },
+    {
+      "files": "**/*.scss",
+      "options": {
+        "parser": "scss"
+      }
+    },
+    {
+      "files": "**/*.less",
+      "options": {
+        "parser": "less"
+      }
+    },
+    {
+      "files": "**/*.styl",
+      "options": {
+        "parser": "stylus"
+      }
+    },
+    {
+      "files": "**/*.html",
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": "**/*.md",
+      "options": {
+        "parser": "markdown"
+      }
+    },
+    {
+      "files": "**/*.json",
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": "**/*.yaml",
+      "options": {
+        "parser": "yaml"
+      }
+    },
+    {
+      "files": "**/*.yml",
+      "options": {
+        "parser": "yaml"
+      }
+    },
+    {
+      "files": "**/*.toml",
+      "options": {
+        "parser": "toml"
+      }
+    },
+    {
+      "files": "**/*.xml",
+      "options": {
+        "parser": "xml"
+      }
+    },
+    {
+      "files": "**/*.svg",
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": "**/*.vue",
+      "options": {
+        "parser": "vue"
+      }
+    },
+    {
+      "files": "**/*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": "**/*.tsx",
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": "**/*.js",
+      "options": {
+        "parser": "babel"
+      }
+    },
+    {
+      "files": "**/*.jsx",
+      "options": {
+        "parser": "babel"
+      }
+    }
+  ]
+}
