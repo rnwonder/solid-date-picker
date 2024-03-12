@@ -5,7 +5,7 @@
 ```js
 import "@rnwonder/solid-date-picker/themes/ark-ui";
 
-<DatePickerGroup
+<DatePicker
   weekDaysType="single"
   shouldHighlightWeekends
   hideOutSideDays

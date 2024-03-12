@@ -5,7 +5,7 @@
 ```js
 import "@rnwonder/solid-date-picker/themes/shad-cn-ui";
 
-<DatePickerGroup
+<DatePicker
   weekDaysType="double"
   monthSelectorFormat={"long"}
 />
