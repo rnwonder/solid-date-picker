@@ -1,4 +1,4 @@
-import { createSignal, Setter } from "solid-js";
+import { Setter } from "solid-js";
 import { cn } from "../../utils";
 import { SelectorProps } from "../Selector";
 import SelectorTwoTop from "../SelectorTwoTop";
@@ -40,6 +40,16 @@ const SelectorTwo = (props: SelectorTwoProps) => {
       )}
       data-scope={"date-picker"}
       data-type={"date-selector-wrapper"}
+      style={{
+        ...(props.backgroundColor && {
+          "background-color": props.backgroundColor,
+        }),
+      }}
+      ref={props.ref}
+      data-part={"grid"}
+      aria-roledescription={
+        props.useValueAsName ? "select year" : "select month"
+      }
     >
       <SelectorTwoTop {...props} isYear={props.useValueAsName} />
 

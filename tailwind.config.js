@@ -1,7 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  corePlugins: {
+    preflight: false,
+    container: false,
+  },
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  darkMode: "class",
+  darkMode: ["class", '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
@@ -10,7 +14,7 @@ module.exports = {
         "eerie-black": "#1b1b1b",
         "dreamless-sleep": "#111111",
         "black-tie": "#474747",
-        "dark-time": '#8f8f8f'
+        "dark-time": "#8f8f8f",
       },
       transformOrigin: {
         "center-bottom": "center bottom ",

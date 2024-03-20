@@ -281,36 +281,6 @@ export const DatePicker = (props: DatePickerProps) => {
     setRender(true);
   });
 
-  createEffect(() => {
-    if (props.type !== "single") return;
-    if (!mounted()) return;
-    const agg = {
-      selectedDate: startDay(),
-      type: props.type,
-    };
-    onChange(agg);
-  });
-  createEffect(() => {
-    if (props.type !== "multiple") return;
-    if (!mounted()) return;
-    const agg = {
-      multipleDates: multipleObject(),
-      type: props.type,
-    };
-    onChange(agg);
-  });
-
-  createEffect(() => {
-    if (props.type !== "range") return;
-    if (!mounted()) return;
-    const agg = {
-      startDate: startDay(),
-      endDate: endDay(),
-      type: props.type,
-    };
-    onChange(agg);
-  });
-
   const handleDayClick = (
     day: MonthDaysObject,
     month: Accessor<number>,
@@ -345,6 +315,11 @@ export const DatePicker = (props: DatePickerProps) => {
       if (end && start) {
         setHoverRangeValue({});
       }
+      onChange({
+        startDate: start,
+        endDate: end,
+        type: "range",
+      });
     }
 
     if (props.type === "single") {
@@ -353,7 +328,12 @@ export const DatePicker = (props: DatePickerProps) => {
         getDatePickerRefactoredMonth(initialMonth, day.month),
         day.value,
       );
-      setStartDay(convertDateToDateObject(selectedDay));
+      const selectedDate = convertDateToDateObject(selectedDay);
+      setStartDay(selectedDate);
+      onChange({
+        selectedDate,
+        type: "single",
+      });
     }
 
     if (props.type === "multiple") {
@@ -370,9 +350,17 @@ export const DatePicker = (props: DatePickerProps) => {
           (date) => !compareObjectDate(date, findDate),
         );
         setMultipleObject(newMultipleObject);
+        onChange({
+          multipleDates: newMultipleObject,
+          type: "multiple",
+        });
         return;
       }
       setMultipleObject((prev) => [...prev, selectedDay]);
+      onChange({
+        multipleDates: multipleObject(),
+        type: "multiple",
+      });
     }
 
     if (!nextMonth) {
