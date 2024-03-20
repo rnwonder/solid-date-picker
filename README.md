@@ -2,8 +2,6 @@
 
 A simple and reusable Datepicker component for SolidJS ([Demo](https://stackblitz.com/edit/solidjs-templates-dof6jl?file=src%2FApp.tsx))
 
-Version 1.0.0 is out. Check out the [changelog](https://soliddatepicker.live/docs) for more details
-
 [Documentation](https://soliddatepicker.live/)
 
 ![Screenshot 2023-05-20 084944.jpg](https://res.cloudinary.com/dfbebf7x0/image/upload/v1706819632/Screenshot_2024-02-01_212902_un7lqa.jpg)
