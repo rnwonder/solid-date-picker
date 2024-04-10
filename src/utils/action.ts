@@ -21,6 +21,7 @@ export const handleDateRange = ({
   hover,
   hoverEndDay,
   enabledDays,
+  disallowSameDayRange,
 }: {
   startDay: DateObjectUnits | undefined;
   endDay: DateObjectUnits | undefined;
@@ -31,6 +32,7 @@ export const handleDateRange = ({
   enabledDays?: DateArray[];
   hover?: boolean;
   hoverEndDay?: boolean;
+  disallowSameDayRange?: boolean;
 }): {
   start?: DateObjectUnits;
   end?: DateObjectUnits;
@@ -65,6 +67,12 @@ export const handleDateRange = ({
     );
 
     if (startDayDate.getTime() === endDayDate.getTime()) {
+      if (disallowSameDayRange) {
+        return {
+          start: startDay,
+        };
+      }
+
       return {
         start: startDay,
         end: convertDateToDateObject(endDayDate),

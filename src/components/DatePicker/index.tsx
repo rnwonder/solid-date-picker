@@ -95,6 +95,7 @@ export interface DatePickerProps
   removeNavButtons?: boolean;
   shouldCloseOnSelect?: boolean;
   shouldHighlightWeekends?: boolean;
+  disallowSameDayRange?: boolean;
   hideCalendar?: boolean;
   hideOutSideDays?: boolean;
   twoMonthsDisplay?: boolean;
@@ -330,6 +331,7 @@ export const DatePicker = (props: DatePickerProps) => {
         startDay: startDay(),
         disabledDays: props.disabledDays,
         enabledDays: props.enabledDays,
+        disallowSameDayRange: props.disallowSameDayRange,
       });
       setStartDay(start);
       setEndDay(end);
