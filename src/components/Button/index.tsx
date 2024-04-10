@@ -1,5 +1,5 @@
-import {Component, createSignal, JSX} from "solid-js";
-import {cn} from "../../utils";
+import { Component, JSX } from "solid-js";
+import { cn } from "../../utils";
 
 interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
   class?: string;
@@ -7,9 +7,8 @@ interface ButtonProps extends JSX.DOMAttributes<HTMLButtonElement> {
   disabled?: boolean;
   style?: JSX.CSSProperties;
   selected?: boolean;
+  noButtonAnimation?: boolean;
 }
-
-export const [showAnimation, setShowAnimation] = createSignal(true)
 
 export const Button: Component<ButtonProps> = (props) => {
   return (
@@ -21,16 +20,16 @@ export const Button: Component<ButtonProps> = (props) => {
         rn-btn-ghost 
         ${props.setHeight ? "" : "rn-h-full"} 
         ${props.selected ? "" : "dark:hover:rn-bg-black-tie"}
-        rn-p-0 
+        date-picker-main-btn 
         rn-min-h-0 
-        date-picker-main-btn
+        rn-p-0
+        motion-reduce:rn-no-animation
         motion-reduce:rn-transition-none
-       
         `,
-          {
-              'rn-no-animation': !showAnimation()
-          },
-        props.class
+        {
+          "rn-no-animation": props.noButtonAnimation,
+        },
+        props.class,
       )}
       data-type={"date-picker-main-btn"}
       type={"button"}

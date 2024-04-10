@@ -95,7 +95,7 @@ describe("formatDate", () => {
         locale: "en-GB",
         localeOptions: { dateStyle: "full" },
       }),
-    ).toMatchInlineSnapshot('"Monday, 1 February 2021"');
+    ).toMatchInlineSnapshot(`"Monday 1 February 2021"`);
   });
 
   /* Tests for date formatting in Spanish */

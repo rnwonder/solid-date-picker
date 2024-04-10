@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/solid-date-picker",
-  "version": "1.2.4",
+  "version": "1.2.6",
   "description": "A responsive, highly-customizable datepicker component for SolidJS.",
   "type": "module",
   "main": "./dist/index.js",

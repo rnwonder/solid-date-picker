@@ -1,4 +1,11 @@
-import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
+import {
+  Accessor,
+  createEffect,
+  createSignal,
+  JSX,
+  Setter,
+  Show,
+} from "solid-js";
 import {
   RnClassName,
   DatePickerOnChange,
@@ -9,7 +16,6 @@ import {
 import { convertDateObjectToDate, labelFormat } from "../../utils";
 import { DatePicker, DatePickerProps } from "../DatePicker";
 import { IPopOverPositionX, IPopOverPositionY, Popover } from "../Popover";
-import { createButtonAnimation } from "../../hooks/createButtonAnimation";
 import { cn } from "../../utils";
 import { SelectorProps } from "../Selector";
 import { defaultSelectorProps } from "../SelectorTwo";
@@ -50,7 +56,6 @@ export interface DatePickerInputSJProps
   formatInputLabel?: string;
   formatInputLabelRangeStart?: string;
   formatInputLabelRangeEnd?: string;
-  noButtonAnimation?: boolean;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -63,8 +68,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   const [showSelectorTwo, setShowSelectorTwo] = createSignal(false);
   const [selectorTwoProps, setSelectorTwoProps] =
     createSignal<SelectorProps>(defaultSelectorProps);
-
-  createButtonAnimation(props.noButtonAnimation);
+  const [pickerRef, setPickerRef] = createSignal<HTMLDivElement | null>(null);
 
   const handleOnChange = (data: DatePickerOnChange) => {
     const pickerValue = props.value || value;
@@ -264,6 +268,8 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           showSelectorTwo={showSelectorTwo}
           setSelectorTwoProps={setSelectorTwoProps}
           selectorTwoProps={selectorTwoProps}
+          ref={pickerRef}
+          setRef={setPickerRef}
         />
       )}
       onClickOutside={(e, setShown) => {

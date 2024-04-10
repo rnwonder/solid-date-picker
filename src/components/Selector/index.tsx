@@ -45,6 +45,8 @@ export interface SelectorProps extends SelectorColorsAndClassNames {
   startYear?: Accessor<number | undefined>;
   endYear?: Accessor<number | undefined>;
   count?: Accessor<number>;
+
+  noButtonAnimation?: boolean;
 }
 
 export const Selector = (props: SelectorProps) => {
@@ -153,6 +155,7 @@ export const Selector = (props: SelectorProps) => {
         type={"compact-dropdown"}
         isOpen={open()}
         twoMonthsDisplay={props.twoMonthsDisplay}
+        noButtonAnimation={props.noButtonAnimation}
       />
     </Popover>
   );

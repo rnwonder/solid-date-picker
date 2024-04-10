@@ -16,7 +16,7 @@ import {
 import { TimeAnalogGroupTop } from "../TimeAnalogGroupTop";
 import { TimeAnalogBottom } from "../TimeAnalogBottom";
 import { cn } from "../../utils";
-import { convert12HourTo24Hour } from "../../utils/time";
+import { convert12HourTo24Hour } from "../../utils";
 
 interface IRenderTimeJSXProps {
   view: Accessor<TimeView>;
@@ -63,6 +63,7 @@ export interface ITimeAnalogGroupProps
   bottomAreaJSX?: IRenderTimeJSX;
   leftAreaJSX?: IRenderTimeJSX;
   rightAreaJSX?: IRenderTimeJSX;
+  noButtonAnimation?: boolean;
 }
 export const TimeAnalogGroup = (props: ITimeAnalogGroupProps) => {
   const [view, setView] = createSignal<TimeView>("hour");

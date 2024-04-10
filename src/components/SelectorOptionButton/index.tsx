@@ -17,6 +17,7 @@ interface SelectorOptionButtonProps extends Partial<SelectorProps> {
   ) => void;
   callback?: () => void;
   disabled?: boolean;
+  noButtonAnimation?: boolean;
 }
 
 export const SelectorOptionButton = (props: SelectorOptionButtonProps) => {
@@ -90,6 +91,7 @@ export const SelectorOptionButton = (props: SelectorOptionButtonProps) => {
           }),
       }}
       aria-owns={props.value}
+      noButtonAnimation={props.noButtonAnimation}
       {...(props.attributes || {})}
     >
       {props.value}

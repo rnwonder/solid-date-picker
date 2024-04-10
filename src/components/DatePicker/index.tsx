@@ -3,6 +3,7 @@ import {
   createEffect,
   createSignal,
   JSXElement,
+  onCleanup,
   onMount,
   Setter,
   Show,
@@ -60,7 +61,8 @@ export interface DatePickerProps
   onMonthChange?: (month: number) => void;
   onValueChange?: (value: DatePickerOnChange) => void;
 
-  ref?: any;
+  ref?: Accessor<HTMLDivElement | null>;
+  setRef?: Setter<HTMLDivElement | null>;
   value?: PickerAloneValue;
   setAllowedComponents?: Setter<HTMLElement[]>;
 
@@ -116,6 +118,8 @@ export interface DatePickerProps
   setShowSelectorTwo?: Setter<boolean>;
   setSelectorTwoProps?: Setter<SelectorProps>;
   selectorTwoProps?: Accessor<SelectorProps>;
+
+  noButtonAnimation?: boolean;
 }
 
 export const DatePicker = (props: DatePickerProps) => {
@@ -133,6 +137,22 @@ export const DatePicker = (props: DatePickerProps) => {
   const [hoverRangeValue, setHoverRangeValue] = createSignal<HoverRangeValue>(
     {},
   );
+  const [typedInput, setTypedInput] = createSignal("");
+
+  onMount(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!props.close) return;
+      if (isNaN(Number(e.key))) return;
+      console.log("log-on-open", e);
+      setTypedInput((prev) => prev + e.key);
+      console.log(typedInput());
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
+    onCleanup(() => {
+      document.removeEventListener("keydown", handleKeyDown);
+    });
+  });
 
   onMount(() => {
     if (
@@ -263,6 +283,13 @@ export const DatePicker = (props: DatePickerProps) => {
     }
   });
 
+  createEffect(() => {
+    // console.log("ref check", props.ref?.(), props.setRef);
+    // if (props.ref?.()) {
+    //   console.log(props.ref?.());
+    // }
+  });
+
   const onChange = (data: DatePickerOnChange) => {
     props.handleOnChange(data);
     props?.onChange?.(data);
@@ -314,6 +341,7 @@ export const DatePicker = (props: DatePickerProps) => {
       }
       if (end && start) {
         setHoverRangeValue({});
+        props.shouldCloseOnSelect && props.close?.();
       }
       onChange({
         startDate: start,
@@ -334,6 +362,7 @@ export const DatePicker = (props: DatePickerProps) => {
         selectedDate,
         type: "single",
       });
+      props.shouldCloseOnSelect && props.close?.();
     }
 
     if (props.type === "multiple") {
@@ -361,6 +390,7 @@ export const DatePicker = (props: DatePickerProps) => {
         multipleDates: multipleObject(),
         type: "multiple",
       });
+      props.shouldCloseOnSelect && props.close?.();
     }
 
     if (!nextMonth) {
@@ -371,7 +401,6 @@ export const DatePicker = (props: DatePickerProps) => {
       props.setYear?.(newYear);
     }
     setRender(false);
-    props.shouldCloseOnSelect && props.close?.();
   };
 
   const setMonthAndYear = (newMonth: number, newYear?: number) => {
@@ -521,7 +550,7 @@ export const DatePicker = (props: DatePickerProps) => {
         props.datePickerWrapperClass,
       )}
       data-type={"date-picker-wrapper"}
-      ref={props.ref}
+      ref={props.setRef}
       style={{
         ...(props.backgroundColor && {
           "background-color": props.backgroundColor,

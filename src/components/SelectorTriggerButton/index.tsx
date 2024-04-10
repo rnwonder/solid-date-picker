@@ -18,6 +18,7 @@ interface Props
   children?: JSXElement;
   isOpen: boolean;
   type: SelectorType;
+  noButtonAnimation?: boolean;
 }
 
 export const SelectorTriggerButton = (props: Props) => {
@@ -47,6 +48,7 @@ export const SelectorTriggerButton = (props: Props) => {
       style={{
         ...(props.textColor && { color: props.textColor }),
       }}
+      noButtonAnimation={props.noButtonAnimation}
     >
       {props.children ||
         (props.useValueAsName

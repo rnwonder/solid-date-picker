@@ -31,6 +31,7 @@ interface DatePickerDayProps
   hoverRangeValue?: Accessor<HoverRangeValue>;
   wrapperProps?: any;
   headerValue?: string;
+  noButtonAnimation?: boolean;
 }
 
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
@@ -103,7 +104,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
         ${props.hidden && "day-number-area-outside-days rn-pointer-events-none"}
         ${
           props.dayRangeBetween && !props.hidden
-            ? `dark:rn-bg-black-tie rn-bg-primary-focus rn-bg-opacity-50`
+            ? `rn-bg-primary-focus rn-bg-opacity-50 dark:rn-bg-black-tie`
             : ""
         }
         before:rn-absolute
@@ -208,7 +209,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
               : "day-number-current-month rn-opacity-100"
           }
 
-          ${props.dayRangeBetween && "dark:hover:rn-bg-black-tie hover:rn-bg-transparent"}
+          ${props.dayRangeBetween && "hover:rn-bg-transparent dark:hover:rn-bg-black-tie"}
           ${
             props.shouldHighlightWeekends && props.isWeekend && isNotSelected()
               ? "rn-text-red-500 dark:rn-text-red-500"
@@ -307,6 +308,7 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
                 : { color: props.textColor }
               : {}),
           }}
+          noButtonAnimation={props.noButtonAnimation}
         >
           {props.children}
         </Button>

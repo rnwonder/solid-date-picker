@@ -13,6 +13,7 @@ interface ITimeAnalogGroupTopProps extends TimeClassName {
   prevIcon?: JSX.Element;
   nextIcon?: JSX.Element;
   allowedView?: TimeView[];
+  noButtonAnimation?: boolean;
 }
 export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
   return (
@@ -63,6 +64,7 @@ export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
           style={{
             ...(props.arrowsColor && { color: props.arrowsColor }),
           }}
+          noButtonAnimation={props.noButtonAnimation}
         >
           {props.prevIcon || (
             <PrevIcon class={"rn-w-[17px]"} color={props.arrowsColor} />
@@ -98,6 +100,7 @@ export const TimeAnalogGroupTop = (props: ITimeAnalogGroupTopProps) => {
           style={{
             ...(props.arrowsColor && { color: props.arrowsColor }),
           }}
+          noButtonAnimation={props.noButtonAnimation}
         >
           {props.nextIcon || (
             <NextIcon class={"rn-w-[17px]"} color={props.arrowsColor} />

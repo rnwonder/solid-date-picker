@@ -65,6 +65,7 @@ export interface DatePickerTopProps extends RnColor, RnClassName {
   type: DatePickerType;
   startDay?: DateObjectUnits;
   setStartDay: Setter<DateObjectUnits | undefined>;
+  noButtonAnimation?: boolean;
 }
 
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
@@ -137,6 +138,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           style={{
             ...(props.arrowsColor && { color: props.arrowsColor }),
           }}
+          noButtonAnimation={props.noButtonAnimation}
         >
           {props.prevIcon || <PrevIcon color={props.arrowsColor} />}
         </Button>
@@ -167,6 +169,7 @@ export const DatePickerTop: Component<DatePickerTopProps> = (props) => {
           style={{
             ...(props.arrowsColor && { color: props.arrowsColor }),
           }}
+          noButtonAnimation={props.noButtonAnimation}
         >
           {props.nextIcon || <NextIcon color={props.arrowsColor} />}
         </Button>

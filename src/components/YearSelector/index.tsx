@@ -36,6 +36,7 @@ export interface YearSelectorProps extends SelectorColorsAndClassNames {
   setShowSelectorTwo?: Setter<boolean>;
   setSelectorTwoProps?: Setter<SelectorProps>;
   showSelectorTwo?: Accessor<boolean>;
+  noButtonAnimation?: boolean;
 }
 
 export const YearSelector: Component<YearSelectorProps> = (props) => {
@@ -145,6 +146,7 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
           type={"full-size"}
           isOpen={props.showSelectorTwo?.() || false}
           onClick={handleFullSizeSelector}
+          noButtonAnimation={props.noButtonAnimation}
         >
           {props.year()}
         </SelectorTriggerButton>

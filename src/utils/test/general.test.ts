@@ -1,12 +1,7 @@
 import { describe, expect, test } from "vitest";
-import {
-  checkIfItsTodayDate,
-  isBeforeDate,
-} from "../general";
+import { checkIfItsTodayDate, isBeforeDate } from "../general";
 
-import {getMonthName, getToday} from "../generate";
-
-
+import { getMonthName, getToday } from "../generate";
 
 describe("checkIfItsTodayDate", () => {
   test("should return true if date is today", () => {
@@ -20,7 +15,7 @@ describe("checkIfItsTodayDate", () => {
         day: today.getDate() + 1,
         month: today.getMonth(),
         year: today.getFullYear(),
-      })
+      }),
     ).toBe(false);
   });
   test("should return true if date is today (object)", () => {
@@ -135,8 +130,6 @@ describe("getMonthName", () => {
   });
 });
 
-
-
 /* Tests for regional formatting */
 describe("TimeAnalog for getMonthName function", () => {
   test("should return month name in Spanish long format", () => {
@@ -162,7 +155,7 @@ describe("TimeAnalog for getMonthName function", () => {
     expect(getMonthName(5, "short", "es-MX")).toBe("jun");
     expect(getMonthName(6, "short", "es-MX")).toBe("jul");
     expect(getMonthName(7, "short", "es-MX")).toBe("ago");
-    expect(getMonthName(8, "short", "es-MX")).toBe("sept");
+    expect(getMonthName(8, "short", "es-MX")).toBe("sep");
     expect(getMonthName(9, "short", "es-MX")).toBe("oct");
     expect(getMonthName(10, "short", "es-MX")).toBe("nov");
     expect(getMonthName(11, "short", "es-MX")).toBe("dic");

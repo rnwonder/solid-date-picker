@@ -29,6 +29,7 @@ export interface MonthSelectorProps extends SelectorColorsAndClassNames {
   setShowSelectorTwo?: Setter<boolean>;
   setSelectorTwoProps?: Setter<SelectorProps>;
   showSelectorTwo?: Accessor<boolean>;
+  noButtonAnimation?: boolean;
 }
 export const MonthSelector = (props: MonthSelectorProps) => {
   const [monthArray, setMonthArray] = createSignal<string[]>([]);
@@ -94,6 +95,7 @@ export const MonthSelector = (props: MonthSelectorProps) => {
           isOpen={props.showSelectorTwo?.() || false}
           twoMonthsDisplay={props.twoMonthsDisplay}
           onClick={handleFullSizeSelector}
+          noButtonAnimation={props.noButtonAnimation}
         />
       )}
     </>

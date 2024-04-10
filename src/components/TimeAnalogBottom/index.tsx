@@ -6,6 +6,7 @@ import { cn } from "../../utils";
 interface ITimeAnalogBottomProps extends TimeClassName {
   meridiem: Accessor<TimeMeridiem>;
   setMeridiem: Setter<TimeMeridiem>;
+  noButtonAnimation?: boolean;
 }
 export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
   const classString = (meridiem: TimeMeridiem) =>
@@ -32,7 +33,7 @@ export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
   return (
     <div
       class={cn(
-`
+        `
         time-picker-analog-bottom
         rn-flex
         rn-justify-between
@@ -40,11 +41,19 @@ export const TimeAnalogBottom = (props: ITimeAnalogBottomProps) => {
         props.timePickerBottomAreaClass,
       )}
     >
-      <Button class={classString("AM")} onClick={() => props.setMeridiem("AM")}>
+      <Button
+        class={classString("AM")}
+        onClick={() => props.setMeridiem("AM")}
+        noButtonAnimation={props.noButtonAnimation}
+      >
         AM
       </Button>
 
-      <Button class={classString("PM")} onClick={() => props.setMeridiem("PM")}>
+      <Button
+        class={classString("PM")}
+        onClick={() => props.setMeridiem("PM")}
+        noButtonAnimation={props.noButtonAnimation}
+      >
         PM
       </Button>
     </div>

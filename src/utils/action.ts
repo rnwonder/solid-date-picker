@@ -67,6 +67,7 @@ export const handleDateRange = ({
     if (startDayDate.getTime() === endDayDate.getTime()) {
       return {
         start: startDay,
+        end: convertDateToDateObject(endDayDate),
       };
     }
 
