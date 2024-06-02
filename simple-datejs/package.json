@@ -1,0 +1,73 @@
+{
+  "name": "@rnwonder/simple-datejs",
+  "version": "1.0.1",
+  "description": "Light weight date management library",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": "https://github.com/rnwonder/solid-date-picker",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./dateMath": {
+      "default": "./dist/dateMath.js"
+    },
+    "./utils": {
+      "default": "./dist/utils.js"
+    },
+    "./datePicker": {
+      "default": "./dist/datePicker.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "index": [
+        "./dist/index.d.ts"
+      ],
+      "dateMath": [
+        "./dist/dateMath.d.ts"
+      ],
+      "utils": [
+        "./dist/utils.d.ts"
+      ],
+      "datePicker": [
+        "./dist/datePicker.d.ts"
+      ]
+    }
+  },
+  "keywords": [
+    "simple-datejs",
+    "datejs",
+    "solid-datejs",
+    "date"
+  ],
+  "author": "rnwonder",
+  "bugs": "https://github.com/rnwonder/solid-date-picker/issues",
+  "homepage": "https://soliddatepicker.netlify.app/docs/helpers-utilities",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vitest run && vite build --mode lib"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "path": "^0.12.7",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.8.3",
+    "vitest": "^1.5.0"
+  }
+}
