@@ -1,6 +1,6 @@
 # Simple datejs
 
-A light weight simple date picker library
+A light weight simple date management library
 
 [Documentation](https://soliddatepicker.live/docs/helpers-utilities/)
 
@@ -25,7 +25,7 @@ import { DateMath, utils } from "@rnwonder/simple-datejs";
 
 const today = new Date();
 
-const isToday = utils().checkIfItsTodayDate(today); // ✅ true
+const isToday = utils.checkIfItsTodayDate(today); // ✅ true
 
 const date1 = DateMath.set("2018-03-13");
 const date2 = DateMath.set("2017-02-13");

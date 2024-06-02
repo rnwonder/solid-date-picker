@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/simple-datejs",
-  "version": "1.0.1",
+  "version": "1.0.11",
   "description": "Light weight date management library",
   "type": "module",
   "files": [
