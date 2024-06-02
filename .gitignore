@@ -1,3 +1,7 @@
+solid-date-picker/.vite
+simple-datejs/.vite
+
+
 solid-date-picker/node_modules
 simple-datejs/node_modules
 node_modules
@@ -58,3 +62,5 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
+
