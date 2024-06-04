@@ -52,7 +52,6 @@ export interface DatePickerProps
   type: DatePickerType;
   close?: () => void;
   handleOnChange: (data: DatePickerOnChange) => void;
-  onDisabledDayError?: () => void;
 
   minDate?: MakeOptionalRequired<DateObjectUnits>;
   maxDate?: MakeOptionalRequired<DateObjectUnits>;
@@ -61,6 +60,7 @@ export interface DatePickerProps
   onYearChange?: (year: number) => void;
   onMonthChange?: (month: number) => void;
   onValueChange?: (value: DatePickerOnChange) => void;
+  onDisabledDayError?: (data: DateObjectUnits) => void;
 
   ref?: Accessor<HTMLDivElement | null>;
   setRef?: Setter<HTMLDivElement | null>;

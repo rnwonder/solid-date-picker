@@ -65,6 +65,23 @@ const App: Component = () => {
             className: "orangeDay",
           },
         ]}
+        disabledDays={[
+          {
+            start: {
+              day: 8,
+              month: 5,
+              year: 2025,
+            },
+            end: {
+              day: 18,
+              month: 5,
+              year: 2025,
+            },
+          },
+        ]}
+        onDisabledDayError={(data) => {
+          console.log(data.day);
+        }}
       />
 
       <TimeAnalogPicker />

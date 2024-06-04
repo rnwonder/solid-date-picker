@@ -10,6 +10,7 @@ import { Button } from "../Button";
 import {
   ApplyDateRange,
   DateArray,
+  DateObjectUnits,
   DatePickerDayClassNamesAndColors,
   HoverRangeValue,
 } from "../../interface/general";
@@ -25,13 +26,16 @@ interface DatePickerDayProps
 
   disabledDays?: DateArray[];
   shouldHighlightWeekends?: boolean;
-  onDisabledDayError?: () => void;
+  onDisabledDayError?: (data: DateObjectUnits) => void;
   onHover?: () => void;
   onHoverEnd?: () => void;
   hoverRangeValue?: Accessor<HoverRangeValue>;
   wrapperProps?: any;
   headerValue?: string;
   noButtonAnimation?: boolean;
+  month?: Accessor<number>;
+  year?: Accessor<number>;
+  day?: number;
 }
 
 export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
@@ -78,6 +82,16 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
     <div
       ref={setref}
       class={cn(
+        {
+          [`date-picker-weekday-name
+            rn-block
+            rn-text-[0.75rem]`]: props.header,
+          [`date-picker-day-number-area
+            rn-flex
+            rn-items-center
+            rn-justify-center
+              rn-text-[0.9375rem]`]: !props.header,
+        },
         `
         ${
           props.header
@@ -315,7 +329,13 @@ export const DatePickerDay: Component<DatePickerDayProps> = (props) => {
 
         <Show keyed when={props.disabled}>
           <div
-            onClick={props.onDisabledDayError}
+            onClick={() =>
+              props.onDisabledDayError?.({
+                day: props.day,
+                month: props.month?.(),
+                year: props.year?.(),
+              })
+            }
             class="rn-absolute rn-left-0 rn-top-0 rn-h-full rn-w-full rn-rounded-full"
           />
         </Show>

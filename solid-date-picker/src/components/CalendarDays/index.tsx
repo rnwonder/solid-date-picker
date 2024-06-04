@@ -28,7 +28,7 @@ export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   customDaysClassName?: CustomDaysClassName[];
   multipleObject: Accessor<DateObjectUnits[]>;
   shouldHighlightWeekends?: boolean;
-  onDisabledDayError?: () => void;
+  onDisabledDayError?: (data: DateObjectUnits) => void;
   hideOutSideDays?: boolean;
 
   nextMonth?: boolean;
@@ -85,6 +85,9 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
                     maxDate: props.maxDate,
                     disabledDays: props.disabledDays,
                   })}
+                  year={props.year}
+                  month={props.month}
+                  day={day.value}
                   onClick={() =>
                     props.handleDayClick(
                       day,
