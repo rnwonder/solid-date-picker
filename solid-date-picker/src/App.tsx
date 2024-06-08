@@ -65,6 +65,14 @@ const App: Component = () => {
             className: "orangeDay",
           },
         ]}
+        locale={"zh-u-nu-hanidec"}
+        // locale={"ar-EG"}
+        yearSelectorCount={12}
+        calendarLeftAreaJSX={({ close }) => (
+          <div>
+            Hello <button onClick={close}>close</button>
+          </div>
+        )}
         disabledDays={[
           {
             start: {
@@ -142,6 +150,7 @@ const App: Component = () => {
         }}
         monthSelectorType={"full-size"}
         yearSelectorType={"full-size"}
+        yearSelectorCount={32}
         yearRange={{ start: 1998, end: 2030 }}
       />
 
@@ -157,6 +166,7 @@ const App: Component = () => {
         month={valueM}
         monthSelectorType={"full-size"}
         twoMonthsDisplay
+        locale={"es-MX"}
       />
     </div>
   );

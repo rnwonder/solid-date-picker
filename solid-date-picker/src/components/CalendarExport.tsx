@@ -5,8 +5,12 @@ import { SelectorProps } from "./Selector";
 import { defaultSelectorProps } from "./SelectorTwo";
 
 export interface DatePickerStandAloneProps
-  extends Omit<DatePickerProps, "handleOnChange" | "type"> {
+  extends Omit<
+    DatePickerProps,
+    "handleOnChange" | "type" | "yearSelectorCount"
+  > {
   type?: DatePickerType;
+  yearSelectorCount?: number;
 }
 
 const CalendarExport = (props: DatePickerStandAloneProps) => {
@@ -23,6 +27,7 @@ const CalendarExport = (props: DatePickerStandAloneProps) => {
       showSelectorTwo={showSelectorTwo}
       setSelectorTwoProps={setSelectorTwoProps}
       selectorTwoProps={selectorTwoProps}
+      yearSelectorCount={props.yearSelectorCount || 20}
     />
   );
 };

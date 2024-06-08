@@ -12,8 +12,8 @@ import {
   convert24HourTo12Hour,
   getAmPm,
   getCurrentTime,
-  getYearRange,
   smartDropDownPosition,
+  leadingZeros,
 } from "@rnwonder/simple-datejs/utils";
 
 const utils = () => ({
@@ -28,13 +28,14 @@ const utils = () => ({
   checkIfItsTodayDate,
   convert12HourTo24Hour,
   convert24HourTo12Hour,
+  leadingZeros,
   getAmPm,
   getCurrentTime,
-  getYearRange,
   smartDropDownPosition,
 });
 
 export * from "./portal";
 export * from "./class";
+export * from "./general";
 
 export { utils };

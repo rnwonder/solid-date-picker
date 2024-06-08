@@ -73,8 +73,8 @@ export type DatePickerOnChange =
       type: "multiple";
     };
 
-export interface MonthDaysObject {
-  value: number;
+export interface MonthDaysObject<T = number> {
+  value: T;
   month: MonthStatus;
 }
 

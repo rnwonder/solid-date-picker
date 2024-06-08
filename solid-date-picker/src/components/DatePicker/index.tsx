@@ -42,7 +42,7 @@ import {
 } from "../../interface/general";
 import { CalendarArea } from "../CalendarArea";
 import { DatePickerTop } from "../DatePickerTop";
-import { cn } from "../../utils";
+import { cn, convertFormattedNumberBackToNumber } from "../../utils";
 import SelectorTwo from "../SelectorTwo";
 import { SelectorProps } from "../Selector";
 
@@ -85,6 +85,8 @@ export interface DatePickerProps
   weekDaysJSX?: PickerRenderJSX;
 
   monthSelectorFormat?: IMonthSelectorType;
+  monthSelectorTopLabel?: string;
+  yearSelectorCount: number;
   monthYearSelectorFlexDirection?: IMonthYearSelectorFlexDirection;
   yearRange?: YearRange;
   locale?: Locale;
@@ -139,6 +141,9 @@ export const DatePicker = (props: DatePickerProps) => {
   const [hoverRangeValue, setHoverRangeValue] = createSignal<HoverRangeValue>(
     {},
   );
+  const [dayRowsArray, setDayRowsArray] = createSignal<
+    Array<Array<MonthDaysObject>>
+  >([]);
 
   onMount(() => {
     if (
@@ -288,7 +293,7 @@ export const DatePicker = (props: DatePickerProps) => {
   });
 
   const handleDayClick = (
-    day: MonthDaysObject,
+    day: MonthDaysObject<number>,
     month: Accessor<number>,
     year: Accessor<number>,
     nextMonth: boolean = false,
@@ -428,7 +433,7 @@ export const DatePicker = (props: DatePickerProps) => {
   };
 
   const onHoverDay = (
-    day: MonthDaysObject,
+    day: MonthDaysObject<number>,
     month: Accessor<number>,
     year: Accessor<number>,
   ) => {
@@ -488,6 +493,7 @@ export const DatePicker = (props: DatePickerProps) => {
         multipleDates: multipleObject,
         endDate: endDay,
         selectedDate: startDay,
+        close: props.close as any,
       });
       return <div data-type="custom-jsx">{content}</div>;
     }
@@ -545,6 +551,7 @@ export const DatePicker = (props: DatePickerProps) => {
       <Show when={props.showSelectorTwo?.()}>
         <SelectorTwo
           {...props.selectorTwoProps?.()}
+          monthSelectorTopLabel={props.monthSelectorTopLabel}
           setShowSelectorTwo={props.setShowSelectorTwo}
           setSelectorTwoProps={props.setSelectorTwoProps}
         />
@@ -616,6 +623,8 @@ export const DatePicker = (props: DatePickerProps) => {
               hoverRangeValue={hoverRangeValue}
               onHoverDayEnd={onHoverDayEnd}
               showSelectorTwo={props.showSelectorTwo}
+              setDayRowsArray={setDayRowsArray}
+              dayRowsArray={dayRowsArray}
             />
           )}
         </Show>

@@ -14,6 +14,7 @@ export interface SelectorTwoProps extends Partial<SelectorProps> {
   setSelectorTwoProps?: Setter<SelectorProps>;
   setShowSelectorTwo?: Setter<boolean>;
   close?: () => void;
+  monthSelectorTopLabel?: string;
 }
 
 const SelectorTwo = (props: SelectorTwoProps) => {

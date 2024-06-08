@@ -9,8 +9,14 @@ import { currentYear } from "@rnwonder/simple-datejs/datePicker";
 export interface YearSelectorExportProps
   extends Omit<
     YearSelectorProps,
-    "type" | "setShowSelectorTwo" | "setSelectorTwoProps" | "showSelectorTwo"
-  > {}
+    | "type"
+    | "setShowSelectorTwo"
+    | "setSelectorTwoProps"
+    | "showSelectorTwo"
+    | "yearSelectorCount"
+  > {
+  yearSelectorCount?: number;
+}
 
 const YearSelectorExport = (props: YearSelectorExportProps) => {
   const [showSelectorTwo, setShowSelectorTwo] = createSignal(false);
@@ -26,6 +32,7 @@ const YearSelectorExport = (props: YearSelectorExportProps) => {
           setSelectorTwoProps={setSelectorTwoProps}
           setShowSelectorTwo={setShowSelectorTwo}
           showSelectorTwo={showSelectorTwo}
+          yearSelectorCount={props.yearSelectorCount || 20}
         />
       ) : (
         <Popover
@@ -58,6 +65,7 @@ const YearSelectorExport = (props: YearSelectorExportProps) => {
             setShowSelectorTwo={setShowSelectorTwo}
             showSelectorTwo={showSelectorTwo}
             yearSelectorType={"full-size"}
+            yearSelectorCount={props.yearSelectorCount || 20}
           />
         </Popover>
       )}

@@ -59,6 +59,7 @@ export interface DatePickerTopProps extends RnColor, RnClassName {
   startDay?: DateObjectUnits;
   setStartDay: Setter<DateObjectUnits | undefined>;
   noButtonAnimation?: boolean;
+  yearSelectorCount: number;
 }
 
 export const DatePickerTop: Component<DatePickerTopProps> = (props) => {

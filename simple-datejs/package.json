@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/simple-datejs",
-  "version": "1.0.11",
+  "version": "1.0.4",
   "description": "Light weight date management library",
   "type": "module",
   "files": [
@@ -52,8 +52,7 @@
   "homepage": "https://soliddatepicker.netlify.app/docs/helpers-utilities",
   "license": "MIT",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "sideEffects": false,
   "engines": {
@@ -66,6 +65,8 @@
   "devDependencies": {
     "@types/node": "^20.12.7",
     "path": "^0.12.7",
+    "prettier": "^3.3.1",
+    "prettier-plugin-tailwindcss": "^0.6.2",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-plugin-dts": "^3.8.3",

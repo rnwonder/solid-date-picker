@@ -1,4 +1,4 @@
-import { cn } from "../../utils";
+import { cn, convertFormattedNumberBackToNumber } from "../../utils";
 import { handleSelectorOptionClick } from "@rnwonder/simple-datejs/datePicker";
 import { For, Show } from "solid-js";
 import { SelectorOptionButton } from "../SelectorOptionButton";
@@ -61,13 +61,15 @@ function SelectorTwoArea(props: SelectorTwoProps) {
 
       <Show when={props.useValueAsName}>
         <For each={props.yearArray?.()}>
-          {(yearData) => (
-            <SelectorTwoYearOptions
-              {...props}
-              array={yearData}
-              handleOptionClick={handleOptionClick}
-            />
-          )}
+          {(yearData) => {
+            return (
+              <SelectorTwoYearOptions
+                {...props}
+                array={yearData}
+                handleOptionClick={handleOptionClick}
+              />
+            );
+          }}
         </For>
       </Show>
     </div>

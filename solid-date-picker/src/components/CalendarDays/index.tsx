@@ -1,4 +1,4 @@
-import { Accessor, Component, For } from "solid-js";
+import { Accessor, Component, For, Setter } from "solid-js";
 import { applyDateRangeProps } from "@rnwonder/simple-datejs/datePicker";
 import { DatePickerDay } from "../DatePickerDay";
 import { DatePickerWeek } from "../DatePickerWeek";
@@ -10,9 +10,11 @@ import {
   HandleDayClick,
   HoverRangeValue,
   CalendarDaysClassNamesAndColors,
+  Locale,
+  MonthDaysObject,
 } from "../../interface/general";
-import { cn } from "../../utils";
-import { createDaysArray, dayRowsArray } from "../../hooks/createDaysArray";
+import { cn, convertFormattedNumberBackToNumber } from "../../utils";
+import { createDaysArray } from "../../hooks/createDaysArray";
 
 export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   month: Accessor<number>;
@@ -40,12 +42,18 @@ export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
   weekStartDay?: number;
 
   showSelectorTwo?: Accessor<boolean>;
+  locale?: Locale;
+  setDayRowsArray: Setter<MonthDaysObject<string>[][]>;
+  dayRowsArray: Accessor<MonthDaysObject<string>[][]>;
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
   createDaysArray({
     month: props.month,
     year: props.year,
     weekStartDay: props.weekStartDay,
+    locale: props.locale || "en-US",
+    setDayRowsArray: props.setDayRowsArray,
+    dayRowsArray: props.dayRowsArray,
   });
   return (
     <div
@@ -56,7 +64,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
         props.datePickerCalendarDaysArea,
       )}
     >
-      <For each={dayRowsArray()}>
+      <For each={props.dayRowsArray()}>
         {(daysRow, index) => (
           <DatePickerWeek
             daysRowClass={cn(
@@ -67,63 +75,70 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
             )}
           >
             <For each={daysRow}>
-              {(day) => (
-                <DatePickerDay
-                  {...{ ...props, calendarWeekDaysNameClass: undefined }}
-                  {...applyDateRangeProps({
-                    year: props.year,
-                    day,
-                    month: props.month,
-                    startDay: props.startDay(),
-                    endDay: props.endDay(),
-                    customDaysClassName: props.customDaysClassName,
-                    multipleObject: props.multipleObject(),
-                    hideOutSideDays: props.hideOutSideDays,
-                    hoverRangeValue: props.hoverRangeValue,
-                    enabledDays: props.enabledDays,
-                    minDate: props.minDate,
-                    maxDate: props.maxDate,
-                    disabledDays: props.disabledDays,
-                  })}
-                  year={props.year}
-                  month={props.month}
-                  day={day.value}
-                  onClick={() =>
-                    props.handleDayClick(
-                      day,
-                      props.month,
-                      props.year,
-                      props.nextMonth || false,
-                    )
-                  }
-                  onHover={() =>
-                    props.onHoverDay(
-                      day,
-                      props.month,
-                      props.year,
-                      props.nextMonth || false,
-                    )
-                  }
-                  onHoverEnd={() =>
-                    props.onHoverDayEnd(
-                      day,
-                      props.month,
-                      props.year,
-                      props.nextMonth || false,
-                    )
-                  }
-                  primaryColor={props.primaryColor}
-                  primaryTextColor={props.primaryTextColor}
-                  secondaryColor={props.secondaryColor}
-                  secondaryTextColor={props.secondaryTextColor}
-                  disabledDays={props.disabledDays}
-                  shouldHighlightWeekends={props.shouldHighlightWeekends}
-                  onDisabledDayError={props.onDisabledDayError}
-                  hoverRangeValue={props.hoverRangeValue}
-                >
-                  {day.value}
-                </DatePickerDay>
-              )}
+              {(day) => {
+                const correctedDay = convertFormattedNumberBackToNumber(
+                  props.locale || "en-US",
+                  day,
+                );
+
+                return (
+                  <DatePickerDay
+                    {...{ ...props, calendarWeekDaysNameClass: undefined }}
+                    {...applyDateRangeProps({
+                      year: props.year,
+                      day: correctedDay,
+                      month: props.month,
+                      startDay: props.startDay(),
+                      endDay: props.endDay(),
+                      customDaysClassName: props.customDaysClassName,
+                      multipleObject: props.multipleObject(),
+                      hideOutSideDays: props.hideOutSideDays,
+                      hoverRangeValue: props.hoverRangeValue,
+                      enabledDays: props.enabledDays,
+                      minDate: props.minDate,
+                      maxDate: props.maxDate,
+                      disabledDays: props.disabledDays,
+                    })}
+                    year={props.year}
+                    month={props.month}
+                    day={correctedDay.value}
+                    onClick={() =>
+                      props.handleDayClick(
+                        correctedDay,
+                        props.month,
+                        props.year,
+                        props.nextMonth || false,
+                      )
+                    }
+                    onHover={() =>
+                      props.onHoverDay(
+                        correctedDay,
+                        props.month,
+                        props.year,
+                        props.nextMonth || false,
+                      )
+                    }
+                    onHoverEnd={() =>
+                      props.onHoverDayEnd(
+                        correctedDay,
+                        props.month,
+                        props.year,
+                        props.nextMonth || false,
+                      )
+                    }
+                    primaryColor={props.primaryColor}
+                    primaryTextColor={props.primaryTextColor}
+                    secondaryColor={props.secondaryColor}
+                    secondaryTextColor={props.secondaryTextColor}
+                    disabledDays={props.disabledDays}
+                    shouldHighlightWeekends={props.shouldHighlightWeekends}
+                    onDisabledDayError={props.onDisabledDayError}
+                    hoverRangeValue={props.hoverRangeValue}
+                  >
+                    {day.value}
+                  </DatePickerDay>
+                );
+              }}
             </For>
           </DatePickerWeek>
         )}

@@ -8,10 +8,12 @@ import {
 } from "../../interface/general";
 import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
 import {
-  formatHourWithLeadingZero,
-  formatMinuteSecondWithLeadingZero,
   convert12HourTo24Hour,
 } from "@rnwonder/simple-datejs/utils";
+import {
+  formatHourWithLeadingZero,
+  formatMinuteSecondWithLeadingZero,
+} from "@rnwonder/simple-datejs/datePicker";
 import { cn } from "../../utils";
 
 interface ITimeAnalogPickerProps

@@ -1,5 +1,5 @@
 import { Button } from "../Button";
-import { cn } from "../../utils";
+import { cn, convertFormattedNumberBackToNumber } from "../../utils";
 import {
   isOptionDisabledOnSelector,
   isOptionSelectedOnSelector,
@@ -22,6 +22,13 @@ interface SelectorOptionButtonProps extends Partial<SelectorProps> {
 }
 
 export const SelectorOptionButton = (props: SelectorOptionButtonProps) => {
+  const selectorValue = props.useValueAsName
+    ? convertFormattedNumberBackToNumber(props.locale, {
+        value: props.value,
+        month: "current",
+      }).value + ""
+    : props.value;
+
   return (
     <Button
       class={cn(
@@ -32,33 +39,33 @@ export const SelectorOptionButton = (props: SelectorOptionButtonProps) => {
         `,
         {
           "rn-selector-option-selected rn-bg-primary rn-text-white hover:rn-bg-primary hover:rn-text-white dark:rn-bg-white dark:rn-text-black dark:hover:rn-bg-white dark:hover:rn-text-black":
-            isOptionSelectedOnSelector(props.value, props.index, props),
+            isOptionSelectedOnSelector(selectorValue, props.index, props),
           "dark:rn-text-white": !isOptionSelectedOnSelector(
             props.value,
             props.index,
             props,
           ),
           [props.monthYearOptionBtnActiveClass || ""]:
-            isOptionSelectedOnSelector(props.value, props.index, props),
+            isOptionSelectedOnSelector(selectorValue, props.index, props),
         },
         props.className,
         props.monthYearOptionBtnClass,
       )}
       onClick={() =>
-        props.handleOptionClick(props.index(), props.value, props.callback)
+        props.handleOptionClick(props.index(), selectorValue, props.callback)
       }
       disabled={
         props.disabled ||
-        isOptionDisabledOnSelector(props.value, props.index, props)
+        isOptionDisabledOnSelector(selectorValue, props.index, props)
       }
       aria-controls={"selector"}
       aria-disabled={isOptionDisabledOnSelector(
-        props.value,
+        selectorValue,
         props.index,
         props,
       )}
       aria-selected={isOptionSelectedOnSelector(
-        props.value,
+        selectorValue,
         props.index,
         props,
       )}
@@ -68,11 +75,11 @@ export const SelectorOptionButton = (props: SelectorOptionButtonProps) => {
       data-part={"cell-trigger"}
       data-selector-option={true}
       date-selector-option-selected={isOptionSelectedOnSelector(
-        props.value,
+        selectorValue,
         props.index,
         props,
       )}
-      selected={isOptionSelectedOnSelector(props.value, props.index, props)}
+      selected={isOptionSelectedOnSelector(selectorValue, props.index, props)}
       aria-label={
         props.useValueAsName
           ? props.value
@@ -80,14 +87,14 @@ export const SelectorOptionButton = (props: SelectorOptionButtonProps) => {
       }
       data-value={props.useValueAsName ? props.value : props.index() + 1}
       style={{
-        ...(isOptionSelectedOnSelector(props.value, props.index, props)
+        ...(isOptionSelectedOnSelector(selectorValue, props.index, props)
           ? {
               "background-color": props.primaryColor,
               color: props.primaryTextColor,
             }
           : {}),
         ...(props.textColor &&
-          !isOptionSelectedOnSelector(props.value, props.index, props) && {
+          !isOptionSelectedOnSelector(selectorValue, props.index, props) && {
             color: props.textColor,
           }),
       }}

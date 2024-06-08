@@ -13,14 +13,16 @@ import {
   DatePickerType,
   SelectorColorsAndClassNames,
   SelectorType,
+  Locale,
 } from "../../interface/general";
 import {
   breakArrayIntoSubArrays,
   currentYear,
   generateYearsArray,
+  getYearRange,
 } from "@rnwonder/simple-datejs/datePicker";
-import { getYearRange } from "@rnwonder/simple-datejs/utils";
 import { SelectorTriggerButton } from "../SelectorTriggerButton";
+import { numberFormatter } from "@rnwonder/simple-datejs/datePicker";
 
 export interface YearSelectorProps extends SelectorColorsAndClassNames {
   year: Accessor<number>;
@@ -37,6 +39,8 @@ export interface YearSelectorProps extends SelectorColorsAndClassNames {
   setSelectorTwoProps?: Setter<SelectorProps>;
   showSelectorTwo?: Accessor<boolean>;
   noButtonAnimation?: boolean;
+  locale?: Locale;
+  yearSelectorCount: number;
 }
 
 export const YearSelector: Component<YearSelectorProps> = (props) => {
@@ -44,7 +48,9 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
   const [yearArray, setYearArray] = createSignal<string[][]>([]);
   const [startYear, setStartYear] = createSignal<number>();
   const [endYear, setEndYear] = createSignal<number>();
-  const [count, _] = createSignal(20);
+  const [count, _] = createSignal(
+    props.yearSelectorCount ? Math.abs(props.yearSelectorCount) : 20,
+  );
 
   createEffect(() => {
     if (props.yearSelectorType === "compact-dropdown") return;
@@ -59,6 +65,7 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
       count: count(),
       year: props.year(),
       yearRange: props.yearRange,
+      locale: props.locale || "en-US",
     });
 
     setRange(range);
@@ -96,6 +103,7 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
     props.setSelectorTwoProps?.({
       ...props,
       optionsArray: [],
+      locale: props.locale || "en-US",
       yearArray,
       option: props.year,
       setOption: props.setYear,
@@ -148,7 +156,7 @@ export const YearSelector: Component<YearSelectorProps> = (props) => {
           onClick={handleFullSizeSelector}
           noButtonAnimation={props.noButtonAnimation}
         >
-          {props.year()}
+          {numberFormatter(props.year(), props.locale)}
         </SelectorTriggerButton>
       )}
     </>

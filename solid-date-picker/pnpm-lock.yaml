@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@rnwonder/simple-datejs':
-        specifier: ^1.0.11
-        version: 1.0.11
+        specifier: ^1.0.4
+        version: 1.0.4
       solid-js:
         specifier: ^1.6.12
         version: 1.8.14
@@ -396,8 +396,8 @@ packages:
   '@polka/url@1.0.0-next.24':
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
 
-  '@rnwonder/simple-datejs@1.0.11':
-    resolution: {integrity: sha512-44XlveOOgLxWedWJ5phKwPs3GdnYw+XW+XuQIcDXlJkmCTVirL6z2txelR5+DUC5kIXYyCOF8dXmytblJThEKQ==}
+  '@rnwonder/simple-datejs@1.0.4':
+    resolution: {integrity: sha512-p1HE7lVfedm+AAVkdJFvQcc8uvBDuweDX4bE6VH8SmeyBn6mHeHP35CdSbmt/E7lGjTiLwoz9sn6l1UCeqhTIw==}
     engines: {node: '>=16.0.0'}
 
   '@rollup/plugin-terser@0.4.4':
@@ -3156,7 +3156,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.24': {}
 
-  '@rnwonder/simple-datejs@1.0.11': {}
+  '@rnwonder/simple-datejs@1.0.4': {}
 
   '@rollup/plugin-terser@0.4.4(rollup@4.9.6)':
     dependencies:

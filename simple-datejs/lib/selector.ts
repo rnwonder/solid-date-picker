@@ -21,7 +21,8 @@ export const isOptionSelectedOnSelector = (
   },
 ): boolean => {
   return props.useValueAsName
-    ? getAccessorValue(props.option) === Number(value)
+    ? isNaN(Number(value))
+      ? getAccessorValue(props.option) as any === value : getAccessorValue(props.option) === Number(value)
     : getAccessorValue(props.option) === getAccessorValue(index);
 };
 

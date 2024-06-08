@@ -15,10 +15,7 @@ export const {
   getAmPm,
   convert12HourTo24Hour,
   getCurrentTime,
-  getYearRange,
   smartDropDownPosition,
   labelFormat,
   leadingZeros,
-  formatHourWithLeadingZero,
-  formatMinuteSecondWithLeadingZero,
 } = utils;

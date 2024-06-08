@@ -28,6 +28,7 @@ export interface DatePickerInputSJProps
       | "setShowSelectorTwo"
       | "setSelectorTwoProps"
       | "selectorTwoProps"
+      | "yearSelectorCount"
     >,
     Pick<RnClassName, "inputWrapperClass" | "inputClass"> {
   type?: DatePickerType;
@@ -52,6 +53,7 @@ export interface DatePickerInputSJProps
   formatInputLabel?: string;
   formatInputLabelRangeStart?: string;
   formatInputLabelRangeEnd?: string;
+  yearSelectorCount?: number;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -260,11 +262,13 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           minDate={props.minDate}
           setAllowedComponents={setAllowedComponents}
           close={close}
+          yearSelectorCount={props.yearSelectorCount || 20}
           setShowSelectorTwo={setShowSelectorTwo}
           showSelectorTwo={showSelectorTwo}
           setSelectorTwoProps={setSelectorTwoProps}
           selectorTwoProps={selectorTwoProps}
           ref={pickerRef}
+          locale={props.locale || "en-US"}
           setRef={setPickerRef}
         />
       )}

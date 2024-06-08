@@ -7,18 +7,22 @@ import {
   Locale,
   MakeOptionalRequired,
 } from "./types";
+import { numberFormatter } from "./localHelpers";
 
 export type CustomAccessor<T> = (() => T) | T;
 export type CustomSetter<T> = (value: T) => void;
+
+interface Options {
+  weekStartDay?: number;
+  locale?: Locale; // Add locale to options
+}
 
 // Gets the current month and year days array
 export const getMonthDaysArray = (
   month: number,
   year: number,
-  option?: {
-    weekStartDay?: number;
-  },
-): MonthDaysObject[] => {
+  option?: Options,
+): MonthDaysObject<string>[] => {
   const firstDayOfMonth = new Date(
     year,
     month,
@@ -28,7 +32,7 @@ export const getMonthDaysArray = (
 
   const numDaysInMonth = new Date(year, month + 1, 0).getDate();
 
-  const daysOfMonth: MonthDaysObject[] = [];
+  const daysOfMonth: MonthDaysObject<string>[] = [];
 
   const prevMonth = month === 0 ? 11 : month - 1;
   const prevMonthYear = prevMonth === 11 ? year - 1 : year;
@@ -44,14 +48,18 @@ export const getMonthDaysArray = (
     prevMonthStart = 1;
   }
 
+  const formatDay = (day: number) => {
+    return numberFormatter(day, option?.locale);
+  };
+
   // Previous month days
   for (let i = 0; i < startDayOfWeekIndex; i++) {
-    daysOfMonth.push({ value: prevMonthStart + i, month: "prev" });
+    daysOfMonth.push({ value: formatDay(prevMonthStart + i), month: "prev" });
   }
 
   // Current month days
   for (let i = 1; i <= numDaysInMonth; i++) {
-    daysOfMonth.push({ value: i, month: "current" });
+    daysOfMonth.push({ value: formatDay(i), month: "current" });
   }
 
   const numDaysLeft =
@@ -61,13 +69,12 @@ export const getMonthDaysArray = (
 
   // Next month days
   for (let i = 1; i <= numDaysLeft; i++) {
-    const value = i;
-    const status = "next";
-    daysOfMonth.push({ value, month: status });
+    daysOfMonth.push({ value: formatDay(i), month: "next" });
   }
 
   return daysOfMonth;
 };
+
 export const getToday = (): MakeOptionalRequired<DateObjectUnits> => {
   const today = new Date();
   return {

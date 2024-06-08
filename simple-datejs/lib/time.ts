@@ -1,4 +1,5 @@
-import { TimeMeridiem, YearRange } from "./types";
+import { Locale, TimeMeridiem, YearRange } from "./types";
+import { numberFormatter } from "./localHelpers";
 
 export const leadingZeros = (value: number, numberOfLeadingZero?: number) => {
   return String(Math.ceil(value)).padStart(numberOfLeadingZero ?? 2, "0");
@@ -59,12 +60,14 @@ export function getYearRange({
   count,
   year,
   yearRange,
+  locale,
 }: {
   count: number;
   year?: number;
   startYear?: number;
   endYear?: number;
   yearRange?: YearRange;
+  locale: Locale;
 }): { array: string[]; range: string; startYear: number; endYear: number } {
   const currentYear = year || new Date().getFullYear();
 
@@ -96,12 +99,12 @@ export function getYearRange({
       rangeEnd = yearRange?.end;
       continue;
     }
-    array.push(year + "");
+    array.push(numberFormatter(year, locale));
   }
 
   return {
     array,
-    range: `${rangeStart} - ${rangeEnd}`,
+    range: `${numberFormatter(rangeStart, locale)} - ${numberFormatter(rangeEnd, locale)}`,
     startYear,
     endYear,
   };

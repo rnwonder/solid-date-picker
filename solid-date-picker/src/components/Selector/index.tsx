@@ -8,6 +8,7 @@ import {
   DatePickerType,
   SelectorColorsAndClassNames,
   YearRange,
+  Locale,
 } from "../../interface/general";
 import { cn } from "../../utils";
 import { handleSelectorOptionClick } from "@rnwonder/simple-datejs/datePicker";
@@ -46,6 +47,7 @@ export interface SelectorProps extends SelectorColorsAndClassNames {
   count?: Accessor<number>;
 
   noButtonAnimation?: boolean;
+  locale?: Locale;
 }
 
 export const Selector = (props: SelectorProps) => {

@@ -1,5 +1,5 @@
 import { SelectorProps } from "../Selector";
-import { cn } from "../../utils";
+import { cn, convertFormattedNumberBackToNumber } from "../../utils";
 import { For } from "solid-js";
 import { SelectorOptionButton } from "../SelectorOptionButton";
 
@@ -25,29 +25,39 @@ function SelectorTwoYearOptions(props: SelectorTwoYearOptionsProps) {
       )}
     >
       <For each={props.array}>
-        {(value, index) => (
-          <SelectorOptionButton
-            {...props}
-            value={value}
-            index={index}
-            className={cn(
-              `
+        {(value, index) => {
+          const correctedValue = convertFormattedNumberBackToNumber(
+            props.locale,
+            {
+              value,
+              month: "current",
+            },
+          );
+
+          return (
+            <SelectorOptionButton
+              {...props}
+              value={value}
+              index={index}
+              className={cn(
+                `
               rn-p-2 
               rn-text-[0.9375rem]
             `,
-              {
-                "disabled:rn-bg-transparent": !value,
-              },
-              props.className,
-            )}
-            disabled={!value}
-            attributes={{
-              ...(!value
-                ? { "data-selector-type": "selector-option-out-of-range" }
-                : {}),
-            }}
-          />
-        )}
+                {
+                  "disabled:rn-bg-transparent": !value,
+                },
+                props.className,
+              )}
+              disabled={!value}
+              attributes={{
+                ...(!value
+                  ? { "data-selector-type": "selector-option-out-of-range" }
+                  : {}),
+              }}
+            />
+          );
+        }}
       </For>
     </div>
   );

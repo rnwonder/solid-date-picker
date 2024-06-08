@@ -30,6 +30,7 @@ export interface MonthSelectorProps extends SelectorColorsAndClassNames {
   setSelectorTwoProps?: Setter<SelectorProps>;
   showSelectorTwo?: Accessor<boolean>;
   noButtonAnimation?: boolean;
+  monthSelectorTopLabel?: string;
 }
 export const MonthSelector = (props: MonthSelectorProps) => {
   const [monthArray, setMonthArray] = createSignal<string[]>([]);

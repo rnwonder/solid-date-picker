@@ -1,11 +1,11 @@
-import { SelectorProps } from "../Selector";
 import { createEffect, createSignal, Show } from "solid-js";
 import { cn } from "../../utils";
 import { Button } from "../Button";
 import { PrevIcon } from "../PrevIcon";
 import { NextIcon } from "../NextIcon";
+import { SelectorTwoProps } from "../SelectorTwo";
 
-interface SelectorTwoTopProps extends Partial<SelectorProps> {
+interface SelectorTwoTopProps extends Partial<SelectorTwoProps> {
   isYear?: boolean;
 }
 
@@ -99,7 +99,7 @@ function SelectorTwoTop(props: SelectorTwoTopProps) {
           )}
           data-type={"date-selector-trigger"}
         >
-          {"Select A Month"}
+          {props.monthSelectorTopLabel || "Select A Month"}
         </div>
       )}
 

@@ -20,8 +20,8 @@ export interface DateObjectUnits {
 
 export type MonthStatus = "prev" | "current" | "next";
 
-export interface MonthDaysObject {
-  value: number;
+export interface MonthDaysObject<T = string> {
+  value: T;
   month: MonthStatus;
 }
 
@@ -88,10 +88,11 @@ export interface PickerRenderJSXProps {
   handlePrevMonth: () => void;
   handleDayClick: HandleDayClick;
   setRefToAllowOutsideClick: Setter<HTMLDivElement | undefined>;
+  close: () => void;
 }
 
 export type HandleDayClick = (
-  day: MonthDaysObject,
+  day: MonthDaysObject<number>,
   month: Accessor<number>,
   year: Accessor<number>,
   nextMonth: boolean,
