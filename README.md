@@ -94,10 +94,8 @@ const App = () => {
 
 ### Road Map
 - Time Picker (In progress)
-- Internationalization (In progress)
 - More themes
 - More utility functions
-- Expose internal components for more flexibility
 - Add more tests
 
 ### Contributing
