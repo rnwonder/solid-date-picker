@@ -31,17 +31,19 @@ export const SelectorOptionButton = (props: SelectorOptionButtonProps) => {
 
   return (
     <Button
+      setHeight
       class={cn(
         `
         date-selector-option
         rn-text-black
         disabled:rn-opacity-40
+        rn-h-auto
         `,
         {
           "rn-selector-option-selected rn-bg-primary rn-text-white hover:rn-bg-primary hover:rn-text-white dark:rn-bg-white dark:rn-text-black dark:hover:rn-bg-white dark:hover:rn-text-black":
             isOptionSelectedOnSelector(selectorValue, props.index, props),
           "dark:rn-text-white": !isOptionSelectedOnSelector(
-            props.value,
+            selectorValue,
             props.index,
             props,
           ),

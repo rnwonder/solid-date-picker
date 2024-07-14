@@ -8,13 +8,59 @@ import {
 } from "./types";
 
 export const formatDateWithString = (
-  dateToFormat: Date | DateObjectUnits,
+  dateToFormat: DateOption,
   format: string,
   locale: Locale = "en-US",
 ) => {
   const date = getJSDateFormat(dateToFormat);
 
   format = format
+    .replace(
+      /(?<!~)(?<!n)nn(?!n)/g,
+      date.toLocaleString(locale, { minute: "2-digit" }).padStart(2, "0"),
+    )
+    .replace(
+      /(?<!~)(?<!n)n(?!n)/g,
+      date.toLocaleString(locale, { minute: "numeric" }),
+    )
+    .replace(
+      /(?<!~)(?<!s)ss(?!s)/g,
+      date.toLocaleString(locale, { second: "2-digit" }).padStart(2, "0"),
+    )
+    .replace(
+      /(?<!~)(?<!s)s(?!s)/g,
+      date.toLocaleString(locale, { second: "numeric" }),
+    )
+    .replace(
+      /(?<!~)(?<!h)hh(?!h)/g,
+      date
+        .toLocaleString(locale, { hour: "2-digit", hour12: true })
+        .split(" ")[0]
+        .padStart(2, "0"),
+    )
+    .replace(
+      /(?<!~)(?<!h)h(?!h)/g,
+      date.toLocaleString(locale, { hour: "numeric", hour12: true }),
+    )
+    .replace(
+      /(?<!~)(?<!H)HH(?!H)/g,
+      date
+        .toLocaleString(locale, { hour: "2-digit", hour12: false })
+        .split(" ")[0]
+        .padStart(2, "0"),
+    )
+    .replace(
+      /(?<!~)(?<!H)H(?!H)/g,
+      date.toLocaleString(locale, { hour: "numeric", hour12: false }),
+    )
+    .replace(
+      /(?<!~)(?<!a)a(?!a)/g,
+      checkIfItMeridiem(
+        date
+          .toLocaleString(locale, { hour: "numeric", hour12: true })
+          .split(" ")[1],
+      ),
+    )
     .replace(
       /(?<!~)(?<!y)yyyy(?!y)/g,
       date.toLocaleString(locale, { year: "numeric" }),
@@ -68,7 +114,12 @@ export const formatDateWithString = (
     .replace(/~m/g, "m")
     .replace(/~M/g, "M")
     .replace(/~d/g, "d")
-    .replace(/~D/g, "D");
+    .replace(/~D/g, "D")
+    .replace(/~H/g, "H")
+    .replace(/~n/g, "n")
+    .replace(/~s/g, "s")
+    .replace(/~a/g, "a")
+    .replace(/~h/g, "h");
   return format;
 };
 
@@ -154,6 +205,16 @@ const checkIfItStartsWithM = (string: string) => {
   } else {
     return string;
   }
+};
+
+const checkIfItMeridiem = (string: string) => {
+  if (string === "AM") {
+    return `A~M`;
+  }
+  if (string === "PM") {
+    return `P~M`;
+  }
+  return string;
 };
 
 export const formatHourWithLeadingZero = (hour?: number) => {

@@ -1,5 +1,5 @@
 import { SelectorProps } from "../Selector";
-import { cn, convertFormattedNumberBackToNumber } from "../../utils";
+import { cn } from "../../utils";
 import { For } from "solid-js";
 import { SelectorOptionButton } from "../SelectorOptionButton";
 
@@ -26,14 +26,6 @@ function SelectorTwoYearOptions(props: SelectorTwoYearOptionsProps) {
     >
       <For each={props.array}>
         {(value, index) => {
-          const correctedValue = convertFormattedNumberBackToNumber(
-            props.locale,
-            {
-              value,
-              month: "current",
-            },
-          );
-
           return (
             <SelectorOptionButton
               {...props}
