@@ -151,7 +151,8 @@
     "solid-js": "^1.6.12"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "private": false,
   "files": [
