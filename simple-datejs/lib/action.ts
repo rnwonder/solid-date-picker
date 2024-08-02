@@ -6,7 +6,7 @@ import {
 } from "./generate";
 import { convertDateToDateObject } from "./format";
 import { isDateRangeDisabled, isDateRangeEnabled } from "./general";
-import { getAccessorValue } from "./localHelpers";
+import { getAccessorValue, modifiedDate } from "./localHelpers";
 
 export const handleDateRange = ({
   year,
@@ -56,12 +56,12 @@ export const handleDateRange = ({
     };
   }
   if (startDay && !endDay) {
-    const startDayDate = new Date(
+    const startDayDate = modifiedDate(
       startDay?.year!,
       startDay?.month!,
       startDay?.day,
     );
-    const endDayDate = new Date(
+    const endDayDate = modifiedDate(
       getDatePickerRefactoredYear(
         getAccessorValue(year),
         getAccessorValue(month),

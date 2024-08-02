@@ -6,6 +6,7 @@ import {
   LocaleOptions,
   MakeOptionalRequired,
 } from "./types";
+import { modifiedDate } from "./localHelpers";
 
 export const formatDateWithString = (
   dateToFormat: DateOption,
@@ -131,7 +132,7 @@ export const getJSDateFormat = (date: DateOption): Date => {
   } else if (date instanceof Date) {
     newDate = date;
   } else {
-    newDate = new Date(
+    newDate = modifiedDate(
       date.year || 2023,
       !date.month && date.month !== 0 ? 1 : date.month,
       date.day,
@@ -158,7 +159,12 @@ export const convertDateObjectToDate = (date: DateObjectUnits): Date => {
   const year = date?.year ?? now.getFullYear();
   const month = date?.month === 0 ? 0 : date?.month ?? now.getMonth();
   const day = date?.day ?? now.getDate();
-  return new Date(year, month, day);
+  const result = new Date(year, month, day);
+
+  // Use setFullYear to correctly handle years less than 100
+  result.setFullYear(year);
+
+  return result;
 };
 
 export const formatDate = (

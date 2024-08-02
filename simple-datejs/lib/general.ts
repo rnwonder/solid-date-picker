@@ -12,7 +12,7 @@ import {
   getDatePickerRefactoredMonth,
   getDatePickerRefactoredYear,
 } from "./generate";
-import { getAccessorValue } from "./localHelpers";
+import { getAccessorValue, modifiedDate } from "./localHelpers";
 
 export const getToday = (): MakeOptionalRequired<DateObjectUnits> => {
   const today = new Date();
@@ -94,13 +94,13 @@ export const isDayInBetweenRange = ({
   monthStatus: MonthStatus;
 }) => {
   if (!startDate || !endDate) return false;
-  const date = new Date(
+  const date = modifiedDate(
     getDatePickerRefactoredYear(year, month, monthStatus),
     getDatePickerRefactoredMonth(month, monthStatus),
     day,
   );
-  const start = new Date(startDate.year!, startDate.month!, startDate.day);
-  const end = new Date(endDate.year!, endDate.month!, endDate.day);
+  const start = modifiedDate(startDate.year!, startDate.month!, startDate.day!);
+  const end = modifiedDate(endDate.year!, endDate.month!, endDate.day!);
 
   return date > start && date < end;
 };
@@ -120,12 +120,12 @@ export const isDayTipRange = ({
   monthStatus: MonthStatus;
 }) => {
   if (!dateRange) return false;
-  const date = new Date(
+  const date = modifiedDate(
     getDatePickerRefactoredYear(year, month, monthStatus),
     getDatePickerRefactoredMonth(month, monthStatus),
     day,
   );
-  const start = new Date(dateRange.year!, dateRange.month!, dateRange.day);
+  const start = modifiedDate(dateRange.year!, dateRange.month!, dateRange.day!);
   return date.getTime() === start.getTime();
 };
 
@@ -144,7 +144,7 @@ export const isMinMaxDate = ({
 }): boolean => {
   if (!minDate && !maxDate) return false;
 
-  const date = new Date(
+  const date = modifiedDate(
     getDatePickerRefactoredYear(
       getAccessorValue(year),
       getAccessorValue(month),
@@ -155,14 +155,14 @@ export const isMinMaxDate = ({
   );
 
   if (minDate && maxDate) {
-    const min = new Date(minDate.year, minDate.month, minDate.day);
-    const max = new Date(maxDate.year, maxDate.month, maxDate.day);
+    const min = modifiedDate(minDate.year, minDate.month, minDate.day);
+    const max = modifiedDate(maxDate.year, maxDate.month, maxDate.day);
     return date < min || date > max;
   } else if (minDate) {
-    const min = new Date(minDate.year, minDate.month, minDate.day);
+    const min = modifiedDate(minDate.year, minDate.month, minDate.day);
     return date < min;
   } else if (maxDate) {
-    const max = new Date(maxDate.year, maxDate.month, maxDate.day);
+    const max = modifiedDate(maxDate.year, maxDate.month, maxDate.day);
     return date > max;
   }
   return false;
@@ -390,7 +390,7 @@ export const isWeekendStatus = ({
 } => {
   const refactorMonth = getDatePickerRefactoredMonth(month, day.month);
   const refactorYear = getDatePickerRefactoredYear(year, month, day.month);
-  const date = new Date(refactorYear, refactorMonth, day.value);
+  const date = modifiedDate(refactorYear, refactorMonth, day.value);
   const dayOfWeek = date.getDay();
 
   return {

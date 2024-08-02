@@ -7,7 +7,7 @@ import {
   Locale,
   MakeOptionalRequired,
 } from "./types";
-import { numberFormatter } from "./localHelpers";
+import { modifiedDate, numberFormatter } from "./localHelpers";
 
 export type CustomAccessor<T> = (() => T) | T;
 export type CustomSetter<T> = (value: T) => void;
@@ -23,20 +23,20 @@ export const getMonthDaysArray = (
   year: number,
   option?: Options,
 ): MonthDaysObject<string>[] => {
-  const firstDayOfMonth = new Date(
+  const firstDayOfMonth = modifiedDate(
     year,
     month,
     1 - (option?.weekStartDay || 0),
   );
   const startDayOfWeekIndex = firstDayOfMonth.getDay();
 
-  const numDaysInMonth = new Date(year, month + 1, 0).getDate();
+  const numDaysInMonth = modifiedDate(year, month + 1, 0).getDate();
 
   const daysOfMonth: MonthDaysObject<string>[] = [];
 
   const prevMonth = month === 0 ? 11 : month - 1;
   const prevMonthYear = prevMonth === 11 ? year - 1 : year;
-  const numDaysInPrevMonth = new Date(
+  const numDaysInPrevMonth = modifiedDate(
     prevMonthYear,
     prevMonth + 1,
     0,

@@ -301,6 +301,7 @@ export const DatePicker = (props: DatePickerProps) => {
     if (!mounted()) {
       setMounted(true);
     }
+
     const initialMonth = Number(month());
     const newMonth = getDatePickerRefactoredMonth(initialMonth, day.month);
     const newYear = getDatePickerRefactoredYear(year(), month(), day.month);
@@ -341,6 +342,7 @@ export const DatePicker = (props: DatePickerProps) => {
         getDatePickerRefactoredMonth(initialMonth, day.month),
         day.value,
       );
+      selectedDay.setFullYear(newYear);
       const selectedDate = convertDateToDateObject(selectedDay);
       setStartDay(selectedDate);
       onChange({

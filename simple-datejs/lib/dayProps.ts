@@ -23,7 +23,7 @@ import {
   isPartOfDisabledDays,
   isWeekendStatus,
 } from "./general";
-import { getAccessorValue } from "./localHelpers";
+import { getAccessorValue, modifiedDate } from "./localHelpers";
 
 export const applyDateRangeProps = ({
   year,
@@ -106,7 +106,7 @@ export const applyDateRangeProps = ({
     }),
     daysCurrent:
       checkIfItsTodayDate(
-        new Date(
+        modifiedDate(
           getDatePickerRefactoredYear(
             getAccessorValue(year),
             getAccessorValue(month),

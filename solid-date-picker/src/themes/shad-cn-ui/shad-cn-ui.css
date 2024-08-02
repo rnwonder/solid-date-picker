@@ -7,7 +7,7 @@
  * This only styles the datepicker only and not the input field
  &
  * @author @rnwonder <rnwonder@gmail.com>
- * @version 2.0.0
+ * @version 2.1.0
  *
  * @supported picker version ^1.2.0
  *
@@ -45,7 +45,7 @@
 }
 
 /*style all buttons*/
-.date-picker-main-btn {
+.date-picker-main-btn:not(.time-picker-meridiem-btn) {
     height: var(--shad-size-2);
     min-width: var(--shad-size-2);
     text-transform: capitalize;
@@ -53,23 +53,23 @@
 }
 
 /*style all buttons when disabled*/
-.date-picker-main-btn:disabled,
-.dark .date-picker-main-btn:disabled,
-[data-theme="dark"] .date-picker-main-btn:disabled {
+.date-picker-main-btn:not(.time-picker-meridiem-btn):disabled,
+.dark .date-picker-main-btn:not(.time-picker-meridiem-btn):disabled,
+[data-theme="dark"] .date-picker-main-btn:not(.time-picker-meridiem-btn):disabled {
     background-color: transparent;
     color: hsl(var(--shad-muted-foreground));
 }
 
-.date-picker-main-btn:disabled:hover,
-.dark .date-picker-main-btn:disabled:hover,
+.date-picker-main-btn:not(.time-picker-meridiem-btn):disabled:hover,
+.dark .date-picker-main-btn:not(.time-picker-meridiem-btn):disabled:hover,
 [data-theme="dark"] .date-picker-main-btn:disabled:hover {
     background-color: transparent;
     color: hsl(var(--shad-muted-foreground));
 }
 
 /*style all buttons when hovered*/
-.date-picker-main-btn:hover,
-.dark .date-picker-main-btn:hover,
+.date-picker-main-btn:not(.time-picker-meridiem-btn):hover,
+.dark .date-picker-main-btn:not(.time-picker-meridiem-btn):hover,
 [data-theme="dark"] .date-picker-main-btn:hover {
     background-color: hsl(var(--shad-accent));
 }

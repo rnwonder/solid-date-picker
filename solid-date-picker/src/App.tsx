@@ -9,6 +9,10 @@ import CalendarExport from "./components/CalendarExport";
 import YearSelectorExport from "./components/YearSelectorExport";
 import MonthSelectorExport from "./components/MonthSelectorExport";
 import { utils } from "./utils";
+import {
+  convertDateObjectToDate,
+  convertDateToDateObject,
+} from "@rnwonder/simple-datejs/utils";
 
 const App: Component = () => {
   const [value, setValue] = createSignal<TimeValue>({
@@ -19,8 +23,16 @@ const App: Component = () => {
   const [date, setDate] = createSignal<PickerValue>({
     label: "",
     value: {
-      selectedDateObject: utils().getToday(),
+      selectedDateObject: {
+        day: 2,
+        month: 1,
+        year: 99,
+      },
     },
+  });
+
+  createEffect(() => {
+    console.log(date().value);
   });
 
   const [date2, setDate2] = createSignal<PickerValue>({
@@ -46,6 +58,23 @@ const App: Component = () => {
   const [valueM, setValueM] = createSignal(1);
   createEffect(() => {
     // console.log("value", value());
+    console.log(
+      convertDateObjectToDate({
+        day: 2,
+        month: 1,
+        year: 99,
+      }),
+    );
+
+    console.log(
+      convertDateToDateObject(
+        convertDateObjectToDate({
+          day: 2,
+          month: 1,
+          year: 99,
+        }),
+      ),
+    );
   });
 
   const [show, setShow] = createSignal(false);
@@ -65,14 +94,12 @@ const App: Component = () => {
             className: "orangeDay",
           },
         ]}
-        locale={"zh-u-nu-hanidec"}
+        onValueChange={(value) => {
+          // console.log(value);
+        }}
+        // locale={"zh-u-nu-hanidec"}
         // locale={"ar-EG"}
         yearSelectorCount={12}
-        calendarLeftAreaJSX={({ close }) => (
-          <div>
-            Hello <button onClick={close}>close</button>
-          </div>
-        )}
         disabledDays={[
           {
             start: {
@@ -90,6 +117,8 @@ const App: Component = () => {
         onDisabledDayError={(data) => {
           console.log(data.day);
         }}
+        value={date}
+        setValue={setDate}
       />
 
       <TimeAnalogPicker />

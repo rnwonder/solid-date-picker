@@ -10,3 +10,13 @@ export const numberFormatter = (num: number, locale?: Locale) => {
     useGrouping: false,
   }).format(num);
 };
+
+export const modifiedDate = (
+  year: number,
+  month: number,
+  day: number | undefined,
+) => {
+  const result = new Date(year, month, day);
+  result.setFullYear(year);
+  return result;
+};
