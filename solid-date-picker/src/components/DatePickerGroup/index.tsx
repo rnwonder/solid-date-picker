@@ -267,9 +267,9 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           showSelectorTwo={showSelectorTwo}
           setSelectorTwoProps={setSelectorTwoProps}
           selectorTwoProps={selectorTwoProps}
-          ref={pickerRef}
+          ref={props.ref || pickerRef}
           locale={props.locale || "en-US"}
-          setRef={setPickerRef}
+          setRef={props.setRef || setPickerRef}
         />
       )}
       onClickOutside={(e, setShown) => {

@@ -79,7 +79,11 @@ const App: Component = () => {
 
   const [show, setShow] = createSignal(false);
 
-  const [ref, setRef] = createSignal<HTMLButtonElement>();
+  const [ref, setRef] = createSignal<HTMLDivElement>();
+
+  createEffect(() => {
+    console.log("ref", ref());
+  });
 
   return (
     <div class={"rn-min-h-screen rn-bg-red-200"}>
@@ -126,7 +130,7 @@ const App: Component = () => {
         class={"rn-w-[10rem] rn-bg-white"}
         id={"portal"}
         onClick={() => setShow(true)}
-        ref={setRef}
+        
       >
         Hey Click me
       </button>
