@@ -281,10 +281,15 @@ export const DatePicker = (props: DatePickerProps) => {
   };
 
   const startingDate = () => {
-    props.startingMonth && setMonth(props.startingMonth);
-    props.startingMonth && props.setMonth?.(props.startingMonth);
-    props.startingYear && setYear(props.startingYear);
-    props.startingYear && props.setYear?.(props.startingYear);
+    if (props.startingMonth !== undefined) {
+      setMonth(props.startingMonth);
+      props.setMonth?.(props.startingMonth);
+    }
+
+    if (props.startingYear !== undefined) {
+      setYear(props.startingYear);
+      props.setYear?.(props.startingYear);
+    }
   };
 
   createEffect(() => {

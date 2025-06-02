@@ -84,7 +84,7 @@ const App: Component = () => {
   return (
     <div class={"rn-min-h-screen rn-bg-red-200"}>
       <DatePickerGroup
-        type={"range"}
+        startingMonth={0}
         customDaysClassName={[
           { day: 8, month: 5, year: 2024, className: "jjjj" },
           {
@@ -117,8 +117,8 @@ const App: Component = () => {
         onDisabledDayError={(data) => {
           console.log(data.day);
         }}
-        value={date}
-        setValue={setDate}
+        // value={date}
+        // setValue={setDate}
       />
 
       <TimeAnalogPicker />
