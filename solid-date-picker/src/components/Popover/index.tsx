@@ -34,6 +34,7 @@ export interface PopoverProps {
   zIndex?: number;
   width?: JSX.CSSProperties["width"];
   contentClassName?: string;
+  portalContainer?: HTMLElement;
 }
 
 export const Popover = (props: PopoverProps) => {
@@ -110,6 +111,7 @@ export const Popover = (props: PopoverProps) => {
   });
 
   onMount(() => {
+    if (props.portalContainer) return;
     const portalIsland = document.getElementById("portal-island");
     if (portalIsland) return;
     const div = document.createElement("div");
@@ -168,7 +170,9 @@ export const Popover = (props: PopoverProps) => {
       <CustomPortal
         setIsShown={props.setIsShown || setShown}
         isShown={props.isShown || shown()}
-        referenceId={"portal-island"}
+        {...(props.portalContainer
+          ? { portalContainer: props.portalContainer }
+          : { referenceId: "portal-island" })}
         hideDefaultStyle
         onClickOutside={
           props.onClickOutside

@@ -17,6 +17,7 @@ export interface ModalProps {
   innerWrapperClass?: string;
   clickOutsideRef?: Accessor<HTMLElement | undefined>;
   onClickOutsideRef?: (e?: MouseEvent) => void;
+  portalContainer?: HTMLElement;
 }
 
 function clickOutside(el: HTMLElement, accessor: ClickOutsideAccessor) {
@@ -42,7 +43,9 @@ export const CustomPortal: Component<ModalProps> = (props) => {
         mount={
           props?.referenceId
             ? document.getElementById(props.referenceId)
-            : props?.reference?.() || (document.getElementById("modal") as any)
+            : props?.reference?.() ||
+              props.portalContainer ||
+              (document.getElementById("modal") as any)
         }
       >
         <div

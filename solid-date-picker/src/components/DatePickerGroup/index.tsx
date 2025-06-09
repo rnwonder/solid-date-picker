@@ -54,6 +54,11 @@ export interface DatePickerInputSJProps
   formatInputLabelRangeStart?: string;
   formatInputLabelRangeEnd?: string;
   yearSelectorCount?: number;
+
+  portalRef?: Accessor<HTMLElement | undefined>;
+  setPortalRef?: Setter<HTMLElement | undefined>;
+
+  portalContainer?: HTMLElement;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -272,6 +277,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
           setRef={props.setRef || setPickerRef}
         />
       )}
+      portalContainer={props.portalContainer}
       onClickOutside={(e, setShown) => {
         if (
           allowedComponents()
