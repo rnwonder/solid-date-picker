@@ -122,8 +122,8 @@ const App: Component = () => {
         onDisabledDayError={(data) => {
           console.log(data.day);
         }}
-        // value={date}
-        // setValue={setDate}
+        value={date}
+        setValue={setDate}
       />
 
       <TimeAnalogPicker />

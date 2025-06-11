@@ -1,4 +1,4 @@
-import { Accessor, createSignal, JSX, Setter, Show } from "solid-js";
+import { Accessor, createSignal, JSX, onMount, Setter, Show } from "solid-js";
 import {
   RnClassName,
   DatePickerOnChange,
@@ -8,6 +8,7 @@ import {
 } from "../../interface/general";
 import {
   convertDateObjectToDate,
+  convertDateToDateObject,
   labelFormat,
 } from "@rnwonder/simple-datejs/utils";
 import { DatePicker, DatePickerProps } from "../DatePicker";
@@ -242,6 +243,54 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
   };
 
   const inputJSX = renderCustomJSX(props.renderInput);
+
+  onMount(() => {
+    const valueData = props.value?.()?.value || value().value;
+
+    if (valueData.selected || valueData.selectedDateObject) {
+      const selectedDate = valueData.selected
+        ? convertDateToDateObject(new Date(valueData.selected))
+        : valueData.selectedDateObject;
+
+      handleOnChange({
+        type: "single",
+        selectedDate,
+      });
+    }
+
+    if (valueData.start || valueData.startDateObject) {
+      const startDate = valueData.start
+        ? convertDateToDateObject(new Date(valueData.start))
+        : valueData.startDateObject;
+
+      const endDate = valueData.end
+        ? convertDateToDateObject(new Date(valueData.end))
+        : valueData.endDateObject;
+
+      handleOnChange({
+        type: "range",
+        startDate,
+        endDate,
+      });
+    }
+
+    if (valueData.multiple || valueData.multipleDateObject) {
+      const multipleDateObject = valueData.multipleDateObject?.length
+        ? valueData.multipleDateObject
+        : valueData.multiple
+          ? valueData.multiple.map((date) =>
+              convertDateToDateObject(new Date(date)),
+            )
+          : undefined;
+
+      if (!multipleDateObject?.length) return;
+
+      handleOnChange({
+        type: "multiple",
+        multipleDates: multipleDateObject,
+      });
+    }
+  });
 
   return (
     <Popover
