@@ -89,6 +89,7 @@ const App: Component = () => {
     <div class={"rn-min-h-screen rn-bg-red-200"}>
       <DatePickerGroup
         startingMonth={0}
+        type="range"
         customDaysClassName={[
           { day: 8, month: 5, year: 2024, className: "jjjj" },
           {

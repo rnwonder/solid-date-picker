@@ -55,11 +55,20 @@ export const handleDateRange = ({
       initial: true,
     };
   }
-  if (startDay && !endDay) {
+  if (startDay) {
+    // Ensure startDay has required properties
+    if (
+      startDay.year === undefined ||
+      startDay.month === undefined ||
+      startDay.day === undefined
+    ) {
+      return { start: startDay, end: endDay };
+    }
+
     const startDayDate = modifiedDate(
-      startDay?.year!,
-      startDay?.month!,
-      startDay?.day,
+      startDay.year,
+      startDay.month,
+      startDay.day,
     );
     const endDayDate = modifiedDate(
       getDatePickerRefactoredYear(
@@ -84,36 +93,39 @@ export const handleDateRange = ({
       };
     }
 
-    if (
-      startDayDate.getTime() < endDayDate.getTime() &&
-      ((disabledDays &&
-        isDateRangeDisabled(startDayDate, endDayDate, disabledDays)) ||
-        (enabledDays &&
-          isDateRangeEnabled(startDayDate, endDayDate, enabledDays)))
-    ) {
-      if (hover) {
-        return {
-          start: startDay,
-        };
-      }
-      return {
-        start: convertDateToDateObject(endDayDate),
-        initial: true,
-      };
-    }
+    // Check if the range contains disabled dates
+    const rangeHasDisabledDates =
+      disabledDays &&
+      isDateRangeDisabled(
+        startDayDate.getTime() < endDayDate.getTime()
+          ? startDayDate
+          : endDayDate,
+        startDayDate.getTime() < endDayDate.getTime()
+          ? endDayDate
+          : startDayDate,
+        disabledDays,
+      );
 
-    if (
-      startDayDate.getTime() > endDayDate.getTime() &&
-      ((disabledDays &&
-        isDateRangeDisabled(startDayDate, endDayDate, disabledDays)) ||
-        (enabledDays &&
-          isDateRangeEnabled(endDayDate, startDayDate, enabledDays)))
-    ) {
+    const rangeHasUnavailableDates =
+      enabledDays &&
+      isDateRangeEnabled(
+        startDayDate.getTime() < endDayDate.getTime()
+          ? startDayDate
+          : endDayDate,
+        startDayDate.getTime() < endDayDate.getTime()
+          ? endDayDate
+          : startDayDate,
+        enabledDays,
+      );
+
+    // If range contains disabled/unavailable dates, don't allow the selection
+    if (rangeHasDisabledDates || rangeHasUnavailableDates) {
       if (hover) {
         return {
           start: startDay,
         };
       }
+      // Reset to new start date instead of invalid range
       return {
         start: convertDateToDateObject(endDayDate),
         initial: true,

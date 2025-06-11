@@ -7,7 +7,7 @@
  * This only styles the datepicker only and not the input field
  &
  * @author @rnwonder <rnwonder@gmail.com>
- * @version 1.9.0
+ * @version 2.0.0
  *
  * @supported picker version ^1.2.0
  *
@@ -113,12 +113,12 @@
 }
 
 /*style selected/active month year selector dropdown options button when hovered and when not hovered*/
-[date-selector-option-selected="true"],
-[date-selector-option-selected="true"]:hover,
-.dark [date-selector-option-selected="true"],
-[data-theme="dark"] [date-selector-option-selected="true"],
-.dark [date-selector-option-selected="true"]:hover,
-[data-theme="dark"] [date-selector-option-selected="true"]:hover {
+button.date-selector-option[date-selector-option-selected="true"],
+button.date-selector-option[date-selector-option-selected="true"]:hover,
+.dark button.date-selector-option[date-selector-option-selected="true"],
+[data-theme="dark"] button.date-selector-option[date-selector-option-selected="true"],
+.dark button.date-selector-option[date-selector-option-selected="true"]:hover,
+[data-theme="dark"] button.date-selector-option[date-selector-option-selected="true"]:hover {
     background-color: var(--ark-colors-bg-subtle);
     color: var(--ark-colors-accent-default);
 }
@@ -189,17 +189,17 @@
 }
 
 /*styled selected day number buttons when hovered and not hovered*/
-[data-day-number-selected="true"],
-[data-day-number-selected="true"]:hover,
-[data-day-number-selected="true"][data-highlight-weekend="true"],
+button.date-picker-day-number[data-day-number-selected="true"],
+button.date-picker-day-number[data-day-number-selected="true"]:hover,
+button.date-picker-day-number[data-day-number-selected="true"][data-highlight-weekend="true"],
 
-.dark [data-day-number-selected="true"],
-.dark [data-day-number-selected="true"]:hover,
-.dark [data-day-number-selected="true"][data-highlight-weekend="true"],
+.dark button.date-picker-day-number[data-day-number-selected="true"],
+.dark button.date-picker-day-number[data-day-number-selected="true"]:hover,
+.dark button.date-picker-day-number[data-day-number-selected="true"][data-highlight-weekend="true"],
 
-[data-theme="dark"] [data-day-number-selected="true"],
-[data-theme="dark"] [data-day-number-selected="true"]:hover,
-[data-theme="dark"] [data-day-number-selected="true"][data-highlight-weekend="true"] {
+[data-theme="dark"] button.date-picker-day-number[data-day-number-selected="true"],
+[data-theme="dark"] button.date-picker-day-number[data-day-number-selected="true"]:hover,
+[data-theme="dark"] button.date-picker-day-number[data-day-number-selected="true"][data-highlight-weekend="true"] {
     background-color: var(--ark-colors-accent-default);
     color: var(--ark-colors-fg-inverted-default);
 }
@@ -211,16 +211,16 @@
  * meaning data-day-number-selected is true when hovering over the end day of a range
  * but data-day-number-range-end-selected is false because it hasn't actually been selected just hovered over.
  */
-[data-day-number-range-end-selected="false"][data-day-number-selected="true"],
-.dark [data-day-number-range-end-selected="false"][data-day-number-selected="true"],
-[data-theme="dark"] [data-day-number-range-end-selected="false"][data-day-number-selected="true"] {
+button.date-picker-day-number[data-day-number-range-end-selected="false"][data-day-number-selected="true"],
+.dark button.date-picker-day-number[data-day-number-range-end-selected="false"][data-day-number-selected="true"],
+[data-theme="dark"] button.date-picker-day-number[data-day-number-range-end-selected="false"][data-day-number-selected="true"] {
     background-color: var(--ark-colors-bg-subtle);
     color: var(--ark-colors-accent-default);
 }
 
-[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before,
-.dark [data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before,
-[data-theme="dark"] [data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before {
+button.date-picker-day-number[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before,
+.dark button.date-picker-day-number[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before,
+[data-theme="dark"] button.date-picker-day-number[data-day-number-range-end-selected="true"][data-day-number-selected="true"][data-day-number-current-day="true"]::before {
     color: var(--ark-colors-fg-inverted-default);
 }
 

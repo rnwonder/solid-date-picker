@@ -326,9 +326,12 @@ export const isDateRangeDisabled = (
   endDate: Date,
   disabledDays?: DateArray[],
 ): boolean => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
   for (
-    let date = new Date(startDate);
-    date <= endDate;
+    let date = new Date(start);
+    date <= end;
     date.setDate(date.getDate() + 1)
   ) {
     if (
@@ -354,9 +357,12 @@ export const isDateRangeEnabled = (
   endDate: Date,
   enabledDays?: DateArray[],
 ) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
   for (
-    let date = new Date(startDate);
-    date <= endDate;
+    let date = new Date(start);
+    date <= end;
     date.setDate(date.getDate() + 1)
   ) {
     if (
@@ -373,6 +379,7 @@ export const isDateRangeEnabled = (
       return true;
     }
   }
+  return false;
 };
 
 export const isWeekendStatus = ({

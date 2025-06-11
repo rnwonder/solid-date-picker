@@ -452,7 +452,7 @@ export const DatePicker = (props: DatePickerProps) => {
       month,
       year,
       endDay: hoverRangeValue()?.end,
-      startDay: hoverRangeValue()?.start,
+      startDay: startDay(),
       disabledDays: props.disabledDays,
       hover: true,
       enabledDays: props.enabledDays,
