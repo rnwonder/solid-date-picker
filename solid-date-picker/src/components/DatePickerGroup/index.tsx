@@ -60,6 +60,8 @@ export interface DatePickerInputSJProps
   setPortalRef?: Setter<HTMLElement | undefined>;
 
   portalContainer?: HTMLElement;
+
+  disableOpenAnimation?: boolean;
 }
 
 export const DatePickerGroup = (props: DatePickerInputSJProps) => {
@@ -302,6 +304,7 @@ export const DatePickerGroup = (props: DatePickerInputSJProps) => {
         setSelectorTwoProps(defaultSelectorProps);
         props.onClose?.();
       }}
+      disableOpenAnimation={props.disableOpenAnimation}
       onOpen={() => {
         props.onOpen?.();
       }}

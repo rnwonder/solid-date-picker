@@ -88,17 +88,22 @@ const App: Component = () => {
   return (
     <div class={"rn-min-h-screen rn-bg-red-200"}>
       <DatePickerGroup
-        startingMonth={0}
+        disableOpenAnimation
+        onClose={() => {
+          console.log("onClose");
+        }}
+        // startingMonth={0}
         type="range"
-        customDaysClassName={[
-          { day: 8, month: 5, year: 2024, className: "jjjj" },
-          {
-            month: 5,
-            year: 2024,
-            day: 18,
-            className: "orangeDay",
-          },
-        ]}
+        // customDaysClassName={[
+        //   { day: 8, month: 5, year: 2024, className: "jjjj" },
+        //   {
+        //     month: 5,
+        //     year: 2024,
+        //     day: 18,
+        //     className: "orangeDay",
+        //   },
+        // ]}
+        // twoMonthsDisplay
         onValueChange={(value) => {
           // console.log(value);
         }}
@@ -122,8 +127,8 @@ const App: Component = () => {
         onDisabledDayError={(data) => {
           console.log(data.day);
         }}
-        value={date}
-        setValue={setDate}
+        // value={date}
+        // setValue={setDate}
       />
 
       <TimeAnalogPicker />
@@ -131,7 +136,6 @@ const App: Component = () => {
         class={"rn-w-[10rem] rn-bg-white"}
         id={"portal"}
         onClick={() => setShow(true)}
-        
       >
         Hey Click me
       </button>

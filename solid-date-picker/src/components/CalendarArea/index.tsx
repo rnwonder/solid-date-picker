@@ -29,6 +29,8 @@ export const CalendarArea: Component<CalendarAreaProps> = (props) => {
 
   createEffect(() => {
     if (props.month() === 0) {
+      setNextYear(props.year());
+      setNextMonth(1);
     } else if (props.month() === 11) {
       setNextYear(props.year() + 1);
       setNextMonth(0);

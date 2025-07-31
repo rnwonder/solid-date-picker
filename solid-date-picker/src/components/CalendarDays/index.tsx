@@ -1,4 +1,4 @@
-import { Accessor, Component, For, Setter } from "solid-js";
+import { Accessor, Component, For, Setter, createSignal } from "solid-js";
 import { applyDateRangeProps } from "@rnwonder/simple-datejs/datePicker";
 import { DatePickerDay } from "../DatePickerDay";
 import { DatePickerWeek } from "../DatePickerWeek";
@@ -43,18 +43,21 @@ export interface CalendarDaysProps extends CalendarDaysClassNamesAndColors {
 
   showSelectorTwo?: Accessor<boolean>;
   locale?: Locale;
-  setDayRowsArray: Setter<MonthDaysObject<string>[][]>;
-  dayRowsArray: Accessor<MonthDaysObject<string>[][]>;
 }
 export const CalendarDays: Component<CalendarDaysProps> = (props) => {
+  const [dayRowsArray, setDayRowsArray] = createSignal<
+    Array<Array<MonthDaysObject>>
+  >([]);
+
   createDaysArray({
     month: props.month,
     year: props.year,
     weekStartDay: props.weekStartDay,
     locale: props.locale || "en-US",
-    setDayRowsArray: props.setDayRowsArray,
-    dayRowsArray: props.dayRowsArray,
+    setDayRowsArray,
+    dayRowsArray,
   });
+
   return (
     <div
       data-type={"calendar-days-area"}
@@ -64,7 +67,7 @@ export const CalendarDays: Component<CalendarDaysProps> = (props) => {
         props.datePickerCalendarDaysArea,
       )}
     >
-      <For each={props.dayRowsArray()}>
+      <For each={dayRowsArray()}>
         {(daysRow, index) => (
           <DatePickerWeek
             daysRowClass={cn(

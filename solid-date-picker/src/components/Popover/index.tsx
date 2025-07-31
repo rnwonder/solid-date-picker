@@ -35,6 +35,7 @@ export interface PopoverProps {
   width?: JSX.CSSProperties["width"];
   contentClassName?: string;
   portalContainer?: HTMLElement;
+  disableOpenAnimation?: boolean;
 }
 
 export const Popover = (props: PopoverProps) => {
@@ -45,6 +46,8 @@ export const Popover = (props: PopoverProps) => {
   const [shown, setShown] = createSignal(false);
 
   const [delayShown, setDelayShown] = createSignal(false);
+
+  const [hasOpen, setHasOpen] = createSignal(false);
 
   const positionDropDown = (position?: {
     x?: IPopOverPositionX;
@@ -94,12 +97,19 @@ export const Popover = (props: PopoverProps) => {
   });
 
   createEffect(() => {
-    if (!props.isShown && !shown()) {
+    const isShown = props.isShown || shown();
+    if (!isShown && hasOpen()) {
       props.onClose?.();
       return;
     }
-    props.onOpen?.();
-    positionDropDown();
+
+    if (isShown) {
+      props.onOpen?.();
+      if (!hasOpen()) {
+        setHasOpen(true);
+      }
+      positionDropDown();
+    }
   });
 
   createEffect(() => {
@@ -191,9 +201,11 @@ export const Popover = (props: PopoverProps) => {
         <div
           class={`
               ${
-                delayShown()
-                  ? `rn-translate-y-[0rem] rn-opacity-100`
-                  : `-rn-translate-y-[1rem] rn-opacity-0`
+                !props.disableOpenAnimation
+                  ? delayShown()
+                    ? `rn-translate-y-[0rem] rn-opacity-100`
+                    : `-rn-translate-y-[1rem] rn-opacity-0`
+                  : `rn-translate-y-[0rem] rn-opacity-100`
               }
               rn-duration-350 
               rn-delay-50
@@ -210,12 +222,15 @@ export const Popover = (props: PopoverProps) => {
                   delayShown()
                     ? `scale-100 rn-opacity-100`
                     : `scale-90 rn-opacity-0`
-                }
-                rn-duration-350 
+                }              
                 rn-transition-opacity
                 rn-ease-in-out
                 motion-reduce:rn-transition-none
             `,
+              {
+                "rn-duration-350 ": !props.disableOpenAnimation,
+                "rn-duration-0 ": props.disableOpenAnimation,
+              },
               props.contentClassName,
             )}
           >

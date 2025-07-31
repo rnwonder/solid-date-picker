@@ -141,9 +141,6 @@ export const DatePicker = (props: DatePickerProps) => {
   const [hoverRangeValue, setHoverRangeValue] = createSignal<HoverRangeValue>(
     {},
   );
-  const [dayRowsArray, setDayRowsArray] = createSignal<
-    Array<Array<MonthDaysObject>>
-  >([]);
 
   onMount(() => {
     if (
@@ -630,8 +627,6 @@ export const DatePicker = (props: DatePickerProps) => {
               hoverRangeValue={hoverRangeValue}
               onHoverDayEnd={onHoverDayEnd}
               showSelectorTwo={props.showSelectorTwo}
-              setDayRowsArray={setDayRowsArray}
-              dayRowsArray={dayRowsArray}
             />
           )}
         </Show>
