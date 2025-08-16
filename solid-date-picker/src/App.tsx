@@ -89,11 +89,14 @@ const App: Component = () => {
     <div class={"rn-min-h-screen rn-bg-red-200"}>
       <DatePickerGroup
         disableOpenAnimation
+        type="range"
+        weekStartDay={2}
+        hideOutSideDays={true}
+        twoMonthsDisplay={true}
         onClose={() => {
           console.log("onClose");
         }}
         // startingMonth={0}
-        type="range"
         // customDaysClassName={[
         //   { day: 8, month: 5, year: 2024, className: "jjjj" },
         //   {
@@ -189,6 +192,7 @@ const App: Component = () => {
         monthSelectorType={"full-size"}
         yearSelectorType={"full-size"}
         yearSelectorCount={32}
+        weekStartDay={7}
         yearRange={{ start: 1998, end: 2030 }}
       />
 

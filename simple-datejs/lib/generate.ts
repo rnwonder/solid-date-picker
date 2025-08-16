@@ -23,12 +23,11 @@ export const getMonthDaysArray = (
   year: number,
   option?: Options,
 ): MonthDaysObject<string>[] => {
-  const firstDayOfMonth = modifiedDate(
-    year,
-    month,
-    1 - (option?.weekStartDay || 0),
-  );
-  const startDayOfWeekIndex = firstDayOfMonth.getDay();
+  const firstDayOfMonth = modifiedDate(year, month, 1);
+
+  const firstDayNormalIndex = firstDayOfMonth.getDay();
+
+  const startDayOfWeekIndex = firstDayNormalIndex - (option?.weekStartDay || 0);
 
   const numDaysInMonth = modifiedDate(year, month + 1, 0).getDate();
 
@@ -36,6 +35,7 @@ export const getMonthDaysArray = (
 
   const prevMonth = month === 0 ? 11 : month - 1;
   const prevMonthYear = prevMonth === 11 ? year - 1 : year;
+
   const numDaysInPrevMonth = modifiedDate(
     prevMonthYear,
     prevMonth + 1,
@@ -52,9 +52,22 @@ export const getMonthDaysArray = (
     return numberFormatter(day, option?.locale);
   };
 
-  // Previous month days
-  for (let i = 0; i < startDayOfWeekIndex; i++) {
-    daysOfMonth.push({ value: formatDay(prevMonthStart + i), month: "prev" });
+  if (startDayOfWeekIndex < 0) {
+    // Create a new row for the previous month
+
+    const firstDayOnNewRow = 7 - Math.abs(startDayOfWeekIndex);
+    const newPrevMonthStart = numDaysInPrevMonth - firstDayOnNewRow + 1;
+
+    for (let i = 0; i < firstDayOnNewRow; i++) {
+      daysOfMonth.push({
+        value: formatDay(newPrevMonthStart + i),
+        month: "prev",
+      });
+    }
+  } else {
+    for (let i = 0; i < startDayOfWeekIndex; i++) {
+      daysOfMonth.push({ value: formatDay(prevMonthStart + i), month: "prev" });
+    }
   }
 
   // Current month days
@@ -74,7 +87,6 @@ export const getMonthDaysArray = (
 
   return daysOfMonth;
 };
-
 export const getToday = (): MakeOptionalRequired<DateObjectUnits> => {
   const today = new Date();
   return {

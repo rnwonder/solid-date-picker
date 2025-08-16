@@ -142,6 +142,13 @@ export const DatePicker = (props: DatePickerProps) => {
     {},
   );
 
+  if (
+    props.weekStartDay &&
+    (props.weekStartDay < 0 || props.weekStartDay > 6)
+  ) {
+    return <p class="rn-text-red-500 rn-bg-red-300 rn-p-1">Invalid weekStartDay prop! Must be between 0 and 6.</p>;
+  }
+
   onMount(() => {
     if (
       !props.value?.selected &&

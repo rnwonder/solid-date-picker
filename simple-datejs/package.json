@@ -1,6 +1,6 @@
 {
   "name": "@rnwonder/simple-datejs",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Light weight date management library",
   "type": "module",
   "files": [
@@ -61,6 +61,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "@vitest/ui": "^3.2.4",
+    "jsdom": "^26.1.0",
     "path": "^0.12.7",
     "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.6.2",
